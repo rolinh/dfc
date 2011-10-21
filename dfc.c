@@ -8,13 +8,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <unistd.h>
+
 #include <sys/param.h>
 
 /* structure to store infos from /etc/mtab */
 struct mntdev {
 	char device[MAXPATHLEN];
 	char mntpt[MAXPATHLEN];
-	char fstype[MAXPATHLEN};
+	char fstype[MAXPATHLEN];
 };
 
 /* set flags for options */
@@ -24,6 +26,7 @@ int hflag, Hflag, vflag, Vflag;
 static void colormsg(FILE *output, unsigned int color);
 static int display(void);
 struct mntpt getmntpt(FILE *mtab);
+int getfileusg();
 static void usage(void);
 
 int
