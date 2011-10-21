@@ -13,7 +13,7 @@
 #include <sys/param.h>
 
 /* structure to store infos from /etc/mtab */
-struct mntdev {
+struct mtabinfo {
 	char device[MAXPATHLEN];
 	char mntpt[MAXPATHLEN];
 	char fstype[MAXPATHLEN];
@@ -68,10 +68,10 @@ display(void)
 
 }
 
-struct mntdev
+struct mtabinfo
 getmntpt(FILE *mtab)
 {
-	struct mntdev crtdev = {"","",""};
+	struct mtabinfo crtdev = {"","",""};
 
 	if (fscanf(mtab, "%s %s %s", crtdev.device, crtdev.mntpt, crtdev.fstype) == EOF) {
 		/* error occured */
