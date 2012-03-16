@@ -84,7 +84,7 @@ main(int argc, char *argv[])
 			if ((fmi->fsname = strdup(entbuf->mnt_fsname)) == NULL) {
 				fmi->fsname = "unknown";
 			}
-			if ((fmi->dir = strdup(entbuf->mnt_fsname)) == NULL) {
+			if ((fmi->dir = strdup(entbuf->mnt_dir)) == NULL) {
 				fmi->dir = "unknown";
 			}
 			if ((fmi->type = strdup(entbuf->mnt_type)) == NULL) {
@@ -103,7 +103,8 @@ main(int argc, char *argv[])
 			enqueue(&queue, *fmi);
 		}
 	}
-	/* TODO remove when testing is done */
+
+	/* actually displays the infos we have gotten */
 	disp(queue);
 
 	/* we need to close the mtab file now */
@@ -250,24 +251,13 @@ fmi_init(void)
 	/* NOTREACHED */
 }
 
-/* TODO remove this when testing is done */
+/*
+ * Actually displays infos in nice manner
+ * @lst: queue containing all required informations
+ */
 void
 disp(struct list lst)
 {
-	struct fsmntinfo *p = NULL;
+	
 
-	p = lst.head;
-
-	while (p != NULL) {
-		(void)printf("fsname: %s\ndir: %s\ntype: %s\nbsize: %ld\n"
-				"blocks: %ld\nbfree: %ld\n",
-			p->fsname,
-			p->dir,
-			p->type,
-			p->bsize,
-			p->blocks,
-			p->bfree);
-		(void)puts("--------------------------------------------");
-		p = p->next;
-	}
 }

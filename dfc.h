@@ -42,8 +42,6 @@ int is_empty(struct list lst);
 int enqueue(struct list *lst, struct fsmntinfo elt);
 struct fsmntinfo dequeue(struct list *lst);
 struct fsmntinfo fmi_init(void);
-
-/* TODO remove once test are done */
 void disp(struct list lst);
 
 #endif /* ndef DFC_H */
