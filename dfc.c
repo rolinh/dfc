@@ -284,7 +284,7 @@ disp(struct list lst)
 			(void)printf(" ");
 
 		/* calculate the % used */
-		used = (double)(((p->blocks - p->bfree) / p->blocks) * 100);
+		used = ((double)(p->blocks - p->bfree) / (double)(p->blocks)) * 100;
 
 		(void)printf("[");
 
