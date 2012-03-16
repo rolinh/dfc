@@ -6,12 +6,14 @@
  * Displays free disk space in an elegant manner.
  */
 #define _POSIX_C_SOURCE 2
+#define _BSD_SOURCE
 
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 
+#include <string.h>
 #include <mntent.h>
 
 #include <sys/param.h>
@@ -69,19 +71,25 @@ main(int argc, char *argv[])
 	}
 
 	/* loop to get infos from all the mounted fs */
-	while ((entbuf = getmntent(mtab))) {
+	while ((entbuf = getmntent(mtab)) != NULL) {
 		/* get infos from statvfs */
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
-			(void)fprintf(stderr, "Error while trying statvfs on %s\n",
+			(void)fprintf(stderr, "Error using statvfs on %s\n",
 					entbuf->mnt_dir);
 			perror("with this error code ");
 			return EXIT_FAILURE;
 			/* NOTREACHED */
 		} else {
 			/* infos from getmntent */
-			fmi->dir = entbuf->mnt_dir;
-			fmi->fsname = entbuf->mnt_fsname;
-			fmi->type = entbuf->mnt_type;
+			if ((fmi->fsname = strdup(entbuf->mnt_fsname)) == NULL) {
+				fmi->fsname = "unknown";
+			}
+			if ((fmi->dir = strdup(entbuf->mnt_fsname)) == NULL) {
+				fmi->dir = "unknown";
+			}
+			if ((fmi->type = strdup(entbuf->mnt_type)) == NULL) {
+				fmi->type = "unknown";
+			}
 
 			/* infos from statvfs */
 			fmi->bsize = vfsbuf.f_bsize;
@@ -230,8 +238,8 @@ fmi_init(void)
 {
 	struct fsmntinfo fmi;
 
-	fmi.dir		= "unknown";
 	fmi.fsname	= "unknown";
+	fmi.dir		= "unknown";
 	fmi.type	= "unknown";
 	fmi.bsize	= 0;
 	fmi.blocks	= 0;
@@ -251,10 +259,10 @@ disp(struct list lst)
 	p = lst.head;
 
 	while (p != NULL) {
-		(void)printf("dir: %s\nfsname: %s\ntype: %s\nbsize: %ld\n"
+		(void)printf("fsname: %s\ndir: %s\ntype: %s\nbsize: %ld\n"
 				"blocks: %ld\nbfree: %ld\n",
-			p->dir,
 			p->fsname,
+			p->dir,
 			p->type,
 			p->bsize,
 			p->blocks,
