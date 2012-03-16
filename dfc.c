@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "hHvV:")) != -1) {
+	while ((ch = getopt(argc, argv, "hHv:")) != -1) {
 		switch (ch) {
 		case 'h':
 			hflag = 1;
@@ -104,12 +104,12 @@ main(int argc, char *argv[])
 		}
 	}
 
-	/* actually displays the infos we have gotten */
-	disp(queue);
-
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
+
+	/* actually displays the infos we have gotten */
+	disp(queue);
 
 	return EXIT_SUCCESS;
 	/* NOTREACHED */
@@ -261,20 +261,40 @@ disp(struct list lst)
 {
 	struct fsmntinfo *p = NULL;
 	int i;
+	double used;
+
+	/* legend on top (80 col wide) at most */
+	(void)printf("FILESYSTEM");
+	for (i = 0; i < 6; i++)
+		(void)printf(" ");
+	(void)printf("USED (*)");
+	for (i = 0; i < 6; i++)
+		(void)printf(" ");
+	(void)printf("FREE (-) ");
+	(void)printf("%%USED ");
+	(void)printf("FREE        ");
+	(void)printf("TOTAL       ");
+	(void)puts("MOUNTED ON");
 
 	p = lst.head;
-
-	(void)puts("                Used (*)                           Free (-)   %%Used   Free   Total ");
-
 	while (p != NULL) {
-		(void)printf("%s [", p->dir);
-		for (i = 0; i < 10; i++) {
+		(void)printf("%s", p->fsname);
+
+		for (i = (int)strlen(p->fsname); i < 16; i++)
+			(void)printf(" ");
+
+		/* calculate the % used */
+		used = (double)(((p->blocks - p->bfree) / p->blocks) * 100);
+
+		(void)printf("[");
+
+		for (i = 0; i < 10; i++)
 			(void)printf("*");
-		}
-		for (i = 0; i < 10; i++) {
+
+		for (i = 0; i < 10; i++)
 			(void)printf("-");
-		}
-		(void)printf("]%3ld\n", p->bsize);
+
+		(void)printf("] %f%%  %ld\n", used, p->bfree);
 
 		p = p->next;
 	}
