@@ -16,8 +16,8 @@
  */
 struct fsmntinfo {
 	/* infos to get from getmntent(3) */
-	char *dir;	/* file system path prefix */
 	char *fsname;	/* name of mounted file system */
+	char *dir;	/* file system path prefix */
 	char *type;	/* mount type */
 
 	/* infos to get from statvfs(3) */
