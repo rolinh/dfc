@@ -262,7 +262,6 @@ disp(struct list lst)
 	struct fsmntinfo *p = NULL;
 	int i, j;
 	int bflen = 1;
-	int bllen = 1;
 	double used;
 
 	/* legend on top (80 col wide) at most */
@@ -274,10 +273,10 @@ disp(struct list lst)
 	for (i = 0; i < 6; i++)
 		(void)printf(" ");
 	(void)printf("FREE (-) ");
-	(void)printf("%%USED ");
-	(void)printf("FREE        ");
-	(void)printf("TOTAL       ");
-	(void)puts("MOUNTED ON");
+	(void)printf("%%USED");
+	(void)printf("      FREE");
+	(void)printf("       TOTAL");
+	(void)puts(" MOUNTED ON");
 
 	/*
 	 * here is what we want:
@@ -326,27 +325,19 @@ disp(struct list lst)
 			i = i / 10;
 		}
 
-		i = (int)(p->blocks);
-		while (i > 9) {
-			bllen++;
-			i = i / 10;
-		}
-
 		/* %used */
-		(void)printf("] %.f%% %10ld", used, p->bfree);
+		(void)printf("]  %.f%% %10ld", used, p->bfree);
 		for (i = bflen; i < 12; i++)
 			(void)printf(" ");
 
 		/* total */
 		(void)printf("%ld",p->blocks);
-		for (i = bllen; i < 12; i++)
-			(void)printf(" ");
 
 		/* mounted on */
-		printf("%s\n", p->dir);
+		printf(" %s\n", p->dir);
 
 		/* reinit the length */
-		bflen = bllen = 1;
+		bflen = 1;
 		p = p->next;
 	}
 }
