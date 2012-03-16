@@ -261,6 +261,8 @@ disp(struct list lst)
 {
 	struct fsmntinfo *p = NULL;
 	int i;
+	int bflen = 1;
+	int bllen = 1;
 	double used;
 
 	/* legend on top (80 col wide) at most */
@@ -276,6 +278,10 @@ disp(struct list lst)
 	(void)printf("TOTAL       ");
 	(void)puts("MOUNTED ON");
 
+	/*
+	 * here is what we want:
+	 * 16 + 1 + 20 + 1 + 1 + 6 + 11 + 11 + 23 = 80
+	 */
 	p = lst.head;
 	while (p != NULL) {
 		(void)printf("%s", p->fsname);
@@ -284,7 +290,10 @@ disp(struct list lst)
 			(void)printf(" ");
 
 		/* calculate the % used */
-		used = ((double)(p->blocks - p->bfree) / (double)(p->blocks)) * 100;
+		if (p->blocks == 0)
+			used = 100;
+		else
+			used = ((double)(p->blocks - p->bfree) / (double)(p->blocks)) * 100;
 
 		(void)printf("[");
 
@@ -294,8 +303,33 @@ disp(struct list lst)
 		for (i = 0; i < 10; i++)
 			(void)printf("-");
 
-		(void)printf("] %f%%  %ld\n", used, p->bfree);
+		/*
+		 * to adjust to output, we need to get the len of bfree and
+		 * blocks
+		 */
+		i = (int)(p->bfree);
+		while (i > 9) {
+			bflen++;
+			i = i / 10;
+		}
 
+		i = (int)(p->blocks);
+		while (i > 9) {
+			bllen++;
+			i = i / 10;
+		}
+
+		(void)printf("] %.f%% %10ld", used, p->bfree);
+		for (i = bflen; i < 12; i++)
+			(void)printf(" ");
+
+		(void)printf("%ld",p->blocks);
+		for (i = bllen; i < 12; i++)
+			(void)printf(" ");
+		printf("%s\n", p->dir);
+
+		/* reinit the length */
+		bflen = bllen = 1;
 		p = p->next;
 	}
 }
