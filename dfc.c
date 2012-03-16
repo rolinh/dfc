@@ -254,10 +254,28 @@ fmi_init(void)
 /*
  * Actually displays infos in nice manner
  * @lst: queue containing all required informations
+ * TODO: finish this function
  */
 void
 disp(struct list lst)
 {
-	
+	struct fsmntinfo *p = NULL;
+	int i;
 
+	p = lst.head;
+
+	(void)puts("                Used (*)                           Free (-)   %%Used   Free   Total ");
+
+	while (p != NULL) {
+		(void)printf("%s [", p->dir);
+		for (i = 0; i < 10; i++) {
+			(void)printf("*");
+		}
+		for (i = 0; i < 10; i++) {
+			(void)printf("-");
+		}
+		(void)printf("]%3ld\n", p->bsize);
+
+		p = p->next;
+	}
 }
