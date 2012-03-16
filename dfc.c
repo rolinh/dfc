@@ -260,13 +260,14 @@ void
 disp(struct list lst)
 {
 	struct fsmntinfo *p = NULL;
-	int i;
+	int i, j;
 	int bflen = 1;
 	int bllen = 1;
 	double used;
 
 	/* legend on top (80 col wide) at most */
-	(void)printf("FILESYSTEM");
+	(void)printf("FILESYSTEM ");
+	(void)printf("TYPE");
 	for (i = 0; i < 6; i++)
 		(void)printf(" ");
 	(void)printf("USED (*)");
@@ -284,9 +285,21 @@ disp(struct list lst)
 	 */
 	p = lst.head;
 	while (p != NULL) {
-		(void)printf("%s", p->fsname);
 
-		for (i = (int)strlen(p->fsname); i < 16; i++)
+		/* skip some stuff we do not care about */
+		if (strncmp(p->fsname, "/dev/", 5) != 0) {
+			p = p->next;
+			continue;
+		}
+
+		/* filesystem */
+		(void)printf("%s", p->fsname);
+		for (i = (int)strlen(p->fsname); i < 11; i++)
+			(void)printf(" ");
+
+		/* type */
+		(void)printf("%s", p->type);
+		for (i = (int)strlen(p->type); i < 10; i++)
 			(void)printf(" ");
 
 		/* calculate the % used */
@@ -295,12 +308,12 @@ disp(struct list lst)
 		else
 			used = ((double)(p->blocks - p->bfree) / (double)(p->blocks)) * 100;
 
+		/* used (*) */
 		(void)printf("[");
-
-		for (i = 0; i < 10; i++)
+		for (i = 0; i < used; i += 5)
 			(void)printf("*");
 
-		for (i = 0; i < 10; i++)
+		for (j = i; j < 100; j += 5)
 			(void)printf("-");
 
 		/*
@@ -319,13 +332,17 @@ disp(struct list lst)
 			i = i / 10;
 		}
 
+		/* %used */
 		(void)printf("] %.f%% %10ld", used, p->bfree);
 		for (i = bflen; i < 12; i++)
 			(void)printf(" ");
 
+		/* total */
 		(void)printf("%ld",p->blocks);
 		for (i = bllen; i < 12; i++)
 			(void)printf(" ");
+
+		/* mounted on */
 		printf("%s\n", p->dir);
 
 		/* reinit the length */
