@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int hflag, Hflag, vflag;
+int aflag, hflag, Hflag, vflag;
 
 int
 main(int argc, char *argv[])
@@ -34,8 +34,11 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch, tmp;
 
-	while ((ch = getopt(argc, argv, "hHv:")) != -1) {
+	while ((ch = getopt(argc, argv, "ahHv")) != -1) {
 		switch (ch) {
+		case 'a':
+			aflag = 1;
+			break;
 		case 'h':
 			hflag = 1;
 			break;
@@ -50,6 +53,12 @@ main(int argc, char *argv[])
 			usage(EXIT_FAILURE);
 			/* NOTREACHED */
 		}
+	}
+
+	if (vflag) {
+		(void)printf("dfc %s\n", VERSION);
+		return EXIT_SUCCESS;
+		/* NOTREACHED */
 	}
 
 	/* initializes the queue */
@@ -91,19 +100,6 @@ main(int argc, char *argv[])
 				fmi->type = "unknown";
 			}
 
-			/* as we do not care about stuff apart from /dev/... */
-			if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
-				/* is it the longest type? */
-				if ((tmp = (int)strlen(fmi->type)) > queue.typemaxlen)
-					queue.fsmaxlen = tmp;
-				/* is it the longest dir */
-				if ((tmp = (int)strlen(fmi->dir)) > queue.dirmaxlen)
-					queue.dirmaxlen = tmp;
-				/* is it the longest fsname? */
-				if ((tmp = (int)strlen(fmi->fsname)) > queue.fsmaxlen)
-					queue.typemaxlen = tmp;
-			}
-
 			/* infos from statvfs */
 			fmi->bsize = vfsbuf.f_bsize;
 			fmi->blocks = vfsbuf.f_blocks;
@@ -114,6 +110,34 @@ main(int argc, char *argv[])
 
 			/* enqueue the element into the queue */
 			enqueue(&queue, *fmi);
+
+			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0)
+					continue;
+
+			if (aflag) {
+				/* is it the longest type? */
+				if ((tmp = (int)strlen(fmi->type)) > queue.typemaxlen)
+					queue.fsmaxlen = tmp;
+				/* is it the longest dir */
+				if ((tmp = (int)strlen(fmi->dir)) > queue.dirmaxlen)
+					queue.dirmaxlen = tmp;
+				/* is it the longest fsname? */
+				if ((tmp = (int)strlen(fmi->fsname)) > queue.fsmaxlen)
+					queue.typemaxlen = tmp;
+			} else {
+				/* as we do not care about stuff apart from /dev/... */
+				if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
+					/* is it the longest type? */
+					if ((tmp = (int)strlen(fmi->type)) > queue.typemaxlen)
+						queue.fsmaxlen = tmp;
+					/* is it the longest dir */
+					if ((tmp = (int)strlen(fmi->dir)) > queue.dirmaxlen)
+						queue.dirmaxlen = tmp;
+					/* is it the longest fsname? */
+					if ((tmp = (int)strlen(fmi->fsname)) > queue.fsmaxlen)
+						queue.typemaxlen = tmp;
+				}
+			}
 		}
 	}
 
@@ -140,6 +164,7 @@ usage(int status)
 	else
 		(void)fputs("Usage: dfc [OPTIONS(S)]\n"
 		"Available options:\n"
+		"	-a	print all\n"
 		"	-h	print size in human readable format\n"
 		"	-H	print size in human readable format but using powers of 1000, not 1024\n"
 		"	-v	print program version\n",
@@ -308,10 +333,18 @@ disp(struct list lst)
 	p = lst.head;
 	while (p != NULL) {
 
-		/* skip some stuff we do not care about */
-		if (strncmp(p->fsname, "/dev/", 5) != 0) {
+		/* we do not care about gvfs-fuse-daemon */
+		if (strcmp(p->fsname, "gvfs-fuse-daemon") == 0){
 			p = p->next;
 			continue;
+		}
+
+		if (!aflag) {
+			/* skip some stuff we do not care about */
+			if (strncmp(p->fsname, "/dev/", 5) != 0) {
+				p = p->next;
+				continue;
+			}
 		}
 
 		/* filesystem */
