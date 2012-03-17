@@ -33,6 +33,10 @@ struct fsmntinfo {
 struct list {
 	struct fsmntinfo *head;
 	struct fsmntinfo *tail;
+
+	int fsmaxlen; /* should be the size of the longest fsname */
+	int dirmaxlen; /* same for dir */
+	int typemaxlen; /* same for type */
 };
 
 /* function declaration */
