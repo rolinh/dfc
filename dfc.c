@@ -55,6 +55,10 @@ main(int argc, char *argv[])
 		}
 	}
 
+	if (hflag)
+		usage(EXIT_SUCCESS);
+		/* NOTREACHED */
+
 	if (vflag) {
 		(void)printf("dfc %s\n", VERSION);
 		return EXIT_SUCCESS;
@@ -165,8 +169,8 @@ usage(int status)
 		(void)fputs("Usage: dfc [OPTIONS(S)]\n"
 		"Available options:\n"
 		"	-a	print all\n"
-		"	-h	print size in human readable format\n"
-		"	-H	print size in human readable format but using powers of 1000, not 1024\n"
+		"	-h	print this message\n"
+		"	-H	print size in human readable format\n"
 		"	-v	print program version\n",
 		stdout);
 
