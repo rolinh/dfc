@@ -32,7 +32,7 @@ main(int argc, char *argv[])
 	struct statvfs vfsbuf;
 	struct fsmntinfo *fmi;
 	struct list queue;
-	int ch;
+	int ch, tmp;
 
 	while ((ch = getopt(argc, argv, "hHv:")) != -1) {
 		switch (ch) {
@@ -91,6 +91,19 @@ main(int argc, char *argv[])
 				fmi->type = "unknown";
 			}
 
+			/* as we do not care about stuff apart from /dev/... */
+			if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
+				/* is it the longest type? */
+				if ((tmp = (int)strlen(fmi->type)) > queue.typemaxlen)
+					queue.fsmaxlen = tmp;
+				/* is it the longest dir */
+				if ((tmp = (int)strlen(fmi->dir)) > queue.dirmaxlen)
+					queue.dirmaxlen = tmp;
+				/* is it the longest fsname? */
+				if ((tmp = (int)strlen(fmi->fsname)) > queue.fsmaxlen)
+					queue.typemaxlen = tmp;
+			}
+
 			/* infos from statvfs */
 			fmi->bsize = vfsbuf.f_bsize;
 			fmi->blocks = vfsbuf.f_blocks;
@@ -145,6 +158,9 @@ init_queue(struct list *lst)
 {
 	lst->head = NULL;
 	lst->tail = NULL;
+	lst->fsmaxlen = -1;
+	lst->dirmaxlen = -1;
+	lst->typemaxlen = -1;
 }
 
 /*
@@ -264,24 +280,31 @@ disp(struct list lst)
 	int bflen = 1;
 	double used;
 
-	/* legend on top (80 col wide) at most */
+	/* legend on top */
 	(void)printf("FILESYSTEM ");
-	(void)printf("TYPE");
-	for (i = 0; i < 6; i++)
-		(void)printf(" ");
+	if (lst.fsmaxlen > 11)
+		for (i = 11; i < lst.fsmaxlen; i++)
+			(void)printf(" ");
+	else
+		lst.fsmaxlen = 11;
+
+	(void)printf("TYPE ");
+	if (lst.typemaxlen > 5)
+		for (i = 5; i < lst.typemaxlen; i++)
+			(void)printf(" ");
+	else
+		lst.typemaxlen = 5;
+
 	(void)printf("USED (*)");
 	for (i = 0; i < 6; i++)
 		(void)printf(" ");
 	(void)printf("FREE (-) ");
+
 	(void)printf("%%USED");
 	(void)printf("      FREE");
 	(void)printf("       TOTAL");
 	(void)puts(" MOUNTED ON");
 
-	/*
-	 * here is what we want:
-	 * 16 + 1 + 20 + 1 + 1 + 6 + 11 + 11 + 23 = 80
-	 */
 	p = lst.head;
 	while (p != NULL) {
 
@@ -293,12 +316,12 @@ disp(struct list lst)
 
 		/* filesystem */
 		(void)printf("%s", p->fsname);
-		for (i = (int)strlen(p->fsname); i < 11; i++)
+		for (i = (int)strlen(p->fsname); i < lst.fsmaxlen; i++)
 			(void)printf(" ");
 
 		/* type */
 		(void)printf("%s", p->type);
-		for (i = (int)strlen(p->type); i < 10; i++)
+		for (i = (int)strlen(p->type); i < lst.typemaxlen; i++)
 			(void)printf(" ");
 
 		/* calculate the % used */
