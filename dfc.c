@@ -338,8 +338,23 @@ disp(struct list lst)
 	(void)printf("FREE (-) ");
 
 	(void)printf("%%USED");
-	(void)printf("       AVAILABLE");
-	(void)printf("           TOTAL");
+	if (kflag)
+		(void)printf("  ");
+	else if (mflag || gflag)
+		(void)printf(" ");
+	else
+		(void)printf("       ");
+
+	(void)printf("AVAILABLE");
+	if (kflag)
+		(void)printf("      ");
+	else if (mflag)
+		(void)printf("     ");
+	else if (gflag)
+		(void)printf(" ");
+	else
+		(void)printf("           ");
+	(void)printf("TOTAL");
 	(void)puts(" MOUNTED ON");
 
 	p = lst.head;
@@ -408,26 +423,34 @@ disp(struct list lst)
 			(void)printf(" ");
 
 		/* free */
-		(void)printf("%15ld", free);
-		if (kflag)
+		if (kflag) {
+			(void)printf("%10ld", free);
 			(void)printf("K");
-		else if (mflag)
+		} else if (mflag) {
+			(void)printf("%9ld", free);
 			(void)printf("M");
-		else if (gflag)
+		} else if (gflag) {
+			(void)printf("%9ld", free);
 			(void)printf("G");
-		else
+		} else {
+			(void)printf("%15ld", free);
 			(void)printf("B");
+		}
 
 		/* total */
-		(void)printf("%15ld", size);
-		if (kflag)
+		if (kflag) {
+			(void)printf("%10ld", size);
 			(void)printf("K");
-		else if (mflag)
+		} else if (mflag) {
+			(void)printf("%9ld", size);
 			(void)printf("M");
-		else if (gflag)
+		} else if (gflag) {
+			(void)printf("%5ld", size);
 			(void)printf("G");
-		else
+		} else {
+			(void)printf("%15ld", size);
 			(void)printf("B");
+		}
 
 		/* mounted on */
 		(void)printf(" %s\n", p->dir);
