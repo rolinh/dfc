@@ -47,5 +47,7 @@ int is_empty(struct list lst);
 int enqueue(struct list *lst, struct fsmntinfo elt);
 struct fsmntinfo fmi_init(void);
 void disp(struct list lst);
+void disp_header(struct list *lst);
+unsigned long cvrt(unsigned long nb);
 
 #endif /* ndef DFC_H */
