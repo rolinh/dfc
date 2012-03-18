@@ -318,9 +318,9 @@ disp(struct list lst)
 		/* calculate the % used */
 		used = size - free;
 		if (size == 0)
-			perctused = 100;
+			perctused = 100.0;
 		else
-			perctused = ((double)used / (double)size) * 100;
+			perctused = ((double)used / (double)size) * 100.0;
 
 		/* format to requested format (k,m,g) */
 		size = cvrt(size);
@@ -337,32 +337,25 @@ disp(struct list lst)
 		/* %used */
 		(void)printf("]  %3.f%%", perctused);
 
-		/* free */
+		/* free  and total */
 		if (kflag) {
 			(void)printf("%10ld", free);
+			(void)printf("K");
+			(void)printf("%10ld", size);
 			(void)printf("K");
 		} else if (mflag) {
 			(void)printf("%9ld", free);
 			(void)printf("M");
+			(void)printf("%9ld", size);
+			(void)printf("M");
 		} else if (gflag) {
 			(void)printf("%9ld", free);
+			(void)printf("G");
+			(void)printf("%5ld", size);
 			(void)printf("G");
 		} else {
 			(void)printf("%15ld", free);
 			(void)printf("B");
-		}
-
-		/* total */
-		if (kflag) {
-			(void)printf("%10ld", size);
-			(void)printf("K");
-		} else if (mflag) {
-			(void)printf("%9ld", size);
-			(void)printf("M");
-		} else if (gflag) {
-			(void)printf("%5ld", size);
-			(void)printf("G");
-		} else {
 			(void)printf("%15ld", size);
 			(void)printf("B");
 		}
