@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, hflag, Hflag, vflag;
+int aflag, hflag, gflag, kflag, mflag, vflag;
 
 int
 main(int argc, char *argv[])
@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch, tmp;
 
-	while ((ch = getopt(argc, argv, "ahHv")) != -1) {
+	while ((ch = getopt(argc, argv, "ahgkmv")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -42,8 +42,14 @@ main(int argc, char *argv[])
 		case 'h':
 			hflag = 1;
 			break;
-		case 'H':
-			Hflag = 1;
+		case 'g':
+			gflag = 1;
+			break;
+		case 'k':
+			kflag = 1;
+			break;
+		case 'm':
+			mflag = 1;
 			break;
 		case 'v':
 			vflag = 1;
@@ -170,7 +176,6 @@ usage(int status)
 		"Available options:\n"
 		"	-a	print all\n"
 		"	-h	print this message\n"
-		"	-H	print size in human readable format\n"
 		"	-v	print program version\n",
 		stdout);
 
@@ -363,13 +368,27 @@ disp(struct list lst)
 			(void)printf(" ");
 
 		/* calculate the % used */
-		size = p->blocks * p->bsize;
-		free = p->bfree * p->bsize;
+		size = (p->blocks * p->bsize);
+		free = (p->bfree * p->bsize);
 		used = size - free;
 		if (used == 0)
 			perctused = 100;
 		else
 			perctused = ((double)used / (double)size) * 100;
+
+		if (kflag) {
+			size /= 1024;
+			free /= 1024;
+			used /= 1024;
+		} else if (mflag) {
+			size /= (1024*1024);
+			free /= (1024*1024);
+			used /= (1024*1024);
+		} else if (gflag) {
+			size /= (1024*1024*1024);
+			free /= (1024*1024*1024);
+			used /= (1024*1024*1024);
+		}
 
 		/* used (*) */
 		(void)printf("[");
@@ -387,8 +406,7 @@ disp(struct list lst)
 			(void)printf(" ");
 
 		/*
-		 * to adjust to output, we need to get the len of bfree and
-		 * blocks
+		 * to adjust to output, we need to get the len of bfree
 		 */
 		i = (int)(p->bfree);
 		while (i > 9) {
@@ -397,12 +415,28 @@ disp(struct list lst)
 		}
 
 		/* free */
-		(void)printf("%10ldK", free / 1024);
+		(void)printf("%10ld", free);
+		if (kflag)
+			(void)printf("K");
+		else if (mflag)
+			(void)printf("M");
+		else if (gflag)
+			(void)printf("G");
+		else
+			(void)printf("B");
 		for (i = bflen; i < 12; i++)
 			(void)printf(" ");
 
 		/* total */
-		(void)printf("%ldK", size / 1024);
+		(void)printf("%ld", size);
+		if (kflag)
+			(void)printf("K");
+		else if (mflag)
+			(void)printf("M");
+		else if (gflag)
+			(void)printf("G");
+		else
+			(void)printf("B");
 
 		/* mounted on */
 		(void)printf("   %s\n", p->dir);
