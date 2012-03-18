@@ -251,37 +251,6 @@ enqueue(struct list *lst, struct fsmntinfo fmi)
 	/* NOTREACHED */
 }
 
-/* Dequeues the first element of a queue
- * @lst: queue pointer
- * Returns:
- *	--> the element dequeued
- */
-struct fsmntinfo
-dequeue(struct list *lst)
-{
-	struct fsmntinfo *p = NULL;
-	struct fsmntinfo fmi;
-
-	if (is_empty((*lst))) {
-		fmi = fmi_init();
-		return fmi;
-		/* NOTREACHED */
-	}
-
-	/* in case there is only one element in the queue */
-	if (lst->head == lst->tail) {
-		lst->head->next = NULL;
-		lst->tail = NULL;
-	}
-
-	p = lst->head;
-	lst->head = p->next;
-	fmi = (*p);
-
-	return fmi;
-	/* NOTREACHED */
-}
-
 /*
  * Inits an fsmntinfo to some defaults values
  * Returns:
@@ -396,15 +365,12 @@ disp(struct list lst)
 		if (kflag) {
 			size /= 1024;
 			free /= 1024;
-			used /= 1024;
 		} else if (mflag) {
 			size /= (1024*1024);
 			free /= (1024*1024);
-			used /= (1024*1024);
 		} else if (gflag) {
 			size /= (1024*1024*1024);
 			free /= (1024*1024*1024);
-			used /= (1024*1024*1024);
 		}
 
 		/* used (*) */
