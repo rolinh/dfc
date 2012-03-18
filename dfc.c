@@ -111,9 +111,9 @@ main(int argc, char *argv[])
 			}
 
 			/* infos from statvfs */
-			fmi->bsize = vfsbuf.f_bsize;
+			fmi->bsize = vfsbuf.f_frsize;
 			fmi->blocks = vfsbuf.f_blocks;
-			fmi->bfree = vfsbuf.f_bavail;
+			fmi->bfree = vfsbuf.f_bfree;
 
 			/* pointer to the next element */
 			fmi->next = NULL;
