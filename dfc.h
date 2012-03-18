@@ -48,7 +48,7 @@ int enqueue(struct list *lst, struct fsmntinfo elt);
 struct fsmntinfo fmi_init(void);
 void disp(struct list lst);
 void disp_header(struct list *lst);
-unsigned long cvrt(unsigned long nb);
+double cvrt(double nb);
 int imax(int a, int b);
 
 #endif /* ndef DFC_H */

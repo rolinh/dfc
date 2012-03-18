@@ -113,7 +113,7 @@ main(int argc, char *argv[])
 			/* infos from statvfs */
 			fmi->bsize = vfsbuf.f_frsize;
 			fmi->blocks = vfsbuf.f_blocks;
-			fmi->bfree = vfsbuf.f_bfree;
+			fmi->bfree = vfsbuf.f_bavail;
 
 			/* pointer to the next element */
 			fmi->next = NULL;
@@ -278,8 +278,7 @@ disp(struct list lst)
 {
 	struct fsmntinfo *p = NULL;
 	int i, j;
-	double perctused;
-	unsigned long size, free, used;
+	double perctused, size, free, used;
 
 	/* legend on top */
 	disp_header(&lst);
@@ -312,19 +311,15 @@ disp(struct list lst)
 			(void)printf(" ");
 
 
-		size = p->blocks * p->bsize;
-		free = p->bfree * p->bsize;
+		size = (double)p->blocks *(double)p->bsize;
+		free = (double)p->bfree * (double)p->bsize;
 
 		/* calculate the % used */
 		used = size - free;
 		if (size == 0)
 			perctused = 100.0;
 		else
-			perctused = ((double)used / (double)size) * 100.0;
-
-		/* format to requested format (k,m,g) */
-		size = cvrt(size);
-		free = cvrt(free);
+			perctused = (used / size) * 100.0;
 
 		/* used (*) */
 		(void)printf("[");
@@ -337,19 +332,23 @@ disp(struct list lst)
 		/* %used */
 		(void)printf("]  %3.f%%", perctused);
 
+		/* format to requested format (k,m,g) */
+		size = cvrt(size);
+		free = cvrt(free);
+
 		/* free  and total */
 		if (kflag) {
-			(void)printf("%10ldK", free);
-			(void)printf("%10ldK", size);
+			(void)printf("%10.fK", free);
+			(void)printf("%10.fK", size);
 		} else if (mflag) {
-			(void)printf("%9ldM", free);
-			(void)printf("%9ldM", size);
+			(void)printf("%9.fM", free);
+			(void)printf("%9.fM", size);
 		} else if (gflag) {
-			(void)printf("%9ldG", free);
-			(void)printf("%5ldG", size);
+			(void)printf("%9.1fG", free);
+			(void)printf("%7.1fG", size);
 		} else {
-			(void)printf("%15ldB", free);
-			(void)printf("%15ldB", size);
+			(void)printf("%15.fB", free);
+			(void)printf("%15.fB", size);
 		}
 
 		/* mounted on */
@@ -402,7 +401,7 @@ disp_header(struct list *lst)
 	else if (mflag)
 		(void)printf("     ");
 	else if (gflag)
-		(void)printf(" ");
+		(void)printf("   ");
 	else
 		(void)printf("           ");
 	(void)printf("TOTAL");
@@ -413,8 +412,8 @@ disp_header(struct list *lst)
  * Converts the argument to the correct format (K,M,G)
  * @nb: number to convert
  */
-unsigned long
-cvrt(unsigned long nb)
+double
+cvrt(double nb)
 {
 	if (kflag)
 		nb /= 1024;
