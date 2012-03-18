@@ -128,20 +128,29 @@ main(int argc, char *argv[])
 			/* adjust longest for the queue */
 			if (aflag) {
 				/* is it the longest type? */
-				queue.fsmaxlen = imax((int)strlen(fmi->type), queue.typemaxlen);
+				queue.fsmaxlen = imax((int)strlen(fmi->type),
+						queue.typemaxlen);
 				/* is it the longest dir */
-				queue.dirmaxlen = imax((int)strlen(fmi->dir), queue.dirmaxlen);
+				queue.dirmaxlen = imax((int)strlen(fmi->dir),
+						queue.dirmaxlen);
 				/* is it the longest fsname? */
-				queue.typemaxlen = imax((int)strlen(fmi->fsname), queue.fsmaxlen);
+				queue.typemaxlen = imax((int)strlen(fmi->fsname),
+						queue.fsmaxlen);
 			} else {
-				/* as we do not care about stuff apart from /dev/... */
+				/* we do not care about stuff not from /dev/ */
 				if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
 					/* is it the longest type? */
-					queue.fsmaxlen = imax((int)strlen(fmi->type), queue.typemaxlen);
+					queue.fsmaxlen = imax(
+							(int)strlen(fmi->type),
+							queue.typemaxlen);
 					/* is it the longest dir */
-					queue.dirmaxlen = imax((int)strlen(fmi->dir), queue.dirmaxlen);
+					queue.dirmaxlen = imax(
+							(int)strlen(fmi->dir),
+							queue.dirmaxlen);
 					/* is it the longest fsname? */
-					queue.typemaxlen = imax((int)strlen(fmi->fsname), queue.fsmaxlen);
+					queue.typemaxlen = imax(
+							(int)strlen(fmi->fsname),
+							queue.fsmaxlen);
 				}
 			}
 		}
