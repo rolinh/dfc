@@ -339,25 +339,17 @@ disp(struct list lst)
 
 		/* free  and total */
 		if (kflag) {
-			(void)printf("%10ld", free);
-			(void)printf("K");
-			(void)printf("%10ld", size);
-			(void)printf("K");
+			(void)printf("%10ldK", free);
+			(void)printf("%10ldK", size);
 		} else if (mflag) {
-			(void)printf("%9ld", free);
-			(void)printf("M");
-			(void)printf("%9ld", size);
-			(void)printf("M");
+			(void)printf("%9ldM", free);
+			(void)printf("%9ldM", size);
 		} else if (gflag) {
-			(void)printf("%9ld", free);
-			(void)printf("G");
-			(void)printf("%5ld", size);
-			(void)printf("G");
+			(void)printf("%9ldG", free);
+			(void)printf("%5ldG", size);
 		} else {
-			(void)printf("%15ld", free);
-			(void)printf("B");
-			(void)printf("%15ld", size);
-			(void)printf("B");
+			(void)printf("%15ldB", free);
+			(void)printf("%15ldB", size);
 		}
 
 		/* mounted on */
