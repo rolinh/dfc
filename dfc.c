@@ -341,11 +341,7 @@ disp(struct list lst)
 			(void)printf("-");
 
 		/* %used */
-		(void)printf("]  %.f%%", perctused);
-		if (perctused <= 9)
-			(void)printf("  ");
-		else if (perctused < 100)
-			(void)printf(" ");
+		(void)printf("]  %3.f%%", perctused);
 
 		/* free */
 		if (kflag) {
