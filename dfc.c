@@ -107,7 +107,7 @@ main(int argc, char *argv[])
 			/* infos from statvfs */
 			fmi->bsize = vfsbuf.f_bsize;
 			fmi->blocks = vfsbuf.f_blocks;
-			fmi->bfree = vfsbuf.f_bfree;
+			fmi->bfree = vfsbuf.f_bavail;
 
 			/* pointer to the next element */
 			fmi->next = NULL;
@@ -307,7 +307,8 @@ disp(struct list lst)
 	struct fsmntinfo *p = NULL;
 	int i, j;
 	int bflen = 1;
-	double used;
+	double perctused;
+	unsigned long size, free, used;
 
 	/* legend on top */
 	(void)printf("FILESYSTEM ");
@@ -330,8 +331,8 @@ disp(struct list lst)
 	(void)printf("FREE (-) ");
 
 	(void)printf("%%USED");
-	(void)printf("      FREE");
-	(void)printf("       TOTAL");
+	(void)printf("  AVAILABLE");
+	(void)printf("         TOTAL");
 	(void)puts(" MOUNTED ON");
 
 	p = lst.head;
@@ -362,18 +363,28 @@ disp(struct list lst)
 			(void)printf(" ");
 
 		/* calculate the % used */
-		if (p->blocks == 0)
-			used = 100;
+		size = p->blocks * p->bsize;
+		free = p->bfree * p->bsize;
+		used = size - free;
+		if (used == 0)
+			perctused = 100;
 		else
-			used = ((double)(p->blocks - p->bfree) / (double)(p->blocks)) * 100;
+			perctused = ((double)used / (double)size) * 100;
 
 		/* used (*) */
 		(void)printf("[");
-		for (i = 0; i < used; i += 5)
+		for (i = 0; i < perctused; i += 5)
 			(void)printf("*");
 
 		for (j = i; j < 100; j += 5)
 			(void)printf("-");
+
+		/* %used */
+		(void)printf("]  %.f%%", perctused);
+		if (perctused <= 9)
+			(void)printf("  ");
+		else if (perctused < 100)
+			(void)printf(" ");
 
 		/*
 		 * to adjust to output, we need to get the len of bfree and
@@ -385,16 +396,16 @@ disp(struct list lst)
 			i = i / 10;
 		}
 
-		/* %used */
-		(void)printf("]  %.f%% %10ld", used, p->bfree);
+		/* free */
+		(void)printf("%10ldK", free / 1024);
 		for (i = bflen; i < 12; i++)
 			(void)printf(" ");
 
 		/* total */
-		(void)printf("%ld",p->blocks);
+		(void)printf("%ldK", size / 1024);
 
 		/* mounted on */
-		printf(" %s\n", p->dir);
+		(void)printf("   %s\n", p->dir);
 
 		/* reinit the length */
 		bflen = 1;
