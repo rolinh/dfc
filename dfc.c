@@ -174,8 +174,11 @@ usage(int status)
 	else
 		(void)fputs("Usage: dfc [OPTIONS(S)]\n"
 		"Available options:\n"
-		"	-a	print all\n"
+		"	-a	print all fs from mtab\n"
 		"	-h	print this message\n"
+		"	-g	size in Go\n"
+		"	-k	size in Ko\n"
+		"	-m	size in Mo\n"
 		"	-v	print program version\n",
 		stdout);
 
@@ -311,7 +314,6 @@ disp(struct list lst)
 {
 	struct fsmntinfo *p = NULL;
 	int i, j;
-	int bflen = 1;
 	double perctused;
 	unsigned long size, free, used;
 
@@ -336,8 +338,8 @@ disp(struct list lst)
 	(void)printf("FREE (-) ");
 
 	(void)printf("%%USED");
-	(void)printf("  AVAILABLE");
-	(void)printf("         TOTAL");
+	(void)printf("       AVAILABLE");
+	(void)printf("           TOTAL");
 	(void)puts(" MOUNTED ON");
 
 	p = lst.head;
@@ -405,17 +407,8 @@ disp(struct list lst)
 		else if (perctused < 100)
 			(void)printf(" ");
 
-		/*
-		 * to adjust to output, we need to get the len of bfree
-		 */
-		i = (int)(p->bfree);
-		while (i > 9) {
-			bflen++;
-			i = i / 10;
-		}
-
 		/* free */
-		(void)printf("%10ld", free);
+		(void)printf("%15ld", free);
 		if (kflag)
 			(void)printf("K");
 		else if (mflag)
@@ -424,11 +417,9 @@ disp(struct list lst)
 			(void)printf("G");
 		else
 			(void)printf("B");
-		for (i = bflen; i < 12; i++)
-			(void)printf(" ");
 
 		/* total */
-		(void)printf("%ld", size);
+		(void)printf("%15ld", size);
 		if (kflag)
 			(void)printf("K");
 		else if (mflag)
@@ -439,10 +430,9 @@ disp(struct list lst)
 			(void)printf("B");
 
 		/* mounted on */
-		(void)printf("   %s\n", p->dir);
+		(void)printf(" %s\n", p->dir);
 
 		/* reinit the length */
-		bflen = 1;
 		p = p->next;
 	}
 }
