@@ -32,7 +32,7 @@ main(int argc, char *argv[])
 	struct statvfs vfsbuf;
 	struct fsmntinfo *fmi;
 	struct list queue;
-	int ch, tmp;
+	int ch;
 
 	while ((ch = getopt(argc, argv, "ahgkmv")) != -1) {
 		switch (ch) {
@@ -128,26 +128,20 @@ main(int argc, char *argv[])
 			/* adjust longest for the queue */
 			if (aflag) {
 				/* is it the longest type? */
-				if ((tmp = (int)strlen(fmi->type)) > queue.typemaxlen)
-					queue.fsmaxlen = tmp;
+				queue.fsmaxlen = imax((int)strlen(fmi->type), queue.typemaxlen);
 				/* is it the longest dir */
-				if ((tmp = (int)strlen(fmi->dir)) > queue.dirmaxlen)
-					queue.dirmaxlen = tmp;
+				queue.dirmaxlen = imax((int)strlen(fmi->dir), queue.dirmaxlen);
 				/* is it the longest fsname? */
-				if ((tmp = (int)strlen(fmi->fsname)) > queue.fsmaxlen)
-					queue.typemaxlen = tmp;
+				queue.typemaxlen = imax((int)strlen(fmi->fsname), queue.fsmaxlen);
 			} else {
 				/* as we do not care about stuff apart from /dev/... */
 				if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
 					/* is it the longest type? */
-					if ((tmp = (int)strlen(fmi->type)) > queue.typemaxlen)
-						queue.fsmaxlen = tmp;
+					queue.fsmaxlen = imax((int)strlen(fmi->type), queue.typemaxlen);
 					/* is it the longest dir */
-					if ((tmp = (int)strlen(fmi->dir)) > queue.dirmaxlen)
-						queue.dirmaxlen = tmp;
+					queue.dirmaxlen = imax((int)strlen(fmi->dir), queue.dirmaxlen);
 					/* is it the longest fsname? */
-					if ((tmp = (int)strlen(fmi->fsname)) > queue.fsmaxlen)
-						queue.typemaxlen = tmp;
+					queue.typemaxlen = imax((int)strlen(fmi->fsname), queue.fsmaxlen);
 				}
 			}
 		}
@@ -446,4 +440,13 @@ cvrt(unsigned long nb)
 
 	return nb;
 	/* NOTREACHED */
+}
+
+/*
+ * Return the longest of the two parameters
+ */
+int
+imax(int a, int b)
+{
+	return (a > b ? a : b);
 }

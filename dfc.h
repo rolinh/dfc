@@ -49,5 +49,6 @@ struct fsmntinfo fmi_init(void);
 void disp(struct list lst);
 void disp_header(struct list *lst);
 unsigned long cvrt(unsigned long nb);
+int imax(int a, int b);
 
 #endif /* ndef DFC_H */
