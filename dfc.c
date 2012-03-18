@@ -121,9 +121,11 @@ main(int argc, char *argv[])
 			/* enqueue the element into the queue */
 			enqueue(&queue, *fmi);
 
+			/* skip fuse-daemon */
 			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0)
 					continue;
 
+			/* adjust longest for the queue */
 			if (aflag) {
 				/* is it the longest type? */
 				if ((tmp = (int)strlen(fmi->type)) > queue.typemaxlen)
@@ -276,7 +278,6 @@ fmi_init(void)
 /*
  * Actually displays infos in nice manner
  * @lst: queue containing all required informations
- * TODO: finish this function
  */
 void
 disp(struct list lst)
@@ -287,44 +288,7 @@ disp(struct list lst)
 	unsigned long size, free, used;
 
 	/* legend on top */
-	(void)printf("FILESYSTEM ");
-	if (lst.fsmaxlen > 11)
-		for (i = 11; i < lst.fsmaxlen; i++)
-			(void)printf(" ");
-	else
-		lst.fsmaxlen = 11;
-
-	(void)printf("TYPE ");
-	if (lst.typemaxlen > 5)
-		for (i = 5; i < lst.typemaxlen; i++)
-			(void)printf(" ");
-	else
-		lst.typemaxlen = 5;
-
-	(void)printf("USED (*)");
-	for (i = 0; i < 6; i++)
-		(void)printf(" ");
-	(void)printf("FREE (-) ");
-
-	(void)printf("%%USED");
-	if (kflag)
-		(void)printf("  ");
-	else if (mflag || gflag)
-		(void)printf(" ");
-	else
-		(void)printf("       ");
-
-	(void)printf("AVAILABLE");
-	if (kflag)
-		(void)printf("      ");
-	else if (mflag)
-		(void)printf("     ");
-	else if (gflag)
-		(void)printf(" ");
-	else
-		(void)printf("           ");
-	(void)printf("TOTAL");
-	(void)puts(" MOUNTED ON");
+	disp_header(&lst);
 
 	p = lst.head;
 	while (p != NULL) {
@@ -353,25 +317,20 @@ disp(struct list lst)
 		for (i = (int)strlen(p->type); i < lst.typemaxlen; i++)
 			(void)printf(" ");
 
+
+		size = p->blocks * p->bsize;
+		free = p->bfree * p->bsize;
+
 		/* calculate the % used */
-		size = (p->blocks * p->bsize);
-		free = (p->bfree * p->bsize);
 		used = size - free;
-		if (used == 0)
+		if (size == 0)
 			perctused = 100;
 		else
 			perctused = ((double)used / (double)size) * 100;
 
-		if (kflag) {
-			size /= 1024;
-			free /= 1024;
-		} else if (mflag) {
-			size /= (1024*1024);
-			free /= (1024*1024);
-		} else if (gflag) {
-			size /= (1024*1024*1024);
-			free /= (1024*1024*1024);
-		}
+		/* format to requested format (k,m,g) */
+		size = cvrt(size);
+		free = cvrt(free);
 
 		/* used (*) */
 		(void)printf("[");
@@ -424,4 +383,71 @@ disp(struct list lst)
 		/* reinit the length */
 		p = p->next;
 	}
+}
+
+/*
+ * Display header
+ * @lst: queue containing the informations
+ */
+void
+disp_header(struct list *lst)
+{
+	int i;
+
+	(void)printf("FILESYSTEM ");
+	if (lst->fsmaxlen > 11)
+		for (i = 11; i < lst->fsmaxlen; i++)
+			(void)printf(" ");
+	else
+		lst->fsmaxlen = 11;
+
+	(void)printf("TYPE ");
+	if (lst->typemaxlen > 5)
+		for (i = 5; i < lst->typemaxlen; i++)
+			(void)printf(" ");
+	else
+		lst->typemaxlen = 5;
+
+	(void)printf("USED (*)");
+	for (i = 0; i < 6; i++)
+		(void)printf(" ");
+	(void)printf("FREE (-) ");
+
+	(void)printf("%%USED");
+	if (kflag)
+		(void)printf("  ");
+	else if (mflag || gflag)
+		(void)printf(" ");
+	else
+		(void)printf("       ");
+
+	(void)printf("AVAILABLE");
+	if (kflag)
+		(void)printf("      ");
+	else if (mflag)
+		(void)printf("     ");
+	else if (gflag)
+		(void)printf(" ");
+	else
+		(void)printf("           ");
+	(void)printf("TOTAL");
+	(void)puts(" MOUNTED ON");
+}
+
+/*
+ * Converts the argument to the correct format (K,M,G)
+ * @nb: number to convert
+ */
+unsigned long
+cvrt(unsigned long nb)
+{
+	if (kflag)
+		nb /= 1024;
+	else if (mflag)
+		nb /= (1024*1024);
+	else if (gflag)
+		nb /= (1024*1024*1024);
+
+	return nb;
+	/* NOTREACHED */
 }
