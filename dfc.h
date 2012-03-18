@@ -45,7 +45,6 @@ static void usage(int status);
 void init_queue(struct list *lst);
 int is_empty(struct list lst);
 int enqueue(struct list *lst, struct fsmntinfo elt);
-struct fsmntinfo dequeue(struct list *lst);
 struct fsmntinfo fmi_init(void);
 void disp(struct list lst);
 
