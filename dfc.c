@@ -13,8 +13,8 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include <string.h>
 #include <mntent.h>
+#include <string.h>
 
 #include <sys/param.h>
 #include <sys/statvfs.h>
@@ -419,19 +419,21 @@ disp_header(struct list *lst)
 
 /*
  * Converts the argument to the correct format (K,M,G)
- * @nb: number to convert
+ * @n: number to convert
  */
 double
-cvrt(double nb)
+cvrt(double n)
 {
 	if (kflag)
-		nb /= 1024;
+		n /= 1024.0;
 	else if (mflag)
-		nb /= (1024*1024);
+		/* 1024^2 */
+		n /= 1048576.0;
 	else if (gflag)
-		nb /= (1024*1024*1024);
+		/* 1024^3 */
+		n /= 1073741824.0;
 
-	return nb;
+	return n;
 	/* NOTREACHED */
 }
 
