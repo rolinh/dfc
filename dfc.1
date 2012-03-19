@@ -1,0 +1,39 @@
+.TH dfc 1  "March 19, 2012" "version 1.0.0" "USER COMMANDS"
+.SH NAME
+dfc \- display file system usage
+.SH SYNOPSIS
+.B dfc [OPTION(S)]
+.SH DESCRIPTION
+dfc is a tool similar to df(1) except that it displays a graph along with the
+datas. The available size correspond to the space available to a user point of
+view and not from root's perspective (ie: use f_bavail instead of f_bfree).
+In the same idea, used space is computed simply by substracting the available
+space from the total size.
+.SH OPTIONS
+.TP
+\-a
+Display informations about all filesystem found in the mtab file with the
+exception of gvfs-fuse-daemon.
+.TP
+\-h
+Display a short help text.
+.TP
+\-g
+Display the size in Gio.
+.TP
+\-k
+Display the size in Kio.
+.TP
+\-m
+Display the size in Mio.
+.TP
+\-v
+Print dfc version and exit.
+.SH AUTHORS
+Robin Hahling (robin.hahling (at) gw-computing.net)
+.SH COPYRIGHT
+Copyright \(co 2012 Robin Hahling
+.SH LICENSE
+3 Clauses BSD
+.SH SEE ALSO
+df(1)
