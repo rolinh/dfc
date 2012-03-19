@@ -181,9 +181,9 @@ usage(int status)
 		"Available options:\n"
 		"	-a	print all fs from mtab\n"
 		"	-h	print this message\n"
-		"	-g	size in Go\n"
-		"	-k	size in Ko\n"
-		"	-m	size in Mo\n"
+		"	-g	size in Gio\n"
+		"	-k	size in Kio\n"
+		"	-m	size in Mio\n"
 		"	-v	print program version\n",
 		stdout);
 
