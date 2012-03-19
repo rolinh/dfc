@@ -1,8 +1,8 @@
 CC	?= gcc
-#CFLAGS = -O3
+#CFLAGS = -O3 -std=c89
 CFLAGS += -g3 -std=c89 -pedantic -Wall -Wunused-parameter
 CFLAGS += -Wlong-long -Wsign-conversion -Wconversion -Wimplicit-function-declaration
-LDFLAGS +=
+#LDFLAGS +=
 EXEC = dfc
 OBJS = dfc.o
 
