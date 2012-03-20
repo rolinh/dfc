@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, hflag, gflag, kflag, mflag, nflag, vflag, wflag;
+int aflag, hflag, gflag, kflag, mflag, nflag, tflag, vflag, wflag;
 
 int
 main(int argc, char *argv[])
@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "ahgkmnvw")) != -1) {
+	while ((ch = getopt(argc, argv, "ahgkmntvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -53,6 +53,9 @@ main(int argc, char *argv[])
 			break;
 		case 'n':
 			nflag = 1;
+			break;
+		case 't':
+			tflag = 1;
 			break;
 		case 'v':
 			vflag = 1;
@@ -191,6 +194,7 @@ usage(int status)
 		"	-k	size in Kio\n"
 		"	-m	size in Mio\n"
 		"	-n	do not print header\n"
+		"	-t	hide filesystem type\n"
 		"	-v	print program version\n"
 		"	-w	use a wider bar\n",
 		stdout);
@@ -325,10 +329,11 @@ disp(struct list lst)
 			(void)printf(" ");
 
 		/* type */
-		(void)printf("%s", p->type);
-		for (i = (int)strlen(p->type); i < lst.typemaxlen; i++)
-			(void)printf(" ");
-
+		if (!tflag) {
+			(void)printf("%s", p->type);
+			for (i = (int)strlen(p->type); i < lst.typemaxlen; i++)
+				(void)printf(" ");
+		}
 
 		size = (double)p->blocks *(double)p->bsize;
 		free = (double)p->bfree * (double)p->bsize;
@@ -399,12 +404,14 @@ disp_header(struct list *lst)
 	else
 		lst->fsmaxlen = 11;
 
-	(void)printf("TYPE ");
-	if (lst->typemaxlen > 5)
-		for (i = 5; i < lst->typemaxlen; i++)
-			(void)printf(" ");
-	else
-		lst->typemaxlen = 5;
+	if (!tflag) {
+		(void)printf("TYPE ");
+		if (lst->typemaxlen > 5)
+			for (i = 5; i < lst->typemaxlen; i++)
+				(void)printf(" ");
+		else
+			lst->typemaxlen = 5;
+	}
 
 	/* option to display a wider bar */
 	if (wflag) {
