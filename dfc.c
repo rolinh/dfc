@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, hflag, gflag, kflag, mflag, nflag, tflag, vflag, wflag;
+int aflag, hflag, gflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
 
 int
 main(int argc, char *argv[])
@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "ahgkmntvw")) != -1) {
+	while ((ch = getopt(argc, argv, "ahgkmnstvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -53,6 +53,9 @@ main(int argc, char *argv[])
 			break;
 		case 'n':
 			nflag = 1;
+			break;
+		case 's':
+			sflag = 1;
 			break;
 		case 't':
 			tflag = 1;
@@ -194,6 +197,7 @@ usage(int status)
 		"	-k	size in Kio\n"
 		"	-m	size in Mio\n"
 		"	-n	do not print header\n"
+		"	-s	sum the total usage\n"
 		"	-t	hide filesystem type\n"
 		"	-v	print program version\n"
 		"	-w	use a wider bar\n",
@@ -298,9 +302,12 @@ void
 disp(struct list lst)
 {
 	struct fsmntinfo *p = NULL;
-	int i, j;
+	int i, j, n;
 	int barinc = 5;
 	double perctused, size, free, used;
+	double stot, ftot, utot, ptot;
+
+	stot = ftot = utot = ptot = n =0;
 
 	/* legend on top */
 	if (!nflag)
@@ -340,13 +347,21 @@ disp(struct list lst)
 
 		size = (double)p->blocks *(double)p->bsize;
 		free = (double)p->bfree * (double)p->bsize;
+		used = size - free;
 
 		/* calculate the % used */
-		used = size - free;
 		if (size == 0)
 			perctused = 100.0;
 		else
 			perctused = (used / size) * 100.0;
+
+		if (sflag) {
+			stot += size;
+			ftot += free;
+			utot += used;
+			ptot += perctused;
+			n += 1;
+		}
 
 		/* option to display a wider bar */
 		if (wflag) {
@@ -385,8 +400,47 @@ disp(struct list lst)
 		/* mounted on */
 		(void)printf(" %s\n", p->dir);
 
-		/* reinit the length */
 		p = p->next;
+	}
+
+	if (sflag) {
+		ptot /= n;
+
+		(void)printf("SUM:");
+
+		j = lst.fsmaxlen;
+		if (!tflag)
+			j += lst.typemaxlen;
+		for (i = 4; i < j; i++)
+			(void)printf(" ");
+
+		(void)printf("[");
+		for (i = 0; i < ptot ; i += barinc)
+			(void)printf("*");
+
+		for (j = i; j < 100; j += barinc)
+			(void)printf("-");
+
+		(void)printf("]  %3.f%%", ptot);
+
+		stot = cvrt(stot);
+		ftot = cvrt(ftot);
+
+		/* free  and total */
+		if (kflag) {
+			(void)printf("%10.fK", ftot);
+			(void)printf("%10.fK", stot);
+		} else if (mflag) {
+			(void)printf("%9.1fM", ftot);
+			(void)printf("%9.1fM", stot);
+		} else if (gflag) {
+			(void)printf("%9.1fG", ftot);
+			(void)printf("%7.1fG", stot);
+		} else {
+			(void)printf("%15.fB", ftot);
+			(void)printf("%15.fB", stot);
+		}
+		(void)printf("\n");
 	}
 }
 
