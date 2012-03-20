@@ -128,13 +128,14 @@ main(int argc, char *argv[])
 			/* NOTREACHED */
 		} else {
 			/* infos from getmntent */
-			if ((fmi->fsname = strdup(entbuf->mnt_fsname)) == NULL) {
+			if ((fmi->fsname = strdup(trk(entbuf->mnt_fsname)))
+					== NULL) {
 				fmi->fsname = "unknown";
 			}
-			if ((fmi->dir = strdup(entbuf->mnt_dir)) == NULL) {
+			if ((fmi->dir = strdup(trk(entbuf->mnt_dir))) == NULL) {
 				fmi->dir = "unknown";
 			}
-			if ((fmi->type = strdup(entbuf->mnt_type)) == NULL) {
+			if ((fmi->type = strdup(trk(entbuf->mnt_type))) == NULL) {
 				fmi->type = "unknown";
 			}
 
@@ -342,6 +343,7 @@ disp(struct list lst)
 			strcmp(p->fsname, "devpts") == 0) {
 			p = p->next;
 			continue;
+			/* NOTREACHED */
 		}
 
 		if (!aflag) {
@@ -349,6 +351,7 @@ disp(struct list lst)
 			if (strncmp(p->fsname, "/dev/", 5) != 0) {
 				p = p->next;
 				continue;
+				/* NOTREACHED */
 			}
 		}
 
@@ -552,4 +555,21 @@ int
 imax(int a, int b)
 {
 	return (a > b ? a : b);
+	/* NOTREACHED */
+}
+
+/*
+ * Trunkate the fsname if it is too long
+ * @fsname: fsname to trunkate
+ */
+char *
+trk(char *fsname)
+{
+	char *ptr;
+
+	if ((ptr = strchr(strchr(fsname, '/'), '/')) != NULL)
+		ptr = '\0';
+
+	return fsname;
+	/* NOTREACHED */
 }
