@@ -23,6 +23,7 @@
 
 /* set flags for options */
 int aflag, hflag, gflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
+int Kflag, Mflag, Gflag;
 
 int
 main(int argc, char *argv[])
@@ -34,7 +35,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "ahgkmnstvw")) != -1) {
+	while ((ch = getopt(argc, argv, "ahgGkKmMnstvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -44,12 +45,27 @@ main(int argc, char *argv[])
 			break;
 		case 'g':
 			gflag = 1;
+			Gflag = 0;
+			break;
+		case 'G':
+			gflag = 0;
+			Gflag = 1;
 			break;
 		case 'k':
 			kflag = 1;
+			Kflag = 0;
+			break;
+		case 'K':
+			kflag = 0;
+			Kflag = 1;
 			break;
 		case 'm':
 			mflag = 1;
+			Mflag = 0;
+			break;
+		case 'M':
+			mflag = 0;
+			Mflag = 1;
 			break;
 		case 'n':
 			nflag = 1;
@@ -194,8 +210,11 @@ usage(int status)
 		"	-a	print all fs from mtab\n"
 		"	-h	print this message\n"
 		"	-g	size in Gio\n"
+		"	-G	size in Go\n"
 		"	-k	size in Kio\n"
+		"	-K	size in Ko\n"
 		"	-m	size in Mio\n"
+		"	-M	size in Mo\n"
 		"	-n	do not print header\n"
 		"	-s	sum the total usage\n"
 		"	-t	hide filesystem type\n"
@@ -383,13 +402,13 @@ disp(struct list lst)
 		free = cvrt(free);
 
 		/* free  and total */
-		if (kflag) {
+		if (kflag || Kflag) {
 			(void)printf("%10.fK", free);
 			(void)printf("%10.fK", size);
-		} else if (mflag) {
+		} else if (mflag || Mflag) {
 			(void)printf("%9.1fM", free);
 			(void)printf("%9.1fM", size);
-		} else if (gflag) {
+		} else if (gflag || Gflag) {
 			(void)printf("%9.1fG", free);
 			(void)printf("%7.1fG", size);
 		} else {
@@ -427,13 +446,13 @@ disp(struct list lst)
 		ftot = cvrt(ftot);
 
 		/* free  and total */
-		if (kflag) {
+		if (kflag || Kflag) {
 			(void)printf("%10.fK", ftot);
 			(void)printf("%10.fK", stot);
-		} else if (mflag) {
+		} else if (mflag || Mflag) {
 			(void)printf("%9.1fM", ftot);
 			(void)printf("%9.1fM", stot);
-		} else if (gflag) {
+		} else if (gflag || Gflag) {
 			(void)printf("%9.1fG", ftot);
 			(void)printf("%7.1fG", stot);
 		} else {
@@ -515,6 +534,12 @@ cvrt(double n)
 	else if (gflag)
 		/* 1024^3 */
 		n /= 1073741824.0;
+	else if (Kflag)
+		n /= 1000.0;
+	else if (Mflag)
+		n /= 1000000.0;
+	else if (Gflag)
+		n /= 1000000000.0;
 
 	return n;
 	/* NOTREACHED */
