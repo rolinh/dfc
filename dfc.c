@@ -350,8 +350,8 @@ disp(struct list lst)
 			(void)printf("%10.fK", free);
 			(void)printf("%10.fK", size);
 		} else if (mflag) {
-			(void)printf("%9.fM", free);
-			(void)printf("%9.fM", size);
+			(void)printf("%9.1fM", free);
+			(void)printf("%9.1fM", size);
 		} else if (gflag) {
 			(void)printf("%9.1fG", free);
 			(void)printf("%7.1fG", size);
