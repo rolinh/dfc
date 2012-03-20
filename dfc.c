@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, hflag, gflag, kflag, mflag, vflag, wflag;
+int aflag, hflag, gflag, kflag, mflag, nflag, vflag, wflag;
 
 int
 main(int argc, char *argv[])
@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "ahgkmvw")) != -1) {
+	while ((ch = getopt(argc, argv, "ahgkmnvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -50,6 +50,9 @@ main(int argc, char *argv[])
 			break;
 		case 'm':
 			mflag = 1;
+			break;
+		case 'n':
+			nflag = 1;
 			break;
 		case 'v':
 			vflag = 1;
@@ -187,6 +190,7 @@ usage(int status)
 		"	-g	size in Gio\n"
 		"	-k	size in Kio\n"
 		"	-m	size in Mio\n"
+		"	-n	do not print header\n"
 		"	-v	print program version\n"
 		"	-w	use a wider bar\n",
 		stdout);
@@ -295,7 +299,8 @@ disp(struct list lst)
 	double perctused, size, free, used;
 
 	/* legend on top */
-	disp_header(&lst);
+	if (!nflag)
+		disp_header(&lst);
 
 	p = lst.head;
 	while (p != NULL) {
