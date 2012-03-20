@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, hflag, gflag, kflag, mflag, vflag;
+int aflag, hflag, gflag, kflag, mflag, vflag, wflag;
 
 int
 main(int argc, char *argv[])
@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "ahgkmv")) != -1) {
+	while ((ch = getopt(argc, argv, "ahgkmvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -53,6 +53,9 @@ main(int argc, char *argv[])
 			break;
 		case 'v':
 			vflag = 1;
+			break;
+		case 'w':
+			wflag = 1;
 			break;
 		case '?':
 		default:
@@ -184,7 +187,8 @@ usage(int status)
 		"	-g	size in Gio\n"
 		"	-k	size in Kio\n"
 		"	-m	size in Mio\n"
-		"	-v	print program version\n",
+		"	-v	print program version\n"
+		"	-w	use a wider bar\n",
 		stdout);
 
 	exit(status);
@@ -287,6 +291,7 @@ disp(struct list lst)
 {
 	struct fsmntinfo *p = NULL;
 	int i, j;
+	int barinc = 5;
 	double perctused, size, free, used;
 
 	/* legend on top */
@@ -330,12 +335,16 @@ disp(struct list lst)
 		else
 			perctused = (used / size) * 100.0;
 
+		/* option to display a wider bar */
+		if (wflag) {
+			barinc = 2;
+		}
 		/* used (*) */
 		(void)printf("[");
-		for (i = 0; i < perctused; i += 5)
+		for (i = 0; i < perctused; i += barinc)
 			(void)printf("*");
 
-		for (j = i; j < 100; j += 5)
+		for (j = i; j < 100; j += barinc)
 			(void)printf("-");
 
 		/* %used */
@@ -376,6 +385,7 @@ void
 disp_header(struct list *lst)
 {
 	int i;
+	int barinc = 5;
 
 	(void)printf("FILESYSTEM ");
 	if (lst->fsmaxlen > 11)
@@ -391,8 +401,12 @@ disp_header(struct list *lst)
 	else
 		lst->typemaxlen = 5;
 
+	/* option to display a wider bar */
+	if (wflag) {
+		barinc = 35;
+	}
 	(void)printf("USED (*)");
-	for (i = 0; i < 6; i++)
+	for (i = 0; i < (barinc + 1); i++)
 		(void)printf(" ");
 	(void)printf("FREE (-) ");
 
