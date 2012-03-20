@@ -309,8 +309,11 @@ disp(struct list lst)
 	p = lst.head;
 	while (p != NULL) {
 
-		/* we do not care about gvfs-fuse-daemon */
-		if (strcmp(p->fsname, "gvfs-fuse-daemon") == 0){
+		/* we do not care about gvfs-fuse-daemon and the others */
+		if (strcmp(p->fsname, "gvfs-fuse-daemon") == 0 ||
+			strcmp(p->fsname, "proc") == 0 ||
+			strcmp(p->fsname, "sys") == 0 ||
+			strcmp(p->fsname, "devpts") == 0) {
 			p = p->next;
 			continue;
 		}
