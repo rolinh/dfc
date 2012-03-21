@@ -559,17 +559,40 @@ imax(int a, int b)
 }
 
 /*
- * Trunkate the fsname if it is too long
- * @fsname: fsname to trunkate
+ * Trunkate str to the third occurrence of /
+ * Example: str: /dev/disk/by-uuid/3c301e8b-560c-4914-b50d-8a49e713003c
+ * It then returns: /dev/disk
+ * Returns unmodified str otherwise
+ * @str: char* to truncate
  */
 char *
-trk(char *fsname)
+trk(char *str)
 {
-	char *ptr;
+	char *p = str;
+	char trunc[strlen(str)];
+	int i = 0;
+	int len;
 
-	if ((ptr = strchr(strchr(fsname, '/'), '/')) != NULL)
-		ptr = '\0';
+	/* if no occurrence of /, return the unmodified str */
+	if ((p = strchr(str, '/')) == NULL)
+		return str;
+		/* NOTREACHED */
 
-	return fsname;
+	while ((i < 2) && (p != NULL)) {
+		/* in case there is only in / */
+		if ((p = strchr(p + 1, '/')) == NULL)
+			return str;
+			/* NOTREACHED */
+		i += 1;
+	}
+
+	/* p contains the part of str we want to truncate from str */
+	len = strlen(str) - strlen(p);
+	(void)strncpy(trunc, str, len);
+	trunc[len] = '\0';
+
+	str = strdup(trunc);
+
+	return str;
 	/* NOTREACHED */
 }
