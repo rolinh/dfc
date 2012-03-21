@@ -333,6 +333,9 @@ disp(struct list lst)
 	if (!nflag)
 		disp_header(&lst);
 
+	if (lst.fsmaxlen < 11)
+		lst.fsmaxlen = 11;
+
 	p = lst.head;
 	while (p != NULL) {
 
@@ -480,8 +483,6 @@ disp_header(struct list *lst)
 	if (lst->fsmaxlen > 11)
 		for (i = 11; i < lst->fsmaxlen; i++)
 			(void)printf(" ");
-	else
-		lst->fsmaxlen = 11;
 
 	if (!tflag) {
 		(void)printf("TYPE ");
