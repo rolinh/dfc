@@ -384,8 +384,6 @@ disp(struct list lst)
 			stot += size;
 			ftot += free;
 			utot += used;
-			ptot += perctused;
-			n += 1;
 		}
 
 		/* option to display a wider bar */
@@ -429,8 +427,10 @@ disp(struct list lst)
 	}
 
 	if (sflag) {
-		ptot /= n;
-
+		if (stot == 0)
+			ptot = 100.0;
+		else
+			ptot = (utot / stot) * 100.0;
 		(void)printf("SUM:");
 
 		j = lst.fsmaxlen;
