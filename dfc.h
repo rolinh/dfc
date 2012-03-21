@@ -50,6 +50,6 @@ void disp(struct list lst);
 void disp_header(struct list *lst);
 double cvrt(double nb);
 int imax(int a, int b);
-char* trk(char *fsname);
+char* trk(char *str);
 
 #endif /* ndef DFC_H */
