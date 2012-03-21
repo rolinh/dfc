@@ -503,19 +503,19 @@ disp_header(struct list *lst)
 	(void)printf("FREE (-) ");
 
 	(void)printf("%%USED");
-	if (kflag)
+	if (kflag || Kflag)
 		(void)printf("  ");
-	else if (mflag || gflag)
+	else if (mflag || gflag || Mflag || Gflag)
 		(void)printf(" ");
 	else
 		(void)printf("       ");
 
 	(void)printf("AVAILABLE");
-	if (kflag)
+	if (kflag || Kflag)
 		(void)printf("      ");
-	else if (mflag)
+	else if (mflag || Mflag)
 		(void)printf("     ");
-	else if (gflag)
+	else if (gflag || Gflag)
 		(void)printf("   ");
 	else
 		(void)printf("           ");
