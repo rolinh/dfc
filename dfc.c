@@ -561,7 +561,7 @@ imax(int a, int b)
 /*
  * Trunkate str to the third occurrence of /
  * Example: str: /dev/disk/by-uuid/3c301e8b-560c-4914-b50d-8a49e713003c
- * It then returns: /dev/disk
+ * It then returns: /dev/disk/by-uuid
  * Returns unmodified str otherwise
  * @str: char* to truncate
  */
@@ -578,7 +578,7 @@ trk(char *str)
 		return str;
 		/* NOTREACHED */
 
-	while ((i < 2) && (p != NULL)) {
+	while ((i < 3) && (p != NULL)) {
 		/* in case there is only in / */
 		if ((p = strchr(p + 1, '/')) == NULL)
 			return str;
