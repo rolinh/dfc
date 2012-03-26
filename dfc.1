@@ -9,11 +9,16 @@ datas. The available size correspond to the space available to a user point of
 view and not from root's perspective (ie: use f_bavail instead of f_bfree).
 In the same idea, used space is computed simply by substracting the available
 space from the total size.
+.TP
+Without any argument, size is displayed in human readable format.
 .SH OPTIONS
 .TP
 \-a
 Display informations about all filesystem found in the mtab file with the
 exception of gvfs-fuse-daemon.
+.TP
+\-b
+Display size in Bytes.
 .TP
 \-g
 Display size in Gio (powers of 1024).
