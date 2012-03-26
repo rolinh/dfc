@@ -1,7 +1,7 @@
 CC	?= gcc
 CFLAGS = -O2 -std=c89
 LDFLAGS +=
-CFDEBUG = -g3 -std=c89 -pedantic -Wall -Wunused-parameter -Wlong-long\
+CFDEBUG = -g3 -std=c89 -pedantic -Wall -Wunused -Wunused-parameter -Wlong-long\
 		  -Wsign-conversion -Wconversion -Wimplicit-function-declaration
 EXEC = dfc
 OBJS = dfc.o

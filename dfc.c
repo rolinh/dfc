@@ -23,6 +23,7 @@
 
 /* set flags for options */
 int aflag, bflag, gflag, hflag, iflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
+int cflag = 1; /* color enabled by default */
 int Kflag, Mflag, Gflag;
 
 int
@@ -31,13 +32,16 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "abghiGkKmMnstvw")) != -1) {
+	while ((ch = getopt(argc, argv, "abcghiGkKmMnstvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
 			break;
 		case 'b':
 			bflag = 1;
+			break;
+		case 'c':
+			cflag = 0;
 			break;
 		case 'g':
 			gflag = 1;
@@ -128,6 +132,7 @@ usage(int status)
 		"Available options:\n"
 		"	-a	print all fs from mtab\n"
 		"	-b	size in Bytes\n"
+		"	-c	disable color\n"
 		"	-g	size in Gio\n"
 		"	-G	size in Go\n"
 		"	-h	print this message\n"
@@ -359,7 +364,6 @@ disp(struct list *lst)
 {
 	struct fsmntinfo *p = NULL;
 	int i, j, n;
-	int barinc = 5;
 	double perctused, size, avail, used;
 	double stot, atot, utot;
 
@@ -422,20 +426,10 @@ disp(struct list *lst)
 			utot += used;
 		}
 
-		/* option to display a wider bar */
-		if (wflag) {
-			barinc = 2;
-		}
-		/* used (*) */
-		(void)printf("[");
-		for (i = 0; i < perctused; i += barinc)
-			(void)printf("*");
-
-		for (j = i; j < 100; j += barinc)
-			(void)printf("-");
+		disp_bar(perctused);
 
 		/* %used */
-		(void)printf("]  %3.f%%", perctused);
+		disp_perct(perctused);
 
 		/* format to requested format (k,m,g) */
 		if (bflag || kflag || Kflag || mflag || Mflag || gflag || Gflag) {
@@ -444,22 +438,7 @@ disp(struct list *lst)
 		}
 
 		/* avail  and total */
-		if (kflag || Kflag) {
-			(void)printf("%10.fK", avail);
-			(void)printf("%10.fK", size);
-		} else if (mflag || Mflag) {
-			(void)printf("%9.1fM", avail);
-			(void)printf("%9.1fM", size);
-		} else if (gflag || Gflag) {
-			(void)printf("%9.1fG", avail);
-			(void)printf("%9.1fG", size);
-		} else if (bflag) {
-			(void)printf("%15.fB", avail);
-			(void)printf("%15.fB", size);
-		} else { /* human readable */
-			humanize(avail);
-			humanize(size);
-		}
+		disp_at(avail, size, perctused);
 
 		/* info about inodes */
 		if (iflag) {
@@ -486,6 +465,10 @@ disp_header(struct list *lst)
 {
 	int i;
 	int barinc = 5;
+
+	/* use blue when color option is triggered */
+	if (cflag)
+		(void)printf("\033[;34m");
 
 	(void)printf("FILESYSTEM  ");
 	for (i = 11; i < lst->fsmaxlen; i++)
@@ -535,6 +518,8 @@ disp_header(struct list *lst)
 	}
 
 	(void)puts(" MOUNTED ON");
+
+	reset_color();
 }
 
 /*
@@ -547,7 +532,6 @@ void
 disp_sum(struct list *lst, double stot, double atot, double utot)
 {
 	int i,j;
-	int barinc = 5;
 	double ptot = 0;
 
 	if (stot == 0)
@@ -562,42 +546,170 @@ disp_sum(struct list *lst, double stot, double atot, double utot)
 	for (i = 4; i < j; i++)
 		(void)printf(" ");
 
-	/* option to display a wider bar */
-	if (wflag)
-		barinc = 2;
+	disp_bar(ptot);
 
-	(void)printf("[");
-	for (i = 0; i < ptot ; i += barinc)
-		(void)printf("*");
-
-	for (j = i; j < 100; j += barinc)
-		(void)printf("-");
-
-	(void)printf("]  %3.f%%", ptot);
+	disp_perct(ptot);
 
 	if (bflag || kflag || Kflag || mflag || Mflag || gflag || Gflag) {
 		stot = cvrt(stot);
 		atot = cvrt(atot);
 	}
 
-	/* free  and total */
-	if (kflag || Kflag) {
-		(void)printf("%10.fK", atot);
-		(void)printf("%10.fK", stot);
-	} else if (mflag || Mflag) {
-		(void)printf("%9.1fM", atot);
-		(void)printf("%9.1fM", stot);
-	} else if (gflag || Gflag) {
-		(void)printf("%9.1fG", atot);
-		(void)printf("%9.1fG", stot);
-	} else if (bflag) {
-		(void)printf("%15.fB", atot);
-		(void)printf("%15.fB", stot);
-	} else {/* human readable */
-		humanize(atot);
-		humanize(stot);
-	}
+	disp_at(atot, stot, ptot);
+
 	(void)printf("\n");
+}
+
+/*
+ * Display the nice usage bar
+ * @perct: percentage value
+ */
+void
+disp_bar(double perct)
+{
+	int i, j;
+	int barinc = 5;
+
+	/* option to display a wider bar */
+	if (wflag) {
+		barinc = 2;
+	}
+
+	/* used (*) */
+	(void)printf("[");
+
+	if (!cflag) {
+		for (i = 0; i < perct; i += barinc)
+			(void)printf("*");
+
+		for (j = i; j < 100; j += barinc)
+			(void)printf("-");
+	} else { /* color */
+
+		/* green */
+		(void)printf("\033[;32m");
+		for (i = 0; (i < 50) && (i < perct); i += barinc)
+			(void)printf("*");
+
+		/* yellow */
+		(void)printf("\033[;33m");
+		for (; (i < 75) && (i < perct); i += barinc)
+			(void)printf("*");
+
+		/* red */
+		(void)printf("\033[;31m");
+		for (; (i < 100) && (i < perct); i += barinc)
+			(void)printf("*");
+
+		reset_color();
+
+		for (j = i; j < 100; j += barinc)
+			(void)printf("-");
+	}
+
+	(void)printf("]  ");
+}
+
+/*
+ * Display available and total correctly formated
+ * @avail: obvious
+ * @total: obvious too...
+ * @perct: percentage (useful for finding which color to use)
+ */
+void
+disp_at(double avail, double total, double perct)
+{
+	change_color(perct);
+
+	/* available  and total */
+	if (kflag || Kflag) {
+		(void)printf("%10.f", avail);
+		reset_color();
+		(void)printf("K");
+		change_color(perct);
+		(void)printf("%10.f", total);
+		reset_color();
+		(void)printf("K");
+	} else if (mflag || Mflag) {
+		(void)printf("%9.1f", avail);
+		reset_color();
+		(void)printf("M");
+		change_color(perct);
+		(void)printf("%9.1f", total);
+		reset_color();
+		(void)printf("M");
+	} else if (gflag || Gflag) {
+		(void)printf("%9.1f", avail);
+		reset_color();
+		(void)printf("G");
+		change_color(perct);
+		(void)printf("%9.1f", total);
+		reset_color();
+		(void)printf("G");
+	} else if (bflag) {
+		(void)printf("%15.f", avail);
+		reset_color();
+		(void)printf("B");
+		change_color(perct);
+		(void)printf("%15.f", total);
+		reset_color();
+		(void)printf("B");
+	} else {/* human readable */
+		humanize(avail, perct);
+		humanize(total, perct);
+	}
+}
+
+/*
+ * Display percentage
+ * @perct: percentage
+ */
+void
+disp_perct(double perct)
+{
+	if (!cflag) {
+		(void)printf("%3.f%%", perct);
+	} else {
+		if (perct < 50.0) /* green */
+			(void)printf("\033[;32m");
+		else if (perct < 75.0) /* yellow */
+			(void)printf("\033[;33m");
+		else /* red */
+			(void)printf("\033[;31m");
+
+		(void)printf("%3.f", perct);
+
+		reset_color();
+
+		(void)printf("%%");
+	}
+}
+
+/*
+ * Change color according to perct
+ * @perct: percentage
+ */
+void
+change_color(double perct)
+{
+	if (cflag) {
+		if (perct < 50.0) /* green */
+			(void)printf("\033[;32m");
+		else if (perct < 75.0) /* yellow */
+			(void)printf("\033[;33m");
+		else /* red */
+			(void)printf("\033[;31m");
+	}
+}
+
+/*
+ * Reset color attribute to default
+ */
+void
+reset_color(void)
+{
+	if (cflag)
+		(void)printf("\033[;m");
 }
 
 /*
@@ -629,9 +741,10 @@ cvrt(double n)
 /*
  * convert to human readable format and print it
  * @n: number to convert and print
+ * @perct: percentage (useful when using colors)
  */
 double
-humanize(double n)
+humanize(double n, double perct)
 {
 	int i = 0;
 
@@ -640,18 +753,28 @@ humanize(double n)
 		i++;
 	}
 
+	change_color(perct);
+
 	switch (i) {
 	case 0:	/* bytes */
-		(void)printf("%15.fB", n);
+		(void)printf("%15.f", n);
+		reset_color();
+		(void)printf("B");
 		break;
 	case 1: /* Kio */
-		(void)printf("%10.fK", n);
+		(void)printf("%10.f", n);
+		reset_color();
+		(void)printf("K");
 		break;
 	case 2: /* Mio */
-		(void)printf("%9.1fM", n);
+		(void)printf("%9.1f", n);
+		reset_color();
+		(void)printf("M");
 		break;
 	case 3: /* Gio */
-		(void)printf("%9.1fG", n);
+		(void)printf("%9.1f", n);
+		reset_color();
+		(void)printf("G");
 		break;
 	default:/* else ??? */
 		(void)fprintf(stderr, "Error while humanizing %f\n", n);
