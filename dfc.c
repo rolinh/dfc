@@ -156,30 +156,30 @@ main(int argc, char *argv[])
 
 			/* adjust longest for the queue */
 			if (aflag) {
-				/* is it the longest type? */
-				queue.fsmaxlen = imax((int)strlen(fmi->type),
-						queue.typemaxlen);
+				/* is it the longest fsname? */
+				queue.fsmaxlen = imax((int)strlen(fmi->fsname),
+						queue.fsmaxlen);
 				/* is it the longest dir */
 				queue.dirmaxlen = imax((int)strlen(fmi->dir),
 						queue.dirmaxlen);
-				/* is it the longest fsname? */
-				queue.typemaxlen = imax((int)strlen(fmi->fsname),
-						queue.fsmaxlen);
+				/* is it the longest type? */
+				queue.typemaxlen = imax((int)strlen(fmi->type),
+						queue.typemaxlen);
 			} else {
 				/* we do not care about stuff not from /dev/ */
 				if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
-					/* is it the longest type? */
+					/* is it the longest fsname? */
 					queue.fsmaxlen = imax(
-							(int)strlen(fmi->type),
-							queue.typemaxlen);
+							(int)strlen(fmi->fsname),
+							queue.fsmaxlen);
 					/* is it the longest dir */
 					queue.dirmaxlen = imax(
 							(int)strlen(fmi->dir),
 							queue.dirmaxlen);
-					/* is it the longest fsname? */
+					/* is it the longest type? */
 					queue.typemaxlen = imax(
-							(int)strlen(fmi->fsname),
-							queue.fsmaxlen);
+							(int)strlen(fmi->type),
+							queue.typemaxlen);
 				}
 			}
 		}
@@ -360,13 +360,13 @@ disp(struct list lst)
 
 		/* filesystem */
 		(void)printf("%s", p->fsname);
-		for (i = (int)strlen(p->fsname); i < lst.fsmaxlen; i++)
+		for (i = (int)strlen(p->fsname); i < lst.fsmaxlen + 1; i++)
 			(void)printf(" ");
 
 		/* type */
 		if (!tflag) {
 			(void)printf("%s", p->type);
-			for (i = (int)strlen(p->type); i < lst.typemaxlen; i++)
+			for (i = (int)strlen(p->type); i < lst.typemaxlen + 1; i++)
 				(void)printf(" ");
 		}
 
@@ -433,9 +433,9 @@ disp(struct list lst)
 			ptot = (utot / stot) * 100.0;
 		(void)printf("SUM:");
 
-		j = lst.fsmaxlen;
+		j = lst.fsmaxlen + 1;
 		if (!tflag)
-			j += lst.typemaxlen;
+			j += lst.typemaxlen + 1;
 		for (i = 4; i < j; i++)
 			(void)printf(" ");
 
@@ -479,15 +479,14 @@ disp_header(struct list *lst)
 	int i;
 	int barinc = 5;
 
-	(void)printf("FILESYSTEM ");
-	if (lst->fsmaxlen > 11)
-		for (i = 11; i < lst->fsmaxlen; i++)
-			(void)printf(" ");
+	(void)printf("FILESYSTEM  ");
+	for (i = 11; i < lst->fsmaxlen; i++)
+		(void)printf(" ");
 
 	if (!tflag) {
 		(void)printf("TYPE ");
 		if (lst->typemaxlen > 5)
-			for (i = 5; i < lst->typemaxlen; i++)
+			for (i = 5; i < lst->typemaxlen + 1; i++)
 				(void)printf(" ");
 		else
 			lst->typemaxlen = 5;
@@ -497,7 +496,7 @@ disp_header(struct list *lst)
 	if (wflag) {
 		barinc = 35;
 	}
-	(void)printf("USED (*)");
+	(void)printf("(*) USED");
 	for (i = 0; i < (barinc + 1); i++)
 		(void)printf(" ");
 	(void)printf("FREE (-) ");
