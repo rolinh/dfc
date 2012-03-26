@@ -23,8 +23,13 @@ struct fsmntinfo {
 
 	/* infos to get from statvfs(3) */
 	unsigned long bsize;	/* file system block size */
-	unsigned long blocks;	/* size of fs */
-	unsigned long bfree;	/* free blocks */
+	unsigned long frsize;	/* fragment size */
+	unsigned long blocks;	/* size of fs in frsize unit */
+	unsigned long bfree;	/* # of free blocks */
+	unsigned long bavail;	/* # of available blocks */
+	unsigned long files;	/* # of inodes */
+	unsigned long ffree;	/* # of free inodes */
+	unsigned long favail;	/* # of available inodes */
 
 	/* pointer to the next element of the list */
 	struct fsmntinfo *next;
