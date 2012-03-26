@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, bflag, gflag, hflag, iflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
+int aflag, bflag, gflag, hflag, iflag, kflag, mflag, nflag, oflag, sflag, tflag, vflag, wflag;
 int cflag = 1; /* color enabled by default */
 int Kflag, Mflag, Gflag;
 
@@ -32,7 +32,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "abcghiGkKmMnstvw")) != -1) {
+	while ((ch = getopt(argc, argv, "abcghiGkKmMnostvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -75,6 +75,9 @@ main(int argc, char *argv[])
 			break;
 		case 'n':
 			nflag = 1;
+			break;
+		case 'o':
+			oflag = 1;
 			break;
 		case 's':
 			sflag = 1;
@@ -142,6 +145,7 @@ usage(int status)
 		"	-m	size in Mio\n"
 		"	-M	size in Mo\n"
 		"	-n	do not print header\n"
+		"	-o	show mount flags\n"
 		"	-s	sum the total usage\n"
 		"	-t	hide filesystem type\n"
 		"	-v	print program version\n"
@@ -447,7 +451,15 @@ disp(struct list *lst)
 		}
 
 		/* mounted on */
-		(void)printf(" %s\n", p->dir);
+		(void)printf(" %s", p->dir);
+
+		/* info about mount option */
+		if (oflag) {
+			for (i = strlen(p->dir); i < 16; i++)
+				(void)printf(" ");
+			(void)printf("%s\n", p->opts);
+		} else
+			(void)printf("\n");
 
 		p = p->next;
 	}
@@ -517,7 +529,12 @@ disp_header(struct list *lst)
 		(void)printf(" AV.INODES");
 	}
 
-	(void)puts(" MOUNTED ON");
+	(void)printf(" MOUNTED ON ");
+
+	if (oflag)
+		(void)printf("     MOUNT OPTIONS\n");
+	else
+		(void)printf("\n");
 
 	reset_color();
 }
