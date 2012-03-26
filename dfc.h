@@ -5,7 +5,7 @@
  *
  * header file for dfc.c
  */
-#define VERSION "1.1.3"
+#define VERSION "1.1.4"
 
 /*
  * structure needed to store informations about mounted fs
