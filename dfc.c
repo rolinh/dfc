@@ -124,9 +124,10 @@ usage(int status)
 		(void)fputs("Usage: dfc [OPTIONS(S)]\n"
 		"Available options:\n"
 		"	-a	print all fs from mtab\n"
-		"	-h	print this message\n"
 		"	-g	size in Gio\n"
 		"	-G	size in Go\n"
+		"	-h	print this message\n"
+		"	-i	info about inodes\n"
 		"	-k	size in Kio\n"
 		"	-K	size in Ko\n"
 		"	-m	size in Mio\n"
@@ -451,6 +452,12 @@ disp(struct list *lst)
 			(void)printf("%15.fB", size);
 		}
 
+		/* info about inodes */
+		if (iflag) {
+			(void)printf("%10ld", p->files);
+			(void)printf("%10ld", p->favail);
+		}
+
 		/* mounted on */
 		(void)printf(" %s\n", p->dir);
 
@@ -511,6 +518,12 @@ disp_header(struct list *lst)
 	else
 		(void)printf("           ");
 	(void)printf("TOTAL");
+
+	if (iflag) {
+		(void)printf("   #INODES");
+		(void)printf(" AV.INODES");
+	}
+
 	(void)puts(" MOUNTED ON");
 }
 
