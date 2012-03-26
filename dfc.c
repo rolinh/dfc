@@ -140,9 +140,9 @@ main(int argc, char *argv[])
 			}
 
 			/* infos from statvfs */
-			fmi->bsize = vfsbuf.f_frsize;
+			fmi->frsize = vfsbuf.f_frsize;
 			fmi->blocks = vfsbuf.f_blocks;
-			fmi->bfree = vfsbuf.f_bavail;
+			fmi->bavail = vfsbuf.f_bavail;
 
 			/* pointer to the next element */
 			fmi->next = NULL;
@@ -305,9 +305,17 @@ fmi_init(void)
 	fmi.fsname	= "unknown";
 	fmi.dir		= "unknown";
 	fmi.type	= "unknown";
+	fmi.opts	= "none";
+
 	fmi.bsize	= 0;
+	fmi.frsize	= 0;
 	fmi.blocks	= 0;
 	fmi.bfree	= 0;
+	fmi.bavail	= 0;
+	fmi.files	= 0;
+	fmi.ffree	= 0;
+	fmi.favail	= 0;
+
 	fmi.next	= NULL;
 
 	return fmi;
@@ -370,8 +378,8 @@ disp(struct list lst)
 				(void)printf(" ");
 		}
 
-		size = (double)p->blocks *(double)p->bsize;
-		free = (double)p->bfree * (double)p->bsize;
+		size = (double)p->blocks *(double)p->frsize;
+		free = (double)p->bavail * (double)p->frsize;
 		used = size - free;
 
 		/* calculate the % used */
