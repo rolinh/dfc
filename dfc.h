@@ -20,6 +20,7 @@ struct fsmntinfo {
 	char *fsname;	/* name of mounted file system */
 	char *dir;	/* file system path prefix */
 	char *type;	/* mount type */
+	char *opts;	/* mount options (see mntent.h) */
 
 	/* infos to get from statvfs(3) */
 	unsigned long bsize;	/* file system block size */
