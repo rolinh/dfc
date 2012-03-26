@@ -22,26 +22,19 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, hflag, gflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
+int aflag, gflag, hflag, iflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
 int Kflag, Mflag, Gflag;
 
 int
 main(int argc, char *argv[])
 {
-	FILE *mtab;
-	struct mntent *entbuf;
-	struct statvfs vfsbuf;
-	struct fsmntinfo *fmi;
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "ahgGkKmMnstvw")) != -1) {
+	while ((ch = getopt(argc, argv, "aghiGkKmMnstvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
-			break;
-		case 'h':
-			hflag = 1;
 			break;
 		case 'g':
 			gflag = 1;
@@ -50,6 +43,12 @@ main(int argc, char *argv[])
 		case 'G':
 			gflag = 0;
 			Gflag = 1;
+			break;
+		case 'h':
+			hflag = 1;
+			break;
+		case 'i':
+			iflag = 1;
 			break;
 		case 'k':
 			kflag = 1;
@@ -102,95 +101,11 @@ main(int argc, char *argv[])
 	/* initializes the queue */
 	init_queue(&queue);
 
-	/* init fsmntinfo */
-	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
-		(void)fputs("Error while allocating memory to fmi", stderr);
-		return EXIT_FAILURE;
-		/* NOTREACHED */
-	}
-	*fmi = fmi_init();
-
-	/* open mtab file */
-	if ((mtab = fopen("/etc/mtab", "r")) == NULL) {
-		perror("Error while opening mtab file ");
-		return EXIT_FAILURE;
-		/* NOTREACHED */
-	}
-
-	/* loop to get infos from all the mounted fs */
-	while ((entbuf = getmntent(mtab)) != NULL) {
-		/* get infos from statvfs */
-		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
-			(void)fprintf(stderr, "Error using statvfs on %s\n",
-					entbuf->mnt_dir);
-			perror("with this error code ");
-			return EXIT_FAILURE;
-			/* NOTREACHED */
-		} else {
-			/* infos from getmntent */
-			if ((fmi->fsname = strdup(trk(entbuf->mnt_fsname)))
-					== NULL) {
-				fmi->fsname = "unknown";
-			}
-			if ((fmi->dir = strdup(trk(entbuf->mnt_dir))) == NULL) {
-				fmi->dir = "unknown";
-			}
-			if ((fmi->type = strdup(trk(entbuf->mnt_type))) == NULL) {
-				fmi->type = "unknown";
-			}
-
-			/* infos from statvfs */
-			fmi->frsize = vfsbuf.f_frsize;
-			fmi->blocks = vfsbuf.f_blocks;
-			fmi->bavail = vfsbuf.f_bavail;
-
-			/* pointer to the next element */
-			fmi->next = NULL;
-
-			/* enqueue the element into the queue */
-			enqueue(&queue, *fmi);
-
-			/* skip fuse-daemon */
-			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0)
-					continue;
-
-			/* adjust longest for the queue */
-			if (aflag) {
-				/* is it the longest fsname? */
-				queue.fsmaxlen = imax((int)strlen(fmi->fsname),
-						queue.fsmaxlen);
-				/* is it the longest dir */
-				queue.dirmaxlen = imax((int)strlen(fmi->dir),
-						queue.dirmaxlen);
-				/* is it the longest type? */
-				queue.typemaxlen = imax((int)strlen(fmi->type),
-						queue.typemaxlen);
-			} else {
-				/* we do not care about stuff not from /dev/ */
-				if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
-					/* is it the longest fsname? */
-					queue.fsmaxlen = imax(
-							(int)strlen(fmi->fsname),
-							queue.fsmaxlen);
-					/* is it the longest dir */
-					queue.dirmaxlen = imax(
-							(int)strlen(fmi->dir),
-							queue.dirmaxlen);
-					/* is it the longest type? */
-					queue.typemaxlen = imax(
-							(int)strlen(fmi->type),
-							queue.typemaxlen);
-				}
-			}
-		}
-	}
-
-	/* we need to close the mtab file now */
-	if (fclose(mtab) == EOF)
-		perror("Could not close mtab file ");
+	/* fetch information from getmntent and statvfs */
+	fetch_info(&queue);
 
 	/* actually displays the infos we have gotten */
-	disp(queue);
+	disp(&queue);
 
 	return EXIT_SUCCESS;
 	/* NOTREACHED */
@@ -323,11 +238,119 @@ fmi_init(void)
 }
 
 /*
+ * fetch information from getmntent and statvfs and store it into the queue
+ * @lst: queue in which to store information
+ */
+void
+fetch_info(struct list *lst)
+{
+	FILE *mtab;
+	struct mntent *entbuf;
+	struct statvfs vfsbuf;
+	struct fsmntinfo *fmi;
+
+	/* init fsmntinfo */
+	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
+		(void)fputs("Error while allocating memory to fmi", stderr);
+		exit(EXIT_FAILURE);
+		/* NOTREACHED */
+	}
+	*fmi = fmi_init();
+
+	/* open mtab file */
+	if ((mtab = fopen("/etc/mtab", "r")) == NULL) {
+		perror("Error while opening mtab file ");
+		exit(EXIT_FAILURE);
+		/* NOTREACHED */
+	}
+
+	/* loop to get infos from all the mounted fs */
+	while ((entbuf = getmntent(mtab)) != NULL) {
+		/* get infos from statvfs */
+		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
+			(void)fprintf(stderr, "Error using statvfs on %s\n",
+					entbuf->mnt_dir);
+			perror("with this error code ");
+			exit(EXIT_FAILURE);
+			/* NOTREACHED */
+		} else {
+			/* infos from getmntent */
+			if ((fmi->fsname = strdup(trk(entbuf->mnt_fsname)))
+					== NULL) {
+				fmi->fsname = "unknown";
+			}
+			if ((fmi->dir = strdup(trk(entbuf->mnt_dir))) == NULL) {
+				fmi->dir = "unknown";
+			}
+			if ((fmi->type = strdup(trk(entbuf->mnt_type))) == NULL) {
+				fmi->type = "unknown";
+			}
+			if ((fmi->opts = strdup(trk(entbuf->mnt_opts))) == NULL) {
+				fmi->opts = "none";
+			}
+
+			/* infos from statvfs */
+			fmi->bsize	= vfsbuf.f_bsize;
+			fmi->frsize	= vfsbuf.f_frsize;
+			fmi->blocks	= vfsbuf.f_blocks;
+			fmi->bfree	= vfsbuf.f_bfree;
+			fmi->bavail	= vfsbuf.f_bavail;
+			fmi->files	= vfsbuf.f_files;
+			fmi->ffree	= vfsbuf.f_ffree;
+			fmi->favail	= vfsbuf.f_favail;
+
+			/* pointer to the next element */
+			fmi->next = NULL;
+
+			/* enqueue the element into the queue */
+			enqueue(lst, *fmi);
+
+			/* skip fuse-daemon */
+			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0)
+					continue;
+
+			/* adjust longest for the queue */
+			if (aflag) {
+				/* is it the longest fsname? */
+				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
+						lst->fsmaxlen);
+				/* is it the longest dir */
+				lst->dirmaxlen = imax((int)strlen(fmi->dir),
+						lst->dirmaxlen);
+				/* is it the longest type? */
+				lst->typemaxlen = imax((int)strlen(fmi->type),
+						lst->typemaxlen);
+			} else {
+				/* we do not care about stuff not from /dev/ */
+				if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
+					/* is it the longest fsname? */
+					lst->fsmaxlen = imax(
+							(int)strlen(fmi->fsname),
+							lst->fsmaxlen);
+					/* is it the longest dir */
+					lst->dirmaxlen = imax(
+							(int)strlen(fmi->dir),
+							lst->dirmaxlen);
+					/* is it the longest type? */
+					lst->typemaxlen = imax(
+							(int)strlen(fmi->type),
+							lst->typemaxlen);
+				}
+			}
+		}
+	}
+
+	/* we need to close the mtab file now */
+	if (fclose(mtab) == EOF)
+		perror("Could not close mtab file ");
+}
+
+/*
  * Actually displays infos in nice manner
  * @lst: queue containing all required informations
  */
 void
-disp(struct list lst)
+disp(struct list *lst)
 {
 	struct fsmntinfo *p = NULL;
 	int i, j, n;
@@ -339,12 +362,12 @@ disp(struct list lst)
 
 	/* legend on top */
 	if (!nflag)
-		disp_header(&lst);
+		disp_header(lst);
 
-	if (lst.fsmaxlen < 11)
-		lst.fsmaxlen = 11;
+	if (lst->fsmaxlen < 11)
+		lst->fsmaxlen = 11;
 
-	p = lst.head;
+	p = lst->head;
 	while (p != NULL) {
 
 		/* we do not care about gvfs-fuse-daemon and the others */
@@ -368,13 +391,13 @@ disp(struct list lst)
 
 		/* filesystem */
 		(void)printf("%s", p->fsname);
-		for (i = (int)strlen(p->fsname); i < lst.fsmaxlen + 1; i++)
+		for (i = (int)strlen(p->fsname); i < lst->fsmaxlen + 1; i++)
 			(void)printf(" ");
 
 		/* type */
 		if (!tflag) {
 			(void)printf("%s", p->type);
-			for (i = (int)strlen(p->type); i < lst.typemaxlen + 1; i++)
+			for (i = (int)strlen(p->type); i < lst->typemaxlen + 1; i++)
 				(void)printf(" ");
 		}
 
@@ -441,9 +464,9 @@ disp(struct list lst)
 			ptot = (utot / stot) * 100.0;
 		(void)printf("SUM:");
 
-		j = lst.fsmaxlen + 1;
+		j = lst->fsmaxlen + 1;
 		if (!tflag)
-			j += lst.typemaxlen + 1;
+			j += lst->typemaxlen + 1;
 		for (i = 4; i < j; i++)
 			(void)printf(" ");
 
