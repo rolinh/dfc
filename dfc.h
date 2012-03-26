@@ -55,6 +55,7 @@ struct fsmntinfo fmi_init(void);
 void fetch_info(struct list *lst);
 void disp(struct list *lst);
 void disp_header(struct list *lst);
+void disp_inodes(struct list *lst);
 void disp_sum(struct list *lst, double stot, double utot, double ftot);
 double cvrt(double nb);
 int imax(int a, int b);
