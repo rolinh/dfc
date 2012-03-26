@@ -22,7 +22,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, gflag, hflag, iflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
+int aflag, bflag, gflag, hflag, iflag, kflag, mflag, nflag, sflag, tflag, vflag, wflag;
 int Kflag, Mflag, Gflag;
 
 int
@@ -31,10 +31,13 @@ main(int argc, char *argv[])
 	struct list queue;
 	int ch;
 
-	while ((ch = getopt(argc, argv, "aghiGkKmMnstvw")) != -1) {
+	while ((ch = getopt(argc, argv, "abghiGkKmMnstvw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
+			break;
+		case 'b':
+			bflag = 1;
 			break;
 		case 'g':
 			gflag = 1;
@@ -124,6 +127,7 @@ usage(int status)
 		(void)fputs("Usage: dfc [OPTIONS(S)]\n"
 		"Available options:\n"
 		"	-a	print all fs from mtab\n"
+		"	-b	size in Bytes\n"
 		"	-g	size in Gio\n"
 		"	-G	size in Go\n"
 		"	-h	print this message\n"
@@ -434,8 +438,10 @@ disp(struct list *lst)
 		(void)printf("]  %3.f%%", perctused);
 
 		/* format to requested format (k,m,g) */
-		size = cvrt(size);
-		avail = cvrt(avail);
+		if (bflag || kflag || Kflag || mflag || Mflag || gflag || Gflag) {
+			size = cvrt(size);
+			avail = cvrt(avail);
+		}
 
 		/* avail  and total */
 		if (kflag || Kflag) {
@@ -446,10 +452,13 @@ disp(struct list *lst)
 			(void)printf("%9.1fM", size);
 		} else if (gflag || Gflag) {
 			(void)printf("%9.1fG", avail);
-			(void)printf("%7.1fG", size);
-		} else {
+			(void)printf("%9.1fG", size);
+		} else if (bflag) {
 			(void)printf("%15.fB", avail);
 			(void)printf("%15.fB", size);
+		} else { /* human readable */
+			humanize(avail);
+			humanize(size);
 		}
 
 		/* info about inodes */
@@ -503,20 +512,21 @@ disp_header(struct list *lst)
 	(void)printf("%%USED");
 	if (kflag || Kflag)
 		(void)printf("  ");
-	else if (mflag || gflag || Mflag || Gflag)
-		(void)printf(" ");
-	else
+	else if (bflag)
 		(void)printf("       ");
+	else
+		(void)printf(" ");
 
 	(void)printf("AVAILABLE");
 	if (kflag || Kflag)
 		(void)printf("      ");
 	else if (mflag || Mflag)
 		(void)printf("     ");
-	else if (gflag || Gflag)
-		(void)printf("   ");
-	else
+	else if (bflag)
 		(void)printf("           ");
+	else
+		(void)printf("     ");
+
 	(void)printf("TOTAL");
 
 	if (iflag) {
@@ -553,9 +563,9 @@ disp_sum(struct list *lst, double stot, double atot, double utot)
 		(void)printf(" ");
 
 	/* option to display a wider bar */
-	if (wflag) {
+	if (wflag)
 		barinc = 2;
-	}
+
 	(void)printf("[");
 	for (i = 0; i < ptot ; i += barinc)
 		(void)printf("*");
@@ -565,8 +575,10 @@ disp_sum(struct list *lst, double stot, double atot, double utot)
 
 	(void)printf("]  %3.f%%", ptot);
 
-	stot = cvrt(stot);
-	atot = cvrt(atot);
+	if (bflag || kflag || Kflag || mflag || Mflag || gflag || Gflag) {
+		stot = cvrt(stot);
+		atot = cvrt(atot);
+	}
 
 	/* free  and total */
 	if (kflag || Kflag) {
@@ -577,10 +589,13 @@ disp_sum(struct list *lst, double stot, double atot, double utot)
 		(void)printf("%9.1fM", stot);
 	} else if (gflag || Gflag) {
 		(void)printf("%9.1fG", atot);
-		(void)printf("%7.1fG", stot);
-	} else {
+		(void)printf("%9.1fG", stot);
+	} else if (bflag) {
 		(void)printf("%15.fB", atot);
 		(void)printf("%15.fB", stot);
+	} else {/* human readable */
+		humanize(atot);
+		humanize(stot);
 	}
 	(void)printf("\n");
 }
@@ -612,6 +627,38 @@ cvrt(double n)
 }
 
 /*
+ * convert to human readable format and print it
+ * @n: number to convert and print
+ */
+double
+humanize(double n)
+{
+	int i = 0;
+
+	while ((n >= 1000) && (i < 3)) {
+		n /= 1024.0;
+		i++;
+	}
+
+	switch (i) {
+	case 0:	/* bytes */
+		(void)printf("%15.fB", n);
+		break;
+	case 1: /* Kio */
+		(void)printf("%10.fK", n);
+		break;
+	case 2: /* Mio */
+		(void)printf("%9.1fM", n);
+		break;
+	case 3: /* Gio */
+		(void)printf("%9.1fG", n);
+		break;
+	default:/* else ??? */
+		(void)fprintf(stderr, "Error while humanizing %f\n", n);
+	}
+}
+
+/*
  * Return the longest of the two parameters
  */
 int
@@ -622,7 +669,7 @@ imax(int a, int b)
 }
 
 /*
- * Trunkate str to the third occurrence of /
+ * Truncate str to the third occurrence of /
  * Example: str: /dev/disk/by-uuid/3c301e8b-560c-4914-b50d-8a49e713003c
  * It then returns: /dev/disk/by-uuid
  * Returns unmodified str otherwise
@@ -646,7 +693,7 @@ trk(char *str)
 		if ((p = strchr(p + 1, '/')) == NULL)
 			return str;
 			/* NOTREACHED */
-		i += 1;
+		i++;
 	}
 
 	/* p contains the part of str we want to truncate from str */

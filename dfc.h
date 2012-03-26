@@ -12,8 +12,8 @@
  * It should contain brut datas.
  * Later on, we would need to compute those infos:
  * unsigned long bused;	used blocks
- * int prct_used;	usage of fs in percent
- * int prct_free;	free space of fs in percent
+ * double prct_used;	usage of fs in percent
+ * double prct_free;	free space of fs in percent
  */
 struct fsmntinfo {
 	/* infos to get from getmntent(3) */
@@ -55,9 +55,9 @@ struct fsmntinfo fmi_init(void);
 void fetch_info(struct list *lst);
 void disp(struct list *lst);
 void disp_header(struct list *lst);
-void disp_inodes(struct list *lst);
 void disp_sum(struct list *lst, double stot, double utot, double ftot);
-double cvrt(double nb);
+double cvrt(double n);
+double humanize(double n);
 int imax(int a, int b);
 char* trk(char *str);
 
