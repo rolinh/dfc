@@ -355,10 +355,10 @@ disp(struct list *lst)
 	struct fsmntinfo *p = NULL;
 	int i, j, n;
 	int barinc = 5;
-	double perctused, size, free, used;
-	double stot, ftot, utot, ptot;
+	double perctused, size, avail, used;
+	double stot, atot, utot;
 
-	stot = ftot = utot = ptot = n =0;
+	stot = atot = utot = n = 0;
 
 	/* legend on top */
 	if (!nflag)
@@ -402,8 +402,8 @@ disp(struct list *lst)
 		}
 
 		size = (double)p->blocks *(double)p->frsize;
-		free = (double)p->bavail * (double)p->frsize;
-		used = size - free;
+		avail = (double)p->bavail * (double)p->frsize;
+		used = size - avail;
 
 		/* calculate the % used */
 		if (size == 0)
@@ -413,7 +413,7 @@ disp(struct list *lst)
 
 		if (sflag) {
 			stot += size;
-			ftot += free;
+			atot += avail;
 			utot += used;
 		}
 
@@ -434,20 +434,20 @@ disp(struct list *lst)
 
 		/* format to requested format (k,m,g) */
 		size = cvrt(size);
-		free = cvrt(free);
+		avail = cvrt(avail);
 
-		/* free  and total */
+		/* avail  and total */
 		if (kflag || Kflag) {
-			(void)printf("%10.fK", free);
+			(void)printf("%10.fK", avail);
 			(void)printf("%10.fK", size);
 		} else if (mflag || Mflag) {
-			(void)printf("%9.1fM", free);
+			(void)printf("%9.1fM", avail);
 			(void)printf("%9.1fM", size);
 		} else if (gflag || Gflag) {
-			(void)printf("%9.1fG", free);
+			(void)printf("%9.1fG", avail);
 			(void)printf("%7.1fG", size);
 		} else {
-			(void)printf("%15.fB", free);
+			(void)printf("%15.fB", avail);
 			(void)printf("%15.fB", size);
 		}
 
@@ -457,47 +457,8 @@ disp(struct list *lst)
 		p = p->next;
 	}
 
-	if (sflag) {
-		if (stot == 0)
-			ptot = 100.0;
-		else
-			ptot = (utot / stot) * 100.0;
-		(void)printf("SUM:");
-
-		j = lst->fsmaxlen + 1;
-		if (!tflag)
-			j += lst->typemaxlen + 1;
-		for (i = 4; i < j; i++)
-			(void)printf(" ");
-
-		(void)printf("[");
-		for (i = 0; i < ptot ; i += barinc)
-			(void)printf("*");
-
-		for (j = i; j < 100; j += barinc)
-			(void)printf("-");
-
-		(void)printf("]  %3.f%%", ptot);
-
-		stot = cvrt(stot);
-		ftot = cvrt(ftot);
-
-		/* free  and total */
-		if (kflag || Kflag) {
-			(void)printf("%10.fK", ftot);
-			(void)printf("%10.fK", stot);
-		} else if (mflag || Mflag) {
-			(void)printf("%9.1fM", ftot);
-			(void)printf("%9.1fM", stot);
-		} else if (gflag || Gflag) {
-			(void)printf("%9.1fG", ftot);
-			(void)printf("%7.1fG", stot);
-		} else {
-			(void)printf("%15.fB", ftot);
-			(void)printf("%15.fB", stot);
-		}
-		(void)printf("\n");
-	}
+	if (sflag)
+		disp_sum(lst, stot, atot, utot);
 }
 
 /*
@@ -551,6 +512,64 @@ disp_header(struct list *lst)
 		(void)printf("           ");
 	(void)printf("TOTAL");
 	(void)puts(" MOUNTED ON");
+}
+
+/*
+ * display the sum (useful when -s option is used
+ * @lst: queue containing the informations
+ * @stot: size total
+ * @utot:
+ */
+void
+disp_sum(struct list *lst, double stot, double atot, double utot)
+{
+	int i,j;
+	int barinc = 5;
+	double ptot = 0;
+
+	if (stot == 0)
+		ptot = 100.0;
+	else
+		ptot = (utot / stot) * 100.0;
+	(void)printf("SUM:");
+
+	j = lst->fsmaxlen + 1;
+	if (!tflag)
+		j += lst->typemaxlen + 1;
+	for (i = 4; i < j; i++)
+		(void)printf(" ");
+
+	/* option to display a wider bar */
+	if (wflag) {
+		barinc = 2;
+	}
+	(void)printf("[");
+	for (i = 0; i < ptot ; i += barinc)
+		(void)printf("*");
+
+	for (j = i; j < 100; j += barinc)
+		(void)printf("-");
+
+	(void)printf("]  %3.f%%", ptot);
+
+	stot = cvrt(stot);
+	atot = cvrt(atot);
+
+	/* free  and total */
+	if (kflag || Kflag) {
+		(void)printf("%10.fK", atot);
+		(void)printf("%10.fK", stot);
+	} else if (mflag || Mflag) {
+		(void)printf("%9.1fM", atot);
+		(void)printf("%9.1fM", stot);
+	} else if (gflag || Gflag) {
+		(void)printf("%9.1fG", atot);
+		(void)printf("%7.1fG", stot);
+	} else {
+		(void)printf("%15.fB", atot);
+		(void)printf("%15.fB", stot);
+	}
+	(void)printf("\n");
 }
 
 /*
