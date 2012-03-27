@@ -383,22 +383,21 @@ disp(struct list *lst)
 	p = lst->head;
 	while (p != NULL) {
 
-		/* we do not care about gvfs-fuse-daemon and the others */
-		if (strcmp(p->fsname, "gvfs-fuse-daemon") == 0 ||
-			strcmp(p->fsname, "proc") == 0 ||
-			strcmp(p->fsname, "sys") == 0 ||
-			strcmp(p->fsname, "devpts") == 0) {
-			p = p->next;
-			continue;
-			/* NOTREACHED */
-		}
-
 		if (!aflag) {
-			/* skip some stuff we do not care about */
-			if (strncmp(p->fsname, "/dev/", 5) != 0) {
+			/* skip (pseudo)devices (which have a size of 0 usually) */
+			if (p->blocks == 0) {
 				p = p->next;
 				continue;
-				/* NOTREACHED */
+				/*NOTREACHED */
+			}
+		} else {
+			/*
+			 * gvfs-fuse-daemon is way too long for a name --> it
+			 * breaks the display so rename it
+			 */
+			if (strcmp(p->fsname, "gvfs-fuse-daemon") == 0) {
+				(void)strcpy(p->fsname, "fuse-daemon");
+				(void)strcpy(p->type, "gvfs");
 			}
 		}
 
