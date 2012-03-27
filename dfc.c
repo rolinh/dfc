@@ -774,12 +774,12 @@ humanize(double n, double perct)
 
 	switch (i) {
 	case 0:	/* bytes */
-		(void)printf("%15.f", n);
+		(void)printf("%9.1f", n);
 		reset_color();
 		(void)printf("B");
 		break;
 	case 1: /* Kio */
-		(void)printf("%10.f", n);
+		(void)printf("%9.1f", n);
 		reset_color();
 		(void)printf("K");
 		break;
