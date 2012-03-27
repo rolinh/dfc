@@ -319,37 +319,21 @@ fetch_info(struct list *lst)
 			/* enqueue the element into the queue */
 			enqueue(lst, *fmi);
 
-			/* skip fuse-daemon */
-			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0)
-					continue;
-
 			/* adjust longest for the queue */
-			if (aflag) {
-				/* is it the longest fsname? */
-				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
-						lst->fsmaxlen);
-				/* is it the longest dir */
+
+			/* adjust for gvfs-fuse-daemon */
+			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0) {
+				lst->fsmaxlen = imax(lst->fsmaxlen, 11);
+				lst->typemaxlen = imax(lst->typemaxlen, 4);
 				lst->dirmaxlen = imax((int)strlen(fmi->dir),
 						lst->dirmaxlen);
-				/* is it the longest type? */
+			} else {
+				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
+					lst->fsmaxlen);
+				lst->dirmaxlen = imax((int)strlen(fmi->dir),
+						lst->dirmaxlen);
 				lst->typemaxlen = imax((int)strlen(fmi->type),
 						lst->typemaxlen);
-			} else {
-				/* we do not care about stuff not from /dev/ */
-				if (strncmp(fmi->fsname, "/dev/", 5) == 0) {
-					/* is it the longest fsname? */
-					lst->fsmaxlen = imax(
-							(int)strlen(fmi->fsname),
-							lst->fsmaxlen);
-					/* is it the longest dir */
-					lst->dirmaxlen = imax(
-							(int)strlen(fmi->dir),
-							lst->dirmaxlen);
-					/* is it the longest type? */
-					lst->typemaxlen = imax(
-							(int)strlen(fmi->type),
-							lst->typemaxlen);
-				}
 			}
 		}
 	}
