@@ -757,7 +757,7 @@ humanize(double n, double perct)
 
 	switch (i) {
 	case 0:	/* bytes */
-		(void)printf("%9.1f", n);
+		(void)printf("%9.f", n);
 		reset_color();
 		(void)printf("B");
 		break;
