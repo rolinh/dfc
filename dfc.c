@@ -108,6 +108,10 @@ main(int argc, char *argv[])
 		/* NOTREACHED */
 	}
 
+	/* if fd is not a terminal, disable color */
+	if (!isatty(1))
+		cflag = 0;
+
 	/* initializes the queue */
 	init_queue(&queue);
 
