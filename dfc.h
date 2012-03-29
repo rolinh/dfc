@@ -53,7 +53,7 @@ int is_empty(struct list lst);
 int enqueue(struct list *lst, struct fsmntinfo elt);
 struct fsmntinfo fmi_init(void);
 void fetch_info(struct list *lst);
-void disp(struct list *lst);
+void disp(struct list *lst, char *fsfilter);
 void disp_header(struct list *lst);
 void disp_sum(struct list *lst, double stot, double utot, double ftot,
 		double ifitot, double ifatot);

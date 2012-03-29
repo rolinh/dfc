@@ -23,8 +23,10 @@
 #include "dfc.h"
 
 /* set flags for options */
-static int aflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag, uflag, vflag, wflag;
+static int aflag, bflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag,
+	   uflag, vflag, wflag;
 static int cflag = 1; /* color enabled by default */
+static int Tflag;
 
 /*
  * Now use -u option for choosing the size (b, k, m, etc.)
@@ -38,6 +40,7 @@ main(int argc, char *argv[])
 {
 	struct list queue;
 	int ch;
+	char *fsfilter;
 	char *subopts;
 	char *value;
 
@@ -65,10 +68,13 @@ main(int argc, char *argv[])
 		NULL
 	};
 
-	while ((ch = getopt(argc, argv, "achimnostu:vw")) != -1) {
+	while ((ch = getopt(argc, argv, "abchimnost:Tu:vw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
+			break;
+		case 'b':
+			bflag = 1;
 			break;
 		case 'c':
 			cflag = 0;
@@ -93,6 +99,10 @@ main(int argc, char *argv[])
 			break;
 		case 't':
 			tflag = 1;
+			fsfilter = strdup(optarg);
+			break;
+		case 'T':
+			Tflag = 1;
 			break;
 		case 'u':
 			uflag = 1;
@@ -171,7 +181,7 @@ main(int argc, char *argv[])
 	fetch_info(&queue);
 
 	/* actually displays the infos we have gotten */
-	disp(&queue);
+	disp(&queue, fsfilter);
 
 	return EXIT_SUCCESS;
 	/* NOTREACHED */
@@ -187,9 +197,10 @@ usage(int status)
 	if (status != 0)
 		(void)fputs("Try dfc -h for more informations\n", stderr);
 	else
-		(void)fputs("Usage: dfc [OPTIONS(S)] [-u unit]\n"
+		(void)fputs("Usage: dfc [OPTIONS(S)] [-u unit] [-t filesystem]\n"
 		"Available options:\n"
 		"	-a	print all fs from mtab\n"
+		"	-b	do not show the graph bar\n"
 		"	-c	disable color\n"
 		"	-h	print this message\n"
 		"	-i	info about inodes\n"
@@ -197,9 +208,11 @@ usage(int status)
 		"	-n	do not print header\n"
 		"	-o	show mount flags\n"
 		"	-s	sum the total usage\n"
-		"	-t	hide filesystem type\n"
-		"	-u	allows you to choose the unit in which\n"
-		"		to display the values. Read the	manpage\n"
+		"	-t	filter filesystems. Read the manpage\n"
+		"		for details\n"
+		"	-T	show filesystem type\n"
+		"	-u	choose the unit in which\n"
+		"		to show the values. Read the manpage\n"
 		"		for details\n"
 		"	-v	print program version\n"
 		"	-w	use a wider bar\n",
@@ -399,9 +412,10 @@ fetch_info(struct list *lst)
 /*
  * Actually displays infos in nice manner
  * @lst: queue containing all required informations
+ * @fsfilter: fstype to filter (can be nothing)
  */
 void
-disp(struct list *lst)
+disp(struct list *lst, char *fsfilter)
 {
 	struct fsmntinfo *p = NULL;
 	int i, j, n;
@@ -438,13 +452,22 @@ disp(struct list *lst)
 			}
 		}
 
+		/* apply fsfiltering */
+		if (tflag) {
+			if (strcmp(p->type, fsfilter) != 0) {
+				p = p->next;
+				continue;
+				/* NOTREACHED */
+			}
+		}
+
 		/* filesystem */
 		(void)printf("%s", p->fsname);
 		for (i = (int)strlen(p->fsname); i < lst->fsmaxlen + 1; i++)
 			(void)printf(" ");
 
 		/* type */
-		if (!tflag) {
+		if (Tflag) {
 			(void)printf("%s", p->type);
 			for (i = (int)strlen(p->type); i < lst->typemaxlen + 1; i++)
 				(void)printf(" ");
@@ -466,7 +489,8 @@ disp(struct list *lst)
 			utot += used;
 		}
 
-		disp_bar(perctused);
+		if (!bflag)
+			disp_bar(perctused);
 
 		/* %used */
 		disp_perct(perctused);
@@ -521,11 +545,11 @@ disp_header(struct list *lst)
 	if (cflag)
 		(void)printf("\033[;34m");
 
-	(void)printf("FILESYSTEM  ");
+	(void)printf("FILESYSTEM ");
 	for (i = 11; i < lst->fsmaxlen; i++)
 		(void)printf(" ");
 
-	if (!tflag) {
+	if (Tflag) {
 		(void)printf("TYPE ");
 		if (lst->typemaxlen > 5)
 			for (i = 5; i < lst->typemaxlen + 1; i++)
@@ -538,10 +562,12 @@ disp_header(struct list *lst)
 	if (wflag) {
 		barinc = 35;
 	}
-	(void)printf("(*) USED");
-	for (i = 0; i < (barinc + 1); i++)
-		(void)printf(" ");
-	(void)printf("FREE (-) ");
+	if (!bflag) {
+		(void)printf(" (*) USED");
+		for (i = 0; i < (barinc + 1); i++)
+			(void)printf(" ");
+		(void)printf("FREE (-) ");
+	}
 
 	(void)printf("%%USED");
 	if (unit == 'k')
@@ -598,12 +624,13 @@ disp_sum(struct list *lst, double stot, double atot, double utot,
 	(void)printf("SUM:");
 
 	j = lst->fsmaxlen + 1;
-	if (!tflag)
+	if (Tflag)
 		j += lst->typemaxlen + 1;
 	for (i = 4; i < j; i++)
 		(void)printf(" ");
 
-	disp_bar(ptot);
+	if (!bflag)
+		disp_bar(ptot);
 
 	disp_perct(ptot);
 
