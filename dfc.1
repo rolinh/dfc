@@ -2,7 +2,7 @@
 .SH NAME
 dfc \- display file system space usage using graph and colors colors
 .SH SYNOPSIS
-.B dfc [OPTION(S)]
+.B dfc [OPTION(S)] [-u UNIT] [-t FILESYSTEM]
 .SH DESCRIPTION
 dfc is a tool similar to df(1) except that it displays a graph along with the
 data and is able to use colors (implemented as "color auto" mode).
@@ -19,6 +19,9 @@ option and choose the unit.
 .TP
 \-a
 Display informations about all filesystem found in the mtab file.
+.TP
+\-b
+Do not show the graph bar.
 .TP
 \-c
 Disable color.
@@ -42,8 +45,12 @@ Show mount options.
 \-s
 Sum the total usage.
 .TP
-\-t
-Hide filesystem type.
+\-t [FILESYSTEM]
+Allows you to perform filtering on filesystem type. FILESYSTEM could take any
+know filesystem value. For instance, "ext4", "btrfs", "tmpfs", "reiserfs", etc.
+.TP
+\-T
+Show filesystem type.
 .TP
 \-u [UNIT]
 Display size using unit specified. UNIT can take one of the following value:
