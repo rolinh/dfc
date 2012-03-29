@@ -5,8 +5,9 @@
  *
  * Displays free disk space in an elegant manner.
  */
-#define _POSIX_C_SOURCE 2
 #define _BSD_SOURCE
+#define _POSIX_C_SOURCE 2
+#define _XOPEN_SOURCE 500
 
 #include <unistd.h>
 #include <stdio.h>
@@ -22,34 +23,55 @@
 #include "dfc.h"
 
 /* set flags for options */
-int aflag, bflag, gflag, hflag, iflag, kflag, mflag, nflag, oflag, sflag, tflag, vflag, wflag;
-int cflag = 1; /* color enabled by default */
-int Kflag, Mflag, Gflag;
+static int aflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag, uflag, vflag, wflag;
+static int cflag = 1; /* color enabled by default */
+
+/*
+ * Now use -u option for choosing the size (b, k, m, etc.)
+ * When using the flag, should specifie the unit used (h is default).
+ * Have a look at unit_opts for the possible values.
+ */
+static char unit = 'h';
 
 int
 main(int argc, char *argv[])
 {
 	struct list queue;
 	int ch;
+	char *subopts;
+	char *value;
 
-	while ((ch = getopt(argc, argv, "abcghiGkKmMnostvw")) != -1) {
+	char *unit_opts[] = {
+		#define H	0
+			"h",
+		#define B	1
+			"b",
+		#define K	2
+			"k",
+		#define M	3
+			"m",
+		#define G	4
+			"g",
+		#define T	5
+			"t",
+		#define P	6
+			"p",
+		#define E	7
+			"e",
+		#define Z	8
+			"z",
+		#define Y	9
+			"y",
+		NULL
+	};
+
+	while ((ch = getopt(argc, argv, "achimnostu:vw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
 			break;
-		case 'b':
-			bflag = 1;
-			break;
 		case 'c':
 			cflag = 0;
-			break;
-		case 'g':
-			gflag = 1;
-			Gflag = 0;
-			break;
-		case 'G':
-			gflag = 0;
-			Gflag = 1;
 			break;
 		case 'h':
 			hflag = 1;
@@ -57,21 +79,8 @@ main(int argc, char *argv[])
 		case 'i':
 			iflag = 1;
 			break;
-		case 'k':
-			kflag = 1;
-			Kflag = 0;
-			break;
-		case 'K':
-			kflag = 0;
-			Kflag = 1;
-			break;
 		case 'm':
 			mflag = 1;
-			Mflag = 0;
-			break;
-		case 'M':
-			mflag = 0;
-			Mflag = 1;
 			break;
 		case 'n':
 			nflag = 1;
@@ -84,6 +93,49 @@ main(int argc, char *argv[])
 			break;
 		case 't':
 			tflag = 1;
+			break;
+		case 'u':
+			uflag = 1;
+			subopts = optarg;
+			while (*subopts) {
+				switch (getsubopt(&subopts, unit_opts, &value)) {
+				case H:
+					unit = 'h';
+					break;
+				case B:
+					unit = 'b';
+					break;
+				case K:
+					unit = 'k';
+					break;
+				case M:
+					unit = 'm';
+					break;
+				case G:
+					unit = 'g';
+					break;
+				case T:
+					unit = 't';
+					break;
+				case P:
+					unit = 'p';
+					break;
+				case E:
+					unit = 'e';
+					break;
+				case Z:
+					unit = 'z';
+					break;
+				case Y: unit = 'y';
+					break;
+				case -1:
+					(void)fprintf(stderr,
+						"illegal sub option %s",
+						subopts);
+					return EXIT_FAILURE;
+					/* NOTREACHED */
+				}
+			}
 			break;
 		case 'v':
 			vflag = 1;
@@ -135,23 +187,20 @@ usage(int status)
 	if (status != 0)
 		(void)fputs("Try dfc -h for more informations\n", stderr);
 	else
-		(void)fputs("Usage: dfc [OPTIONS(S)]\n"
+		(void)fputs("Usage: dfc [OPTIONS(S)] [-u unit]\n"
 		"Available options:\n"
 		"	-a	print all fs from mtab\n"
-		"	-b	size in Bytes\n"
 		"	-c	disable color\n"
-		"	-g	size in Gio\n"
-		"	-G	size in Go\n"
 		"	-h	print this message\n"
 		"	-i	info about inodes\n"
-		"	-k	size in Kio\n"
-		"	-K	size in Ko\n"
-		"	-m	size in Mio\n"
-		"	-M	size in Mo\n"
+		"	-m	use metric (SI unit)\n"
 		"	-n	do not print header\n"
 		"	-o	show mount flags\n"
 		"	-s	sum the total usage\n"
 		"	-t	hide filesystem type\n"
+		"	-u	allows you to choose the unit in which\n"
+		"		to display the values. Read the	manpage\n"
+		"		for details\n"
 		"	-v	print program version\n"
 		"	-w	use a wider bar\n",
 		stdout);
@@ -422,14 +471,15 @@ disp(struct list *lst)
 		/* %used */
 		disp_perct(perctused);
 
-		/* format to requested format (k,m,g) */
-		if (bflag || kflag || Kflag || mflag || Mflag || gflag || Gflag) {
+		/* format to requested format */
+		if (uflag) {
 			size = cvrt(size);
 			avail = cvrt(avail);
 		}
 
 		/* avail  and total */
-		disp_at(avail, size, perctused);
+		disp_at(avail, perctused);
+		disp_at(size, perctused);
 
 		/* info about inodes */
 		if (iflag) {
@@ -492,19 +542,19 @@ disp_header(struct list *lst)
 	(void)printf("FREE (-) ");
 
 	(void)printf("%%USED");
-	if (kflag || Kflag)
+	if (unit == 'k')
 		(void)printf("  ");
-	else if (bflag)
+	else if (unit == 'b')
 		(void)printf("       ");
 	else
 		(void)printf(" ");
 
 	(void)printf("AVAILABLE");
-	if (kflag || Kflag)
+	if (unit == 'k')
 		(void)printf("      ");
-	else if (mflag || Mflag)
+	else if (unit == 'm')
 		(void)printf("     ");
-	else if (bflag)
+	else if (unit == 'b')
 		(void)printf("           ");
 	else
 		(void)printf("     ");
@@ -554,12 +604,13 @@ disp_sum(struct list *lst, double stot, double atot, double utot)
 
 	disp_perct(ptot);
 
-	if (bflag || kflag || Kflag || mflag || Mflag || gflag || Gflag) {
+	if (uflag) {
 		stot = cvrt(stot);
 		atot = cvrt(atot);
 	}
 
-	disp_at(atot, stot, ptot);
+	disp_at(atot, ptot);
+	disp_at(stot, ptot);
 
 	(void)printf("\n");
 }
@@ -616,51 +667,60 @@ disp_bar(double perct)
 
 /*
  * Display available and total correctly formated
- * @avail: obvious
- * @total: obvious too...
+ * TODO: men... this is really UGLY! Just figure out something!!
+ * @n: number to print
  * @perct: percentage (useful for finding which color to use)
  */
 void
-disp_at(double avail, double total, double perct)
+disp_at(double n, double perct)
 {
 	change_color(perct);
 
 	/* available  and total */
-	if (kflag || Kflag) {
-		(void)printf("%10.f", avail);
-		reset_color();
-		(void)printf("K");
-		change_color(perct);
-		(void)printf("%10.f", total);
-		reset_color();
-		(void)printf("K");
-	} else if (mflag || Mflag) {
-		(void)printf("%9.1f", avail);
-		reset_color();
-		(void)printf("M");
-		change_color(perct);
-		(void)printf("%9.1f", total);
-		reset_color();
-		(void)printf("M");
-	} else if (gflag || Gflag) {
-		(void)printf("%9.1f", avail);
-		reset_color();
-		(void)printf("G");
-		change_color(perct);
-		(void)printf("%9.1f", total);
-		reset_color();
-		(void)printf("G");
-	} else if (bflag) {
-		(void)printf("%15.f", avail);
+	switch (unit) {
+	case 'h':
+		humanize(n, perct);
+		return;
+		/* NOTREACHED */
+	case 'b':
+		(void)printf("%15.f", n);
 		reset_color();
 		(void)printf("B");
-		change_color(perct);
-		(void)printf("%15.f", total);
+		return;
+		/* NOTREACHED */
+	case 'k':
+		(void)printf("%10.f", n);
 		reset_color();
-		(void)printf("B");
-	} else {/* human readable */
-		humanize(avail, perct);
-		humanize(total, perct);
+		(void)printf("K");
+		return;
+		/* NOTREACHED */
+	}
+
+	(void)printf("%9.1f", n);
+	reset_color();
+
+	switch (unit) {
+	case 'm':
+		(void)printf("M");
+		break;
+	case 'g':
+		(void)printf("G");
+		break;
+	case 't':
+		(void)printf("T");
+		break;
+	case 'p':
+		(void)printf("P");
+		break;
+	case 'e':
+		(void)printf("E");
+		break;
+	case 'z':
+		(void)printf("Z");
+		break;
+	case 'y':
+		(void)printf("Y");
+		break;
 	}
 }
 
@@ -717,71 +777,136 @@ reset_color(void)
 }
 
 /*
- * Converts the argument to the correct format (K,M,G)
+ * Converts the argument to the correct unit
+ * TODO: pretty crapy function... should do it in a smart way!
+ * Plus there probably is some roundings errors...
+ * Need to clean this crap ASAP
  * @n: number to convert
  */
 double
 cvrt(double n)
 {
-	if (kflag)
-		n /= 1024.0;
-	else if (mflag)
-		/* 1024^2 */
-		n /= 1048576.0;
-	else if (gflag)
-		/* 1024^3 */
-		n /= 1073741824.0;
-	else if (Kflag)
-		n /= 1000.0;
-	else if (Mflag)
-		n /= 1000000.0;
-	else if (Gflag)
-		n /= 1000000000.0;
-
-	return n;
-	/* NOTREACHED */
+	switch (unit) {
+	case 'b':
+		return n;
+		/* NOTREACHED */
+	case 'e':
+		if (mflag) /* 1000^6 */
+			return n / 1000000000000000000.0;
+			/* NOTREACHED */
+		else /* 1024^6 */
+			return n / 1152921504606846976.0;
+			/* NOTREACHED */
+	case 'g':
+		if (mflag) /* 1000^3 */
+			return n / 1000000000.0;
+			/* NOTREACHED */
+		else /* 1024^3 */
+			return n / 1073741824.0;
+			/* NOTREACHED */
+	case 'k':
+		if (mflag)
+			return n / 1000.0;
+			/* NOTREACHED */
+		else
+			return n / 1024.0;
+			/* NOTREACHED */
+	case 'm':
+		if (mflag) /* 1000^2 */
+			return n / 1000000.0;
+			/* NOTREACHED */
+		else /* 1024^2 */
+			return n / 1048576.0;
+			/* NOTREACHED */
+	case 'p':
+		if (mflag) /* 1000^5 */
+			return n / 1000000000000000.0;
+			/* NOTREACHED */
+		else /* 1024^5 */
+			return n / 1125899906842624.0;
+			/* NOTREACHED */
+	case 't':
+		if (mflag) /* 1000^4 */
+			return n / 1000000000000.0;
+			/* NOTREACHED */
+		else /* 1024^4 */
+			return n / 1099511627776.0;
+			/* NOTREACHED */
+	case 'y':
+		if (mflag) /* 1000^8 */
+			return n / 1000000000000000000000000.0;
+			/* NOTREACHED */
+		else /* 1024^8 */
+			return n / 1208925819614629174706176.0;
+			/* NOTREACHED */
+	case 'z':
+		if (mflag)
+			/* 1000^7 */
+			return n / 1000000000000000000000.0;
+			/* NOTREACHED */
+		else /* 1024^7 */
+			return n / 1180591620717411303424.0;
+			/* NOTREACHED */
+	}
 }
 
 /*
- * convert to human readable format and print it
+ * convert to human readable format and print the result
  * @n: number to convert and print
  * @perct: percentage (useful when using colors)
  */
-double
+void
 humanize(double n, double perct)
 {
 	int i = 0;
+	double divider = 1024.0;
 
-	while ((n >= 1000) && (i < 3)) {
-		n /= 1024.0;
+	/* when using SI unit... */
+	if (mflag)
+		divider = 1000.0;
+
+	while ((n >= 1000) && (i < 8)) {
+		n /= divider;
 		i++;
 	}
 
 	change_color(perct);
 
+	if ( i == 0)
+		(void)printf("%9.f", n);
+	else
+		(void)printf("%9.1f", n);
+
+	reset_color();
+
 	switch (i) {
 	case 0:	/* bytes */
-		(void)printf("%9.f", n);
-		reset_color();
 		(void)printf("B");
 		break;
-	case 1: /* Kio */
-		(void)printf("%9.1f", n);
-		reset_color();
+	case 1: /* Kio  or Ko */
 		(void)printf("K");
 		break;
-	case 2: /* Mio */
-		(void)printf("%9.1f", n);
-		reset_color();
+	case 2: /* Mio or Mo */
 		(void)printf("M");
 		break;
-	case 3: /* Gio */
-		(void)printf("%9.1f", n);
-		reset_color();
+	case 3: /* Gio or Go*/
 		(void)printf("G");
 		break;
-	default:/* else ??? */
-		(void)fprintf(stderr, "Error while humanizing %f\n", n);
+	case 4: /* Tio or To*/
+		(void)printf("T");
+		break;
+	case 5: /* Pio or Po*/
+		(void)printf("P");
+		break;
+	case 6: /* Eio or Eo*/
+		(void)printf("E");
+		break;
+	case 7: /* Zio or Zo*/
+		(void)printf("Z");
+		break;
+	case 8: /* Yio or Yo*/
+		(void)printf("Y");
+		break;
 	}
 }
 
