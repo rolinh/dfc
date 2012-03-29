@@ -57,12 +57,12 @@ void disp(struct list *lst);
 void disp_header(struct list *lst);
 void disp_sum(struct list *lst, double stot, double utot, double ftot);
 void disp_bar(double perct);
-void disp_at(double avail, double total, double perct);
+void disp_at(double n, double perct);
 void disp_perct(double perct);
 void change_color(double perct);
 void reset_color(void);
 double cvrt(double n);
-double humanize(double n, double perct);
+void humanize(double n, double perct);
 int imax(int a, int b);
 char* trk(char *str);
 
