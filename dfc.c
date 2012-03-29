@@ -485,8 +485,8 @@ disp(struct list *lst)
 		if (iflag) {
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
-			(void)printf("%10ld", p->files);
-			(void)printf("%10ld", p->favail);
+			(void)printf("%9ldk", p->files / 1000);
+			(void)printf("%9ldk", p->favail / 1000);
 		}
 
 		/* mounted on */
@@ -616,8 +616,8 @@ disp_sum(struct list *lst, double stot, double atot, double utot,
 	disp_at(stot, ptot);
 
 	if (ifitot && ifatot) {
-		(void)printf("%10.f", ifitot);
-		(void)printf("%10.f", ifatot);
+		(void)printf("%9.fk", ifitot / 1000);
+		(void)printf("%9.fk", ifatot / 1000);
 	}
 
 	(void)printf("\n");
