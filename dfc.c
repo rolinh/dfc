@@ -406,9 +406,9 @@ disp(struct list *lst)
 	struct fsmntinfo *p = NULL;
 	int i, j, n;
 	double perctused, size, avail, used;
-	double stot, atot, utot;
+	double stot, atot, utot, ifitot, ifatot;
 
-	stot = atot = utot = n = 0;
+	stot = atot = utot = ifitot = ifatot = n = 0;
 
 	/* legend on top */
 	if (!nflag)
@@ -483,6 +483,8 @@ disp(struct list *lst)
 
 		/* info about inodes */
 		if (iflag) {
+			ifitot += (double)p->files;
+			ifatot += (double)p->favail;
 			(void)printf("%10ld", p->files);
 			(void)printf("%10ld", p->favail);
 		}
@@ -502,7 +504,7 @@ disp(struct list *lst)
 	}
 
 	if (sflag)
-		disp_sum(lst, stot, atot, utot);
+		disp_sum(lst, stot, atot, utot, ifitot, ifatot);
 }
 
 /*
@@ -583,7 +585,8 @@ disp_header(struct list *lst)
  * @utot:
  */
 void
-disp_sum(struct list *lst, double stot, double atot, double utot)
+disp_sum(struct list *lst, double stot, double atot, double utot,
+		double ifitot, double ifatot)
 {
 	int i,j;
 	double ptot = 0;
@@ -611,6 +614,11 @@ disp_sum(struct list *lst, double stot, double atot, double utot)
 
 	disp_at(atot, ptot);
 	disp_at(stot, ptot);
+
+	if (ifitot && ifatot) {
+		(void)printf("%10.f", ifitot);
+		(void)printf("%10.f", ifatot);
+	}
 
 	(void)printf("\n");
 }

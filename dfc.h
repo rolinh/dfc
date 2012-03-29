@@ -55,7 +55,8 @@ struct fsmntinfo fmi_init(void);
 void fetch_info(struct list *lst);
 void disp(struct list *lst);
 void disp_header(struct list *lst);
-void disp_sum(struct list *lst, double stot, double utot, double ftot);
+void disp_sum(struct list *lst, double stot, double utot, double ftot,
+		double ifitot, double ifatot);
 void disp_bar(double perct);
 void disp_at(double n, double perct);
 void disp_perct(double perct);
