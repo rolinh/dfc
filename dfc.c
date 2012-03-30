@@ -465,7 +465,7 @@ disp(struct list *lst, char *fsfilter)
 	double perctused, size, avail, used;
 	double stot, atot, utot, ifitot, ifatot;
 	char *stropt;
-	char *strtmp = strdup(fsfilter);
+	char *strtmp;
 
 	stot = atot = utot = ifitot = ifatot = n = 0;
 
@@ -499,6 +499,12 @@ disp(struct list *lst, char *fsfilter)
 
 		/* apply fsfiltering */
 		if (tflag) {
+			if ((strtmp = strdup(fsfilter)) == NULL) {
+				(void)fprintf(stderr, "cannot duplicate "
+					"fsfilter\n");
+				exit(EXIT_FAILURE);
+				/* NOTREACHED */
+			}
 			stropt = strtok(fsfilter, ",");
 			while (stropt != NULL) {
 				if (strcmp(p->type, stropt) == 0)
