@@ -40,7 +40,7 @@ main(int argc, char *argv[])
 {
 	struct list queue;
 	int ch;
-	char *fsfilter;
+	char *fsfilter = NULL;
 	char *subopts;
 	char *value;
 
