@@ -226,8 +226,10 @@ usage(int status)
 	if (status != 0)
 		(void)fputs("Try dfc -h for more informations\n", stderr);
 	else
-		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-u UNIT] [-t FILESYSTEM]\n"
-		"Available options:\n"
+		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-u UNIT]"
+			"[-t FILESYSTEM]\n"
+			"Available options:\n", stdout);
+		(void)fputs(
 		"	-a	print all fs from mtab\n"
 		"	-b	do not show the graph bar\n"
 		"	-c	choose color mode. Read the manpage\n"
@@ -458,7 +460,7 @@ void
 disp(struct list *lst, char *fsfilter)
 {
 	struct fsmntinfo *p = NULL;
-	int i, j, n;
+	int i, n;
 	double perctused, size, avail, used;
 	double stot, atot, utot, ifitot, ifatot;
 
@@ -558,7 +560,7 @@ disp(struct list *lst, char *fsfilter)
 
 		/* info about mount option */
 		if (oflag) {
-			for (i = strlen(p->dir); i < 16; i++)
+			for (i = (int)strlen(p->dir); i < 16; i++)
 				(void)printf(" ");
 			(void)printf("%s\n", p->opts);
 		} else
@@ -923,6 +925,10 @@ cvrt(double n)
 			return n / 1180591620717411303424.0;
 			/* NOTREACHED */
 	}
+
+	/* should not be able to be here but just in case... */
+	return n;
+	/* NOTREACHED */
 }
 
 /*
@@ -1006,9 +1012,9 @@ char *
 trk(char *str)
 {
 	char *p = str;
-	char trunc[strlen(str)];
+	char trunc[MAXPATHLEN];
 	int i = 0;
-	int len;
+	size_t len;
 
 	/* if no occurrence of /, return the unmodified str */
 	if ((p = strchr(str, '/')) == NULL)
