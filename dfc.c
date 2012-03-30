@@ -378,11 +378,19 @@ fetch_info(struct list *lst)
 	while ((entbuf = getmntent(mtab)) != NULL) {
 		/* get infos from statvfs */
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
-			(void)fprintf(stderr, "Error using statvfs on %s\n",
+			/* permission denied for this one -> show warning */
+			if (errno == EACCES) {
+				(void)fprintf(stderr, "WARNING: %s was skipped "
+					"because it cannot be stated",
 					entbuf->mnt_dir);
-			perror("with this error code ");
-			exit(EXIT_FAILURE);
-			/* NOTREACHED */
+				perror(" ");
+			} else {
+				(void)fprintf(stderr, "Error while stating %s",
+					entbuf->mnt_dir);
+				perror(" ");
+				exit(EXIT_FAILURE);
+				/* NOTREACHED */
+			}
 		} else {
 			/* infos from getmntent */
 			if ((fmi->fsname = strdup(trk(entbuf->mnt_fsname)))
@@ -415,7 +423,6 @@ fetch_info(struct list *lst)
 			/* enqueue the element into the queue */
 			enqueue(lst, *fmi);
 
-			/* adjust longest for the queue */
 
 			/* adjust for gvfs-fuse-daemon */
 			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0) {
@@ -423,7 +430,7 @@ fetch_info(struct list *lst)
 				lst->typemaxlen = imax(lst->typemaxlen, 4);
 				lst->dirmaxlen = imax((int)strlen(fmi->dir),
 						lst->dirmaxlen);
-			} else {
+			} else { /* adjust longest for the queue */
 				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
 					lst->fsmaxlen);
 				lst->dirmaxlen = imax((int)strlen(fmi->dir),
@@ -435,8 +442,11 @@ fetch_info(struct list *lst)
 	}
 
 	/* we need to close the mtab file now */
-	if (fclose(mtab) == EOF)
+	if (fclose(mtab) == EOF) {
 		perror("Could not close mtab file ");
+		exit(EXIT_FAILURE);
+		/* NOTREACHED */
+	}
 }
 
 /*
