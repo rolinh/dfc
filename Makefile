@@ -25,8 +25,8 @@ install-data: dfc.1
 
 install: all install-main install-data
 
-debug: ${OBJS}
-	${CC} ${CFDEBUG} ${LDFLAGS} -o ${EXEC} ${OBJS}
+debug: ${EXEC}
+debug: CC += ${CFDEBUG}
 
 clean:
 	rm -rf *.o
