@@ -68,7 +68,17 @@ main(int argc, char *argv[])
 		NULL
 	};
 
-	while ((ch = getopt(argc, argv, "abchimnost:Tu:vw")) != -1) {
+	char *color_opts[] = {
+		#define CALWAYS	0
+			"always",
+		#define	CNEVER	1
+			"never",
+		#define	CAUTO	2
+			"auto",
+		NULL
+	};
+
+	while ((ch = getopt(argc, argv, "abc:himnost:Tu:vw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -77,7 +87,26 @@ main(int argc, char *argv[])
 			bflag = 1;
 			break;
 		case 'c':
-			cflag = 0;
+			subopts = optarg;
+			while (*subopts) {
+				switch (getsubopt(&subopts, color_opts, &value)) {
+				case CALWAYS:
+					cflag = 2;
+					break;
+				case CNEVER:
+					cflag = 0;
+					break;
+				case CAUTO:
+					cflag = 1;
+					break;
+				case -1:
+					(void)fprintf(stderr,
+						"-c: illegal sub option %s\n",
+						subopts);
+					return EXIT_FAILURE;
+					/* NOTREACHED */
+				}
+			}
 			break;
 		case 'h':
 			hflag = 1;
@@ -140,7 +169,7 @@ main(int argc, char *argv[])
 					break;
 				case -1:
 					(void)fprintf(stderr,
-						"illegal sub option %s",
+						"-u: illegal sub option %s\n",
 						subopts);
 					return EXIT_FAILURE;
 					/* NOTREACHED */
@@ -170,8 +199,8 @@ main(int argc, char *argv[])
 		/* NOTREACHED */
 	}
 
-	/* if fd is not a terminal, disable color */
-	if (!isatty(1))
+	/* if fd is not a terminal and color mode is not "always", disable color */
+	if (!isatty(1) && cflag != 2)
 		cflag = 0;
 
 	/* initializes the queue */
@@ -197,11 +226,12 @@ usage(int status)
 	if (status != 0)
 		(void)fputs("Try dfc -h for more informations\n", stderr);
 	else
-		(void)fputs("Usage: dfc [OPTIONS(S)] [-u unit] [-t filesystem]\n"
+		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-u UNIT] [-t FILESYSTEM]\n"
 		"Available options:\n"
 		"	-a	print all fs from mtab\n"
 		"	-b	do not show the graph bar\n"
-		"	-c	disable color\n"
+		"	-c	choose color mode. Read the manpage\n"
+		"		for details\n"
 		"	-h	print this message\n"
 		"	-i	info about inodes\n"
 		"	-m	use metric (SI unit)\n"
