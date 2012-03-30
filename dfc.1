@@ -1,11 +1,13 @@
 .TH dfc 1  "March 29, 2012" "version 2.1.0" "USER COMMANDS"
 .SH NAME
-dfc \- display file system space usage using graph and colors colors
+dfc \- display file system space usage using graph and colors
 .SH SYNOPSIS
-.B dfc [OPTION(S)] [-u UNIT] [-t FILESYSTEM]
+.B dfc [OPTION(S)] [-c WHEN] [-u UNIT] [-t FILESYSTEM]
 .SH DESCRIPTION
-dfc is a tool similar to df(1) except that it displays a graph along with the
-data and is able to use colors (implemented as "color auto" mode).
+dfc is a tool similar to df(1) except that it is able to show a graph along with the
+data and is able to use color (color mode is "color-auto" by default but you
+can change this with "-c" option).
+
 The available size correspond to the space available to a user point of
 view and not from root's perspective (ie: use f_bavail instead of f_bfree).
 In the same idea, used space is computed simply by substracting the available
@@ -13,24 +15,36 @@ space from the total size.
 
 Without any argument, size is displayed in human readable format.
 Be aware that when using human-readable format, there might be some rounding
-when computing the size. If you want a maximum precision, use the "-u"
+when computing the size. If you want maximum precision, use the "-u"
 option and choose the unit.
 .SH OPTIONS
 .TP
 \-a
-Display informations about all filesystem found in the mtab file.
+Show information about all file systems found in the mtab file.
 .TP
 \-b
 Do not show the graph bar.
 .TP
-\-c
-Disable color.
+\-c [WHEN]
+Choose color mode where WHEN is one of the following sub-option:
+
+"always":
+	Color will always be used, no matter what stdout is.
+
+"auto":
+	This is default when "-c" is not activated. Color is used only if "stdout"
+is a terminal. For instance, color will be disabled with this option if you
+pipe the output of dfc(1) into another command.
+
+"never":
+	Color will never be used.
+
 .TP
 \-h
-Display a short help text.
+Show a short help text.
 .TP
 \-i
-Display information about inodes.
+Show information about inodes.
 .TP
 \-m
 Use SI units (metric) ie size are computed with powers of 10 instead of powers
@@ -53,37 +67,37 @@ know filesystem value. For instance, "ext4", "btrfs", "tmpfs", "reiserfs", etc.
 Show filesystem type.
 .TP
 \-u [UNIT]
-Display size using unit specified. UNIT can take one of the following value:
+Show size using unit specified. UNIT can take one of the following value:
 
-\-h
-	Human readable (default when not using -u option).
+"h":
+	Human readable (default when not using "-u" option).
 
-\-b
-	Display bytes.
+"b":
+	Show bytes.
 
-\-k
-	Display size using Kio.
+"k":
+	Show size using Kio.
 
-\-m
-	Display size using Mio.
+"m":
+	Show size using Mio.
 
-\-g
-	Display size using Gio.
+"g":
+	Show size using Gio.
 
-\-t
-	Display size using Tio.
+"t":
+	Show size using Tio.
 
-\-p
-	Display size using Pio.
+"p":
+	Show size using Pio.
 
-\-e
-	Display size using Eio.
+"e":
+	Show size using Eio.
 
-\-z
-	Display size using Zio.
+"z":
+	Show size using Zio.
 
-\-y
-	Display size using Yio.
+"y":
+	Show size using Yio.
 
 NOTE: When using "-u" option along with "-m" option, those suboptions are
 replaced by their SI counterparts.
