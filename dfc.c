@@ -225,7 +225,7 @@ usage(int status)
 {
 	if (status != 0)
 		(void)fputs("Try dfc -h for more informations\n", stderr);
-	else
+	else {
 		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-u UNIT]"
 			"[-t FILESYSTEM]\n"
 			"Available options:\n", stdout);
@@ -249,6 +249,7 @@ usage(int status)
 		"	-v	print program version\n"
 		"	-w	use a wider bar\n",
 		stdout);
+	}
 
 	exit(status);
 	/* NOTREACHED */
