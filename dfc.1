@@ -60,8 +60,14 @@ Show mount options.
 Sum the total usage.
 .TP
 \-t [FILESYSTEM]
-Allows you to perform filtering on filesystem type. FILESYSTEM could take any
-know filesystem value. For instance, "ext4", "btrfs", "tmpfs", "reiserfs", etc.
+Allows you to perform filtering on file system type. FILESYSTEM could take any
+known file system value. For instance, "ext4", "ufs", "tmpfs", "reiserfs", etc.
+
+Multiple selection on file system is also possible. In this case, FILESYSTEM
+needs to be comma separated (without spaces). For instance, if you want to
+filter "ext4" and "tmpfs", you would use the following:
+
+	dfc -t ext4,tmpfs
 .TP
 \-T
 Show filesystem type.

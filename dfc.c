@@ -461,8 +461,11 @@ disp(struct list *lst, char *fsfilter)
 {
 	struct fsmntinfo *p = NULL;
 	int i, n;
+	int skip = 1;
 	double perctused, size, avail, used;
 	double stot, atot, utot, ifitot, ifatot;
+	char *stropt;
+	char *strtmp = strdup(fsfilter);
 
 	stot = atot = utot = ifitot = ifatot = n = 0;
 
@@ -474,8 +477,8 @@ disp(struct list *lst, char *fsfilter)
 		lst->fsmaxlen = 11;
 
 	p = lst->head;
-	while (p != NULL) {
 
+	while (p != NULL) {
 		if (!aflag) {
 			/* skip (pseudo)devices (which have a size of 0 usually) */
 			if (p->blocks == 0) {
@@ -496,11 +499,20 @@ disp(struct list *lst, char *fsfilter)
 
 		/* apply fsfiltering */
 		if (tflag) {
-			if (strcmp(p->type, fsfilter) != 0) {
+			stropt = strtok(fsfilter, ",");
+			while (stropt != NULL) {
+				if (strcmp(p->type, stropt) == 0)
+					skip = 0;
+				stropt = strtok(NULL, ",");
+			}
+			/* strtok modifies fsfilter so give back its value */
+			fsfilter = strdup(strtmp);
+			if (skip) {
 				p = p->next;
 				continue;
 				/* NOTREACHED */
-			}
+			} else
+				skip = 1;
 		}
 
 		/* filesystem */
