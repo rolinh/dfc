@@ -200,7 +200,7 @@ main(int argc, char *argv[])
 	}
 
 	/* if fd is not a terminal and color mode is not "always", disable color */
-	if (!isatty(1) && cflag != 2)
+	if (!isatty(STDOUT_FILENO) && cflag != 2)
 		cflag = 0;
 
 	/* initializes the queue */
