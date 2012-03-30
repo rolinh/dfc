@@ -539,7 +539,7 @@ disp(struct list *lst, char *fsfilter)
 		used = size - avail;
 
 		/* calculate the % used */
-		if (size == 0)
+		if ((int)size == 0)
 			perctused = 100.0;
 		else
 			perctused = (used / size) * 100.0;
@@ -678,7 +678,7 @@ disp_sum(struct list *lst, double stot, double atot, double utot,
 	int i,j;
 	double ptot = 0;
 
-	if (stot == 0)
+	if ((int)stot == 0)
 		ptot = 100.0;
 	else
 		ptot = (utot / stot) * 100.0;
