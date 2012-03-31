@@ -26,7 +26,8 @@
 #include "dfc.h"
 
 /* set flags for options */
-static int aflag, bflag, iflag, mflag, nflag, oflag, sflag, tflag, uflag, wflag;
+static int aflag, bflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag,
+	   uflag, vflag, wflag;
 static int cflag = 1; /* color enabled by default */
 static int Tflag;
 
@@ -42,7 +43,6 @@ main(int argc, char *argv[])
 {
 	struct list queue;
 	int ch;
-	int fflag, hflag, vflag;
 	unsigned int width;
 	char *fsfilter = NULL;
 	char *subopts;
@@ -456,12 +456,14 @@ fetch_info(struct list *lst)
 			enqueue(lst, *fmi);
 
 			/* adjust longest for the queue */
-			lst->fsmaxlen = imax((int)strlen(fmi->fsname),
-				lst->fsmaxlen);
-			lst->dirmaxlen = imax((int)strlen(fmi->dir),
-					lst->dirmaxlen);
-			lst->typemaxlen = imax((int)strlen(fmi->type),
-					lst->typemaxlen);
+			if ((!aflag && fmi->blocks > 0) || aflag) {
+				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
+					lst->fsmaxlen);
+				lst->dirmaxlen = imax((int)strlen(fmi->dir),
+						lst->dirmaxlen);
+				lst->typemaxlen = imax((int)strlen(fmi->type),
+						lst->typemaxlen);
+			}
 		}
 	}
 
