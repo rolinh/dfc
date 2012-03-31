@@ -483,12 +483,22 @@ disp(struct list *lst, char *fsfilter)
 	struct fsmntinfo *p = NULL;
 	int i, n;
 	int skip = 1;
+	int nm = 0;
 	double perctused, size, avail, used;
 	double stot, atot, utot, ifitot, ifatot;
 	char *stropt;
 	char *strtmp;
 
 	stot = atot = utot = ifitot = ifatot = n = 0;
+
+	/* activate negative matching? */
+	if (tflag) {
+		if (fsfilter[0] == '-') {
+			nm = 1;
+			skip = 0;
+			fsfilter++;
+		}
+	}
 
 	/* legend on top */
 	if (!nflag)
@@ -519,18 +529,26 @@ disp(struct list *lst, char *fsfilter)
 			}
 			stropt = strtok(fsfilter, ",");
 			while (stropt != NULL) {
-				if (strcmp(p->type, stropt) == 0)
-					skip = 0;
+				if (strcmp(p->type, stropt) == 0) {
+					if (nm)
+						skip = 1;
+					else
+						skip = 0;
+				}
 				stropt = strtok(NULL, ",");
 			}
 			/* strtok modifies fsfilter so give back its value */
 			fsfilter = strdup(strtmp);
 			if (skip) {
+				if (nm)
+					skip = 0;
 				p = p->next;
 				continue;
 				/* NOTREACHED */
-			} else
-				skip = 1;
+			} else {
+				if (!nm)
+					skip = 1;
+			}
 		}
 
 		/* filesystem */

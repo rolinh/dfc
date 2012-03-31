@@ -47,6 +47,7 @@ pipe the output of dfc(1) into another command.
 \-f
 Override auto-adjust behavior by forcing information to be displayed.
 You probably do not want to activate this option but choice is yours.
+This option can be useful if you pipe the output of dfc(1) though.
 .TP
 \-h
 Show a short help text.
@@ -76,6 +77,13 @@ needs to be comma separated (without spaces). For instance, if you want to
 filter "ext4" and "tmpfs", you would use the following:
 
 	dfc -t ext4,tmpfs
+
+You can also use negative matching to filter the output. To do so, you just
+need to prepend a "-" to FILESYSTEM. In the following example, dfc(1) will
+display all file system type except those mentionned:
+
+	dfc -t -rootfs,tmpfs
+
 .TP
 \-T
 Show filesystem type.
