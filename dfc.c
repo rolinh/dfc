@@ -21,6 +21,7 @@
 
 #include <sys/param.h>
 #include <sys/statvfs.h>
+#include <sys/ioctl.h>
 
 #include "dfc.h"
 
@@ -42,6 +43,7 @@ main(int argc, char *argv[])
 {
 	struct list queue;
 	int ch;
+	unsigned int width;
 	char *fsfilter = NULL;
 	char *subopts;
 	char *value;
@@ -204,6 +206,21 @@ main(int argc, char *argv[])
 	/* if fd is not a terminal and color mode is not "always", disable color */
 	if (!isatty(STDOUT_FILENO) && cflag != 2)
 		cflag = 0;
+
+	/* cannot display all information if tty is too narrow */
+	width = getttywidth();
+	if (width < 151) {
+		if (oflag) {
+			Tflag = 0;
+			bflag = 1;
+		}
+	}
+	if (width < 125)
+		oflag = 0;
+	if (width < 81) {
+		bflag = 1;
+		Tflag = 0;
+	}
 
 	/* initializes the queue */
 	init_queue(&queue);
@@ -1064,5 +1081,35 @@ shortenstr(char *str, int len)
 	str[0] = '+';
 
 	return str;
+	/* NOTREACHED */
+}
+
+/*
+ * Get the width of tty and return it.
+ * Return 0 if stdout is not a tty.
+ */
+unsigned int
+getttywidth(void)
+{
+	unsigned int width = 0;
+#ifdef TIOCGSIZE
+	struct ttysize win;
+#elif defined(TIOCGWINSZ)
+	struct winsize win;
+#endif
+
+	if (!isatty(STDOUT_FILENO))
+		return 0;
+		/* NOTREACHED */
+
+#ifdef TIOCGSIZE
+	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
+		width = win.ws_col;
+#elif defined(TIOCGWINSZ)
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
+		width = win.ws_col;
+#endif
+
+	return width == 0 ? 80 : width;
 	/* NOTREACHED */
 }

@@ -67,5 +67,6 @@ void humanize(double n, double perct);
 int imax(int a, int b);
 char* trk(char *str);
 char* shortenstr(char *str, int len);
+unsigned int getttywidth(void);
 
 #endif /* ndef DFC_H */
