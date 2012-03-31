@@ -17,6 +17,10 @@ Without any argument, size is displayed in human readable format.
 Be aware that when using human-readable format, there might be some rounding
 when computing the size. If you want maximum precision, use the "-u"
 option and choose the unit.
+
+dfc(1) also has a built in feature that makes the output auto adjust based on
+terminal width. If you want to override this behavior, use the "-f" option.
+
 .SH OPTIONS
 .TP
 \-a
@@ -39,6 +43,10 @@ pipe the output of dfc(1) into another command.
 "never":
 	Color will never be used.
 
+.TP
+\-f
+Override auto-adjust behavior by forcing information to be displayed.
+You probably do not want to activate this option but choice is yours.
 .TP
 \-h
 Show a short help text.

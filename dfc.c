@@ -26,8 +26,8 @@
 #include "dfc.h"
 
 /* set flags for options */
-static int aflag, bflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag,
-	   uflag, vflag, wflag;
+static int aflag, bflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag,
+	   tflag, uflag, vflag, wflag;
 static int cflag = 1; /* color enabled by default */
 static int Tflag;
 
@@ -82,7 +82,7 @@ main(int argc, char *argv[])
 		NULL
 	};
 
-	while ((ch = getopt(argc, argv, "abc:himnost:Tu:vw")) != -1) {
+	while ((ch = getopt(argc, argv, "abc:fhimnost:Tu:vw")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -111,6 +111,9 @@ main(int argc, char *argv[])
 					/* NOTREACHED */
 				}
 			}
+			break;
+		case 'f':
+			fflag = 1;
 			break;
 		case 'h':
 			hflag = 1;
@@ -210,17 +213,19 @@ main(int argc, char *argv[])
 		cflag = 0;
 
 	/* cannot display all information if tty is too narrow */
-	if (width < 151) {
-		if (oflag) {
-			Tflag = 0;
-			bflag = 1;
+	if (!fflag) {
+		if (width < 151) {
+			if (oflag) {
+				Tflag = 0;
+				bflag = 1;
+			}
 		}
-	}
-	if (width < 125)
-		oflag = 0;
-	if (width < 81) {
-		bflag = 1;
-		Tflag = 0;
+		if (width < 125)
+			oflag = 0;
+		if (width < 81) {
+			bflag = 1;
+			Tflag = 0;
+		}
 	}
 
 	/* initializes the queue */
