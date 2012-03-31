@@ -9,6 +9,8 @@
 #define _POSIX_C_SOURCE 2
 #define _XOPEN_SOURCE 500
 
+#define STRMAXLEN 24
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -396,14 +398,17 @@ fetch_info(struct list *lst)
 			}
 		} else {
 			/* infos from getmntent */
-			if ((fmi->fsname = strdup(trk(entbuf->mnt_fsname)))
-					== NULL) {
+			if ((fmi->fsname = strdup(shortenstr(
+						trk(entbuf->mnt_fsname),
+						STRMAXLEN))) == NULL) {
 				fmi->fsname = "unknown";
 			}
-			if ((fmi->dir = strdup(trk(entbuf->mnt_dir))) == NULL) {
+			if ((fmi->dir = strdup(shortenstr(trk(entbuf->mnt_dir),
+							STRMAXLEN))) == NULL) {
 				fmi->dir = "unknown";
 			}
-			if ((fmi->type = strdup(trk(entbuf->mnt_type))) == NULL) {
+			if ((fmi->type = strdup(shortenstr(trk(entbuf->mnt_type),
+							9))) == NULL) {
 				fmi->type = "unknown";
 			}
 			if ((fmi->opts = strdup(trk(entbuf->mnt_opts))) == NULL) {
@@ -426,21 +431,13 @@ fetch_info(struct list *lst)
 			/* enqueue the element into the queue */
 			enqueue(lst, *fmi);
 
-
-			/* adjust for gvfs-fuse-daemon */
-			if (strcmp(fmi->fsname, "gvfs-fuse-daemon") == 0) {
-				lst->fsmaxlen = imax(lst->fsmaxlen, 11);
-				lst->typemaxlen = imax(lst->typemaxlen, 4);
-				lst->dirmaxlen = imax((int)strlen(fmi->dir),
-						lst->dirmaxlen);
-			} else { /* adjust longest for the queue */
-				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
-					lst->fsmaxlen);
-				lst->dirmaxlen = imax((int)strlen(fmi->dir),
-						lst->dirmaxlen);
-				lst->typemaxlen = imax((int)strlen(fmi->type),
-						lst->typemaxlen);
-			}
+			/* adjust longest for the queue */
+			lst->fsmaxlen = imax((int)strlen(fmi->fsname),
+				lst->fsmaxlen);
+			lst->dirmaxlen = imax((int)strlen(fmi->dir),
+					lst->dirmaxlen);
+			lst->typemaxlen = imax((int)strlen(fmi->type),
+					lst->typemaxlen);
 		}
 	}
 
@@ -486,15 +483,6 @@ disp(struct list *lst, char *fsfilter)
 				p = p->next;
 				continue;
 				/*NOTREACHED */
-			}
-		} else {
-			/*
-			 * gvfs-fuse-daemon is way too long for a name --> it
-			 * breaks the display so rename it
-			 */
-			if (strcmp(p->fsname, "gvfs-fuse-daemon") == 0) {
-				(void)strcpy(p->fsname, "fuse-daemon");
-				(void)strcpy(p->type, "gvfs");
 			}
 		}
 
@@ -611,7 +599,7 @@ disp_header(struct list *lst)
 		(void)printf(" ");
 
 	if (Tflag) {
-		(void)printf("TYPE ");
+		(void)printf(" TYPE");
 		if (lst->typemaxlen > 5)
 			for (i = 5; i < lst->typemaxlen + 1; i++)
 				(void)printf(" ");
@@ -1031,7 +1019,6 @@ char *
 trk(char *str)
 {
 	char *p = str;
-	char trunc[MAXPATHLEN];
 	int i = 0;
 	size_t len;
 
@@ -1050,10 +1037,31 @@ trk(char *str)
 
 	/* p contains the part of str we want to truncate from str */
 	len = strlen(str) - strlen(p);
-	(void)strncpy(trunc, str, len);
-	trunc[len] = '\0';
+	str[len] = '\0';
 
-	str = strdup(trunc);
+	return str;
+	/* NOTREACHED */
+}
+
+/*
+ * Shorten the input string to the specified length
+ * @str: string to shorten
+ * @len: the length the new string should be
+ */
+char *
+shortenstr(char *str, int len)
+{
+	int i = 0;
+	int slen = (int)strlen(str);
+
+	if (slen < len + 1)
+		return str;
+		/* NOTREACHED */
+
+	while (i++ < (slen - len))
+		str++;
+
+	str[0] = '+';
 
 	return str;
 	/* NOTREACHED */
