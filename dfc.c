@@ -203,12 +203,13 @@ main(int argc, char *argv[])
 		/* NOTREACHED */
 	}
 
+	width = getttywidth();
+
 	/* if fd is not a terminal and color mode is not "always", disable color */
-	if (!isatty(STDOUT_FILENO) && cflag != 2)
+	if (width == 0 && cflag != 2)
 		cflag = 0;
 
 	/* cannot display all information if tty is too narrow */
-	width = getttywidth();
 	if (width < 151) {
 		if (oflag) {
 			Tflag = 0;
@@ -459,11 +460,8 @@ fetch_info(struct list *lst)
 	}
 
 	/* we need to close the mtab file now */
-	if (fclose(mtab) == EOF) {
+	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
-		exit(EXIT_FAILURE);
-		/* NOTREACHED */
-	}
 }
 
 /*
