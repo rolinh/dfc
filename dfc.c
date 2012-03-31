@@ -26,8 +26,7 @@
 #include "dfc.h"
 
 /* set flags for options */
-static int aflag, bflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag,
-	   tflag, uflag, vflag, wflag;
+static int aflag, bflag, iflag, mflag, nflag, oflag, sflag, tflag, uflag, wflag;
 static int cflag = 1; /* color enabled by default */
 static int Tflag;
 
@@ -43,6 +42,7 @@ main(int argc, char *argv[])
 {
 	struct list queue;
 	int ch;
+	int fflag, hflag, vflag;
 	unsigned int width;
 	char *fsfilter = NULL;
 	char *subopts;
