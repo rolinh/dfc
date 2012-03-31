@@ -259,6 +259,7 @@ usage(int status)
 		"	-b	do not show the graph bar\n"
 		"	-c	choose color mode. Read the manpage\n"
 		"		for details\n"
+		"	-f	disable auto-adjust mode (force display)\n"
 		"	-h	print this message\n"
 		"	-i	info about inodes\n"
 		"	-m	use metric (SI unit)\n"
