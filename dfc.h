@@ -66,5 +66,6 @@ double cvrt(double n);
 void humanize(double n, double perct);
 int imax(int a, int b);
 char* trk(char *str);
+char* shortenstr(char *str, int len);
 
 #endif /* ndef DFC_H */
