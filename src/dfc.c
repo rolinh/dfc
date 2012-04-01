@@ -64,17 +64,17 @@
 #include "dfc.h"
 
 /* set flags for options */
-static int aflag, bflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag,
+int aflag, bflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag,
 	   uflag, vflag, wflag;
-static int cflag = 1; /* color enabled by default */
-static int Tflag;
+int cflag = 1; /* color enabled by default */
+int Tflag;
 
 /*
  * Now use -u option for choosing the size (b, k, m, etc.)
  * When using the flag, should specifie the unit used (h is default).
  * Have a look at unit_opts for the possible values.
  */
-static char unit = 'h';
+char unit = 'h';
 
 int
 main(int argc, char *argv[])
