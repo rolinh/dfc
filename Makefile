@@ -6,7 +6,7 @@ CFDEBUG = -g3 -pedantic -Wall -Wunused-parameter -Wlong-long\
 SRC = src
 MAN = man
 EXEC = dfc
-OBJS = ${SRC}/dfc.o
+OBJS = ${SRC}/dfc.o ${SRC}/list.o
 
 PREFIX=/usr/local
 BINDIR=${PREFIX}/bin
