@@ -4,7 +4,7 @@ dfc \- display file system space usage using graph and colors
 .SH SYNOPSIS
 .B dfc [OPTION(S)] [-c WHEN] [-u UNIT] [-t FILESYSTEM]
 .SH DESCRIPTION
-dfc is a tool similar to df(1) except that it is able to show a graph along with the
+dfc(1) is a tool similar to df(1) except that it is able to show a graph along with the
 data and is able to use color (color mode is "color-auto" by default but you
 can change this with "-c" option).
 
@@ -47,7 +47,7 @@ pipe the output of dfc(1) into another command.
 \-f
 Override auto-adjust behavior by forcing information to be displayed.
 You probably do not want to activate this option but choice is yours.
-This option can be useful if you pipe the output of dfc(1) though.
+This option may be useful if you pipe the output of dfc(1) though.
 .TP
 \-h
 Show a short help text.
@@ -125,7 +125,7 @@ NOTE: When using "-u" option along with "-m" option, those suboptions are
 replaced by their SI counterparts.
 .TP
 \-v
-Print dfc version and exit.
+Print dfc(1) version and exit.
 .TP
 \-w
 Use a wider bar.
