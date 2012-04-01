@@ -443,6 +443,7 @@ fetch_info(struct list *lst)
 #ifdef __FreeBSD__
 	if ((nummnt = getmntinfo(&entbuf, MNT_WAIT)) <= 0)
 		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
+		/* NOTREACHED */
 
 	for (fs = &entbuf; nummnt--; (*fs)++) {
 		vfsbuf = **fs;
@@ -474,7 +475,6 @@ fetch_info(struct list *lst)
 			}
 		} else {
 #endif
-			/* infos from getmntent */
 #ifdef __FreeBSD__
 			if ((fmi->fsname = strdup(shortenstr(
 						trk(entbuf->f_mntfromname),
@@ -494,6 +494,7 @@ fetch_info(struct list *lst)
 			/* TODO add the options */
 			fmi->opts = "non";
 #else
+			/* infos from getmntent */
 			if ((fmi->fsname = strdup(shortenstr(
 						trk(entbuf->mnt_fsname),
 						STRMAXLEN))) == NULL) {
@@ -514,7 +515,7 @@ fetch_info(struct list *lst)
 
 			/* infos from statvfs */
 			fmi->bsize	= vfsbuf.f_bsize;
-#ifdef __FreeBSD__
+#ifdef __FreeBSD__	/* FreeBSD does not have frsize */
 			fmi->frsize	= 0;
 #else
 			fmi->frsize	= vfsbuf.f_frsize;
@@ -524,7 +525,7 @@ fetch_info(struct list *lst)
 			fmi->bavail	= vfsbuf.f_bavail;
 			fmi->files	= vfsbuf.f_files;
 			fmi->ffree	= vfsbuf.f_ffree;
-#ifdef __FreeBSD__
+#ifdef __FreeBSD__	/* FreeBSD does not have favail */
 			fmi->favail	= 0;
 #else
 			fmi->favail	= vfsbuf.f_favail;
@@ -784,7 +785,7 @@ disp_header(struct list *lst)
 }
 
 /*
- * display the sum (useful when -s option is used
+ * display the sum (used when -s option is triggered)
  * @lst: queue containing the informations
  * @stot: size total
  * @utot:
@@ -830,7 +831,7 @@ disp_sum(struct list *lst, double stot, double atot, double utot,
 }
 
 /*
- * Display the nice usage bar
+ * Display nice usage bar
  * @perct: percentage value
  */
 void
@@ -956,9 +957,7 @@ disp_perct(double perct)
 			(void)printf("\033[;31m");
 
 		(void)printf("%3.f", perct);
-
 		reset_color();
-
 		(void)printf("%%");
 	}
 }
@@ -1063,7 +1062,7 @@ cvrt(double n)
 			/* NOTREACHED */
 	}
 
-	/* should not be able to be here but just in case... */
+	/* should not be able to reach this point but just in case... */
 	return n;
 	/* NOTREACHED */
 }
