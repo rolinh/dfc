@@ -1,4 +1,4 @@
-dfc is a simple tool that display filesystem usage
+dfc is a simple tool that display file system usage
 
 BUILD
 simply use make:
