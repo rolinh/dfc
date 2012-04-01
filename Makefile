@@ -20,10 +20,12 @@ ${EXEC}: ${OBJS}
 	${CC} ${LDFLAGS} -o ${EXEC} ${OBJS}
 
 install-main: dfc
-	install -Dm755 dfc ${DESTDIR}${BINDIR}/dfc
+	test -d ${DESTDIR}${BINDIR} || mkdir -p ${DESTDIR}${BINDIR}
+	install -m755 dfc ${DESTDIR}${BINDIR}/dfc
 
 install-data: ${MAN}/dfc.1
-	install -Dm644 ${MAN}/dfc.1 ${DESTDIR}${MANDIR}/man1/dfc.1
+	test -d ${DESTDIR}${MANDIR}/man1 || mkdir -p ${DESTDIR}${MANDIR}/man1
+	install -m644 ${MAN}/dfc.1 ${DESTDIR}${MANDIR}/man1/dfc.1
 
 install: all install-main install-data
 
