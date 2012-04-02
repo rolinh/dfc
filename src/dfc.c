@@ -647,7 +647,7 @@ disp_header(struct list *lst)
 		barinc = 35;
 	}
 	if (!bflag) {
-		(void)printf(" (*) USED");
+		(void)printf(" (=) USED");
 		for (i = 0; i < (barinc + 1); i++)
 			(void)printf(" ");
 		(void)printf("FREE (-) ");
@@ -756,7 +756,7 @@ disp_bar(double perct)
 
 	if (!cflag) {
 		for (i = 0; i < perct; i += barinc)
-			(void)printf("*");
+			(void)printf("=");
 
 		for (j = i; j < 100; j += barinc)
 			(void)printf("-");
@@ -765,17 +765,17 @@ disp_bar(double perct)
 		/* green */
 		(void)printf("\033[;32m");
 		for (i = 0; (i < 50) && (i < perct); i += barinc)
-			(void)printf("*");
+			(void)printf("=");
 
 		/* yellow */
 		(void)printf("\033[;33m");
 		for (; (i < 75) && (i < perct); i += barinc)
-			(void)printf("*");
+			(void)printf("=");
 
 		/* red */
 		(void)printf("\033[;31m");
 		for (; (i < 100) && (i < perct); i += barinc)
-			(void)printf("*");
+			(void)printf("=");
 
 		reset_color();
 
