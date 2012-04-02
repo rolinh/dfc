@@ -6,15 +6,22 @@ CFDEBUG = -g3 -pedantic -Wall -Wunused-parameter -Wlong-long\
 SRC = src
 MAN = man
 EXEC = dfc
-OBJS = ${SRC}/dfc.o ${SRC}/list.o
 
-PREFIX=/usr/local
+SRCS= ${SRC}/dfc.c \
+      ${SRC}/list.c
+
+OBJS= ${SRCS:.c=.o}
+
+.PATH: ${SRC}
+
+PREFIX?=/usr/local
 BINDIR=${PREFIX}/bin
 MANDIR=${PREFIX}/man
 
 all: ${EXEC}
 
-dfc.o: ${SRC}/dfc.c
+.c.o:
+	${CC} ${CFLAGS} -o $@ -c $<
 
 ${EXEC}: ${OBJS}
 	${CC} ${LDFLAGS} -o ${EXEC} ${OBJS}
