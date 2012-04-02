@@ -32,8 +32,14 @@
  *
  * Displays free disk space in an elegant manner.
  */
+
+/* What works for FreeBSD works for MacOS */
+#ifndef __linux__
+#define BSD
+#endif
+
 #define _BSD_SOURCE
-#ifndef __FreeBSD__
+#ifdef __linux
 #define _POSIX_C_SOURCE 2
 #define _XOPEN_SOURCE 500
 #endif
@@ -46,7 +52,7 @@
 #include <errno.h>
 #include <err.h>
 
-#ifndef __FreeBSD__
+#ifdef __linux__
 #include <mntent.h>
 #endif
 #include <string.h>
@@ -56,7 +62,7 @@
 #include <sys/statvfs.h>
 #include <sys/ioctl.h>
 
-#ifdef __FreeBSD__
+#ifdef BSD
 #include <sys/ucred.h>
 #include <sys/mount.h>
 #endif
@@ -328,15 +334,14 @@ fetch_info(struct list *lst)
 {
 	FILE *mtab;
 	struct fsmntinfo *fmi;
-#ifdef __FreeBSD__
+#ifdef __linux__
+	struct mntent *entbuf;
+	struct statvfs vfsbuf;
+#else
 	int nummnt;
 	struct statfs *entbuf;
 	struct statfs vfsbuf, **fs;
-#else
-	struct mntent *entbuf;
-	struct statvfs vfsbuf;
 #endif
-
 	/* init fsmntinfo */
 	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
 		(void)fputs("Error while allocating memory to fmi", stderr);
@@ -344,16 +349,7 @@ fetch_info(struct list *lst)
 		/* NOTREACHED */
 	}
 	*fmi = fmi_init();
-
-#ifdef __FreeBSD__
-	if ((nummnt = getmntinfo(&entbuf, MNT_WAIT)) <= 0)
-		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
-		/* NOTREACHED */
-
-	for (fs = &entbuf; nummnt--; (*fs)++) {
-		vfsbuf = **fs;
-
-#else
+#ifdef __linux__
 	/* open mtab file */
 	if ((mtab = fopen("/etc/mtab", "r")) == NULL) {
 		perror("Error while opening mtab file ");
@@ -379,26 +375,15 @@ fetch_info(struct list *lst)
 				/* NOTREACHED */
 			}
 		} else {
-#endif
-#ifdef __FreeBSD__
-			if ((fmi->fsname = strdup(shortenstr(
-						entbuf->f_mntfromname,
-						STRMAXLEN))) == NULL) {
-				fmi->fsname = "unknown";
-			}
-			if ((fmi->dir = strdup(shortenstr(
-						entbuf->f_mntonname,
-						STRMAXLEN))) == NULL) {
-				fmi->dir = "unknown";
-			}
-			if ((fmi->type = strdup(shortenstr(
-						entbuf->f_fstypename,
-						9))) == NULL) {
-				fmi->type = "unknown";
-			}
-			/* TODO add the options */
-			fmi->opts = "non";
 #else
+	if ((nummnt = getmntinfo(&entbuf, MNT_WAIT)) <= 0)
+		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
+		/* NOTREACHED */
+
+	for (fs = &entbuf; nummnt--; (*fs)++) {
+		vfsbuf = **fs;
+#endif
+#ifdef __linux__
 			/* infos from getmntent */
 			if ((fmi->fsname = strdup(shortenstr(
 						entbuf->mnt_fsname,
@@ -416,26 +401,42 @@ fetch_info(struct list *lst)
 			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
 				fmi->opts = "none";
 			}
+#else
+			if ((fmi->fsname = strdup(shortenstr(
+						entbuf->f_mntfromname,
+						STRMAXLEN))) == NULL) {
+				fmi->fsname = "unknown";
+			}
+			if ((fmi->dir = strdup(shortenstr(
+						entbuf->f_mntonname,
+						STRMAXLEN))) == NULL) {
+				fmi->dir = "unknown";
+			}
+			if ((fmi->type = strdup(shortenstr(
+						entbuf->f_fstypename,
+						9))) == NULL) {
+				fmi->type = "unknown";
+			}
+			/* TODO add the options */
+			fmi->opts = "non";
 #endif
-
 			/* infos from statvfs */
 			fmi->bsize	= vfsbuf.f_bsize;
-#ifdef __FreeBSD__	/* FreeBSD does not have frsize */
-			fmi->frsize	= 0;
-#else
+#ifdef __linux__
 			fmi->frsize	= vfsbuf.f_frsize;
+#else			/* *BSD do not have frsize */
+			fmi->frsize	= 0;
 #endif
 			fmi->blocks	= vfsbuf.f_blocks;
 			fmi->bfree	= vfsbuf.f_bfree;
 			fmi->bavail	= vfsbuf.f_bavail;
 			fmi->files	= vfsbuf.f_files;
 			fmi->ffree	= vfsbuf.f_ffree;
-#ifdef __FreeBSD__	/* FreeBSD does not have favail */
-			fmi->favail	= 0;
-#else
+#ifdef __linux__
 			fmi->favail	= vfsbuf.f_favail;
+#else			/* *BSD do not have favail */
+			fmi->favail	= 0;
 #endif
-
 			/* pointer to the next element */
 			fmi->next = NULL;
 
@@ -452,9 +453,8 @@ fetch_info(struct list *lst)
 						lst->typemaxlen);
 			}
 		}
-#ifndef __FreeBSD__
+#ifdef __linux__
 	}
-
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
@@ -551,17 +551,15 @@ disp(struct list *lst, char *fsfilter)
 			for (i = (int)strlen(p->type); i < lst->typemaxlen + 1; i++)
 				(void)printf(" ");
 		}
-
-#ifdef __FreeBSD__
-		size = p->bsize * p->blocks;
-		avail = p->bsize * p->bavail;
-		used = p->bsize * (p->blocks - p->bfree);
-#else
+#ifdef __linux__
 		size = (double)p->blocks *(double)p->frsize;
 		avail = (double)p->bavail * (double)p->frsize;
 		used = size - avail;
+#else
+		size = p->bsize * p->blocks;
+		avail = p->bsize * p->bavail;
+		used = p->bsize * (p->blocks - p->bfree);
 #endif
-
 		/* calculate the % used */
 		if ((int)size == 0)
 			perctused = 100.0;
@@ -1089,12 +1087,19 @@ getttywidth(void)
 
 #ifdef TIOCGSIZE
 	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
-		width = win.ws_col;
-#elif defined(TIOCGWINSZ)
-	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
+#ifdef __MACH__
+		width = win.ts_cols;
+#else
 		width = win.ws_col;
 #endif
-
+#elif defined(TIOCGWINSZ)
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
+#ifdef __MACH__
+		width = win.ts_cols;
+#else
+		width = win.ws_col;
+#endif
+#endif
 	return width == 0 ? 80 : width;
 	/* NOTREACHED */
 }
