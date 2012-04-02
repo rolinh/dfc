@@ -382,17 +382,17 @@ fetch_info(struct list *lst)
 #endif
 #ifdef __FreeBSD__
 			if ((fmi->fsname = strdup(shortenstr(
-						trk(entbuf->f_mntfromname),
+						entbuf->f_mntfromname,
 						STRMAXLEN))) == NULL) {
 				fmi->fsname = "unknown";
 			}
 			if ((fmi->dir = strdup(shortenstr(
-						trk(entbuf->f_mntonname),
+						entbuf->f_mntonname,
 						STRMAXLEN))) == NULL) {
 				fmi->dir = "unknown";
 			}
 			if ((fmi->type = strdup(shortenstr(
-						trk(entbuf->f_fstypename),
+						entbuf->f_fstypename,
 						9))) == NULL) {
 				fmi->type = "unknown";
 			}
@@ -401,19 +401,19 @@ fetch_info(struct list *lst)
 #else
 			/* infos from getmntent */
 			if ((fmi->fsname = strdup(shortenstr(
-						trk(entbuf->mnt_fsname),
+						entbuf->mnt_fsname,
 						STRMAXLEN))) == NULL) {
 				fmi->fsname = "unknown";
 			}
-			if ((fmi->dir = strdup(shortenstr(trk(entbuf->mnt_dir),
+			if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
 							STRMAXLEN))) == NULL) {
 				fmi->dir = "unknown";
 			}
-			if ((fmi->type = strdup(shortenstr(trk(entbuf->mnt_type),
+			if ((fmi->type = strdup(shortenstr(entbuf->mnt_type,
 							9))) == NULL) {
 				fmi->type = "unknown";
 			}
-			if ((fmi->opts = strdup(trk(entbuf->mnt_opts))) == NULL) {
+			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
 				fmi->opts = "none";
 			}
 #endif
@@ -1042,41 +1042,6 @@ int
 imax(int a, int b)
 {
 	return (a > b ? a : b);
-	/* NOTREACHED */
-}
-
-/*
- * Truncate str to the third occurrence of /
- * Example: str: /dev/disk/by-uuid/3c301e8b-560c-4914-b50d-8a49e713003c
- * It then returns: /dev/disk/by-uuid
- * Returns unmodified str otherwise
- * @str: char* to truncate
- */
-char *
-trk(char *str)
-{
-	char *p = str;
-	int i = 0;
-	size_t len;
-
-	/* if no occurrence of /, return the unmodified str */
-	if ((p = strchr(str, '/')) == NULL)
-		return str;
-		/* NOTREACHED */
-
-	while ((i < 3) && (p != NULL)) {
-		/* in case there is only in / */
-		if ((p = strchr(p + 1, '/')) == NULL)
-			return str;
-			/* NOTREACHED */
-		i++;
-	}
-
-	/* p contains the part of str we want to truncate from str */
-	len = strlen(str) - strlen(p);
-	str[len] = '\0';
-
-	return str;
 	/* NOTREACHED */
 }
 
