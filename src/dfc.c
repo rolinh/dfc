@@ -293,31 +293,31 @@ static void
 usage(int status)
 {
 	if (status != 0)
-		(void)fputs("Try dfc -h for more informations\n", stderr);
+		(void)fputs("Try dfc -h for more information\n", stderr);
 	else {
 		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-u UNIT]"
 			"[-t FILESYSTEM]\n"
 			"Available options:\n", stdout);
 		(void)fputs(
-		"	-a	print all fs from mtab\n"
-		"	-b	do not show the graph bar\n"
-		"	-c	choose color mode. Read the manpage\n"
-		"		for details\n"
-		"	-f	disable auto-adjust mode (force display)\n"
-		"	-h	print this message\n"
-		"	-i	info about inodes\n"
-		"	-m	use metric (SI unit)\n"
-		"	-n	do not print header\n"
-		"	-o	show mount flags\n"
-		"	-s	sum the total usage\n"
-		"	-t	filter filesystems. Read the manpage\n"
-		"		for details\n"
-		"	-T	show filesystem type\n"
-		"	-u	choose the unit in which\n"
-		"		to show the values. Read the manpage\n"
-		"		for details\n"
-		"	-v	print program version\n"
-		"	-w	use a wider bar\n",
+			"\t-a\tprint all fs from mtab\n"
+			"\t-b\tdo not show the graph bar\n"
+			"\t-c\tchoose color mode. Read the manpage\n"
+			"\t\tfor details\n"
+			"\t-f\tdisable auto-adjust mode (force display)\n"
+			"\t-h\tprint this message\n"
+			"\t-i\tinfo about inodes\n"
+			"\t-m\tuse metric (SI unit)\n"
+			"\t-n\tdo not print header\n"
+			"\t-o\tshow mount flags\n"
+			"\t-s\tsum the total usage\n"
+			"\t-t\tfilter filesystems. Read the manpage\n"
+			"\t\tfor details\n"
+			"\t-T\tshow filesystem type\n"
+			"\t-u\tchoose the unit in which\n"
+			"\t\tto show the values. Read the manpage\n"
+			"\t\tfor details\n"
+			"\t-v\tprint program version\n"
+			"\t-w\tuse a wider bar\n",
 		stdout);
 	}
 
@@ -463,7 +463,7 @@ fetch_info(struct list *lst)
 
 /*
  * Actually displays infos in nice manner
- * @lst: queue containing all required informations
+ * @lst: queue containing all required information
  * @fsfilter: fstype to filter (can be nothing)
  */
 void
@@ -617,7 +617,7 @@ disp(struct list *lst, char *fsfilter)
 
 /*
  * Display header
- * @lst: queue containing the informations
+ * @lst: queue containing the information
  */
 void
 disp_header(struct list *lst)
@@ -692,7 +692,7 @@ disp_header(struct list *lst)
 
 /*
  * display the sum (used when -s option is triggered)
- * @lst: queue containing the informations
+ * @lst: queue containing the information
  * @stot: size total
  * @utot:
  */
