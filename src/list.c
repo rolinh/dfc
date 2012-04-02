@@ -28,8 +28,6 @@
 /*
  * list.c
  *
- * (C) 2012 - Hahling Robin <robin.hahling@gw-computing.net>
- *
  * Manipulate list
  */
 #include <stdio.h>
