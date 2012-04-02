@@ -603,7 +603,8 @@ disp(struct list *lst, char *fsfilter)
 
 		/* info about mount option */
 		if (oflag) {
-			for (i = (int)strlen(p->dir); i < 16; i++)
+			for (i = (int)strlen(p->dir);
+					i < imax(lst->dirmaxlen + 1, 11); i++)
 				(void)printf(" ");
 			(void)printf("%s\n", p->opts);
 		} else
@@ -681,9 +682,11 @@ disp_header(struct list *lst)
 
 	(void)printf(" MOUNTED ON ");
 
-	if (oflag)
-		(void)printf("     MOUNT OPTIONS\n");
-	else
+	if (oflag) {
+		for (i = 10; i < lst->dirmaxlen; i++)
+			(void)printf(" ");
+		(void)printf("MOUNT OPTIONS\n");
+	} else
 		(void)printf("\n");
 
 	reset_color();
