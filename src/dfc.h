@@ -44,7 +44,7 @@ void fetch_info(struct list *lst);
 double cvrt(double n);
 void humanize(double n, double perct);
 
-#ifdef BSD
+#ifdef __FreeBSD__
 char *
 statfs_flags_to_str(struct statfs *s);
 #endif
