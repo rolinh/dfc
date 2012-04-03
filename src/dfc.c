@@ -124,7 +124,7 @@ main(int argc, char *argv[])
 	 */
 	unitflag = 'h';
 
-	while ((ch = getopt(argc, argv, "abc:fhimnost:Tu:vw")) != -1) {
+	while ((ch = getopt(argc, argv, "abc:fhimnost:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -231,6 +231,9 @@ main(int argc, char *argv[])
 		case 'w':
 			wflag = 1;
 			break;
+		case 'W':
+			Wflag = 1;
+			break;
 		case '?':
 		default:
 			usage(EXIT_FAILURE);
@@ -293,14 +296,16 @@ usage(int status)
 	if (status != 0)
 		(void)fputs("Try dfc -h for more information\n", stderr);
 	else {
+		/* 2 fputs because string length limit is 509 */
 		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-u UNIT]"
 			"[-t FILESYSTEM]\n"
-			"Available options:\n", stdout);
-		(void)fputs(
+			"Available options:\n"
 			"\t-a\tprint all fs from mtab\n"
 			"\t-b\tdo not show the graph bar\n"
 			"\t-c\tchoose color mode. Read the manpage\n"
-			"\t\tfor details\n"
+			"\t\tfor details\n",
+			stdout);
+		(void)fputs(
 			"\t-f\tdisable auto-adjust mode (force display)\n"
 			"\t-h\tprint this message\n"
 			"\t-i\tinfo about inodes\n"
@@ -315,7 +320,8 @@ usage(int status)
 			"\t\tto show the values. Read the manpage\n"
 			"\t\tfor details\n"
 			"\t-v\tprint program version\n"
-			"\t-w\tuse a wider bar\n",
+			"\t-w\tuse a wider bar\n"
+			"\t-W\twide filename (un truncate)\n",
 		stdout);
 	}
 
@@ -383,36 +389,58 @@ fetch_info(struct list *lst)
 #endif
 #ifdef __linux__
 			/* infos from getmntent */
-			if ((fmi->fsname = strdup(shortenstr(
-						entbuf->mnt_fsname,
-						STRMAXLEN))) == NULL) {
+			if (Wflag) { /* Wflag to avoid name truncation */
+				if ((fmi->fsname = strdup(entbuf->mnt_fsname))
+						== NULL) {
+					fmi->fsname = "unknown";
+				}
+				if ((fmi->dir = strdup(entbuf->mnt_dir))
+						== NULL) {
+					fmi->dir = "unknown";
+				}
+			} else {
+				if ((fmi->fsname = strdup(shortenstr(
+					entbuf->mnt_fsname,
+					STRMAXLEN))) == NULL) {
 				fmi->fsname = "unknown";
-			}
-			if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
+				}
+				if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
 							STRMAXLEN))) == NULL) {
-				fmi->dir = "unknown";
+					fmi->dir = "unknown";
+				}
 			}
 			if ((fmi->type = strdup(shortenstr(entbuf->mnt_type,
-							9))) == NULL) {
+							12))) == NULL) {
 				fmi->type = "unknown";
 			}
 			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
 				fmi->opts = "none";
 			}
 #else
-			if ((fmi->fsname = strdup(shortenstr(
-						entbuf->f_mntfromname,
-						STRMAXLEN))) == NULL) {
-				fmi->fsname = "unknown";
-			}
-			if ((fmi->dir = strdup(shortenstr(
-						entbuf->f_mntonname,
-						STRMAXLEN))) == NULL) {
-				fmi->dir = "unknown";
+			if (Wflag) { /* Wflag to avoid name truncation */
+				if ((fmi->fsname = strdup(
+						entbuf->f_mntfromname))	== NULL) {
+					fmi->fsname = "unknown";
+				}
+				if ((fmi->dir = strdup((
+						entbuf->f_mntonname ))) == NULL) {
+					fmi->dir = "unknown";
+				}
+			} else {
+				if ((fmi->fsname = strdup(shortenstr(
+							entbuf->f_mntfromname,
+							STRMAXLEN))) == NULL) {
+					fmi->fsname = "unknown";
+				}
+				if ((fmi->dir = strdup(shortenstr(
+							entbuf->f_mntonname,
+							STRMAXLEN))) == NULL) {
+					fmi->dir = "unknown";
+				}
 			}
 			if ((fmi->type = strdup(shortenstr(
 						entbuf->f_fstypename,
-						9))) == NULL) {
+						12))) == NULL) {
 				fmi->type = "unknown";
 			}
 			/* TODO add the options */
