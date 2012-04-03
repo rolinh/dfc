@@ -630,7 +630,8 @@ humanize(double n, double perct)
 }
 
 
-#ifdef BSD
+/* does not work on Mac OS */
+#ifdef __FreeBSD__
 /*
  * Turn the f_flags member of the given struct statfs to a human-readable string
  * of the form "opt1,opt2..."
@@ -724,4 +725,4 @@ truncated:
        return buffer;
        /* NOTREACHED */
 }
-#endif /* BSD */
+#endif /* __FreeBSD__ */
