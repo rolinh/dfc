@@ -490,8 +490,6 @@ fetch_info(struct list *lst)
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
-#else
-		free(entbuf);
 #endif
 }
 
