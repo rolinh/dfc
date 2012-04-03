@@ -25,8 +25,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DFC_H
-#define DFC_H
+#ifndef H_DFC
+#define H_DFC
 /*
  * dfc.h
  *

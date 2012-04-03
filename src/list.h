@@ -25,8 +25,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef LIST_H
-#define LIST_H
+#ifndef H_LIST
+#define H_LIST
 /*
  * list.h
  *
