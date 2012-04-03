@@ -25,8 +25,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DISP_H
-#define DISP_H
+#ifndef H_DISP
+#define H_DISP
 /*
  * disp.h
  *
