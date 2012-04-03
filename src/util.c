@@ -40,16 +40,6 @@
 #include "util.h"
 
 /*
- * Reset color attribute to default
- */
-void
-reset_color(void)
-{
-	if (cflag)
-		(void)printf("\033[;m");
-}
-
-/*
  * Return the longest of the two parameters
  */
 int
