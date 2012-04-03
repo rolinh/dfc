@@ -25,23 +25,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DFC_H
-#define DFC_H
+#ifndef UTIL_H
+#define UTIL_H
 /*
- * dfc.h
+ * util.h
  *
- * header file for dfc.c
+ * Util functions
  */
 
 #include "extern.h"
-#include "list.h"
-#include "disp.h"
-#include "util.h"
 
 /* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-double cvrt(double n);
-void humanize(double n, double perct);
+void change_color(double perct);
+void reset_color(void);
+int imax(int a, int b);
+char* shortenstr(char *str, int len);
+unsigned int getttywidth(void);
 
-#endif /* ndef DFC_H */
+#endif /* ndef UTIL_H */

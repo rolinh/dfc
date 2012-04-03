@@ -25,23 +25,97 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DFC_H
-#define DFC_H
 /*
- * dfc.h
+ * util.c
  *
- * header file for dfc.c
+ * Various util functions
  */
+#include <stdlib.h>
+#include <stdio.h>
 
-#include "extern.h"
-#include "list.h"
-#include "disp.h"
+#include <unistd.h>
+#include <string.h>
+#include <sys/ioctl.h>
+
 #include "util.h"
 
-/* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-double cvrt(double n);
-void humanize(double n, double perct);
+/*
+ * Reset color attribute to default
+ */
+void
+reset_color(void)
+{
+	if (cflag)
+		(void)printf("\033[;m");
+}
 
-#endif /* ndef DFC_H */
+/*
+ * Return the longest of the two parameters
+ */
+int
+imax(int a, int b)
+{
+	return (a > b ? a : b);
+	/* NOTREACHED */
+}
+
+/*
+ * Shorten the input string to the specified length
+ * @str: string to shorten
+ * @len: the length the new string should be
+ */
+char *
+shortenstr(char *str, int len)
+{
+	int i = 0;
+	int slen = (int)strlen(str);
+
+	if (slen < len + 1)
+		return str;
+		/* NOTREACHED */
+
+	while (i++ < (slen - len))
+		str++;
+
+	str[0] = '+';
+
+	return str;
+	/* NOTREACHED */
+}
+
+/*
+ * Get the width of tty and return it.
+ * Return 0 if stdout is not a tty.
+ */
+unsigned int
+getttywidth(void)
+{
+	unsigned int width = 0;
+#ifdef TIOCGSIZE
+	struct ttysize win;
+#elif defined(TIOCGWINSZ)
+	struct winsize win;
+#endif
+
+	if (!isatty(STDOUT_FILENO))
+		return 0;
+		/* NOTREACHED */
+
+#ifdef TIOCGSIZE
+	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
+#ifdef __MACH__
+		width = win.ts_cols;
+#else
+		width = win.ws_col;
+#endif
+#elif defined(TIOCGWINSZ)
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
+#ifdef __MACH__
+		width = win.ts_cols;
+#else
+		width = win.ws_col;
+#endif
+#endif
+	return width == 0 ? 80 : width;
+	/* NOTREACHED */
+}

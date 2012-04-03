@@ -25,23 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DFC_H
-#define DFC_H
+#ifndef DISP_H
+#define DISP_H
 /*
- * dfc.h
+ * disp.h
  *
- * header file for dfc.c
+ * Header for disp.c
  */
 
 #include "extern.h"
 #include "list.h"
-#include "disp.h"
 #include "util.h"
+#include "dfc.h"
 
 /* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-double cvrt(double n);
-void humanize(double n, double perct);
+void disp(struct list *lst, char *fsfilter);
+void disp_header(struct list *lst);
+void disp_sum(struct list *lst, double stot, double utot, double ftot,
+		double ifitot, double ifatot);
+void disp_bar(double perct);
+void disp_at(double n, double perct);
+void disp_perct(double perct);
 
-#endif /* ndef DFC_H */
+#endif /* ndef DISP_H */
