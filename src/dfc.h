@@ -46,7 +46,7 @@ void humanize(double n, double perct);
 
 #ifdef BSD
 char *
-statfs_flags_to_str(struct statfs *s)
+statfs_flags_to_str(struct statfs *s);
 #endif
 
 #endif /* ndef DFC_H */
