@@ -44,4 +44,9 @@ void fetch_info(struct list *lst);
 double cvrt(double n);
 void humanize(double n, double perct);
 
+#ifdef BSD
+char *
+statfs_flags_to_str(struct statfs *s)
+#endif
+
 #endif /* ndef DFC_H */
