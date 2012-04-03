@@ -232,19 +232,19 @@ disp_header(struct list *lst)
 	}
 
 	(void)printf("%%USED");
-	if (unit == 'k')
+	if (unitflag == 'k')
 		(void)printf("  ");
-	else if (unit == 'b')
+	else if (unitflag == 'b')
 		(void)printf("       ");
 	else
 		(void)printf(" ");
 
 	(void)printf("AVAILABLE");
-	if (unit == 'k')
+	if (unitflag == 'k')
 		(void)printf("      ");
-	else if (unit == 'm')
+	else if (unitflag == 'm')
 		(void)printf("     ");
-	else if (unit == 'b')
+	else if (unitflag == 'b')
 		(void)printf("           ");
 	else
 		(void)printf("     ");
@@ -376,7 +376,7 @@ disp_at(double n, double perct)
 	change_color(perct);
 
 	/* available  and total */
-	switch (unit) {
+	switch (unitflag) {
 	case 'h':
 		humanize(n, perct);
 		return;
@@ -398,7 +398,7 @@ disp_at(double n, double perct)
 	(void)printf("%9.1f", n);
 	reset_color();
 
-	switch (unit) {
+	switch (unitflag) {
 	case 'm':
 		(void)printf("M");
 		break;
