@@ -8,7 +8,9 @@ MAN = man
 EXEC = dfc
 
 SRCS= ${SRC}/dfc.c \
-      ${SRC}/list.c
+	  ${SRC}/disp.c \
+      ${SRC}/list.c \
+	  ${SRC}/util.c
 
 OBJS= ${SRCS:.c=.o}
 

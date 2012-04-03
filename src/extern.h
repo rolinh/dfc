@@ -25,23 +25,22 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DFC_H
-#define DFC_H
+#ifndef H_EXTERN
+#define H_EXTERN
 /*
- * dfc.h
+ * extern.h
  *
- * header file for dfc.c
+ * Globals and dfc version declaration
  */
 
-#include "extern.h"
-#include "list.h"
-#include "disp.h"
-#include "util.h"
+#define VERSION "2.4.0"
 
-/* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-double cvrt(double n);
-void humanize(double n, double perct);
+/* set flags for options */
+int aflag, bflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag, tflag,
+	   uflag, vflag, wflag;
+int cflag;
+int Tflag;
 
-#endif /* ndef DFC_H */
+char unit;
+
+#endif /* ndef EXTERN_H */
