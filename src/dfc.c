@@ -443,10 +443,14 @@ fetch_info(struct list *lst)
 						12))) == NULL) {
 				fmi->type = "unknown";
 			}
-			/* TODO add the options */
+#ifdef __MACH__
+			/* TODO: implement feature for MacOS */
+			fmi->opts = "none";
+#else
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
 				fmi->opts = "none";
 			}
+#endif /* __MACH__ */
 #endif
 			/* infos from statvfs */
 			fmi->bsize	= vfsbuf.f_bsize;
