@@ -33,7 +33,7 @@
  * Globals and dfc version declaration
  */
 
-#define VERSION "2.4.0"
+#define VERSION "2.5.0"
 
 /* set flags for options */
 int aflag, bflag, cflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag,
