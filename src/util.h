@@ -36,8 +36,6 @@
 #include "extern.h"
 
 /* function declaration */
-void change_color(double perct);
-void reset_color(void);
 int imax(int a, int b);
 char* shortenstr(char *str, int len);
 unsigned int getttywidth(void);

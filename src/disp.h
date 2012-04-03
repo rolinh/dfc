@@ -47,4 +47,7 @@ void disp_bar(double perct);
 void disp_at(double n, double perct);
 void disp_perct(double perct);
 
+void change_color(double perct);
+void reset_color(void);
+
 #endif /* ndef DISP_H */
