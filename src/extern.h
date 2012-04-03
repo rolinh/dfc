@@ -38,7 +38,7 @@
 /* set flags for options */
 int aflag, bflag, cflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag,
     tflag, uflag, vflag, wflag;
-int Tflag;
+int Tflag, Wflag;
 
 char unitflag;
 
