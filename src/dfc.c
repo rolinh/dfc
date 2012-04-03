@@ -122,7 +122,7 @@ main(int argc, char *argv[])
 	 * When using the flag, should specifie the unit used (h is default).
 	 * Have a look at unit_opts for the possible values.
 	 */
-	unit = 'h';
+	unitflag = 'h';
 
 	while ((ch = getopt(argc, argv, "abc:fhimnost:Tu:vw")) != -1) {
 		switch (ch) {
@@ -188,33 +188,33 @@ main(int argc, char *argv[])
 			while (*subopts) {
 				switch (getsubopt(&subopts, unit_opts, &value)) {
 				case H:
-					unit = 'h';
+					unitflag = 'h';
 					break;
 				case B:
-					unit = 'b';
+					unitflag = 'b';
 					break;
 				case K:
-					unit = 'k';
+					unitflag = 'k';
 					break;
 				case M:
-					unit = 'm';
+					unitflag = 'm';
 					break;
 				case G:
-					unit = 'g';
+					unitflag = 'g';
 					break;
 				case T:
-					unit = 't';
+					unitflag = 't';
 					break;
 				case P:
-					unit = 'p';
+					unitflag = 'p';
 					break;
 				case E:
-					unit = 'e';
+					unitflag = 'e';
 					break;
 				case Z:
-					unit = 'z';
+					unitflag = 'z';
 					break;
-				case Y: unit = 'y';
+				case Y: unitflag = 'y';
 					break;
 				case -1:
 					(void)fprintf(stderr,
@@ -469,7 +469,7 @@ fetch_info(struct list *lst)
 double
 cvrt(double n)
 {
-	switch (unit) {
+	switch (unitflag) {
 	case 'b':
 		return n;
 		/* NOTREACHED */
