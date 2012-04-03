@@ -444,7 +444,9 @@ fetch_info(struct list *lst)
 				fmi->type = "unknown";
 			}
 			/* TODO add the options */
-			fmi->opts = "non";
+			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
+				fmi->opts = "none";
+			}
 #endif
 			/* infos from statvfs */
 			fmi->bsize	= vfsbuf.f_bsize;
@@ -484,6 +486,8 @@ fetch_info(struct list *lst)
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
+#else
+		free(entbuf);
 #endif
 }
 
@@ -624,3 +628,100 @@ humanize(double n, double perct)
 		break;
 	}
 }
+
+
+#ifdef BSD
+/*
+ * Turn the f_flags member of the given struct statfs to a human-readable string
+ * of the form "opt1,opt2..."
+ * Returns NULL if an error occurred.
+ * @s: struct statfs * to parse.
+ */
+char *
+statfs_flags_to_str(struct statfs *s)
+{
+       uint64_t flags = s->f_flags;
+       size_t bufsize = 128;
+       char *buffer = malloc(bufsize);
+       if (!buffer) {
+               (void)fprintf(stderr, "Could not retrieve mount flags for %s\n",
+                       s->f_mntonname);
+               return NULL;
+	       /* NOTREACHED */
+       }
+       buffer[0] = '\0';
+
+       /* Comparing flags to all possible flags, in the same order as mount -p */
+       if (flags & MNT_RDONLY) {
+               if (strlcat(buffer, "ro", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       } else {
+               if (strlcat(buffer, "rw", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       }
+
+       if (flags & MNT_SYNCHRONOUS)
+               if (strlcat(buffer, ",sync", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_NOEXEC)
+               if (strlcat(buffer, ",noexec", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_NOSUID)
+               if (strlcat(buffer, ",nosuid", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_UNION)
+               if (strlcat(buffer, ",union", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_ASYNC)
+               if (strlcat(buffer, ",async", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_NOATIME)
+               if (strlcat(buffer, ",noatime", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_NOCLUSTERR)
+               if (strlcat(buffer, ",noclusterr", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_NOCLUSTERW)
+               if (strlcat(buffer, ",noclusterw", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_NOSYMFOLLOW)
+               if (strlcat(buffer, ",nosymfollow", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_SUIDDIR)
+               if (strlcat(buffer, ",suiddir", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_MULTILABEL)
+               if (strlcat(buffer, ",multilabel", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_ACLS)
+               if (strlcat(buffer, ",acls", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_NFS4ACLS)
+               if (strlcat(buffer, ",nfsv4acls", bufsize) >= bufsize)
+		       goto truncated;
+			/* NOTREACHED */
+
+       return buffer;
+       /* NOTREACHED */
+
+truncated:
+       (void)fprintf(stderr, "Truncating mount options for %s\n",
+                       s->f_mntonname);
+       return buffer;
+       /* NOTREACHED */
+}
+#endif /* BSD */
