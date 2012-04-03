@@ -45,6 +45,9 @@ double cvrt(double n);
 void humanize(double n, double perct);
 
 #ifdef __FreeBSD__
+/* avoid struct statfs declared inside parameter list warning */
+struct statfs;
+
 char *
 statfs_flags_to_str(struct statfs *s);
 #endif

@@ -445,7 +445,7 @@ fetch_info(struct list *lst)
 			}
 #ifdef __MACH__
 			/* TODO: implement feature for MacOS */
-			fmi->opts = "none";
+			fmi->opts = "sorry, not implemented yet on MacOS...";
 #else
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
 				fmi->opts = "none";
