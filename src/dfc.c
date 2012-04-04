@@ -571,67 +571,6 @@ cvrt(double n)
 	/* NOTREACHED */
 }
 
-/*
- * convert to human readable format and print the result
- * @n: number to convert and print
- * @perct: percentage (useful when using colors)
- */
-void
-humanize(double n, double perct)
-{
-	int i = 0;
-	double divider = 1024.0;
-
-	/* when using SI unit... */
-	if (mflag)
-		divider = 1000.0;
-
-	while ((n >= 1000) && (i < 8)) {
-		n /= divider;
-		i++;
-	}
-
-	change_color(perct);
-
-	if ( i == 0)
-		(void)printf("%9.f", n);
-	else
-		(void)printf("%9.1f", n);
-
-	reset_color();
-
-	switch (i) {
-	case 0:	/* bytes */
-		(void)printf("B");
-		break;
-	case 1: /* Kio  or Ko */
-		(void)printf("K");
-		break;
-	case 2: /* Mio or Mo */
-		(void)printf("M");
-		break;
-	case 3: /* Gio or Go*/
-		(void)printf("G");
-		break;
-	case 4: /* Tio or To*/
-		(void)printf("T");
-		break;
-	case 5: /* Pio or Po*/
-		(void)printf("P");
-		break;
-	case 6: /* Eio or Eo*/
-		(void)printf("E");
-		break;
-	case 7: /* Zio or Zo*/
-		(void)printf("Z");
-		break;
-	case 8: /* Yio or Yo*/
-		(void)printf("Y");
-		break;
-	}
-}
-
-
 /* does not work on Mac OS */
 #ifdef __FreeBSD__
 /*

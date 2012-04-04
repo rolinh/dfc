@@ -42,7 +42,6 @@
 void usage(int status);
 void fetch_info(struct list *lst);
 double cvrt(double n);
-void humanize(double n, double perct);
 
 #ifdef __FreeBSD__
 /* avoid struct statfs declared inside parameter list warning */
