@@ -109,3 +109,27 @@ getttywidth(void)
 	return width == 0 ? 80 : width;
 	/* NOTREACHED */
 }
+
+/*
+ * convert to human readable format and return the information i to format
+ * correctly the output.
+ * @n: address of the number to convert
+ * @perct: percentage (useful when using colors)
+ */
+int
+humanize(double *n, double perct)
+{
+	int i = 0;
+	double divider = 1024.0;
+
+	/* when using SI unit... */
+	if (mflag)
+		divider = 1000.0;
+
+	while ((*n >= 1000) && (i < 8)) {
+		*n /= divider;
+		i++;
+	}
+
+    return i;
+}
