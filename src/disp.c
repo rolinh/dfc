@@ -380,39 +380,39 @@ disp_at(double n, double perct)
 	/* available  and total */
 	switch (unitflag) {
 	case 'h':
-		i = humanize(&n, perct);
-        change_color(perct);
+		i = humanize(&n);
+		change_color(perct);
 		(void)printf(i == 0 ? "%9.f" : "%9.1f", n);
-        reset_color();
-        switch (i) {
-        case 0:	/* bytes */
-            (void)printf("B");
-            break;
-        case 1: /* Kio  or Ko */
-            (void)printf("K");
-            break;
-        case 2: /* Mio or Mo */
-            (void)printf("M");
-            break;
-        case 3: /* Gio or Go*/
-            (void)printf("G");
-            break;
-        case 4: /* Tio or To*/
-            (void)printf("T");
-            break;
-        case 5: /* Pio or Po*/
-            (void)printf("P");
-            break;
-        case 6: /* Eio or Eo*/
-            (void)printf("E");
-            break;
-        case 7: /* Zio or Zo*/
-            (void)printf("Z");
-            break;
-        case 8: /* Yio or Yo*/
-            (void)printf("Y");
-            break;
-        }
+		reset_color();
+		switch (i) {
+		case 0:	/* bytes */
+		    (void)printf("B");
+		    break;
+		case 1: /* Kio  or Ko */
+		    (void)printf("K");
+		    break;
+		case 2: /* Mio or Mo */
+		    (void)printf("M");
+		    break;
+		case 3: /* Gio or Go*/
+		    (void)printf("G");
+		    break;
+		case 4: /* Tio or To*/
+		    (void)printf("T");
+		    break;
+		case 5: /* Pio or Po*/
+		    (void)printf("P");
+		    break;
+		case 6: /* Eio or Eo*/
+		    (void)printf("E");
+		    break;
+		case 7: /* Zio or Zo*/
+		    (void)printf("Z");
+		    break;
+		case 8: /* Yio or Yo*/
+		    (void)printf("Y");
+		    break;
+		}
 		return;
 		/* NOTREACHED */
 	case 'b':

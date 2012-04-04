@@ -36,6 +36,7 @@
 #include "extern.h"
 #include "list.h"
 #include "util.h"
+#include "dfc.h"
 
 /* function declaration */
 void disp(struct list *lst, char *fsfilter);

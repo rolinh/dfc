@@ -114,10 +114,9 @@ getttywidth(void)
  * convert to human readable format and return the information i to format
  * correctly the output.
  * @n: address of the number to convert
- * @perct: percentage (useful when using colors)
  */
 int
-humanize(double *n, double perct)
+humanize(double *n)
 {
 	int i = 0;
 	double divider = 1024.0;
@@ -132,4 +131,5 @@ humanize(double *n, double perct)
 	}
 
     return i;
+    /* NOTREACHED */
 }
