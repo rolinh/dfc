@@ -7,12 +7,12 @@ SRC = src
 MAN = man
 EXEC = dfc
 
-SRCS= ${SRC}/dfc.c  \
-      ${SRC}/text.c \
-      ${SRC}/tex.c  \
-      ${SRC}/csv.c  \
+SRCS= ${SRC}/csv.c  \
+	  ${SRC}/dfc.c  \
       ${SRC}/html.c \
       ${SRC}/list.c \
+      ${SRC}/tex.c  \
+      ${SRC}/text.c \
       ${SRC}/util.c
 
 OBJS= ${SRCS:.c=.o}
