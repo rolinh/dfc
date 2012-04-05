@@ -24,35 +24,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#ifndef H_DISPLAY
+#define H_DISPLAY
 
-#ifndef H_DFC
-#define H_DFC
-/*
- * dfc.h
- *
- * header file for dfc.c
- */
-
-#include "extern.h"
 #include "list.h"
-#include "display.h"
-#include "text.h"
-#include "tex.h"
-#include "csv.h"
-#include "html.h"
-#include "util.h"
 
-/* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-void disp(struct list *lst, char *fsfilter, struct Display *disp);
+/* The structure to handle the display interface. */
+struct Display
+{
+    void (*print_header) (struct list*);
+    void (*print_sum)    (struct list*, double, double, double, double, double);
+    void (*print_bar)    (double);
+    void (*print_at)     (double, double);
+    void (*print_perct)  (double);
+    void (*change_color) (double);
+    void (*reset_color)  (void);
+};
 
-#ifdef __FreeBSD__
-/* avoid struct statfs declared inside parameter list warning */
-struct statfs;
-
-char *
-statfs_flags_to_str(struct statfs *s);
-#endif
-
-#endif /* ndef DFC_H */
+#endif /* ndef H_DISPLAY */

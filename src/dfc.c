@@ -73,6 +73,7 @@ int
 main(int argc, char *argv[])
 {
 	struct list queue;
+	struct Display display;
 	int ch;
 	unsigned int width;
 	char *fsfilter = NULL;
@@ -124,6 +125,9 @@ main(int argc, char *argv[])
 	 */
 	unitflag = 'h';
 
+	/* For now, the only output supported is text. */
+	init_disp_text(&display);
+	
 	while ((ch = getopt(argc, argv, "abc:fhimnost:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
@@ -280,7 +284,7 @@ main(int argc, char *argv[])
 	fetch_info(&queue);
 
 	/* actually displays the info we have got */
-	disp(&queue, fsfilter);
+	disp(&queue, fsfilter, &display);
 
 	return EXIT_SUCCESS;
 	/* NOTREACHED */
@@ -493,6 +497,160 @@ fetch_info(struct list *lst)
 #endif
 }
 
+/*
+ * Actually displays infos in nice manner
+ * @lst: queue containing all required information
+ * @fsfilter: fstype to filter (can be nothing)
+ */
+void
+disp(struct list *lst, char *fsfilter, struct Display *disp)
+{
+	struct fsmntinfo *p = NULL;
+	int i, n;
+	int skip = 1;
+	int nm = 0;
+	double perctused, size, avail, used;
+	double stot, atot, utot, ifitot, ifatot;
+	char *stropt;
+	char *strtmp;
+
+	stot = atot = utot = ifitot = ifatot = n = 0;
+
+	/* activate negative matching? */
+	if (tflag) {
+		if (fsfilter[0] == '-') {
+			nm = 1;
+			skip = 0;
+			fsfilter++;
+		}
+	}
+
+	/* legend on top */
+	if (!nflag)
+		disp->print_header(lst);
+
+	if (lst->fsmaxlen < 11)
+		lst->fsmaxlen = 11;
+
+	p = lst->head;
+
+	while (p != NULL) {
+		if (!aflag) {
+			/* skip (pseudo)devices (which have a size of 0 usually) */
+			if (p->blocks == 0) {
+				p = p->next;
+				continue;
+				/*NOTREACHED */
+			}
+		}
+
+		/* apply fsfiltering */
+		if (tflag) {
+			if ((strtmp = strdup(fsfilter)) == NULL) {
+				(void)fprintf(stderr, "cannot duplicate "
+					"fsfilter\n");
+				exit(EXIT_FAILURE);
+				/* NOTREACHED */
+			}
+			stropt = strtok(fsfilter, ",");
+			while (stropt != NULL) {
+				if (strcmp(p->type, stropt) == 0) {
+					if (nm)
+						skip = 1;
+					else
+						skip = 0;
+				}
+				stropt = strtok(NULL, ",");
+			}
+			/* strtok modifies fsfilter so give back its value */
+			fsfilter = strdup(strtmp);
+			if (skip) {
+				if (nm)
+					skip = 0;
+				p = p->next;
+				continue;
+				/* NOTREACHED */
+			} else {
+				if (!nm)
+					skip = 1;
+			}
+		}
+
+		/* filesystem */
+		(void)printf("%s", p->fsname);
+		for (i = (int)strlen(p->fsname); i < lst->fsmaxlen + 1; i++)
+			(void)printf(" ");
+
+		/* type */
+		if (Tflag) {
+			(void)printf("%s", p->type);
+			for (i = (int)strlen(p->type); i < lst->typemaxlen + 1; i++)
+				(void)printf(" ");
+		}
+#ifdef __linux__
+		size = (double)p->blocks *(double)p->frsize;
+		avail = (double)p->bavail * (double)p->frsize;
+		used = size - avail;
+#else
+		size = p->bsize * p->blocks;
+		avail = p->bsize * p->bavail;
+		used = p->bsize * (p->blocks - p->bfree);
+#endif
+		/* calculate the % used */
+		if ((int)size == 0)
+			perctused = 100.0;
+		else
+			perctused = (used / size) * 100.0;
+
+		if (sflag) {
+			stot += size;
+			atot += avail;
+			utot += used;
+		}
+
+		if (!bflag)
+			disp->print_bar(perctused);
+
+		/* %used */
+		disp->print_perct(perctused);
+
+		/* format to requested format */
+		if (uflag) {
+			size = cvrt(size);
+			avail = cvrt(avail);
+		}
+
+		/* avail  and total */
+		disp->print_at(avail, perctused);
+		disp->print_at(size, perctused);
+
+		/* info about inodes */
+		if (iflag) {
+			ifitot += (double)p->files;
+			ifatot += (double)p->favail;
+			(void)printf("%9ldk", p->files / 1000);
+			(void)printf("%9ldk", p->favail / 1000);
+		}
+
+		/* mounted on */
+		(void)printf(" %s", p->dir);
+
+		/* info about mount option */
+		if (oflag) {
+			for (i = (int)strlen(p->dir);
+					i < imax(lst->dirmaxlen + 1, 11); i++)
+				(void)printf(" ");
+			(void)printf("%s\n", p->opts);
+		} else
+			(void)printf("\n");
+
+		p = p->next;
+	}
+
+	if (sflag)
+		disp->print_sum(lst, stot, atot, utot, ifitot, ifatot);
+}
+
 /* does not work on Mac OS */
 #ifdef __FreeBSD__
 /*
@@ -588,4 +746,5 @@ truncated:
        return buffer;
        /* NOTREACHED */
 }
+
 #endif /* __FreeBSD__ */

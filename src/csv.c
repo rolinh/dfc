@@ -25,34 +25,65 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef H_DFC
-#define H_DFC
 /*
- * dfc.h
+ * csv.c
  *
- * header file for dfc.c
+ * CSV display functions
  */
-
-#include "extern.h"
-#include "list.h"
-#include "display.h"
-#include "text.h"
-#include "tex.h"
 #include "csv.h"
-#include "html.h"
-#include "util.h"
+#include "extern.h"
 
-/* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-void disp(struct list *lst, char *fsfilter, struct Display *disp);
+void
+init_disp_csv(struct Display *disp)
+{
+    disp->print_header = csv_disp_header;
+    disp->print_sum    = csv_disp_sum;
+    disp->print_bar    = csv_disp_bar;
+    disp->print_at     = csv_disp_at;
+    disp->print_perct  = csv_disp_perct;
+    disp->change_color = csv_change_color;
+    disp->reset_color  = csv_reset_color;
+}
 
-#ifdef __FreeBSD__
-/* avoid struct statfs declared inside parameter list warning */
-struct statfs;
+void
+csv_disp_header(struct list *lst)
+{
+    /* TODO. */
+}
 
-char *
-statfs_flags_to_str(struct statfs *s);
-#endif
+void
+csv_disp_sum(struct list *lst, double stot, double utot, double ftot,
+             double ifitot, double ifatot)
+{
+    /* TODO. */
+}
 
-#endif /* ndef DFC_H */
+void
+csv_disp_bar(double perct)
+{
+    /* TODO. */
+}
+
+void
+csv_disp_at(double n, double perct)
+{
+    /* TODO. */
+}
+
+void
+csv_disp_perct(double perct)
+{
+    /* TODO. */
+}
+
+void
+csv_change_color(double perct)
+{
+    /* TODO. */
+}
+
+void
+csv_reset_color(void)
+{
+    /* TODO. */
+}

@@ -25,34 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef H_DFC
-#define H_DFC
+#ifndef H_CSV
+#define H_CSV
 /*
- * dfc.h
+ * csv.h
  *
- * header file for dfc.c
+ * Header for csv.c
  */
 
-#include "extern.h"
-#include "list.h"
 #include "display.h"
-#include "text.h"
-#include "tex.h"
-#include "csv.h"
-#include "html.h"
-#include "util.h"
+#include "list.h"
 
 /* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-void disp(struct list *lst, char *fsfilter, struct Display *disp);
+void init_disp_csv(struct Display *disp);
+void csv_disp_header(struct list *lst);
+void csv_disp_sum(struct list *lst, double stot, double utot, double ftot,
+                  double ifitot, double ifatot);
+void csv_disp_bar(double perct);
+void csv_disp_at(double n, double perct);
+void csv_disp_perct(double perct);
+void csv_change_color(double perct);
+void csv_reset_color(void);
 
-#ifdef __FreeBSD__
-/* avoid struct statfs declared inside parameter list warning */
-struct statfs;
-
-char *
-statfs_flags_to_str(struct statfs *s);
-#endif
-
-#endif /* ndef DFC_H */
+#endif /* ndef H_CSV */
