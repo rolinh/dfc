@@ -25,34 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef H_DFC
-#define H_DFC
+#ifndef H_TEXT
+#define H_TEXT
 /*
- * dfc.h
+ * text.h
  *
- * header file for dfc.c
+ * Header for text.c
  */
 
-#include "extern.h"
-#include "list.h"
 #include "display.h"
-#include "text.h"
-#include "tex.h"
-#include "csv.h"
-#include "html.h"
-#include "util.h"
+#include "list.h"
 
 /* function declaration */
-void usage(int status);
-void fetch_info(struct list *lst);
-void disp(struct list *lst, char *fsfilter, struct Display *disp);
+void init_disp_text(struct Display *disp);
+void text_disp_header(struct list *lst);
+void text_disp_sum(struct list *lst, double stot, double utot, double ftot,
+                   double ifitot, double ifatot);
+void text_disp_bar(double perct);
+void text_disp_at(double n, double perct);
+void text_disp_perct(double perct);
+void text_change_color(double perct);
+void text_reset_color(void);
 
-#ifdef __FreeBSD__
-/* avoid struct statfs declared inside parameter list warning */
-struct statfs;
-
-char *
-statfs_flags_to_str(struct statfs *s);
-#endif
-
-#endif /* ndef DFC_H */
+#endif /* ndef H_TEXT */
