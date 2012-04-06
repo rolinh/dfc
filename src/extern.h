@@ -36,8 +36,8 @@
 #define VERSION "2.5.0"
 
 /* set flags for options */
-int aflag, bflag, cflag, fflag, hflag, iflag, mflag, nflag, oflag, sflag,
-    tflag, uflag, vflag, wflag;
+int aflag, bflag, cflag, fflag, hflag, iflag, mflag, nflag, oflag, pflag,
+    sflag, tflag, uflag, vflag, wflag;
 int Tflag, Wflag;
 
 char unitflag;

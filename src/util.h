@@ -41,5 +41,7 @@ char* shortenstr(char *str, int len);
 unsigned int getttywidth(void);
 int humanize(double *n);
 double cvrt(double n);
+int fstypefilter(char *type, char *filter, int nm);
+int fsnamefilter(char *fsname, char *filter, int nm);
 
 #endif /* ndef UTIL_H */

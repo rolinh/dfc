@@ -30,6 +30,8 @@
  *
  * Various util functions
  */
+#define _BSD_SOURCE
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -209,5 +211,93 @@ cvrt(double n)
 
 	/* should not be able to reach this point but just in case... */
 	return n;
+	/* NOTREACHED */
+}
+
+/*
+ * Return:
+ * 	1 if the given fs should be showed
+ *	0 if the given fs should be skipped
+ * @type: fs type to check
+ * @filter: filter string
+ * @nm: boolean indicating if the negative matching is activated
+ */
+int
+fstypefilter(char *type, char *filter, int nm)
+{
+	int ret = 1;
+	char *stropt;
+	char *strtmp;
+
+	if (tflag) {
+		if ((strtmp = strdup(filter)) == NULL) {
+			(void)fprintf(stderr, "Cannot duplicate filter\n");
+			exit(EXIT_FAILURE);
+			/* NOTREACHED */
+		}
+		/* assume it should not be shown */
+		ret = 0;
+		stropt = strtok(strtmp, ",");
+		while (stropt != NULL) {
+			if (strcmp(type, stropt) == 0) {
+				ret = 1;
+			}
+			stropt = strtok(NULL, ",");
+		}
+	}
+
+	/* reverse result if negative matching activated */
+	if (nm) {
+		if (ret)
+			ret = 0;
+		else
+			ret = 1;
+	}
+
+	return ret;
+	/* NOTREACHED */
+}
+
+/*
+ * Return:
+ * 	1 if the given fs should be showed
+ *	0 if the given fs should be skipped
+ * @type: fs type to check
+ * @filter: filter string
+ * @nm: boolean indicating if the negative matching is activated
+ */
+int
+fsnamefilter(char *fsname, char *filter, int nm)
+{
+	int ret = 1;
+	char *stropt;
+	char *strtmp;
+
+	if (pflag) {
+		if ((strtmp = strdup(filter)) == NULL) {
+			(void)fprintf(stderr, "Cannot duplicate filter\n");
+			exit(EXIT_FAILURE);
+			/* NOTREACHED */
+		}
+		/* assume it should not be shown */
+		ret = 0;
+		stropt = strtok(strtmp, ",");
+		while (stropt != NULL) {
+			if (strncmp(fsname, stropt, strlen(stropt)) == 0) {
+				ret = 1;
+			}
+			stropt = strtok(NULL, ",");
+		}
+	}
+
+	/* reverse result if negative matching activated */
+	if (nm) {
+		if (ret)
+			ret = 0;
+		else
+			ret = 1;
+	}
+
+	return ret;
 	/* NOTREACHED */
 }
