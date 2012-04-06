@@ -2,7 +2,7 @@
 .SH NAME
 dfc \- display file system space usage using graph and colors
 .SH SYNOPSIS
-.B dfc [OPTION(S)] [-c WHEN] [-u UNIT] [-t FILESYSTEM]
+.B dfc [OPTION(S)] [-c WHEN] [-p FSNAME] [-t FSTYPE] [-u UNIT]
 .SH DESCRIPTION
 dfc(1) is a tool similar to df(1) except that it is able to show a graph along with the
 data and is able to use color (color mode is "color-auto" by default but you
@@ -65,28 +65,51 @@ Do not print header.
 \-o
 Show mount options.
 .TP
+\-p [FSNAME]
+Allows you to perform filtering on file system name. FSNAME can be anything.
+For instance, if you want to see only file system which name starts with
+"/dev", you would use the following:
+
+	dfc -p /dev
+
+This will output, for instance, only file system which names are, for instance,
+"/dev/sda1", "/dev/root", "/dev", etc.
+
+Multiple selection is supported. In this case, FSNAME needs to be comma
+separated (without spaces). For instance, if you want to filter "/dev" and
+"tmpfs", you would use the following:
+
+	dfc -p /dev,tmpfs
+
+You can also use negative matching to filter the output. To do so, you just
+need to prepend a "-" to FSNAME. In the following example, dfc(1) will display
+all file system name except those mentionned:
+
+	dfc -p -proc,/dev/sdc,run
+
+.TP
 \-s
 Sum the total usage.
 .TP
-\-t [FILESYSTEM]
-Allows you to perform filtering on file system type. FILESYSTEM could take any
+\-t [FSTYPE]
+Allows you to perform filtering on file system type. FSTYPE could take any
 known file system value. For instance, "ext4", "ufs", "tmpfs", "reiserfs", etc.
 
-Multiple selection on file system is also possible. In this case, FILESYSTEM
+Multiple selection on file system is also possible. In this case, FSTYPE
 needs to be comma separated (without spaces). For instance, if you want to
 filter "ext4" and "tmpfs", you would use the following:
 
 	dfc -t ext4,tmpfs
 
 You can also use negative matching to filter the output. To do so, you just
-need to prepend a "-" to FILESYSTEM. In the following example, dfc(1) will
+need to prepend a "-" to FSTYPE. In the following example, dfc(1) will
 display all file system type except those mentionned:
 
 	dfc -t -rootfs,tmpfs
 
 .TP
 \-T
-Show filesystem type.
+Show file system type.
 .TP
 \-u [UNIT]
 Show size using unit specified. UNIT can take one of the following value:

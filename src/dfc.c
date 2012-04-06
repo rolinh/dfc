@@ -76,7 +76,8 @@ main(int argc, char *argv[])
 	struct Display display;
 	int ch;
 	unsigned int width;
-	char *fsfilter = NULL;
+	char *fsnfilter = NULL;
+	char *fstfilter = NULL;
 	char *subopts;
 	char *value;
 
@@ -127,8 +128,8 @@ main(int argc, char *argv[])
 
 	/* For now, the only output supported is text. */
 	init_disp_text(&display);
-	
-	while ((ch = getopt(argc, argv, "abc:fhimnost:Tu:vwW")) != -1) {
+
+	while ((ch = getopt(argc, argv, "abc:fhimnop:st:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -176,12 +177,16 @@ main(int argc, char *argv[])
 		case 'o':
 			oflag = 1;
 			break;
+		case 'p':
+			pflag = 1;
+			fsnfilter = strdup(optarg);
+			break;
 		case 's':
 			sflag = 1;
 			break;
 		case 't':
 			tflag = 1;
-			fsfilter = strdup(optarg);
+			fstfilter = strdup(optarg);
 			break;
 		case 'T':
 			Tflag = 1;
@@ -284,7 +289,7 @@ main(int argc, char *argv[])
 	fetch_info(&queue);
 
 	/* actually displays the info we have got */
-	disp(&queue, fsfilter, &display);
+	disp(&queue, fstfilter, fsnfilter, &display);
 
 	return EXIT_SUCCESS;
 	/* NOTREACHED */
@@ -301,23 +306,25 @@ usage(int status)
 		(void)fputs("Try dfc -h for more information\n", stderr);
 	else {
 		/* 2 fputs because string length limit is 509 */
-		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-u UNIT]"
-			"[-t FILESYSTEM]\n"
+		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME] "
+			"[-t FSTYPE] [-u UNIT]\n"
 			"Available options:\n"
 			"\t-a\tprint all fs from mtab\n"
 			"\t-b\tdo not show the graph bar\n"
 			"\t-c\tchoose color mode. Read the manpage\n"
-			"\t\tfor details\n",
+			"\t\tfor details\n"
+			"\t-f\tdisable auto-adjust mode (force display)\n"
+			"\t-h\tprint this message\n",
 			stdout);
 		(void)fputs(
-			"\t-f\tdisable auto-adjust mode (force display)\n"
-			"\t-h\tprint this message\n"
 			"\t-i\tinfo about inodes\n"
 			"\t-m\tuse metric (SI unit)\n"
 			"\t-n\tdo not print header\n"
 			"\t-o\tshow mount flags\n"
+			"\t-p\tfilter by file system name. Read the manpage\n"
+			"\t\tfor details\n"
 			"\t-s\tsum the total usage\n"
-			"\t-t\tfilter filesystems. Read the manpage\n"
+			"\t-t\tfilter by file system type. Read the manpage\n"
 			"\t\tfor details\n"
 			"\t-T\tshow filesystem type\n"
 			"\t-u\tchoose the unit in which\n"
@@ -500,28 +507,33 @@ fetch_info(struct list *lst)
 /*
  * Actually displays infos in nice manner
  * @lst: queue containing all required information
- * @fsfilter: fstype to filter (can be nothing)
+ * @fstfilter: fstype to filter (can be nothing)
  */
 void
-disp(struct list *lst, char *fsfilter, struct Display *disp)
+disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 {
 	struct fsmntinfo *p = NULL;
 	int i, n;
-	int skip = 1;
-	int nm = 0;
+	int nmt = 0;
+	int nmn = 0;
 	double perctused, size, avail, used;
 	double stot, atot, utot, ifitot, ifatot;
-	char *stropt;
-	char *strtmp;
 
 	stot = atot = utot = ifitot = ifatot = n = 0;
 
-	/* activate negative matching? */
+	/* activate negative matching on fs type? */
 	if (tflag) {
-		if (fsfilter[0] == '-') {
-			nm = 1;
-			skip = 0;
-			fsfilter++;
+		if (fstfilter[0] == '-') {
+			nmt = 1;
+			fstfilter++;
+		}
+	}
+
+	/* activate negative matching on fs name? */
+	if (pflag) {
+		if (fsnfilter[0] == '-') {
+			nmn = 1;
+			fsnfilter++;
 		}
 	}
 
@@ -544,36 +556,17 @@ disp(struct list *lst, char *fsfilter, struct Display *disp)
 			}
 		}
 
-		/* apply fsfiltering */
-		if (tflag) {
-			if ((strtmp = strdup(fsfilter)) == NULL) {
-				(void)fprintf(stderr, "cannot duplicate "
-					"fsfilter\n");
-				exit(EXIT_FAILURE);
-				/* NOTREACHED */
-			}
-			stropt = strtok(fsfilter, ",");
-			while (stropt != NULL) {
-				if (strcmp(p->type, stropt) == 0) {
-					if (nm)
-						skip = 1;
-					else
-						skip = 0;
-				}
-				stropt = strtok(NULL, ",");
-			}
-			/* strtok modifies fsfilter so give back its value */
-			fsfilter = strdup(strtmp);
-			if (skip) {
-				if (nm)
-					skip = 0;
-				p = p->next;
-				continue;
-				/* NOTREACHED */
-			} else {
-				if (!nm)
-					skip = 1;
-			}
+		/* apply filtering on fs type */
+		if (fstypefilter(p->type, fstfilter, nmt) == 0) {
+			p = p->next;
+			continue;
+			/* NOTREACHED */
+		}
+		/* apply filtering on fs name */
+		if (fsnamefilter(p->fsname, fsnfilter, nmn) == 0) {
+			p = p->next;
+			continue;
+			/* NOTREACHED */
 		}
 
 		/* filesystem */
