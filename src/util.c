@@ -241,6 +241,7 @@ fstypefilter(char *type, char *filter, int nm)
 		while (stropt != NULL) {
 			if (strcmp(type, stropt) == 0) {
 				ret = 1;
+				break;
 			}
 			stropt = strtok(NULL, ",");
 		}
@@ -260,7 +261,7 @@ fstypefilter(char *type, char *filter, int nm)
 
 /*
  * Return:
- * 	1 if the given fs should be showed
+ *	1 if the given fs should be showed
  *	0 if the given fs should be skipped
  * @type: fs type to check
  * @filter: filter string
@@ -285,6 +286,7 @@ fsnamefilter(char *fsname, char *filter, int nm)
 		while (stropt != NULL) {
 			if (strncmp(fsname, stropt, strlen(stropt)) == 0) {
 				ret = 1;
+				break;
 			}
 			stropt = strtok(NULL, ",");
 		}
