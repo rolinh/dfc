@@ -115,6 +115,16 @@ main(int argc, char *argv[])
 		NULL
 	};
 
+	char *sort_opts[] = {
+		#define SFSNAME	0
+			"name",
+		#define SFSTYPE	1
+			"type",
+		#define SFSDIR	2
+			"mount",
+		NULL
+	};
+
 
 	/* default value for those globals */
 	cflag = 1; /* color enabled by default */
@@ -129,7 +139,7 @@ main(int argc, char *argv[])
 	/* For now, the only output supported is text. */
 	init_disp_text(&display);
 
-	while ((ch = getopt(argc, argv, "abc:fhimnop:st:Tu:vwW")) != -1) {
+	while ((ch = getopt(argc, argv, "abc:fhimnop:q:st:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -180,6 +190,28 @@ main(int argc, char *argv[])
 		case 'p':
 			pflag = 1;
 			fsnfilter = strdup(optarg);
+			break;
+		case 'q':
+			subopts = optarg;
+			while (*subopts) {
+				switch (getsubopt(&subopts, sort_opts, &value)) {
+				case SFSNAME:
+					qflag = 1;
+					break;
+				case SFSTYPE:
+					qflag = 2;
+					break;
+				case SFSDIR:
+					qflag = 3;
+					break;
+				case -1:
+					(void)fprintf(stderr,
+						"-q: illegal sub option %s\n",
+						subopts);
+					return EXIT_FAILURE;
+					/* NOTREACHED */
+				}
+			}
 			break;
 		case 's':
 			sflag = 1;
@@ -307,7 +339,7 @@ usage(int status)
 	else {
 		/* 2 fputs because string length limit is 509 */
 		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME] "
-			"[-t FSTYPE] [-u UNIT]\n"
+			" [-q SORTBY] [-t FSTYPE] [-u UNIT]\n"
 			"Available options:\n"
 			"\t-a\tprint all fs from mtab\n"
 			"\t-b\tdo not show the graph bar\n"
@@ -322,6 +354,8 @@ usage(int status)
 			"\t-n\tdo not print header\n"
 			"\t-o\tshow mount flags\n"
 			"\t-p\tfilter by file system name. Read the manpage\n"
+			"\t\tfor details\n"
+			"\t-q\tsort the output. Read the manpage\n"
 			"\t\tfor details\n"
 			"\t-s\tsum the total usage\n"
 			"\t-t\tfilter by file system type. Read the manpage\n"
@@ -543,6 +577,10 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 
 	if (lst->fsmaxlen < 11)
 		lst->fsmaxlen = 11;
+
+	 /* sort the list */
+	if (qflag)
+		lst->head = msort(lst->head);
 
 	p = lst->head;
 

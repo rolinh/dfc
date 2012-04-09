@@ -44,6 +44,7 @@ init_queue(struct list *lst)
 {
 	lst->head = NULL;
 	lst->tail = NULL;
+	lst->size = 0;
 	lst->fsmaxlen = -1;
 	lst->dirmaxlen = -1;
 	lst->typemaxlen = -1;
@@ -95,6 +96,9 @@ enqueue(struct list *lst, struct fsmntinfo fmi)
 		lst->tail->next = new_fmi;
 
 	lst->tail = new_fmi;
+
+	/* increment size of the list */
+	lst->size++;
 
 	return 0;
 	/* NOTREACHED */

@@ -88,6 +88,16 @@ all file system name except those mentionned:
 	dfc -p -proc,/dev/sdc,run
 
 .TP
+\-q [SORTBY]
+Allows you to sort the output based on SORTBY.
+
+SORTBY can take one of those three values: "name", "type", "mount".
+
+When using "name", the output is sorted by file system name.
+When using "type", the output is sorted by file system type.
+When using "mount", the output is sorted by mount points.
+
+.TP
 \-s
 Sum the total usage.
 .TP

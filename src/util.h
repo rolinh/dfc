@@ -34,6 +34,7 @@
  */
 
 #include "extern.h"
+#include "list.h"
 
 /* function declaration */
 int imax(int a, int b);
@@ -43,5 +44,7 @@ int humanize(double *n);
 double cvrt(double n);
 int fstypefilter(char *type, char *filter, int nm);
 int fsnamefilter(char *fsname, char *filter, int nm);
+int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
+struct fsmntinfo * msort(struct fsmntinfo *fmi);
 
 #endif /* ndef UTIL_H */
