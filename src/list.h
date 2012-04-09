@@ -66,6 +66,7 @@ struct fsmntinfo {
 struct list {
 	struct fsmntinfo *head;
 	struct fsmntinfo *tail;
+	unsigned int size; /* number of elements in the list */
 
 	int fsmaxlen; /* should be the size of the longest fsname */
 	int dirmaxlen; /* same for dir */

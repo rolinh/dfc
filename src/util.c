@@ -303,3 +303,89 @@ fsnamefilter(char *fsname, char *filter, int nm)
 	return ret;
 	/* NOTREACHED */
 }
+
+/*
+ * Compares regarding the qflag
+ */
+int
+cmp(struct fsmntinfo *a, struct fsmntinfo *b)
+{
+	if (qflag == 1)
+		return strcmp(a->fsname, b->fsname);
+		/* NOTREACHED */
+	else if (qflag == 2)
+		return strcmp(a->type, b->type);
+		/* NOTREACHED */
+	else if (qflag == 3)
+		return strcmp(a->dir, b->dir);
+		/* NOTREACHED */
+	else
+		return -1;
+		/* NOTREACHED */
+}
+
+/*
+ * Perform a mergesort algorithm to sort the list by ascending
+ * Results depends on what was chosen for comparison (fsname, type or dir)
+ */
+struct fsmntinfo *
+msort(struct fsmntinfo *fmi)
+{
+	struct fsmntinfo *tail, *left, *right, *next;
+	int nmerges, lsize, rsize;
+	int size = 1;
+
+	/*
+	 * trivial case: list is sorted if there is no or only one element in
+	 * the linked list
+	 */
+	if (fmi == NULL || fmi->next == NULL)
+		return fmi;
+		/* NOTREACHED */
+
+	do {
+		nmerges = 0;
+		left = fmi;
+		tail = fmi = NULL;
+		while (left) {
+			nmerges++;
+			right = left;
+			lsize = 0;
+			rsize = size;
+			while (right && lsize < size) {
+				lsize++;
+				right = right->next;
+			}
+			while (lsize > 0 || (rsize > 0 && right)) {
+				if (!lsize) {
+					next = right;
+					right = right->next;
+					rsize--;
+				} else if (!rsize || !right) {
+					next = left;
+					left = left->next;
+					lsize--;
+				} else if (cmp(left, right) <= 0) {
+					next = left;
+					left = left->next;
+					lsize--;
+				} else {
+					next = right;
+					right = right->next;
+					rsize--;
+				}
+				if (tail)
+					tail->next = next;
+				else
+					fmi = next;
+				tail = next;
+			}
+			left = right;
+		}
+		tail->next = NULL;
+		size *= 2;
+	} while (nmerges > 1);
+
+	return fmi;
+	/* NOTREACHED */
+}
