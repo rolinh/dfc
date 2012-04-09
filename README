@@ -1,4 +1,4 @@
-dfc is a simple tool that display file system usage
+dfc is a simple tool that display file system space usage using graph and color
 
 BUILD
 simply use make:
@@ -7,10 +7,12 @@ simply use make:
 RUN
 Once built, you can run it by typing:
 	./dfc
+
 see ./dfc -h for options and usage
 
 INSTALL
 By default, it will be installed in /usr/local/bin. As root, type:
 	make install
-If you want to override this, change the prefix like so:
+If you want to override this, change the prefix.
+For instance:
 	make PREFIX=/usr install
