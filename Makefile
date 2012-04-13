@@ -1,4 +1,4 @@
-CC	?= gcc
+CC ?= gcc
 CFLAGS ?= -O2 -std=c89
 LDFLAGS +=
 CFDEBUG = -g -pedantic -Wall -Wunused-parameter -Wlong-long\
@@ -7,12 +7,13 @@ SRC = src
 MAN = man
 EXEC = dfc
 
-SRCS= ${SRC}/dfc.c  \
+
+SRCS= ${SRC}/csv.c  \
+	  ${SRC}/dfc.c  \
       ${SRC}/list.c \
       ${SRC}/text.c \
       ${SRC}/util.c
-	  #${SRC}/csv.c  \
-      ${SRC}/html.c \
+      #${SRC}/html.c \
       ${SRC}/tex.c  \
 
 OBJS= ${SRCS:.c=.o}

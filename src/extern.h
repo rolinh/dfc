@@ -36,7 +36,7 @@
 #define VERSION "2.5.0"
 
 /* set flags for options */
-int aflag, bflag, cflag, fflag, hflag, iflag, mflag, nflag, oflag, pflag,
+int aflag, bflag, cflag, eflag, fflag, hflag, iflag, mflag, nflag, oflag, pflag,
     qflag, sflag, tflag, uflag, vflag, wflag;
 int Tflag, Wflag;
 
