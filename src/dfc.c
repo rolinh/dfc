@@ -81,6 +81,38 @@ main(int argc, char *argv[])
 	char *subopts;
 	char *value;
 
+	char *color_opts[] = {
+		#define CALWAYS	0
+			"always",
+		#define	CNEVER	1
+			"never",
+		#define	CAUTO	2
+			"auto",
+		NULL
+	};
+
+	char *export_opts[] = {
+		#define ETEXT	0
+			"text",
+		#define	ECSV	1
+			"csv",
+		#define	EHTML	2
+			"html",
+		#define	ETEX	3
+			"tex",
+		NULL
+	};
+
+	char *sort_opts[] = {
+		#define SFSNAME	0
+			"name",
+		#define SFSTYPE	1
+			"type",
+		#define SFSDIR	2
+			"mount",
+		NULL
+	};
+
 	char *unit_opts[] = {
 		#define H	0
 			"h",
@@ -105,26 +137,6 @@ main(int argc, char *argv[])
 		NULL
 	};
 
-	char *color_opts[] = {
-		#define CALWAYS	0
-			"always",
-		#define	CNEVER	1
-			"never",
-		#define	CAUTO	2
-			"auto",
-		NULL
-	};
-
-	char *sort_opts[] = {
-		#define SFSNAME	0
-			"name",
-		#define SFSTYPE	1
-			"type",
-		#define SFSDIR	2
-			"mount",
-		NULL
-	};
-
 
 	/* default value for those globals */
 	cflag = 1; /* color enabled by default */
@@ -136,10 +148,7 @@ main(int argc, char *argv[])
 	 */
 	unitflag = 'h';
 
-	/* For now, the only output supported is text. */
-	init_disp_text(&display);
-
-	while ((ch = getopt(argc, argv, "abc:fhimnop:q:st:Tu:vwW")) != -1) {
+	while ((ch = getopt(argc, argv, "abc:e:fhimnop:q:st:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -163,6 +172,32 @@ main(int argc, char *argv[])
 				case -1:
 					(void)fprintf(stderr,
 						"-c: illegal sub option %s\n",
+						subopts);
+					return EXIT_FAILURE;
+					/* NOTREACHED */
+				}
+			}
+			break;
+		case 'e':
+			eflag = 1;
+			subopts = optarg;
+			while (*subopts) {
+				switch (getsubopt(&subopts, export_opts, &value)) {
+				case ETEXT:
+					eflag = 0;
+					break;
+				case ECSV:
+					init_disp_csv(&display);
+					break;
+				case EHTML:
+					/* init_disp_html(&display); */
+					break;
+				case ETEX:
+					/* init_disp_tex(&display); */
+					break;
+				case -1:
+					(void)fprintf(stderr,
+						"-e: illegal sub option %s\n",
 						subopts);
 					return EXIT_FAILURE;
 					/* NOTREACHED */
@@ -313,6 +348,10 @@ main(int argc, char *argv[])
 			Tflag = 0;
 		}
 	}
+
+	/* if nothing specified, text output is default */
+	if (!eflag)
+		init_disp_text(&display);
 
 	/* initializes the queue */
 	init_queue(&queue);
@@ -609,14 +648,18 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 
 		/* filesystem */
 		(void)printf("%s", p->fsname);
-		for (i = (int)strlen(p->fsname); i < lst->fsmaxlen + 1; i++)
-			(void)printf(" ");
+		if (!eflag) {
+			for (i = (int)strlen(p->fsname); i < lst->fsmaxlen + 1; i++)
+				(void)printf(" ");
+		}
 
 		/* type */
 		if (Tflag) {
 			(void)printf("%s", p->type);
-			for (i = (int)strlen(p->type); i < lst->typemaxlen + 1; i++)
-				(void)printf(" ");
+			if (!eflag) {
+				for (i = (int)strlen(p->type); i < lst->typemaxlen + 1; i++)
+					(void)printf(" ");
+			}
 		}
 #ifdef __linux__
 		size = (double)p->blocks *(double)p->frsize;
@@ -668,9 +711,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 
 		/* info about mount option */
 		if (oflag) {
-			for (i = (int)strlen(p->dir);
+			if (!eflag) {
+				for (i = (int)strlen(p->dir);
 					i < imax(lst->dirmaxlen + 1, 11); i++)
-				(void)printf(" ");
+					(void)printf(" ");
+			}
 			(void)printf("%s\n", p->opts);
 		} else
 			(void)printf("\n");

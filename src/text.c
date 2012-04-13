@@ -30,7 +30,7 @@
  *
  * Text display functions
  */
-#include "stdio.h"
+#include <stdio.h>
 
 #include "text.h"
 #include "extern.h"
