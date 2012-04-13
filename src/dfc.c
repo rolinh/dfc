@@ -187,6 +187,7 @@ main(int argc, char *argv[])
 					eflag = 0;
 					break;
 				case ECSV:
+					Wflag = 1;
 					init_disp_csv(&display);
 					break;
 				case EHTML:
@@ -586,7 +587,7 @@ void
 disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 {
 	struct fsmntinfo *p = NULL;
-	int i, n;
+	int n;
 	int nmt = 0;
 	int nmn = 0;
 	double perctused, size, avail, used;
@@ -647,20 +648,13 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		}
 
 		/* filesystem */
-		(void)printf("%s", p->fsname);
-		if (!eflag) {
-			for (i = (int)strlen(p->fsname); i < lst->fsmaxlen + 1; i++)
-				(void)printf(" ");
-		}
+		disp->print_fs(lst, p->fsname);
 
 		/* type */
 		if (Tflag) {
-			(void)printf("%s", p->type);
-			if (!eflag) {
-				for (i = (int)strlen(p->type); i < lst->typemaxlen + 1; i++)
-					(void)printf(" ");
-			}
+			disp->print_type(lst, p->type);
 		}
+
 #ifdef __linux__
 		size = (double)p->blocks *(double)p->frsize;
 		avail = (double)p->bavail * (double)p->frsize;
@@ -702,23 +696,17 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		if (iflag) {
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
-			(void)printf("%9ldk", p->files / 1000);
-			(void)printf("%9ldk", p->favail / 1000);
+			disp->print_inodes(p->files / 1000, p->files / 1000);
 		}
 
 		/* mounted on */
-		(void)printf(" %s", p->dir);
+		disp->print_mount(p->dir);
 
 		/* info about mount option */
-		if (oflag) {
-			if (!eflag) {
-				for (i = (int)strlen(p->dir);
-					i < imax(lst->dirmaxlen + 1, 11); i++)
-					(void)printf(" ");
-			}
-			(void)printf("%s\n", p->opts);
-		} else
-			(void)printf("\n");
+		if (oflag)
+			disp->print_mopt(lst, p->dir, p->opts);
+
+		(void)printf("\n");
 
 		p = p->next;
 	}

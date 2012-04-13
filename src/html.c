@@ -40,9 +40,12 @@ init_disp_html(struct Display *disp)
     disp->print_sum    = html_disp_sum;
     disp->print_bar    = html_disp_bar;
     disp->print_at     = html_disp_at;
+    disp->print_fs     = html_disp_fs;
+    disp->print_type   = html_disp_type;
+    disp->print_inodes = html_disp_inodes;
+    disp->print_mount  = html_disp_mount;
+    disp->print_mopt   = html_disp_mopt;
     disp->print_perct  = html_disp_perct;
-    disp->change_color = html_change_color;
-    disp->reset_color  = html_reset_color;
 }
 
 void
@@ -71,19 +74,37 @@ html_disp_at(double n, double perct)
 }
 
 void
+html_disp_fs(struct list *lst, char *fsname)
+{
+    /* TODO. */
+}
+
+void
+html_disp_type(struct list *lst, char *type)
+{
+    /* TODO. */
+}
+
+void
+html_disp_inodes(unsigned long files, unsigned long favail)
+{
+    /* TODO. */
+}
+
+void
+html_disp_mount(char *dir)
+{
+    /* TODO. */
+}
+
+void
+html_disp_mopt(struct list *lst, char *dir, char *opts)
+{
+    /* TODO. */
+}
+
+void
 html_disp_perct(double perct)
-{
-    /* TODO. */
-}
-
-void
-html_change_color(double perct)
-{
-    /* TODO. */
-}
-
-void
-html_reset_color(void)
 {
     /* TODO. */
 }

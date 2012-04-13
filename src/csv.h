@@ -43,8 +43,11 @@ void csv_disp_sum(struct list *lst, double stot, double utot, double ftot,
                   double ifitot, double ifatot);
 void csv_disp_bar(double perct);
 void csv_disp_at(double n, double perct);
+void csv_disp_fs(struct list *lst, char *fsname);
+void csv_disp_type(struct list *lst, char *type);
+void csv_disp_inodes(unsigned long files, unsigned long favail);
+void csv_disp_mount(char *dir);
+void csv_disp_mopt(struct list *lst, char *dir, char *opts);
 void csv_disp_perct(double perct);
-void csv_change_color(double perct);
-void csv_reset_color(void);
 
 #endif /* ndef H_CSV */

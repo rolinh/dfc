@@ -36,9 +36,12 @@ struct Display
     void (*print_sum)    (struct list*, double, double, double, double, double);
     void (*print_bar)    (double);
     void (*print_at)     (double, double);
+    void (*print_fs)	 (struct list*, char *);
+    void (*print_type)	 (struct list*, char *);
+    void (*print_inodes) (unsigned long, unsigned long);
+    void (*print_mount)	 (char *);
+    void (*print_mopt)	 (struct list*, char *, char *);
     void (*print_perct)  (double);
-    void (*change_color) (double);
-    void (*reset_color)  (void);
 };
 
 #endif /* ndef H_DISPLAY */

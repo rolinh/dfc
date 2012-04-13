@@ -32,6 +32,8 @@
  */
 #include <stdio.h>
 
+#include <string.h>
+
 #include "text.h"
 #include "extern.h"
 #include "util.h"
@@ -43,9 +45,12 @@ init_disp_text(struct Display *disp)
     disp->print_sum    = text_disp_sum;
     disp->print_bar    = text_disp_bar;
     disp->print_at     = text_disp_at;
+    disp->print_fs     = text_disp_fs;
+    disp->print_type   = text_disp_type;
+    disp->print_inodes = text_disp_inodes;
+    disp->print_mount  = text_disp_mount;
+    disp->print_mopt   = text_disp_mopt;
     disp->print_perct  = text_disp_perct;
-    disp->change_color = text_change_color;
-    disp->reset_color  = text_reset_color;
 }
 
 /*
@@ -120,7 +125,7 @@ text_disp_header(struct list *lst)
 	} else
 		(void)printf("\n");
 
-	text_reset_color();
+	reset_color();
 }
 
 /*
@@ -210,7 +215,7 @@ text_disp_bar(double perct)
 		for (; (i < 100) && (i < perct); i += barinc)
 			(void)printf("=");
 
-		text_reset_color();
+		reset_color();
 
 		for (j = i; j < 100; j += barinc)
 			(void)printf("-");
@@ -230,15 +235,15 @@ text_disp_at(double n, double perct)
 {
     int i;
 
-	text_change_color(perct);
+	change_color(perct);
 
 	/* available  and total */
 	switch (unitflag) {
 	case 'h':
 		i = humanize(&n);
-		text_change_color(perct);
+		change_color(perct);
 		(void)printf(i == 0 ? "%9.f" : "%9.1f", n);
-		text_reset_color();
+		reset_color();
 		switch (i) {
 		case 0:	/* bytes */
 		    (void)printf("B");
@@ -272,20 +277,20 @@ text_disp_at(double n, double perct)
 		/* NOTREACHED */
 	case 'b':
 		(void)printf("%15.f", n);
-		text_reset_color();
+		reset_color();
 		(void)printf("B");
 		return;
 		/* NOTREACHED */
 	case 'k':
 		(void)printf("%10.f", n);
-		text_reset_color();
+		reset_color();
 		(void)printf("K");
 		return;
 		/* NOTREACHED */
 	}
 
 	(void)printf("%9.1f", n);
-	text_reset_color();
+	reset_color();
 
 	switch (unitflag) {
 	case 'm':
@@ -312,6 +317,50 @@ text_disp_at(double n, double perct)
 	}
 }
 
+void
+text_disp_fs(struct list *lst, char *fsname)
+{
+	int i;
+
+	(void)printf("%s", fsname);
+	for (i = (int)strlen(fsname); i < lst->fsmaxlen + 1; i++)
+			(void)printf(" ");
+}
+
+void
+text_disp_type(struct list* lst, char *type)
+{
+	int i;
+
+	(void)printf("%s", type);
+	for (i = (int)strlen(type); i < lst->typemaxlen + 1; i++)
+		(void)printf(" ");
+}
+
+void
+text_disp_inodes(unsigned long files, unsigned long favail)
+{
+	(void)printf("%9ldk", files);
+	(void)printf("%9ldk", favail);
+}
+
+void
+text_disp_mount(char *dir)
+{
+	(void)printf(" %s", dir);
+}
+
+void
+text_disp_mopt(struct list* lst, char *dir, char *opts)
+{
+	int i;
+
+	for (i = (int)strlen(dir);
+		i < imax(lst->dirmaxlen + 1, 11); i++)
+		(void)printf(" ");
+	(void)printf("%s", opts);
+}
+
 /*
  * Display percentage
  * @perct: percentage
@@ -330,7 +379,7 @@ text_disp_perct(double perct)
 			(void)printf("\033[;31m");
 
 		(void)printf("%3.f", perct);
-		text_reset_color();
+		reset_color();
 		(void)printf("%%");
 	}
 }
@@ -340,7 +389,7 @@ text_disp_perct(double perct)
  * @perct: percentage
  */
 void
-text_change_color(double perct)
+change_color(double perct)
 {
 	if (cflag) {
 		if (perct < 50.0) /* green */
@@ -356,7 +405,7 @@ text_change_color(double perct)
  * Reset color attribute to default
  */
 void
-text_reset_color(void)
+reset_color(void)
 {
 	if (cflag)
 		(void)printf("\033[;m");

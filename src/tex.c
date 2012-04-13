@@ -40,9 +40,12 @@ init_disp_tex(struct Display *disp)
     disp->print_sum    = tex_disp_sum;
     disp->print_bar    = tex_disp_bar;
     disp->print_at     = tex_disp_at;
+    disp->print_fs     = tex_disp_fs;
+    disp->print_type   = tex_disp_type;
+    disp->print_inodes = tex_disp_inodes;
+    disp->print_mount  = tex_disp_mount;
+    disp->print_mopt   = tex_disp_mopt;
     disp->print_perct  = tex_disp_perct;
-    disp->change_color = tex_change_color;
-    disp->reset_color  = tex_reset_color;
 }
 
 void
@@ -71,19 +74,37 @@ tex_disp_at(double n, double perct)
 }
 
 void
+tex_disp_fs(struct list *lst, char *fsname)
+{
+    /* TODO. */
+}
+
+void
+tex_disp_type(struct list *lst, char *type)
+{
+    /* TODO. */
+}
+
+void
+tex_disp_inodes(unsigned long files, unsigned long favail)
+{
+    /* TODO. */
+}
+
+void
+tex_disp_mount(char *dir)
+{
+    /* TODO. */
+}
+
+void
+tex_disp_mopt(struct list *lst, char *dir, char *opts)
+{
+    /* TODO. */
+}
+
+void
 tex_disp_perct(double perct)
-{
-    /* TODO. */
-}
-
-void
-tex_change_color(double perct)
-{
-    /* TODO. */
-}
-
-void
-tex_reset_color(void)
 {
     /* TODO. */
 }
