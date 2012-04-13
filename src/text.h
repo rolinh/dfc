@@ -43,8 +43,14 @@ void text_disp_sum(struct list *lst, double stot, double utot, double ftot,
                    double ifitot, double ifatot);
 void text_disp_bar(double perct);
 void text_disp_at(double n, double perct);
+void text_disp_fs(struct list *lst, char *fsname);
+void text_disp_type(struct list *lst, char *type);
+void text_disp_inodes(unsigned long files, unsigned long favail);
+void text_disp_mount(char *dir);
+void text_disp_mopt(struct list *lst, char *dir, char *opts);
 void text_disp_perct(double perct);
-void text_change_color(double perct);
-void text_reset_color(void);
+
+void change_color(double perct);
+void reset_color(void);
 
 #endif /* ndef H_TEXT */

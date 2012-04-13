@@ -45,9 +45,12 @@ init_disp_csv(struct Display *disp)
     disp->print_sum    = csv_disp_sum;
     disp->print_bar    = csv_disp_bar;
     disp->print_at     = csv_disp_at;
+    disp->print_fs     = csv_disp_fs;
+    disp->print_type   = csv_disp_type;
+    disp->print_inodes = csv_disp_inodes;
+    disp->print_mount  = csv_disp_mount;
+    disp->print_mopt   = csv_disp_mopt;
     disp->print_perct  = csv_disp_perct;
-    disp->change_color = csv_change_color;
-    disp->reset_color  = csv_reset_color;
 }
 
 void
@@ -72,12 +75,12 @@ csv_disp_header(struct list *lst)
 		(void)printf("AV.INODES,");
 	}
 
-	(void)printf("MOUNTED ON,");
+	(void)printf("MOUNTED ON");
 
 	if (oflag)
-		(void)printf("MOUNT OPTIONS\n");
-	else
-		(void)printf("\n");
+		(void)printf(",MOUNT OPTIONS");
+	
+	(void)printf("\n");
 }
 
 void
@@ -132,7 +135,7 @@ csv_disp_at(double n, double perct)
 	switch (unitflag) {
 	case 'h':
 		i = humanize(&n);
-		(void)printf(i == 0 ? "%f," : "%.1f,", n);
+		(void)printf(i == 0 ? "%.f," : "%.1f,", n);
 		switch (i) {
 		case 0:	/* bytes */
 		    (void)printf("B");
@@ -204,21 +207,49 @@ csv_disp_at(double n, double perct)
 }
 
 void
+csv_disp_fs(struct list *lst, char *fsname)
+{
+	/* we do not care about lst here */
+	(void)lst;
+
+	(void)printf("%s,",fsname);
+}
+
+void
+csv_disp_type(struct list *lst, char *type)
+{
+	/* we do not care about lst here */
+	(void)lst;
+
+	(void)printf("%s,", type);
+}
+
+void
+csv_disp_inodes(unsigned long files, unsigned long favail)
+{
+	(void)printf("%ld,k,", files);
+	(void)printf("%ld,k,", favail);
+}
+
+void
+csv_disp_mount(char *dir)
+{
+	(void)printf("%s", dir);
+}
+
+void
+csv_disp_mopt(struct list *lst, char *dir, char *opts)
+{
+	/* we do not care about lst here */
+	(void)lst;
+	/* neither about dir */
+	(void)dir;
+
+	(void)printf(",%s", opts);
+}
+
+void
 csv_disp_perct(double perct)
 {
 	(void)printf("%.f,%%,", perct);
-}
-
-void
-csv_change_color(double perct)
-{
-	/* do not care about perct here */
-	(void)perct;
-	/* DUMMY */
-}
-
-void
-csv_reset_color(void)
-{
-	/* DUMMY */
 }
