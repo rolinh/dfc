@@ -310,18 +310,20 @@ fsnamefilter(char *fsname, char *filter, int nm)
 int
 cmp(struct fsmntinfo *a, struct fsmntinfo *b)
 {
-	if (qflag == 1)
+	switch(qflag) {
+	case 1:
 		return strcmp(a->fsname, b->fsname);
 		/* NOTREACHED */
-	else if (qflag == 2)
+	case 2:
 		return strcmp(a->type, b->type);
 		/* NOTREACHED */
-	else if (qflag == 3)
+	case 3:
 		return strcmp(a->dir, b->dir);
 		/* NOTREACHED */
-	else
+	default:
 		return -1;
 		/* NOTREACHED */
+	}
 }
 
 /*
