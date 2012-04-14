@@ -39,12 +39,14 @@
 /* function declaration */
 int imax(int a, int b);
 char* shortenstr(char *str, int len);
-unsigned int getttywidth(void);
+int getttywidth(void);
 int humanize(double *n);
 double cvrt(double n);
 int fstypefilter(char *type, char *filter, int nm);
 int fsnamefilter(char *fsname, char *filter, int nm);
 int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
+void auto_adjust(struct list lst, int width);
+int req_width(struct list lst);
 
 #endif /* ndef UTIL_H */
