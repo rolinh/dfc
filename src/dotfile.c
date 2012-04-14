@@ -131,7 +131,11 @@ parse_conf(char *conf)
 			else
 				cnf.chigh = tmpcol;
 		} else if (strcmp(key, "graph_symbol") == 0) {
-			/* TODO */
+			if (strlen(val) == 1)
+				cnf.gsymbol = val[0];
+			else
+				(void)fprintf(stderr, "Wrong symbol value: "
+						"%s\n", val);
 		} else
 			(void)fprintf(stderr, "Unknown option in configuration "
 					"file: %s\n", key);
