@@ -195,7 +195,7 @@ text_disp_bar(double perct)
 
 	if (!cflag) {
 		for (i = 0; i < perct; i += barinc)
-			(void)printf("=");
+			(void)printf("%c", cnf.gsymbol);
 
 		for (j = i; j < 100; j += barinc)
 			(void)printf("-");
@@ -204,17 +204,17 @@ text_disp_bar(double perct)
 		/* green */
 		(void)printf("\033[;%dm", cnf.clow);
 		for (i = 0; (i < 50) && (i < perct); i += barinc)
-			(void)printf("=");
+			(void)printf("%c", cnf.gsymbol);
 
 		/* yellow */
 		(void)printf("\033[;%dm", cnf.cmedium);
 		for (; (i < 75) && (i < perct); i += barinc)
-			(void)printf("=");
+			(void)printf("%c", cnf.gsymbol);
 
 		/* red */
 		(void)printf("\033[;%dm", cnf.chigh);
 		for (; (i < 100) && (i < perct); i += barinc)
-			(void)printf("=");
+			(void)printf("%c", cnf.gsymbol);
 
 		reset_color();
 
