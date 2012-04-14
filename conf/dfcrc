@@ -11,6 +11,7 @@
 # - cyan
 # - white
 # Note: it only concerns foreground values
+color_header = blue
 color_low = green
 color_medium = yellow
 color_high = red
