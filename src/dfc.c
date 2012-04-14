@@ -75,7 +75,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	struct Display display;
 	int ch;
-	unsigned int width;
+	int width;
 	char *fsnfilter = NULL;
 	char *fstfilter = NULL;
 	char *subopts;
@@ -338,22 +338,6 @@ main(int argc, char *argv[])
 	if (width == 0 && cflag != 2)
 		cflag = 0;
 
-	/* cannot display all information if tty is too narrow */
-	if (!fflag) {
-		if (width < 151) {
-			if (oflag) {
-				Tflag = 0;
-				bflag = 1;
-			}
-		}
-		if (width < 125)
-			oflag = 0;
-		if (width < 81) {
-			bflag = 1;
-			Tflag = 0;
-		}
-	}
-
 	/* change cnf value according to config file, it it exists */
 	if ((cfgfile = getconf()) != NULL) {
 		if (parse_conf(cfgfile) == -1)
@@ -370,6 +354,10 @@ main(int argc, char *argv[])
 
 	/* fetch information about the currently mounted filesystems */
 	fetch_info(&queue);
+
+	/* cannot display all information if tty is too narrow */
+	if (!fflag && width > 0 && !eflag)
+		auto_adjust(queue, width);
 
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &display);
@@ -579,6 +567,8 @@ fetch_info(struct list *lst)
 						lst->dirmaxlen);
 				lst->typemaxlen = imax((int)strlen(fmi->type),
 						lst->typemaxlen);
+				lst->mntoptmaxlen = imax((int)strlen(fmi->opts),
+						lst->mntoptmaxlen);
 			}
 		}
 #ifdef __linux__

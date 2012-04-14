@@ -79,10 +79,10 @@ shortenstr(char *str, int len)
  * Get the width of tty and return it.
  * Return 0 if stdout is not a tty.
  */
-unsigned int
+int
 getttywidth(void)
 {
-	unsigned int width = 0;
+	int width = 0;
 #ifdef TIOCGSIZE
 	struct ttysize win;
 #elif defined(TIOCGWINSZ)
@@ -216,7 +216,7 @@ cvrt(double n)
 
 /*
  * Return:
- * 	1 if the given fs should be showed
+ *	1 if the given fs should be showed
  *	0 if the given fs should be skipped
  * @type: fs type to check
  * @filter: filter string
@@ -389,5 +389,112 @@ msort(struct fsmntinfo *fmi)
 	} while (nmerges > 1);
 
 	return fmi;
+	/* NOTREACHED */
+}
+
+/*
+ * auto-adjust options based on the size needed to display the informations
+ * @width: width of the output
+ */
+void
+auto_adjust(struct list lst, int width)
+{
+	int req, gap;
+
+	req = req_width(lst);
+
+	/* nothing to adjust here */
+	if ((gap = (width - req)) >= 0)
+		return;
+		/* NOTREACHED */
+
+	(void)fputs("WARNING: TTY too narrow. Some options will be disabled "
+			"to try to make dfc output fit.\n", stderr);
+
+	if (!bflag) {
+		/* large graph should be the first option to disable */
+		if (wflag) {
+			wflag = 0;
+			gap += 30;
+			if (gap >= 0)
+				return;
+				/* NOTREACHED */
+		}
+		bflag = 1;
+		gap += 24;
+		if (gap >= 0)
+			return;
+			/* NOTREACHED */
+	}
+	if (Tflag) {
+		Tflag = 0;
+		gap += lst.typemaxlen + 1;
+		if (gap >= 0)
+			return;
+			/* NOTREACHED */
+	}
+	if (iflag) {
+		iflag = 0;
+		gap += 12;
+		if (gap >= 0)
+			return;
+			/* NOTREACHED */
+	}
+	if (oflag) {
+		oflag = 0;
+		gap += lst.mntoptmaxlen + 1;
+		if (gap >= 0)
+			return;
+			/* NOTREACHED */
+	}
+	if (gap < 0)
+		(void)fputs("WARNING: Output still messed up. Enlarge your "
+				"terminal if you can...\n", stderr);
+}
+
+/*
+ * compute the required width needed for the output
+ * @lst: list containing the info
+ */
+int
+req_width(struct list lst)
+{
+	int ret;
+
+	/* dir and fs are always displayed */
+	ret = lst.fsmaxlen + lst.dirmaxlen + 3;
+	ret += 6; /* percentage */
+
+	if (Tflag)
+		ret += lst.typemaxlen + 1;
+	if (oflag)
+		ret += lst.mntoptmaxlen + 1;
+	if (iflag)
+		ret += 12;
+	if (!bflag) {
+		ret += 24;
+		if (wflag)
+			ret += 30;
+	}
+	switch (unitflag) {
+	case 'h': /* FALLTHROUGH */
+	case 'm': /* FALLTHROUGH */
+	case 'g': /* FALLTHROUGH */
+	case 't': /* FALLTHROUGH */
+	case 'p': /* FALLTHROUGH */
+	case 'e': /* FALLTHROUGH */
+	case 'z': /* FALLTHROUGH */
+	case 'y': /* FALLTHROUGH */
+		ret += 25;
+		break;
+	case 'b':
+		ret += 33;
+		break;
+	case 'k':
+		ret += 23;
+		break;
+	}
+
+	return ret;
 	/* NOTREACHED */
 }
