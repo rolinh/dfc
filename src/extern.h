@@ -49,6 +49,7 @@ struct conf {
 	int clow;	/* color when usage low */
 	int cmedium;	/* color when usage medium */
 	int chigh;	/* color when usage high */
+	int chead;	/* color used for the header */
 
 	char gsymbol;	/* symbol used to draw the graph */
 };

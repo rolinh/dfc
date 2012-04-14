@@ -64,9 +64,9 @@ text_disp_header(struct list *lst)
 	int i;
 	int barinc = 5;
 
-	/* use blue when color option is triggered */
+	/* use color option is triggered */
 	if (cflag)
-		(void)printf("\033[;34m");
+		(void)printf("\033[;%dm", cnf.chead);
 
 	(void)printf("FILESYSTEM ");
 	for (i = 11; i < lst->fsmaxlen; i++)

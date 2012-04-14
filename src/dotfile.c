@@ -112,7 +112,13 @@ parse_conf(char *conf)
 		key = strtrim(key);
 		val = strtrim(val);
 
-		if (strcmp(key, "color_low") == 0) {
+		if (strcmp(key, "color_header") == 0) {
+			if ((tmpcol = cvrt_color(val)) == -1)
+				(void)fprintf(stderr, "Unknown color value: "
+						"%s\n", val);
+			else
+				cnf.chead = tmpcol;
+		} else if (strcmp(key, "color_low") == 0) {
 			if ((tmpcol = cvrt_color(val)) == -1)
 				(void)fprintf(stderr, "Unknown color value: "
 						"%s\n", val);
@@ -209,9 +215,10 @@ cvrt_color(char *col)
 void
 init_conf(struct conf *cnf)
 {
-	cnf->clow =	GREEN;	/* green */
-	cnf->cmedium =	YELLOW;	/* yellow */
-	cnf->chigh =	RED;	/* red */
+	cnf->clow =	GREEN;
+	cnf->cmedium =	YELLOW;
+	cnf->chigh =	RED;
+	cnf->chead =	BLUE;
 
 	cnf->gsymbol =	'=';
 }
