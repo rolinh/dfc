@@ -80,6 +80,7 @@ main(int argc, char *argv[])
 	char *fstfilter = NULL;
 	char *subopts;
 	char *value;
+	char *cfgfile;
 
 	char *color_opts[] = {
 		#define CALWAYS	0
@@ -147,6 +148,9 @@ main(int argc, char *argv[])
 	 * Have a look at unit_opts for the possible values.
 	 */
 	unitflag = 'h';
+
+	 /* Init default colors and symbol sign */
+	init_conf(&cnf);
 
 	while ((ch = getopt(argc, argv, "abc:e:fhimnop:q:st:Tu:vwW")) != -1) {
 		switch (ch) {
@@ -348,6 +352,13 @@ main(int argc, char *argv[])
 			bflag = 1;
 			Tflag = 0;
 		}
+	}
+
+	/* change cnf value according to config file, it it exists */
+	if ((cfgfile = getconf()) != NULL) {
+		if (parse_conf(cfgfile) == -1)
+			(void)fprintf(stderr, "Error reading the configuration"
+					" file: %s\n", cfgfile);
 	}
 
 	/* if nothing specified, text output is default */

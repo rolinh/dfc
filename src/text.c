@@ -37,6 +37,7 @@
 #include "text.h"
 #include "extern.h"
 #include "util.h"
+#include "dotfile.h"
 
 void
 init_disp_text(struct Display *disp)
@@ -201,17 +202,17 @@ text_disp_bar(double perct)
 	} else { /* color */
 
 		/* green */
-		(void)printf("\033[;32m");
+		(void)printf("\033[;%dm", cnf.clow);
 		for (i = 0; (i < 50) && (i < perct); i += barinc)
 			(void)printf("=");
 
 		/* yellow */
-		(void)printf("\033[;33m");
+		(void)printf("\033[;%dm", cnf.cmedium);
 		for (; (i < 75) && (i < perct); i += barinc)
 			(void)printf("=");
 
 		/* red */
-		(void)printf("\033[;31m");
+		(void)printf("\033[;%dm", cnf.chigh);
 		for (; (i < 100) && (i < perct); i += barinc)
 			(void)printf("=");
 
@@ -368,20 +369,10 @@ text_disp_mopt(struct list* lst, char *dir, char *opts)
 void
 text_disp_perct(double perct)
 {
-	if (!cflag) {
-		(void)printf("%3.f%%", perct);
-	} else {
-		if (perct < 50.0) /* green */
-			(void)printf("\033[;32m");
-		else if (perct < 75.0) /* yellow */
-			(void)printf("\033[;33m");
-		else /* red */
-			(void)printf("\033[;31m");
-
-		(void)printf("%3.f", perct);
-		reset_color();
-		(void)printf("%%");
-	}
+	change_color(perct);
+	(void)printf("%3.f", perct);
+	reset_color();
+	(void)printf("%%");
 }
 
 /*
@@ -393,11 +384,11 @@ change_color(double perct)
 {
 	if (cflag) {
 		if (perct < 50.0) /* green */
-			(void)printf("\033[;32m");
+			(void)printf("\033[;%dm", cnf.clow);
 		else if (perct < 75.0) /* yellow */
-			(void)printf("\033[;33m");
+			(void)printf("\033[;%dm", cnf.cmedium);
 		else /* red */
-			(void)printf("\033[;31m");
+			(void)printf("\033[;%dm", cnf.chigh);
 	}
 }
 

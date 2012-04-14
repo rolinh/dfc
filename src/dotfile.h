@@ -25,45 +25,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef H_EXTERN
-#define H_EXTERN
+#ifndef H_DOTFILE
+#define H_DOTFILE
 /*
- * extern.h
+ * dotfile.h
  *
- * Globals and dfc version declaration
+ * Header for dotfile.c
  */
 
-#define VERSION "2.5.0"
+#include "extern.h"
 
-/* color defines */
-#define BLACK	30
-#define RED	31
-#define GREEN	32
-#define YELLOW	33
-#define BLUE	34
-#define MAGENTA 35
-#define CYAN	36
-#define WHITE	37
+/* function declaration */
+char * getconf(void);
+int parse_conf(char *dfcrc);
+char * strtrim(char *str);
+int cvrt_color(char *col);
+void init_conf(struct conf *cnf);
 
-struct conf {
-	int clow;	/* color when usage low */
-	int cmedium;	/* color when usage medium */
-	int chigh;	/* color when usage high */
-
-	char gsymbol;	/* symbol used to draw the graph */
-};
-
-/* struct to store specific configuration from config file */
-struct conf cnf;
-
-/* set flags for options */
-int aflag, bflag, cflag, eflag, fflag, hflag, iflag, mflag, nflag, oflag, pflag,
-    qflag, sflag, tflag, uflag, vflag, wflag;
-int Tflag, Wflag;
-
-
-/* struct to store specific configuration from config file */
-struct conf cnf;
-char unitflag;
-
-#endif /* ndef EXTERN_H */
+#endif /* ndef H_DOTFILE */
