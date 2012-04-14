@@ -2,7 +2,7 @@
 .SH NAME
 dfc \- display file system space usage using graph and colors
 .SH SYNOPSIS
-.B dfc [OPTION(S)] [-c WHEN] [-p FSNAME] [-t FSTYPE] [-u UNIT]
+.B dfc [OPTION(S)] [-c WHEN] [-p FSNAME] [-q SORTBY] [-t FSTYPE] [-u UNIT]
 .SH DESCRIPTION
 dfc(1) is a tool similar to df(1) except that it is able to show a graph along with the
 data and is able to use color (color mode is "color-auto" by default but you
@@ -165,6 +165,24 @@ Use a wider bar.
 .TP
 \-W
 Wide path name (avoid truncation of file name). May require a larger display.
+.SH CONFIGURATION FILE
+The configuration file is totally optional. It allows you to change dfc(1)
+default colors and graph symbol.
+If you want to use one, place it here:
+
+	$XDG_CONFIG_HOME/dfc/dfcrc
+
+If your operating system does not support XDG Base Directory Specification, it
+should then be placed here:
+
+	$HOME/.config/dfc/dfcrc
+
+Or, last choice:
+
+	$HOME/.dfcrc
+
+NOTE: the last two choices can be chosen only if your OS does not support XDG
+Base Directory Specification.
 .SH BUGS
 If you find one, please contact the author and explain what you encounter.
 .SH AUTHORS
