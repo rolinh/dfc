@@ -9,6 +9,7 @@ EXEC = dfc
 
 
 SRCS= ${SRC}/csv.c  \
+	  ${SRC}/dotfile.c \
 	  ${SRC}/dfc.c  \
       ${SRC}/list.c \
       ${SRC}/text.c \

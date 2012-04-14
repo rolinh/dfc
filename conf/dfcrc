@@ -1,0 +1,22 @@
+# Optional configuration file for dfc
+
+# Colors used for the default text output
+# possible values are:
+# - black
+# - red
+# - green
+# - yellow
+# - blue
+# - magenta
+# - cyan
+# - white
+# Note: it only concerns foreground values
+color_low = green
+color_medium = yellow
+color_high = red
+
+# Symbol used for the graph
+# Can be any ASCII symbol
+graph_symbol = =
+
+# vim: set noet syn=conf

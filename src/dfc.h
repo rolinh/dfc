@@ -41,6 +41,7 @@
 #include "csv.h"
 #include "html.h"
 #include "util.h"
+#include "dotfile.h"
 
 /* function declaration */
 void usage(int status);
