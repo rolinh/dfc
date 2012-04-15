@@ -45,6 +45,8 @@
 
 /*
  * Return the longest of the two parameters
+ * @a: first element to compare
+ * @b: second element to compare
  */
 int
 imax(int a, int b)
@@ -308,6 +310,8 @@ fsnamefilter(char *fsname, char *filter, int nm)
 
 /*
  * Compares regarding the qflag
+ * @a: first element of comparison
+ * @b: second element of comparison
  */
 int
 cmp(struct fsmntinfo *a, struct fsmntinfo *b)
@@ -331,6 +335,7 @@ cmp(struct fsmntinfo *a, struct fsmntinfo *b)
 /*
  * Perform a mergesort algorithm to sort the list by ascending
  * Results depends on what was chosen for comparison (fsname, type or dir)
+ * @fmi: pointer to the first element of the linked list structure to be sorted
  */
 struct fsmntinfo *
 msort(struct fsmntinfo *fmi)
@@ -396,6 +401,7 @@ msort(struct fsmntinfo *fmi)
 
 /*
  * auto-adjust options based on the size needed to display the informations
+ * @lst: list containing info
  * @width: width of the output
  */
 void
@@ -455,7 +461,7 @@ auto_adjust(struct list lst, int width)
 }
 
 /*
- * compute the required width needed for the output
+ * compute the required width needed for the output and return it
  * @lst: list containing the info
  */
 int

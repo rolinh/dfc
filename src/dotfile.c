@@ -85,6 +85,11 @@ getconf(void)
 	}
 }
 
+/*
+ * parse the configuration file and update options
+ * return -1 in case of error, otherwise, 0 is returned
+ * @conf: path to the configuration file
+ */
 int
 parse_conf(char *conf)
 {
@@ -155,6 +160,10 @@ parse_conf(char *conf)
 	/* NOTREACHED */
 }
 
+/*
+ * trim withespaces from the input string and returns it
+ * @str: string that needs to be trimmed
+ */
 char *
 strtrim(char *str)
 {
@@ -181,31 +190,35 @@ strtrim(char *str)
 	/* NOTREACHED */
 }
 
+/*
+ * convert color from natural name into correponding number and return it
+ * @col: color name
+ */
 int
 cvrt_color(char *col)
 {
-	if (strcmp(col, "black") == 0)
+	if (strcmp(col, _("black")) == 0)
 		return BLACK;
 		/* NOTREACHED */
-	else if (strcmp(col, "red") == 0)
+	else if (strcmp(col, _("red")) == 0)
 		return RED;
 		/* NOTREACHED */
-	else if (strcmp(col, "green") == 0)
+	else if (strcmp(col, _("green")) == 0)
 		return GREEN;
 		/* NOTREACHED */
-	else if (strcmp(col, "yellow") == 0)
+	else if (strcmp(col, _("yellow")) == 0)
 		return YELLOW;
 		/* NOTREACHED */
-	else if (strcmp(col, "blue") == 0)
+	else if (strcmp(col, _("blue")) == 0)
 		return BLUE;
 		/* NOTREACHED */
-	else if (strcmp(col, "magenta") == 0)
+	else if (strcmp(col, _("magenta")) == 0)
 		return MAGENTA;
 		/* NOTREACHED */
-	else if (strcmp(col, "cyan") == 0)
+	else if (strcmp(col, _("cyan")) == 0)
 		return CYAN;
 		/* NOTREACHED */
-	else if (strcmp(col, "white") == 0)
+	else if (strcmp(col, _("white")) == 0)
 		return WHITE;
 		/* NOTREACHED */
 	else
@@ -213,6 +226,10 @@ cvrt_color(char *col)
 		/* NOTREACHED */
 }
 
+/*
+ * init a conf structure
+ * @cnf: structure to be initiated
+ */
 void
 init_conf(struct conf *cnf)
 {
