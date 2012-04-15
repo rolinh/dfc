@@ -1,0 +1,260 @@
+# French translations for dfc package.
+# Copyright (C) 2012 THE dfc'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the dfc package.
+# Robin Hahling <robin.hahling@gw-computing.net>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dfc 3.0.0-devel\n"
+"Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
+"POT-Creation-Date: 2012-04-15 13:52+0200\n"
+"PO-Revision-Date: 2012-04-15 13:52+0200\n"
+"Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../src/csv.c:64
+#, c-format
+msgid "FILESYSTEM,"
+msgstr "SYSTÈME DE FICHIERS,"
+
+#: ../src/csv.c:67
+#, c-format
+msgid "TYPE,"
+msgstr "TYPE,"
+
+#: ../src/csv.c:69
+#, c-format
+msgid "%%USED,"
+msgstr "%%UTILISÉ,"
+
+#: ../src/csv.c:71
+#, c-format
+msgid "AVAILABLE,"
+msgstr "DISPONIBLE,"
+
+#: ../src/csv.c:73
+#, c-format
+msgid "TOTAL,"
+msgstr "TOTAL,"
+
+#: ../src/csv.c:76
+#, c-format
+msgid "#INODES,"
+msgstr "#INODES,"
+
+#: ../src/csv.c:77
+#, c-format
+msgid "AV.INODES,"
+msgstr "INODES DISP.,"
+
+#: ../src/csv.c:80
+#, c-format
+msgid "MOUNTED ON"
+msgstr "MONTÉ SUR"
+
+#: ../src/csv.c:83
+#, c-format
+msgid ",MOUNT OPTIONS"
+msgstr ",OPTIONS DE MONTAGE"
+
+#: ../src/csv.c:101
+#, c-format
+msgid "SUM:,"
+msgstr "SOMME:,"
+
+#: ../src/dfc.c:190
+#, c-format
+msgid "-c: illegal sub option %s\n"
+msgstr "-c: sous-option illégale %s\n"
+
+#: ../src/dfc.c:217
+#, c-format
+msgid "-e: illegal sub option %s\n"
+msgstr "-e: sous-option illégale %s\n"
+
+#: ../src/dfc.c:261
+#, c-format
+msgid "-q: illegal sub option %s\n"
+msgstr "-q: sous-option illégale %s\n"
+
+#: ../src/dfc.c:314
+#, c-format
+msgid "-u: illegal sub option %s\n"
+msgstr "-u: sous-option illégale %s\n"
+
+#: ../src/dfc.c:389
+msgid "Try dfc -h for more information\n"
+msgstr "Essayez dfc -h pour plus d'informations\n"
+
+#: ../src/dfc.c:392
+msgid ""
+"Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] [-u "
+"UNIT]\n"
+"Available options:\n"
+"\t-a\tprint all fs from mtab\n"
+"\t-b\tdo not show the graph bar\n"
+"\t-c\tchoose color mode. Read the manpage\n"
+"\t\tfor details\n"
+"\t-f\tdisable auto-adjust mode (force display)\n"
+"\t-h\tprint this message\n"
+msgstr ""
+"Utilisation: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] [-u "
+"UNIT]\n"
+"Options disponibles:\n"
+"\t-a\taffiche tous les systèmes de fichiers du mtab\n"
+"\t-b\tdésactive l'affichage du graphique\n"
+"\t-c\tpermet de choisir le mode pour la couleur. Lisez le manuel\n"
+"\t\tpour les détails\n"
+"\t-f\tdésactive le mode d'auto-ajustement (force l'affichage)\n"
+"\t-h\taffiche ce message\n"
+
+#: ../src/dfc.c:403
+msgid ""
+"\t-i\tinfo about inodes\n"
+"\t-m\tuse metric (SI unit)\n"
+"\t-n\tdo not print header\n"
+"\t-o\tshow mount flags\n"
+"\t-p\tfilter by file system name. Read the manpage\n"
+"\t\tfor details\n"
+"\t-q\tsort the output. Read the manpage\n"
+"\t\tfor details\n"
+"\t-s\tsum the total usage\n"
+"\t-t\tfilter by file system type. Read the manpage\n"
+"\t\tfor details\n"
+"\t-T\tshow filesystem type\n"
+"\t-u\tchoose the unit in which\n"
+"\t\tto show the values. Read the manpage\n"
+"\t\tfor details\n"
+"\t-v\tprint program version\n"
+"\t-w\tuse a wider bar\n"
+"\t-W\twide filename (un truncate)\n"
+msgstr ""
+"\t-i\tinformations sur les inodes\n"
+"\t-m\tutilise les unités metriques (unités SI)\n"
+"\t-n\tdésactive l'affichage du titre\n"
+"\t-o\taffiche les options de montage\n"
+"\t-p\tfiltre par nom de système de fichiers. Lisez le manuel\n"
+"\t\tpour les détails\n"
+"\t-q\ttrie l'affichage. Lisez le manuel\n"
+"\t\tpour les détails.\n"
+"\t-s\tsomme l'utilisation totale\n"
+"\t-t\tfiltre par type de système de fichiers. Lisez le manuel\n"
+"\t\tpour les détails\n"
+"\t-T\taffiche le type de système de fichiers\n"
+"\t-u\tpermet de choisir l'unité dans laquelle\n"
+"\t\tles valeurs sont affichées. Lisez le manuel\n"
+"\t\tpour les détails\n"
+"\t-v\taffiche la version du programme\n"
+"\t-w\tutilise une barre plus large\n"
+"\t-W\tlong nom de fichiers (dé-tronque)\n"
+
+#: ../src/dfc.c:466
+#, c-format
+msgid "WARNING: %s was skipped because it cannot be stated"
+msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
+
+#: ../src/dfc.c:544
+msgid "sorry, not available on MacOS..."
+msgstr "désolé, non disponible pour MacOS..."
+
+#: ../src/dfc.c:746
+#, c-format
+msgid "Could not retrieve mount flags for %s\n"
+msgstr "Impossible de récupérer les options de montage pour %s\n"
+
+#: ../src/dfc.c:821
+#, c-format
+msgid "Truncating mount options for %s\n"
+msgstr "Troncation des options de montage pour %s\n"
+
+#: ../src/dotfile.c:118 ../src/dotfile.c:124 ../src/dotfile.c:130
+#: ../src/dotfile.c:136
+#, c-format
+msgid "Unknown color value: %s\n"
+msgstr "Couleur inconnue: %s\n"
+
+#: ../src/dotfile.c:144
+#, c-format
+msgid "Wrong symbol value: %s\n"
+msgstr "Symbole impossible: %s\n"
+
+#: ../src/dotfile.c:147
+#, c-format
+msgid "Unknown option in configuration file: %s\n"
+msgstr "Option inconnue dans le fichier de configuration: %s\n"
+
+#: ../src/text.c:73
+#, c-format
+msgid "FILESYSTEM "
+msgstr "SYS. FICH. "
+
+#: ../src/text.c:78
+#, c-format
+msgid " TYPE"
+msgstr " TYPE"
+
+#: ../src/text.c:91
+#, c-format
+msgid " (=) USED"
+msgstr " (=) UT. "
+
+#: ../src/text.c:94
+#, c-format
+msgid "FREE (-) "
+msgstr "LIB. (-) "
+
+#: ../src/text.c:97
+#, c-format
+msgid "%%USED"
+msgstr "%%UT. "
+
+#: ../src/text.c:105
+#, c-format
+msgid "AVAILABLE"
+msgstr "DISPO.   "
+
+#: ../src/text.c:115
+#, c-format
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#: ../src/text.c:118
+#, c-format
+msgid "   #INODES"
+msgstr "   #INODES"
+
+#: ../src/text.c:119
+#, c-format
+msgid " AV.INODES"
+msgstr " INODES D."
+
+#: ../src/text.c:122
+#, c-format
+msgid " MOUNTED ON "
+msgstr " MONTÉ SUR  "
+
+#: ../src/text.c:127
+#, c-format
+msgid "MOUNT OPTIONS\n"
+msgstr "OPT. DE MONT. \n"
+
+#: ../src/text.c:151
+#, c-format
+msgid "SUM:"
+msgstr "SOM:"
+
+#: ../src/util.c:413
+msgid ""
+"WARNING: TTY too narrow. Some options will be disabled to try to make dfc "
+"output fit.\n"
+msgstr "AVERTISSEMENT: le TTY est trop étroit. Certaines options seront "
+"désactivées afin d'ajuster l'affichage.\n"
+
+#: ../src/util.c:453
+msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
+msgstr "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal si cela est possible...\n"

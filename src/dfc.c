@@ -53,6 +53,9 @@
 #include <errno.h>
 #include <err.h>
 
+#include <locale.h>
+#include <libintl.h>
+
 #ifdef __linux__
 #include <mntent.h>
 #endif
@@ -138,6 +141,15 @@ main(int argc, char *argv[])
 		NULL
 	};
 
+	/* translation support */
+	if (setlocale(LC_ALL, "") == NULL)
+		(void)fprintf(stderr, "Locale cannot be set\n");
+	if (bindtextdomain(PACKAGE, LOCALEDIR) == NULL)
+		(void)fprintf(stderr, "Cannot bind locale\n");
+	if (bind_textdomain_codeset(PACKAGE, "") == NULL)
+		(void)fprintf(stderr, "Cannot bind locale codeset\n");
+	if (textdomain(PACKAGE) == NULL)
+		(void)fprintf(stderr, "Cannot set translation domain\n");
 
 	/* default value for those globals */
 	cflag = 1; /* color enabled by default */
@@ -175,7 +187,7 @@ main(int argc, char *argv[])
 					break;
 				case -1:
 					(void)fprintf(stderr,
-						"-c: illegal sub option %s\n",
+						_("-c: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
 					/* NOTREACHED */
@@ -202,7 +214,7 @@ main(int argc, char *argv[])
 					break;
 				case -1:
 					(void)fprintf(stderr,
-						"-e: illegal sub option %s\n",
+						_("-e: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
 					/* NOTREACHED */
@@ -246,7 +258,7 @@ main(int argc, char *argv[])
 					break;
 				case -1:
 					(void)fprintf(stderr,
-						"-q: illegal sub option %s\n",
+						_("-q: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
 					/* NOTREACHED */
@@ -299,7 +311,7 @@ main(int argc, char *argv[])
 					break;
 				case -1:
 					(void)fprintf(stderr,
-						"-u: illegal sub option %s\n",
+						_("-u: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
 					/* NOTREACHED */
@@ -327,7 +339,7 @@ main(int argc, char *argv[])
 		/* NOTREACHED */
 
 	if (vflag) {
-		(void)printf("dfc %s\n", VERSION);
+		(void)printf("%s %s\n", PACKAGE, VERSION);
 		return EXIT_SUCCESS;
 		/* NOTREACHED */
 	}
@@ -374,10 +386,10 @@ void
 usage(int status)
 {
 	if (status != 0)
-		(void)fputs("Try dfc -h for more information\n", stderr);
+		(void)fputs(_("Try dfc -h for more information\n"), stderr);
 	else {
 		/* 2 fputs because string length limit is 509 */
-		(void)fputs("Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME] "
+		(void)fputs(_("Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME] "
 			" [-q SORTBY] [-t FSTYPE] [-u UNIT]\n"
 			"Available options:\n"
 			"\t-a\tprint all fs from mtab\n"
@@ -385,9 +397,9 @@ usage(int status)
 			"\t-c\tchoose color mode. Read the manpage\n"
 			"\t\tfor details\n"
 			"\t-f\tdisable auto-adjust mode (force display)\n"
-			"\t-h\tprint this message\n",
+			"\t-h\tprint this message\n"),
 			stdout);
-		(void)fputs(
+		(void)fputs(_(
 			"\t-i\tinfo about inodes\n"
 			"\t-m\tuse metric (SI unit)\n"
 			"\t-n\tdo not print header\n"
@@ -405,7 +417,7 @@ usage(int status)
 			"\t\tfor details\n"
 			"\t-v\tprint program version\n"
 			"\t-w\tuse a wider bar\n"
-			"\t-W\twide filename (un truncate)\n",
+			"\t-W\twide filename (un truncate)\n"),
 		stdout);
 	}
 
@@ -451,8 +463,8 @@ fetch_info(struct list *lst)
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
 			/* permission denied for this one -> show warning */
 			if (errno == EACCES) {
-				(void)fprintf(stderr, "WARNING: %s was skipped "
-					"because it cannot be stated",
+				(void)fprintf(stderr, _("WARNING: %s was skipped "
+					"because it cannot be stated"),
 					entbuf->mnt_dir);
 				perror(" ");
 			} else {
@@ -529,7 +541,7 @@ fetch_info(struct list *lst)
 			}
 #ifdef __MACH__
 			/* TODO: implement feature for MacOS */
-			fmi->opts = "sorry, not implemented yet on MacOS...";
+			fmi->opts = _("sorry, not available on MacOS...");
 #else
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
 				fmi->opts = "none";
@@ -731,7 +743,7 @@ statfs_flags_to_str(struct statfs *s)
        size_t bufsize = 128;
        char *buffer = malloc(bufsize);
        if (!buffer) {
-               (void)fprintf(stderr, "Could not retrieve mount flags for %s\n",
+               (void)fprintf(stderr, _("Could not retrieve mount flags for %s\n"),
                        s->f_mntonname);
                return NULL;
 	       /* NOTREACHED */
@@ -806,7 +818,7 @@ statfs_flags_to_str(struct statfs *s)
        /* NOTREACHED */
 
 truncated:
-       (void)fprintf(stderr, "Truncating mount options for %s\n",
+       (void)fprintf(stderr, _("Truncating mount options for %s\n"),
                        s->f_mntonname);
        return buffer;
        /* NOTREACHED */

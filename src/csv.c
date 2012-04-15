@@ -34,6 +34,8 @@
  */
 #include <stdio.h>
 
+#include <libintl.h>
+
 #include "csv.h"
 #include "extern.h"
 #include "util.h"
@@ -59,27 +61,27 @@ csv_disp_header(struct list *lst)
 	/* do not care about lst in CSV output */
 	(void)lst;
 
-	(void)printf("FILESYSTEM,");
+	(void)printf(_("FILESYSTEM,"));
 
 	if (Tflag)
-		(void)printf("TYPE,");
+		(void)printf(_("TYPE,"));
 
-	(void)printf("%%USED,");
+	(void)printf(_("%%USED,"));
 
-	(void)printf("AVAILABLE,");
+	(void)printf(_("AVAILABLE,"));
 
-	(void)printf("TOTAL,");
+	(void)printf(_("TOTAL,"));
 
 	if (iflag) {
-		(void)printf("#INODES,");
-		(void)printf("AV.INODES,");
+		(void)printf(_("#INODES,"));
+		(void)printf(_("AV.INODES,"));
 	}
 
-	(void)printf("MOUNTED ON");
+	(void)printf(_("MOUNTED ON"));
 
 	if (oflag)
-		(void)printf(",MOUNT OPTIONS");
-	
+		(void)printf(_(",MOUNT OPTIONS"));
+
 	(void)printf("\n");
 }
 
@@ -96,7 +98,7 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 		ptot = 100.0;
 	else
 		ptot = (utot / stot) * 100.0;
-	(void)printf("SUM:,");
+	(void)printf(_("SUM:,"));
 
 	csv_disp_perct(ptot);
 

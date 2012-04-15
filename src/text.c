@@ -34,6 +34,8 @@
 
 #include <string.h>
 
+#include <libintl.h>
+
 #include "text.h"
 #include "extern.h"
 #include "util.h"
@@ -68,12 +70,12 @@ text_disp_header(struct list *lst)
 	if (cflag)
 		(void)printf("\033[;%dm", cnf.chead);
 
-	(void)printf("FILESYSTEM ");
+	(void)printf(_("FILESYSTEM "));
 	for (i = 11; i < lst->fsmaxlen; i++)
 		(void)printf(" ");
 
 	if (Tflag) {
-		(void)printf(" TYPE");
+		(void)printf(_(" TYPE"));
 		if (lst->typemaxlen > 5)
 			for (i = 5; i < lst->typemaxlen + 1; i++)
 				(void)printf(" ");
@@ -86,13 +88,13 @@ text_disp_header(struct list *lst)
 		barinc = 35;
 	}
 	if (!bflag) {
-		(void)printf(" (=) USED");
+		(void)printf(_(" (=) USED"));
 		for (i = 0; i < (barinc + 1); i++)
 			(void)printf(" ");
-		(void)printf("FREE (-) ");
+		(void)printf(_("FREE (-) "));
 	}
 
-	(void)printf("%%USED");
+	(void)printf(_("%%USED"));
 	if (unitflag == 'k')
 		(void)printf("  ");
 	else if (unitflag == 'b')
@@ -100,7 +102,7 @@ text_disp_header(struct list *lst)
 	else
 		(void)printf(" ");
 
-	(void)printf("AVAILABLE");
+	(void)printf(_("AVAILABLE"));
 	if (unitflag == 'k')
 		(void)printf("      ");
 	else if (unitflag == 'm')
@@ -110,19 +112,19 @@ text_disp_header(struct list *lst)
 	else
 		(void)printf("     ");
 
-	(void)printf("TOTAL");
+	(void)printf(_("TOTAL"));
 
 	if (iflag) {
-		(void)printf("   #INODES");
-		(void)printf(" AV.INODES");
+		(void)printf(_("   #INODES"));
+		(void)printf(_(" AV.INODES"));
 	}
 
-	(void)printf(" MOUNTED ON ");
+	(void)printf(_(" MOUNTED ON "));
 
 	if (oflag) {
 		for (i = 10; i < lst->dirmaxlen; i++)
 			(void)printf(" ");
-		(void)printf("MOUNT OPTIONS\n");
+		(void)printf(_("MOUNT OPTIONS\n"));
 	} else
 		(void)printf("\n");
 
@@ -146,7 +148,7 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
 		ptot = 100.0;
 	else
 		ptot = (utot / stot) * 100.0;
-	(void)printf("SUM:");
+	(void)printf(_("SUM:"));
 
 	j = lst->fsmaxlen + 1;
 	if (Tflag)
