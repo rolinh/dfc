@@ -594,7 +594,10 @@ fetch_info(struct list *lst)
 /*
  * Actually displays infos in nice manner
  * @lst: queue containing all required information
- * @fstfilter: fstype to filter (can be nothing)
+ * @fstfilter: fstype to filter (can be NULL)
+ * @fsnfilter: fsname to filter (can be NULL)
+ * @disp: display structure that points to the respective functions regarding
+ *	  the selected output type
  */
 void
 disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)

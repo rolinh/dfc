@@ -134,8 +134,11 @@ text_disp_header(struct list *lst)
 /*
  * display the sum (useful when -s option is used
  * @lst: queue containing the informations
- * @stot: size total
- * @utot:
+ * @stot: total size of "total"
+ * @atot: total size of "available"
+ * @utot: total size of "used"
+ * @ifitot: total number of inodes
+ * @ifatot: total number of available inodes
  */
 void
 text_disp_sum(struct list *lst, double stot, double atot, double utot,
@@ -320,6 +323,11 @@ text_disp_at(double n, double perct)
 	}
 }
 
+/*
+ * display file system
+ * @lst: list containing the information
+ * @fsname: list of the file system to print
+ */
 void
 text_disp_fs(struct list *lst, char *fsname)
 {
@@ -330,6 +338,11 @@ text_disp_fs(struct list *lst, char *fsname)
 			(void)printf(" ");
 }
 
+/*
+ * display file system type
+ * @lst: list containing the information
+ * @type: the file system type to print
+ */
 void
 text_disp_type(struct list* lst, char *type)
 {
@@ -340,6 +353,11 @@ text_disp_type(struct list* lst, char *type)
 		(void)printf(" ");
 }
 
+/*
+ * display inodes
+ *@files: number of inodes
+ *@favail: number of available inodes
+ */
 void
 text_disp_inodes(unsigned long files, unsigned long favail)
 {
@@ -347,12 +365,22 @@ text_disp_inodes(unsigned long files, unsigned long favail)
 	(void)printf("%9ldk", favail);
 }
 
+/*
+ * display mount point
+ * @dir: mount point
+ */
 void
 text_disp_mount(char *dir)
 {
 	(void)printf(" %s", dir);
 }
 
+/*
+ * display mount options
+ * @lst: structure containing information
+ * @dir: mount point
+ * @opts: mount options
+ */
 void
 text_disp_mopt(struct list* lst, char *dir, char *opts)
 {

@@ -1,3 +1,7 @@
+ifndef PREFIX
+	PREFIX=/usr/local
+endif
+
 EXEC = dfc
 VERSION = 3.0.0-devel
 DATADIR = ${DESTDIR}${PREFIX}/share

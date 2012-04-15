@@ -29,7 +29,7 @@
 
 #include "list.h"
 
-/* The structure to handle the display interface. */
+/* Structure to handle the display interface. */
 struct Display
 {
     void (*print_header) (struct list*);
