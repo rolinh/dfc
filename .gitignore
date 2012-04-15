@@ -2,3 +2,5 @@
 *.o
 dfc
 mtab
+po/dfc.pot
+po/*.mo

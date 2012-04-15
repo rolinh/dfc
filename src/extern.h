@@ -33,7 +33,8 @@
  * Globals and dfc version declaration
  */
 
-#define VERSION "2.5.0"
+/* to ugly to use gettext in each string that needs translation... */
+#define _(STRING) gettext(STRING)
 
 /* color defines */
 #define BLACK	30

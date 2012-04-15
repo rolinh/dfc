@@ -39,6 +39,8 @@
 #include <string.h>
 #include <sys/ioctl.h>
 
+#include <libintl.h>
+
 #include "util.h"
 
 /*
@@ -408,8 +410,8 @@ auto_adjust(struct list lst, int width)
 		return;
 		/* NOTREACHED */
 
-	(void)fputs("WARNING: TTY too narrow. Some options will be disabled "
-			"to try to make dfc output fit.\n", stderr);
+	(void)fputs(_("WARNING: TTY too narrow. Some options will be disabled "
+			"to try to make dfc output fit.\n"), stderr);
 
 	if (!bflag) {
 		/* large graph should be the first option to disable */
@@ -448,8 +450,8 @@ auto_adjust(struct list lst, int width)
 			/* NOTREACHED */
 	}
 	if (gap < 0)
-		(void)fputs("WARNING: Output still messed up. Enlarge your "
-				"terminal if you can...\n", stderr);
+		(void)fputs(_("WARNING: Output still messed up. Enlarge your "
+				"terminal if you can...\n"), stderr);
 }
 
 /*

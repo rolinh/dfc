@@ -36,6 +36,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <ctype.h>
+#include <libintl.h>
 
 #include "dotfile.h"
 #include "extern.h"
@@ -114,37 +115,37 @@ parse_conf(char *conf)
 
 		if (strcmp(key, "color_header") == 0) {
 			if ((tmpcol = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, "Unknown color value: "
-						"%s\n", val);
+				(void)fprintf(stderr, _("Unknown color value: "
+						"%s\n"), val);
 			else
 				cnf.chead = tmpcol;
 		} else if (strcmp(key, "color_low") == 0) {
 			if ((tmpcol = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, "Unknown color value: "
-						"%s\n", val);
+				(void)fprintf(stderr, _("Unknown color value: "
+						"%s\n"), val);
 			else
 				cnf.clow = tmpcol;
 		} else if (strcmp(key, "color_medium") == 0) {
 			if ((tmpcol = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, "Unknown color value: "
-						"%s\n", val);
+				(void)fprintf(stderr, _("Unknown color value: "
+						"%s\n"), val);
 			else
 				cnf.cmedium = tmpcol;
 		} else if (strcmp(key, "color_high") == 0) {
 			if ((tmpcol = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, "Unknown color value: "
-						"%s\n", val);
+				(void)fprintf(stderr, _("Unknown color value: "
+						"%s\n"), val);
 			else
 				cnf.chigh = tmpcol;
 		} else if (strcmp(key, "graph_symbol") == 0) {
 			if (strlen(val) == 1)
 				cnf.gsymbol = val[0];
 			else
-				(void)fprintf(stderr, "Wrong symbol value: "
-						"%s\n", val);
+				(void)fprintf(stderr, _("Wrong symbol value: "
+						"%s\n"), val);
 		} else
-			(void)fprintf(stderr, "Unknown option in configuration "
-					"file: %s\n", key);
+			(void)fprintf(stderr, _("Unknown option in configuration "
+					"file: %s\n"), key);
 	}
 
 	if (fclose(fd) == EOF)

@@ -6,7 +6,7 @@ CFDEBUG = -g -pedantic -Wall -Wunused-parameter -Wlong-long\
 SRC = src
 MAN = man
 EXEC = dfc
-
+VERSION = 3.0.0-devel
 
 SRCS= ${SRC}/csv.c  \
 	  ${SRC}/dotfile.c \
@@ -24,8 +24,14 @@ OBJS= ${SRCS:.c=.o}
 PREFIX?=/usr/local
 BINDIR=${PREFIX}/bin
 MANDIR=${PREFIX}/man
+DATADIR=${DESTDIR}${PREFIX}/share
+LOCALEDIR=${DATADIR}/locale
+
+CFLAGS += -DLOCALEDIR=\"${LOCALEDIR}\" -DPACKAGE=\"${EXEC}\" \
+		  -DVERSION=\"${VERSION}\"
 
 all: ${EXEC}
+	${MAKE} -C po all
 
 .c.o:
 	${CC} ${CFLAGS} -o $@ -c $<
@@ -41,15 +47,19 @@ install-data: ${MAN}/dfc.1
 	test -d ${DESTDIR}${MANDIR}/man1 || mkdir -p ${DESTDIR}${MANDIR}/man1
 	install -m644 ${MAN}/dfc.1 ${DESTDIR}${MANDIR}/man1/dfc.1
 
-install: all install-main install-data
+install-po:
+	${MAKE} -C po install
+
+install: all install-main install-data install-po
 
 debug: ${EXEC}
 debug: CC += ${CFDEBUG}
 
 clean:
 	rm -rf ${SRC}/*.o
+	${MAKE} -C po clean
 
 mrproper: clean
 	rm ${EXEC}
 
-.PHONY: all clean mrproper install install-main install-data
+.PHONY: all clean mrproper install install-main install-data install-po
