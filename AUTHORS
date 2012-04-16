@@ -1,13 +1,19 @@
-AUTHOR:
-	- Robin Hahling <Rolinh> <robin.hahling@gw-computing.net>
+## AUTHOR:
 
-CONTRIBUTORS:
-	- Baptiste Daroussin
-	- Cyril Roelandt
-	- Kevin Gillieron
-	- Matthieu Le Jeune
-	- Sylvain Laperche
+  * Robin Hahling <Rolinh> <robin.hahling@gw-computing.net>
 
-TRANSLATORS:
+## CONTRIBUTORS:
+
+  * Baptiste Daroussin
+  * Cyril Roelandt
+  * Kevin Gillieron
+  * Matthieu Le Jeune
+  * Sylvain Laperche
+
+## TRANSLATORS:
+
 French:
-	- Robin Hahling <Rolinh> <robin.hahling@gw-computing.net>
+
+  * Robin Hahling <Rolinh> <robin.hahling@gw-computing.net>
+
+<!-- vim: set filetype=markdown textwidth=80 -->
