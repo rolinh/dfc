@@ -1,7 +1,7 @@
 # Optional configuration file for dfc
 
 # Colors used for the default text output
-# possible values are:
+# Possible values are:
 # - black
 # - red
 # - green
@@ -10,10 +10,15 @@
 # - magenta
 # - cyan
 # - white
-# Note: it only concerns foreground values
+# Note: it only concerns foreground colors
+
+# Header color
 color_header = blue
+# Color when usage is low
 color_low = green
+# Color when usage is medium
 color_medium = yellow
+# Color when usage is high
 color_high = red
 
 # Symbol used for the graph
