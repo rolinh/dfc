@@ -2,11 +2,11 @@
 .SH NAME
 dfc \- display file system space usage using graph and colors
 .SH SYNOPSIS
-.B dfc [OPTION(S)] [-c WHEN] [-p FSNAME] [-q SORTBY] [-t FSTYPE] [-u UNIT]
+.B dfc [OPTION(S)] [\-c WHEN] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
 .SH DESCRIPTION
 dfc(1) is a tool similar to df(1) except that it is able to show a graph along with the
-data and is able to use color (color mode is "color-auto" by default but you
-can change this with "-c" option).
+data and is able to use color (color mode is "color\-auto" by default but you
+can change this with "\-c" option).
 
 The available size correspond to the space available to a user point of
 view and not from root's perspective (ie: use f_bavail instead of f_bfree).
@@ -14,12 +14,12 @@ In the same idea, used space is computed simply by substracting the available
 space from the total size.
 
 Without any argument, size is displayed in human readable format.
-Be aware that when using human-readable format, there might be some rounding
-when computing the size. If you want maximum precision, use the "-u"
+Be aware that when using human\-readable format, there might be some rounding
+when computing the size. If you want maximum precision, use the "\-u"
 option and choose the unit.
 
 dfc(1) also has a built in feature that makes the output auto adjust based on
-terminal width. If you want to override this behavior, use the "-f" option.
+terminal width. If you want to override this behavior, use the "\-f" option.
 
 .SH OPTIONS
 .TP
@@ -30,13 +30,13 @@ Show information about all file systems found in the mtab file.
 Do not show the graph bar.
 .TP
 \-c [WHEN]
-Choose color mode where WHEN is one of the following sub-option:
+Choose color mode where WHEN is one of the following sub\-option:
 
 "always":
 	Color will always be used, no matter what stdout is.
 
 "auto":
-	This is default when "-c" is not activated. Color is used only if "stdout"
+	This is default when "\-c" is not activated. Color is used only if "stdout"
 is a terminal. For instance, color will be disabled with this option if you
 pipe the output of dfc(1) into another command.
 
@@ -45,7 +45,7 @@ pipe the output of dfc(1) into another command.
 
 .TP
 \-f
-Override auto-adjust behavior by forcing information to be displayed.
+Override auto\-adjust behavior by forcing information to be displayed.
 You probably do not want to activate this option but choice is yours.
 .TP
 \-h
@@ -69,7 +69,7 @@ Allows you to perform filtering on file system name. FSNAME can be anything.
 For instance, if you want to see only file system which name starts with
 "/dev", you would use the following:
 
-	dfc -p /dev
+	dfc \-p /dev
 
 This will output only file system which names are, for instance,
 "/dev/sda1", "/dev/root", "/dev", etc.
@@ -78,13 +78,13 @@ Multiple selection is supported. In this case, FSNAME needs to be a comma
 separated list (without spaces). For instance, if you want to filter "/dev"
 and "tmpfs", you would use the following:
 
-	dfc -p /dev,tmpfs
+	dfc \-p /dev,tmpfs
 
 You can also use negative matching to filter the output. To do so, you just
-need to prepend a "-" to FSNAME. In the following example, dfc(1) will display
+need to prepend a "\-" to FSNAME. In the following example, dfc(1) will display
 all file system name except those mentionned:
 
-	dfc -p -proc,/dev/sdc,run
+	dfc \-p \-proc,/dev/sdc,run
 
 .TP
 \-q [SORTBY]
@@ -108,13 +108,13 @@ Multiple selection on file system is also possible. In this case, FSTYPE
 needs to be a comma separated list (without spaces). For instance, if you want to
 filter "ext4" and "tmpfs", you would use the following:
 
-	dfc -t ext4,tmpfs
+	dfc \-t ext4,tmpfs
 
 You can also use negative matching to filter the output. To do so, you just
-need to prepend a "-" to FSTYPE. In the following example, dfc(1) will
+need to prepend a "\-" to FSTYPE. In the following example, dfc(1) will
 display all file system type except those mentionned:
 
-	dfc -t -rootfs,tmpfs
+	dfc \-t \-rootfs,tmpfs
 
 .TP
 \-T
@@ -124,7 +124,7 @@ Show file system type.
 Show size using unit specified. UNIT can take one of the following value:
 
 "h":
-	Human readable (default when not using "-u" option).
+	Human readable (default when not using "\-u" option).
 
 "b":
 	Show bytes.
@@ -153,7 +153,7 @@ Show size using unit specified. UNIT can take one of the following value:
 "y":
 	Show size using Yio.
 
-NOTE: When using "-u" option along with "-m" option, those suboptions are
+NOTE: When using "\-u" option along with "\-m" option, those suboptions are
 replaced by their SI counterparts.
 .TP
 \-v
@@ -185,7 +185,7 @@ Base Directory Specification.
 .SH BUGS
 If you find one, please contact the author and explain what you encounter.
 .SH AUTHORS
-Robin Hahling (robin.hahling (at) gw-computing.net)
+Robin Hahling (robin.hahling (at) gw\-computing.net)
 .SH COPYRIGHT
 Copyright \(co 2012 Robin Hahling
 .SH LICENSE
