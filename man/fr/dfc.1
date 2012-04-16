@@ -1,0 +1,207 @@
+.TH dfc 1  "Le 3 Avril 2012" "version 2.5.0" "COMMANDES UTILISATEURS"
+.SH NOM
+dfc \- affiche le taux d'utilisation des systèmes de fichiers avec couleurs
+et graphes.
+.SH SYNOPSIS
+.B dfc [OPTION(S)] [-c WHEN] [-p FSNAME] [-q SORTBY] [-t FSTYPE] [-u UNIT]
+.SH DESCRIPTION
+dfc(1) est un outil similaire à df(1) mise à part le fait qu'il est capable
+d'afficher un graphe en plus des données et qu'il peut utiliser des couleurs
+(le mode couleur par défaut est "automatique" mais il peut être changé par le
+biais de l'option "-c").
+
+La taille disponible correspond à l'espace disponible du point de vue de
+l'utilisateur et non de la perspective de l'utilisateur root (càd: dfc(1)
+utilise f_bavail au lieu de f_bfree).
+Dans le même ordre d'idée, l'espace utilisé est calculé simplement par
+soustraction de l'espace disponible à la taille totale.
+
+Sans option, la taille est affichée dans un format lisible par l'être humain.
+Faites attention au fait qu'en utilisant ce format, quelques erreurs d'arrondis
+peuvent survenir lors du calcul de la taille. Si vous souhaitez une précision
+maximum, utilisez l'option "-u" et choisissez l'unité désirée.
+
+dfc(1) possède également une fonctionnalité permettant à l'affichage de
+s'auto-ajuster en fonction de la taille du terminal. Si vous désirez
+outrepasser ce comportement, utilisez l'option "-f".
+
+.SH OPTIONS
+.TP
+\-a
+Affiche les informations à propos de tous les systèmes de fichiers trouvé dans
+le fichier mtab.
+.TP
+\-b
+Désactive l'affichage du graphe.
+.TP
+\-c [WHEN]
+Permet de choisir la couleur où WHEN est une des sous-options suivantes:
+
+"always":
+	Les couleurs seront toujours utilisées, peu importe stdout.
+
+"auto":
+	Il s'agit de l'option par défaut lorsque "-c" n'est pas activée. Les
+couleurs sont utilisées seulement si "stdout" est un terminal. Par exemple,
+les couleurs seront désactivées avec cette option si vous faites une redirection de la sortie de dfc(1) vers une autre commande.
+
+"never":
+	Les couleurs ne seront jamais utilisées.
+
+.TP
+\-f
+Outrepasse le comportement d'auto-ajustement en forçant l'affichage
+des informations. Vous ne souhaitez probablement pas activer cette option mais
+vous avez le choix.
+.TP
+\-h
+Affiche une brève aide.
+.TP
+\-i
+Affiche des informations sur les inodes.
+.TP
+\-m
+Utilise les unités SI (càd: la taille est calculée en utilisant des puissances
+de 10 au lieu de 2).
+.TP
+\-n
+Désactive l'affichage de l'entête.
+.TP
+\-o
+Affiche les options de montage.
+.TP
+\-p [FSNAME]
+Permet de filtrer par nom de système de fichiers. FSNAME peut prendre n'importe
+quelle valeur. Par exemple, si vous souhaitez afficher uniquement les systèmes
+de fichiers dont le nom commence par "/dev", vous utiliseriez la commande
+suivante:
+
+	dfc -p /dev
+
+Cela affichera uniquement les systèmes de fichiers dont le nom est, par exemple,
+"/dev/sda1", "/dev/root", "/dev", etc.
+
+Une sélection multiple est également possible. Dans ce cas, FSNAME doit être
+sous forme d'une liste séparée par des virgules (sans espaces). Par exemple,
+si vous souhaitez filtrer "/dev" et "tmpfs", vous utiliseriez la commande suivante:
+
+	dfc -p /dev,tmpfs
+
+Il est également possible d'utiliser la correspondance négative afin de
+filtrer la sortie. Dans ce cas, il faut ajouter un "-" au début de FSNAME.
+Dans l'exemple suivant, dfc(1) affichera tous les systèmes de fichiers exceptés
+ceux mentionnés:
+
+	dfc -p -proc,/dev/sdc,run
+
+.TP
+\-q [SORTBY]
+Permet de filter la sortie en fonction de SORTBY.
+
+SORTBY peut prendre une de ces trois valeurs: "name", "type", "mount".
+
+En utilisant "name", la sortie est triée par nom de système de fichiers.
+En utilisant "type", la sortie est triée par type de système de fichiers.
+En utilisant "mount", la sortie est triée par point de montage.
+
+.TP
+\-s
+Somme l'utilisation totale.
+.TP
+\-t [FSTYPE]
+Permet de filtrer en fonction du type de système de fichier. FSTYPE peut prendre
+n'importe quelle valeur connue d'un système de fichiers. Par exemple, "ext4",
+"ufs", "tmpfs", "reiserfs", etc.
+
+Une sélection multiple est également possible. Dans ce cas, FSTYPE doit être
+une liste séparée par des virgules (sans espaces). Par exemple, si vous
+souhaitez filtrer "ext4" et "tmpfs", vous utiliseriez la commande suivante:
+
+	dfc -t ext4,tmpfs
+
+Il est également possible d'utiliser la correspondance négative afin de
+filtrer la sortie. Dans ce cas, il faut ajouter un "-" au début de FSTYPE.
+Dans l'exemple suivant, dfc(1) affichera tous les systèmes de fichiers
+à part ceux mentionnés:
+
+	dfc -t -rootfs,tmpfs
+
+.TP
+\-T
+Affiche le type de système de fichiers.
+.TP
+\-u [UNIT]
+Affiche la taille dans l'unité spécifiée. UNIT peut prendre n'importe laquelle
+des valeurs suivantes:
+
+"h":
+	Format lisible par l'être humain (par défault lorsque l'option "-u" n'est pas utilisée).
+
+"b":
+	Affiche le nombre d'octets.
+
+"k":
+	Affiche la taille en Kio.
+
+"m":
+	Affiche la taille en Mio.
+
+"g":
+	Affiche la taille en Gio.
+
+"t":
+	Affiche la taille en Tio.
+
+"p":
+	Affiche la taille en Pio.
+
+"e":
+	Affiche la taille en Eio.
+
+"z":
+	Affiche la taille en Zio.
+
+"y":
+	Affiche la taille en Yio.
+
+NOTE: Lorsque l'option "-u" est utilisée en même temps que l'option "-m", ces
+sous-options sont remplacées par leur équivalent SI.
+.TP
+\-v
+Affiche la version de dfc(1) et quitte.
+.TP
+\-w
+Utilise une barre plus large pour le graphe.
+.TP
+\-W
+Noms de fichiers larges (évite la troncation des noms de fichiers).
+Peut nécessiter un affichage plus large.
+.SH FICHIER DE CONFIGURATION
+Le fichier de configuration est parfaitement optionnel. Il permet de changer
+les couleurs par défaut et le symbole du graphe de dfc(1).
+Si vous souhaitez l'utiliser, il faut le placer dans ce répertoire:
+
+	$XDG_CONFIG_HOME/dfc/dfcrc
+
+Si votre système d'exploitation ne supporte pas les spécifications de dossiers
+XDG, alors il devrait être placé dans ce répertoire:
+
+	$HOME/.config/dfc/dfcrc
+
+Ou, dernier choix:
+
+	$HOME/.dfcrc
+
+NOTE: Les deux derniers choix ne peuvent être choisis que lorsque votre OS ne
+supporte pas les spécifications XDG.
+.SH BOGUES
+Si vous en trouvez un, merci de contacter l'auteur de lui expliquez le problème
+rencontré.
+.SH AUTEUR
+Robin Hahling (robin.hahling (at) gw-computing.net)
+.SH COPYRIGHT
+Copyright \(co 2012 Robin Hahling
+.SH LICENSE
+BSD 3 Clauses
+.SH VOIR AUSSI
+df(1), du(1)
