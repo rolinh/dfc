@@ -47,7 +47,6 @@ pipe the output of dfc(1) into another command.
 \-f
 Override auto-adjust behavior by forcing information to be displayed.
 You probably do not want to activate this option but choice is yours.
-This option may be useful if you pipe the output of dfc(1) though.
 .TP
 \-h
 Show a short help text.
@@ -72,12 +71,12 @@ For instance, if you want to see only file system which name starts with
 
 	dfc -p /dev
 
-This will output, for instance, only file system which names are, for instance,
+This will output only file system which names are, for instance,
 "/dev/sda1", "/dev/root", "/dev", etc.
 
-Multiple selection is supported. In this case, FSNAME needs to be comma
-separated (without spaces). For instance, if you want to filter "/dev" and
-"tmpfs", you would use the following:
+Multiple selection is supported. In this case, FSNAME needs to be a comma
+separated list (without spaces). For instance, if you want to filter "/dev"
+and "tmpfs", you would use the following:
 
 	dfc -p /dev,tmpfs
 
@@ -106,7 +105,7 @@ Allows you to perform filtering on file system type. FSTYPE could take any
 known file system value. For instance, "ext4", "ufs", "tmpfs", "reiserfs", etc.
 
 Multiple selection on file system is also possible. In this case, FSTYPE
-needs to be comma separated (without spaces). For instance, if you want to
+needs to be a comma separated list (without spaces). For instance, if you want to
 filter "ext4" and "tmpfs", you would use the following:
 
 	dfc -t ext4,tmpfs
@@ -161,14 +160,14 @@ replaced by their SI counterparts.
 Print dfc(1) version and exit.
 .TP
 \-w
-Use a wider bar.
+Use a wider bar for the graphe.
 .TP
 \-W
 Wide path name (avoid truncation of file name). May require a larger display.
 .SH CONFIGURATION FILE
 The configuration file is totally optional. It allows you to change dfc(1)
 default colors and graph symbol.
-If you want to use one, place it here:
+If you want to use it, place it here:
 
 	$XDG_CONFIG_HOME/dfc/dfcrc
 
@@ -181,7 +180,7 @@ Or, last choice:
 
 	$HOME/.dfcrc
 
-NOTE: the last two choices can be chosen only if your OS does not support XDG
+NOTE: The last two choices can be chosen only if your OS does not support XDG
 Base Directory Specification.
 .SH BUGS
 If you find one, please contact the author and explain what you encounter.
