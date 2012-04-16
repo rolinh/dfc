@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-04-15 13:52+0200\n"
+"POT-Creation-Date: 2012-04-16 15:45+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -162,31 +162,63 @@ msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 msgid "sorry, not available on MacOS..."
 msgstr "désolé, non disponible pour MacOS..."
 
-#: ../src/dfc.c:746
+#: ../src/dfc.c:749
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: ../src/dfc.c:821
+#: ../src/dfc.c:824
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: ../src/dotfile.c:118 ../src/dotfile.c:124 ../src/dotfile.c:130
-#: ../src/dotfile.c:136
+#: ../src/dotfile.c:123 ../src/dotfile.c:129 ../src/dotfile.c:135
+#: ../src/dotfile.c:141
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: ../src/dotfile.c:144
+#: ../src/dotfile.c:149
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: ../src/dotfile.c:147
+#: ../src/dotfile.c:152
 #, c-format
 msgid "Unknown option in configuration file: %s\n"
 msgstr "Option inconnue dans le fichier de configuration: %s\n"
+
+#: ../src/dotfile.c:200
+msgid "black"
+msgstr "noir"
+
+#: ../src/dotfile.c:203
+msgid "red"
+msgstr "rouge"
+
+#: ../src/dotfile.c:206
+msgid "green"
+msgstr "vert"
+
+#: ../src/dotfile.c:209
+msgid "yellow"
+msgstr "jaune"
+
+#: ../src/dotfile.c:212
+msgid "blue"
+msgstr "bleu"
+
+#: ../src/dotfile.c:215
+msgid "magenta"
+msgstr "magenta"
+
+#: ../src/dotfile.c:218
+msgid "cyan"
+msgstr "cyan"
+
+#: ../src/dotfile.c:221
+msgid "white"
+msgstr "blanc"
 
 #: ../src/text.c:73
 #, c-format
@@ -243,18 +275,21 @@ msgstr " MONTÉ SUR  "
 msgid "MOUNT OPTIONS\n"
 msgstr "OPT. DE MONT. \n"
 
-#: ../src/text.c:151
+#: ../src/text.c:154
 #, c-format
 msgid "SUM:"
 msgstr "SOM:"
 
-#: ../src/util.c:413
+#: ../src/util.c:419
 msgid ""
 "WARNING: TTY too narrow. Some options will be disabled to try to make dfc "
 "output fit.\n"
-msgstr "AVERTISSEMENT: le TTY est trop étroit. Certaines options seront "
-"désactivées afin d'ajuster l'affichage.\n"
+msgstr ""
+"AVERTISSEMENT: le TTY est trop étroit. Certaines options seront désactivées "
+"afin d'ajuster l'affichage.\n"
 
-#: ../src/util.c:453
+#: ../src/util.c:459
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
-msgstr "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal si cela est possible...\n"
+msgstr ""
+"AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
+"si cela est possible...\n"
