@@ -37,23 +37,14 @@ update-pot: ${EXEC}.pot
 build: $(LANGUAGES_MO)
 
 $(LANGUAGES_MO): $(LANGUAGES_PO)
-	for po in ${LANGUAGES}; \
-	do msgfmt -v --statistics -c -o t-$${po} $${po}.po && mv -f t-$${po} $${po}.mo; \
+	for po in ${LANGUAGES}; do\
+		msgfmt -v --statistics -c -o t-$${po} $${po}.po && mv -f t-$${po} $${po}.mo; \
 	done
 
-install: all install-dirs
-	for po in ${LANGUAGES}; \
-	do install -m 0644 $${po}.mo ${LOCALEDIR}/$${po}/LC_MESSAGES/${EXEC}.mo; \
-	done
-
-install-dirs:
-	for po in ${LANGUAGES}; \
-	do install -d ${LOCALEDIR}/$${po}/LC_MESSAGES; \
-	done
-
-uninstall:
-	for po in ${LANGUAGES}; \
-	do rm -f ${LOCALEDIR}/$${po}/LC_MESSAGES/${EXEC}.mo; \
+install: all
+	for po in ${LANGUAGES}; do\
+		test -d ${LOCALEDIR}/$${po}/LC_MESSAGES || mkdir -p ${LOCALEDIR}/$${po}/LC_MESSAGES; \
+		install -m 0644 $${po}.mo ${LOCALEDIR}/$${po}/LC_MESSAGES/${EXEC}.mo; \
 	done
 
 clean-build:
@@ -65,5 +56,5 @@ clean-pox:
 clean: clean-build
 	rm -f *~ dfc.pot
 
-.PHONY: all build install install-dirs uninstall clean clean-pox clean-build \
+.PHONY: all build install clean clean-pox clean-build \
 	update-pot
