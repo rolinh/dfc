@@ -1,0 +1,28 @@
+# Fichier de configuration optionnel pour dfc
+
+# Couleurs utilisées pour l'affichage par défaut en mode texte
+# Les valeurs possibles sont les suivantes:
+# - noir
+# - rouge
+# - vert
+# - jaune
+# - bleu
+# - magenta
+# - cyan
+# - blanc
+# Note: cela concerne uniquement les couleurs d'avant-plan
+
+# Couleur de l'entête
+color_header = bleu
+# Couleur quand le taux d'utilisation est faible
+color_low = vert
+# Couleur quand le taux d'utilisation est moyen
+color_medium = jaune
+# Couleur quand le taux d'utilisation est élevé
+color_high = rouge
+
+# Symbole utilisé pour le graph
+# Cela peut être n'importe quel symbole ASCII
+graph_symbol = =
+
+# vim: set noet syn=conf
