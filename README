@@ -35,11 +35,21 @@ The configuration file found in conf/dfcrc needs to be placed here:
 
 If your operating system does not support XDG Base Directory Specification it
 can then be placed in this directory:
-	
+
 	$HOME/.config/dfc/dfcrc
 
 Or, last choice, directly in $HOME (but the name has to be preceeded by a dot):
-	
+
 	$HOME/.dfcrc
+
+## INFORMATION FOR PACKAGERS
+
+Here is the list of dependencies:
+
+  * glibc
+
+Yep, that should be it. :)
+If you package it for a BSD system, note the Makefile should be BSD make
+compliant so there is no need for gmake. If not, feel free to inform me.
 
 <!-- vim: set filetype=markdown textwidth=80 -->
