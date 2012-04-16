@@ -30,6 +30,8 @@ LOCALEDIR=${DATADIR}/locale
 CFLAGS += -DLOCALEDIR=\"${LOCALEDIR}\" -DPACKAGE=\"${EXEC}\" \
 		  -DVERSION=\"${VERSION}\"
 
+LANGUAGES = fr
+
 all: ${EXEC}
 	${MAKE} -C po all
 
@@ -43,9 +45,13 @@ install-main: dfc
 	test -d ${BINDIR} || mkdir -p ${BINDIR}
 	install -m755 dfc ${BINDIR}/dfc
 
-install-data: ${MAN}/dfc.1
+install-data: ${MAN}/dfc.1 ${MAN}/${LANGUAGES}
 	test -d ${MANDIR}/man1 || mkdir -p ${MANDIR}/man1
 	install -m644 ${MAN}/dfc.1 ${MANDIR}/man1/dfc.1
+	for lang in ${MAN}/${LANGUAGES}; do \
+		test -d ${MANDIR}/${LANGUAGES}/man1 || mkdir -p ${MANDIR}/${LANGUAGES}/man1; \
+		install -m644 $${lang}/dfc.1 ${MANDIR}/${LANGUAGES}/man1/dfc.1; \
+	done
 
 install-po:
 	${MAKE} -C po install
