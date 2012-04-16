@@ -11,6 +11,12 @@ If you want to translate dfc, there are three things to translate:
   * The manpage.
   * The configuration file.
 
+Once you translated all of this, send those three file to the author:
+
+  * The po file
+  * The translated manpage
+  * The tanslated configuration file
+
 Read the instructions below carefully in order to be able to produce a nice
 translation.
 
@@ -57,10 +63,6 @@ Simply use this command to check your translation for errors and completeness
 
 	msgfmt -c --statistics fr.po -o /dev/null
 
-Once this is done, you can send your translation to Robin Hahling:
-
-	robin.hahling@gw-computing.net
-
 If you get this error message when running the command:
 
 	"invalid multibyte sequence"
@@ -82,11 +84,29 @@ file:
 		msgmerge --update fr.po dfc.pot
 
   * Open the *.po file and update translation. Once done, as usual, ckeck your
-    translation and send it to the AUTHOR.
-
+    translation.
 
 ## TRANSLATE THE MANPAGE
 
+Simply translate the file 'dfc.1' located in 'man' folder using your favorite
+text editor.
+
 ## TRANSLATE THE CONFIGURATION FILE
+
+Simply translate the file 'dfcrc' located in 'conf' folder using your favorite
+text editor.
+
+Two things though:
+
+  * Colors value must have exactly the same translation as the
+    one you did for the po file.
+
+  * Do NOT translate those values:
+
+	  * color_header
+	  * color_low
+	  * color_medium
+	  * color_high
+	  * grah_symbol
 
 <!-- vim: set filetype=markdown textwidth=80 -->
