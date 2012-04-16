@@ -22,9 +22,9 @@ OBJS= ${SRCS:.c=.o}
 .PATH: ${SRC}
 
 PREFIX?=/usr/local
-BINDIR=${PREFIX}/bin
-MANDIR=${PREFIX}/man
+BINDIR=${DESTDIR}${PREFIX}/bin
 DATADIR=${DESTDIR}${PREFIX}/share
+MANDIR=${DATADIR}/man
 LOCALEDIR=${DATADIR}/locale
 
 CFLAGS += -DLOCALEDIR=\"${LOCALEDIR}\" -DPACKAGE=\"${EXEC}\" \
@@ -40,12 +40,12 @@ ${EXEC}: ${OBJS}
 	${CC} ${LDFLAGS} -o ${EXEC} ${OBJS}
 
 install-main: dfc
-	test -d ${DESTDIR}${BINDIR} || mkdir -p ${DESTDIR}${BINDIR}
-	install -m755 dfc ${DESTDIR}${BINDIR}/dfc
+	test -d ${BINDIR} || mkdir -p ${BINDIR}
+	install -m755 dfc ${BINDIR}/dfc
 
 install-data: ${MAN}/dfc.1
-	test -d ${DESTDIR}${MANDIR}/man1 || mkdir -p ${DESTDIR}${MANDIR}/man1
-	install -m644 ${MAN}/dfc.1 ${DESTDIR}${MANDIR}/man1/dfc.1
+	test -d ${MANDIR}/man1 || mkdir -p ${MANDIR}/man1
+	install -m644 ${MAN}/dfc.1 ${MANDIR}/man1/dfc.1
 
 install-po:
 	${MAKE} -C po install
