@@ -1,14 +1,20 @@
 Patches are welcome!
 
 Just keep in mind the following:
-	- keep the same coding style
-	- your patch must improve dfc in one way or another
+
+  * keep the same coding style
+  * your patch must improve dfc in one way or another
 
 If this is OK, you can send your patch via email to the author:
+
 	Robin Hahling: <robin.hahling@gw-computing.net>
 
 OR, better solution, register to the official website:
+
 	http://projects.gw-computing.net/projects/dfc
-and add an issue with your patch attached.
+a
+nd add an issue with your patch attached.
 
 Thanks for making dfc better!
+
+<!-- vim: set filetype=markdown textwidth=80 -->

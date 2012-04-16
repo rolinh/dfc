@@ -1,28 +1,45 @@
+# README
+
 dfc is a simple tool that display file system space usage using graph and color
 
-BUILD
+## BUILD
+
 simply use make:
+
 	make
 
-RUN
+## RUN
+
 Once built, you can run it by typing:
+
 	./dfc
 
 see ./dfc -h for options and usage
 
-INSTALL
+## INSTALL
+
 By default, it will be installed in /usr/local/bin. As root, type:
+
 	make install
+
 If you want to override this, change the prefix.
 For instance:
+
 	make PREFIX=/usr install
 
-CONFIGURATION FILE
+## CONFIGURATION FILE
+
 The configuration file found in conf/dfcrc needs to be placed here:
+
 	$XDG_CONFIG_HOME/dfc/dfcrc
 
 If your operating system does not support XDG Base Directory Specification it
 can then be placed in this directory:
+	
 	$HOME/.config/dfc/dfcrc
+
 Or, last choice, directly in $HOME (but the name has to be preceeded by a dot):
+	
 	$HOME/.dfcrc
+
+<!-- vim: set filetype=markdown textwidth=80 -->
