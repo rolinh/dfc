@@ -1,6 +1,4 @@
-ifndef PREFIX
-	PREFIX=/usr/local
-endif
+PREFIX ?= /usr/local
 
 EXEC = dfc
 VERSION = 3.0.0-devel
@@ -9,22 +7,24 @@ LOCALEDIR = ${DATADIR}/locale
 
 SRC = ../src
 
-SRCS= ${SRC}/csv.c \
-	  ${SRC}/dfc.c \
-	  ${SRC}/dotfile.c \
-	  ${SRC}/text.c \
-	  ${SRC}/util.c
+SRCS = ${SRC}/csv.c \
+	   ${SRC}/dfc.c \
+	   ${SRC}/dotfile.c \
+	   ${SRC}/text.c \
+	   ${SRC}/util.c
 
 XG_ARGS = --keyword=_ --keyword=N_ -w 80 --package-name=${EXEC} \
 		  --package-version=${VERSION} \
 		  --msgid-bugs-address=robin.hahling@gw-computing.net
 
-LANGUAGES = fr
+LANGUAGES= fr
 
-LANGUAGES_MO = $(foreach currlang,$(LANGUAGES),$(currlang).mo)
-LANGUAGES_PO = $(foreach currlang,$(LANGUAGES),$(currlang).po)
+LANGUAGES_PO = ${LANGUAGES:=.po}
+LANGUAGES_MO = ${LANGUAGES:=.mo}
 
-all: build
+.SUFFIXES: .po .mo
+
+all: ${LANGUAGES_MO}
 
 ${EXEC}.pot:
 	xgettext ${XG_ARGS} --directory=${SRC} ${SRCS} -d ${EXEC} -o ./${EXEC}.pot
@@ -34,12 +34,8 @@ update-pot: ${EXEC}.pot
 %.pox: %.po
 	msgmerge -o $@ --previous $< ${EXEC}.pot
 
-build: $(LANGUAGES_MO)
-
-$(LANGUAGES_MO): $(LANGUAGES_PO)
-	for po in ${LANGUAGES}; do\
-		msgfmt -v --statistics -c -o t-$${po} $${po}.po && mv -f t-$${po} $${po}.mo; \
-	done
+.po.mo:
+	msgfmt -v --statistics -c -o $@ $<
 
 install: all
 	for po in ${LANGUAGES}; do\

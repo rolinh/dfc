@@ -1,6 +1,6 @@
 CC ?= gcc
 CFLAGS ?= -O2 -std=c89
-LDFLAGS +=
+LDFLAGS += -lintl
 CFDEBUG = -g -pedantic -Wall -Wunused-parameter -Wlong-long\
 		  -Wsign-conversion -Wconversion -Wimplicit-function-declaration
 SRC = src
@@ -8,14 +8,14 @@ MAN = man
 EXEC = dfc
 VERSION = 3.0.0-devel
 
-SRCS= ${SRC}/csv.c  \
-	  ${SRC}/dotfile.c \
-	  ${SRC}/dfc.c  \
-      ${SRC}/list.c \
-      ${SRC}/text.c \
-      ${SRC}/util.c
-      #${SRC}/html.c \
-      ${SRC}/tex.c
+SRCS = ${SRC}/csv.c  \
+	   ${SRC}/dotfile.c \
+	   ${SRC}/dfc.c  \
+       ${SRC}/list.c \
+       ${SRC}/text.c \
+       ${SRC}/util.c
+       #${SRC}/html.c
+       #${SRC}/tex.c
 
 OBJS= ${SRCS:.c=.o}
 
@@ -30,7 +30,7 @@ LOCALEDIR=${DATADIR}/locale
 CFLAGS += -DLOCALEDIR=\"${LOCALEDIR}\" -DPACKAGE=\"${EXEC}\" \
 		  -DVERSION=\"${VERSION}\"
 
-LANGUAGES = fr
+LANGUAGES= fr
 
 all: ${EXEC}
 	${MAKE} -C po all
