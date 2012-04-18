@@ -476,7 +476,7 @@ fetch_info(struct list *lst)
 			}
 		} else {
 #else
-	if ((nummnt = getmntinfo(&entbuf, MNT_WAIT)) <= 0)
+	if ((nummnt = getmntinfo(&entbuf, MNT_NOWAIT)) <= 0)
 		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
 		/* NOTREACHED */
 
