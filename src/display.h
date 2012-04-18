@@ -32,6 +32,10 @@
 /* Structure to handle the display interface. */
 struct Display
 {
+    /* Some interfaces may need to initialize/deinitialize stuff */
+    void (*init)         (void);
+    void (*deinit)       (void);
+
     void (*print_header) (struct list*);
     void (*print_sum)    (struct list*, double, double, double, double, double);
     void (*print_bar)    (double);

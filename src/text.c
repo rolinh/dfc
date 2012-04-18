@@ -44,6 +44,8 @@
 void
 init_disp_text(struct Display *disp)
 {
+    disp->init         = NULL;
+    disp->deinit       = NULL;
     disp->print_header = text_disp_header;
     disp->print_sum    = text_disp_sum;
     disp->print_bar    = text_disp_bar;
