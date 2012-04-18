@@ -43,6 +43,8 @@
 void
 init_disp_csv(struct Display *disp)
 {
+    disp->init         = NULL;
+    disp->deinit       = NULL;
     disp->print_header = csv_disp_header;
     disp->print_sum    = csv_disp_sum;
     disp->print_bar    = csv_disp_bar;

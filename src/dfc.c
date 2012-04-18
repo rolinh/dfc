@@ -627,6 +627,9 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		}
 	}
 
+	if (disp->init)
+		disp->init();
+
 	/* legend on top */
 	if (!nflag)
 		disp->print_header(lst);
@@ -729,6 +732,9 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 
 	if (sflag)
 		disp->print_sum(lst, stot, atot, utot, ifitot, ifatot);
+
+	if (disp->deinit)
+		disp->deinit();
 }
 
 /* does not work on Mac OS */
