@@ -1,8 +1,6 @@
-
-
 CC ?= gcc
 CFLAGS ?= -O2 -std=c89
-LDFLAGS += -lintl
+LDFLAGS +=
 CFDEBUG = -g -pedantic -Wall -Wunused-parameter -Wlong-long\
 		  -Wsign-conversion -Wconversion -Wimplicit-function-declaration
 SRC = src
