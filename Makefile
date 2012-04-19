@@ -1,6 +1,3 @@
-# Load specific OS stuff
-include platform.mk
-
 CC ?= gcc
 CFLAGS ?= -O2 -std=c89
 LDFLAGS +=
