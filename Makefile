@@ -13,8 +13,8 @@ SRCS = ${SRC}/csv.c  \
 	   ${SRC}/dfc.c  \
        ${SRC}/list.c \
        ${SRC}/text.c \
-       ${SRC}/util.c
-       #${SRC}/html.c
+       ${SRC}/util.c \
+       ${SRC}/html.c
        #${SRC}/tex.c
 
 OBJS= ${SRCS:.c=.o}
