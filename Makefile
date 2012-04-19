@@ -1,3 +1,5 @@
+
+
 CC ?= gcc
 CFLAGS ?= -O2 -std=c89
 LDFLAGS += -lintl
@@ -31,6 +33,10 @@ CFLAGS += -DLOCALEDIR=\"${LOCALEDIR}\" -DPACKAGE=\"${EXEC}\" \
 		  -DVERSION=\"${VERSION}\"
 
 LANGUAGES= fr
+
+# needed for portability while remaining simple
+SYS:= ${shell uname -s | cut -c 1-7}
+include ${SYS}.mk
 
 all: ${EXEC}
 	${MAKE} -C po all
