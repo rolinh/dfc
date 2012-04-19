@@ -207,7 +207,7 @@ main(int argc, char *argv[])
 					init_disp_csv(&display);
 					break;
 				case EHTML:
-					/* init_disp_html(&display); */
+					init_disp_html(&display);
 					break;
 				case ETEX:
 					/* init_disp_tex(&display); */
