@@ -45,16 +45,21 @@
 static void
 html_disp_init(void)
 {
-	(void)printf("<!DOCTYPE html>");
-	(void)printf("<html><head>");
-	(void)printf("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\"/>");
-	(void)printf("<title>dfc</title></head><body>");
+	(void)puts("<!DOCTYPE html>");
+	(void)puts("<html>");
+	(void)puts("  <head>");
+	(void)puts("    <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\"/>");
+	(void)puts("    <meta name=\"author\" content=\"Robin Hahling\"/>");
+	(void)puts("    <meta name=\"description\" content=\"dfc - Display file system space usage using graph and colors\"/>");
+	(void)puts("    <meta name=\"keywords\" content=\"dfc,file system, usage, display, cli, df\"/>");
+	(void)puts("    <title>dfc</title>");
+	(void)puts("  </head>\n  <body>");
 }
 
 static void
 html_disp_deinit(void)
 {
-    (void)printf("</tr></table></body></html>");
+    (void)puts("\t</tr>\n    </table>\n  </body>\n</html>");
 }
 
 void
@@ -79,27 +84,29 @@ html_disp_header(struct list *lst)
 {
 	(void) lst;
 
-	(void)printf("<table border=\"1\"><tr>");
-	(void)printf("<th>%s</th>", _("FILESYSTEM"));
+	(void)printf("    <table border=\"1\">\n\t<tr>\n");
+	(void)printf("\t  <th>%s</th>\n", _("FILESYSTEM"));
 
 	if (Tflag)
-		(void)printf("<th>%s</th>", _("TYPE"));
+		(void)printf("\t  <th>%s</th>\n", _("TYPE"));
 	if (!bflag)
-		(void)printf("<th>BAR</th>");
+		(void)printf("\t  <th>USAGE</th>\n");
 
-	(void)printf("<th>%s</th>", _("%USED"));
-	(void)printf("<th>%s</th>", _("AVAILABLE"));
-	(void)printf("<th>%s</th>", _("TOTAL"));
+	(void)printf("\t  <th>%s</th>\n", _("%USED"));
+	(void)printf("\t  <th>%s</th>\n", _("AVAILABLE"));
+	(void)printf("\t  <th>%s</th>\n", _("TOTAL"));
 
 	if (iflag) {
-		(void)printf("<th>%s</th>", _("#INODES"));
-		(void)printf("<th>%s</th>", _("AV.INODES,"));
+		(void)printf("\t  <th>%s</th>\n", _("#INODES"));
+		(void)printf("\t  <th>%s</th>\n", _("AV.INODES,"));
 	}
 
-	(void)printf("<th>%s</th>", _("MOUNTED ON"));
+	(void)printf("\t  <th>%s</th>\n", _("MOUNTED ON"));
 
 	if (oflag)
-		(void)printf("<th>%s</th></tr>", _("MOUNT OPTIONS"));
+		(void)printf("\t  <th>%s</th></tr>\n", _("MOUNT OPTIONS"));
+
+	(void)puts("\t</tr>");
 }
 
 void
@@ -110,14 +117,13 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 
 	(void)lst;
 
-	(void)fprintf(stdout, "</tr><tr>");
-	(void)fprintf(stdout, "<td>Sum</td>");
+	(void)puts("\t</tr>\n\t<tr>\n\t  <td>Sum</td>");
 
 	if (Tflag)
-		(void)printf("<td>N/A</td>");
+		(void)puts("\t  <td>N/A</td>");
 
 	if (!bflag)
-		(void)fprintf(stdout, "<td>N/A</td>");
+		(void)puts("\t  <td>N/A</td>");
 
 	html_disp_perct(ptot);
 
@@ -129,10 +135,15 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 	html_disp_at(atot, ptot);
 	html_disp_at(stot, ptot);
 
-	if (ifitot && ifatot) {
-		(void)fprintf(stdout, "<td>%9.fk</td>", ifitot / 1000.0);
-		(void)fprintf(stdout, "<td>%9.fk</td>", ifatot / 1000.0);
+	if (iflag) {
+		(void)printf("\t  <td>%.fk</td>\n", ifitot / 1000.0);
+		(void)printf("\t  <td>%.fk</td>\n", ifatot / 1000.0);
 	}
+
+	/* keep same amount of columns in table */
+	(void)puts("\t  <td>N/A</td>");
+	if (oflag)
+		(void)puts("\t  <td>N/A</td>");
 }
 
 void
@@ -142,39 +153,39 @@ html_disp_bar(double perct)
 	int barheight = 25; /* In pixels */
 	int size;
 
-	(void)printf("<td>");
+	(void)puts("\t  <td>");
 
 	if (wflag)
 		barwidth *= 2;
 
 	if (!cflag) {
-	(void)printf("<span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>",
+	(void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>\n",
                        (int)perct*barwidth/100, barheight);
 	} else { /* color */
 		size = (perct < 50.0) ? (int)perct : 50;
-        (void)printf("<span style=\"width:%dpx; height:%dpx;background-color:green;float:left\"></span>",
+        (void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:green;float:left\"></span>\n",
                        size * barwidth / 100, barheight);
 
         if (perct >= 50.0) {
 		size = (perct < 75.0) ? (int)perct:75;
 		size -= 50;
-            (void)printf("<span style=\"width:%dpx; height:%dpx;background-color:yellow;float:left\"></span>",
+            (void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:yellow;float:left\"></span>\n",
                            size * barwidth / 100, barheight);
         }
 
         if (perct >= 75.0) {
 		size = (int)perct - 75;
-		(void)printf("<span style=\"width:%dpx; height:%dpx;background-color:red;float:left\"></span>",
+		(void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:red;float:left\"></span>\n",
                            size * barwidth / 100, barheight);
         }
 
         if (perct < 100.0) {
 		size = 100 - (int)perct;
-		(void)printf("<span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>",
+		(void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>\n",
                            size * barwidth / 100, barheight);
         }
     }
-    (void)printf("</td>");
+    (void)puts("\t  </td>");
 }
 
 void
@@ -183,7 +194,7 @@ html_disp_at(double n, double perct)
 	int i;
 
 	(void)perct;
-	(void)printf("<td>");
+	(void)printf("\t  <td>");
 
 	/* XXX: This is a huge copy/paste of src/text.c. This should probably be
 	* factorized in src/util.c */
@@ -191,7 +202,7 @@ html_disp_at(double n, double perct)
 	switch (unitflag) {
 	case 'h':
 		i = humanize(&n);
-		(void)printf(i == 0 ? "%9.f" : "%9.1f", n);
+		(void)printf(i == 0 ? "%.f" : "%.1f", n);
 		switch (i) {
 		case 0:	/* bytes */
 			(void)printf("B");
@@ -221,18 +232,19 @@ html_disp_at(double n, double perct)
 			(void)printf("Y");
 			break;
 		}
+		(void)puts("</td>");
 		return;
 	case 'b':
-		(void)printf("%15.f", n);
-		(void)printf("B");
+		(void)printf("%.f", n);
+		(void)puts("B</td>");
 		return;
 	case 'k':
-		(void)printf("%10.f", n);
-		(void)printf("K");
+		(void)printf("%.f", n);
+		(void)puts("K</td>");
 		return;
 	}
 
-	(void)printf("%9.1f", n);
+	(void)printf("%.1f", n);
 
 	switch (unitflag) {
 	case 'm':
@@ -257,7 +269,7 @@ html_disp_at(double n, double perct)
 		(void)printf("Y");
 		break;
 	}
-	(void)printf("</td>");
+	(void)puts("\t  </td>");
 }
 
 void
@@ -268,9 +280,9 @@ html_disp_fs(struct list *lst, char *fsname)
 	(void)lst;
 
 	if (must_close == 1)
-		(void)printf("</tr>");
+		(void)puts("\t</tr>");
 
-	(void)printf("<tr><td>%s</td>", fsname);
+	(void)printf("\t<tr>\n\t  <td>%s</td>\n", fsname);
 	must_close = 1;
 }
 
@@ -278,20 +290,20 @@ void
 html_disp_type(struct list *lst, char *type)
 {
 	(void)lst;
-	(void)printf("<td>%s</td>", type);
+	(void)printf("\t  <td>%s</td>\n", type);
 }
 
 void
 html_disp_inodes(unsigned long files, unsigned long favail)
 {
-	(void)printf("<td>%9ldk</td>", files);
-	(void)printf("<td>%9ldk</td>", favail);
+	(void)printf("\t  <td>%ldk</td>\n", files);
+	(void)printf("\t  <td>%ldk</td>\n", favail);
 }
 
 void
 html_disp_mount(char *dir)
 {
-	(void)printf("<td>%s</td>", dir);
+	(void)printf("\t  <td>%s</td>", dir);
 }
 
 void
@@ -300,11 +312,11 @@ html_disp_mopt(struct list *lst, char *dir, char *opts)
 	(void)lst;
 	(void)dir;
 
-	(void)printf("<td>%s</td>", opts);
+	(void)printf("\t  <td>%s</td>\n", opts);
 }
 
 void
 html_disp_perct(double perct)
 {
-	(void)printf("<td>%2.f</td>", perct);
+	(void)printf("\t  <td>%.f</td>\n", perct);
 }
