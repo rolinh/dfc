@@ -112,9 +112,9 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 	csv_disp_at(atot, ptot);
 	csv_disp_at(stot, ptot);
 
-	if (ifitot && ifatot) {
-		(void)printf("%f,k,", ifitot / 1000);
-		(void)printf("%f,k,", ifatot / 1000);
+	if (iflag) {
+		(void)printf(",%.f,k", ifitot / 1000);
+		(void)printf(",%.f,k", ifatot / 1000);
 	}
 
 	(void)printf("\n");
@@ -134,6 +134,8 @@ csv_disp_at(double n, double perct)
 
 	/* do not care about perct here */
 	(void)perct;
+
+	(void)printf(",");
 
 	/* available  and total */
 	switch (unitflag) {
@@ -169,7 +171,6 @@ csv_disp_at(double n, double perct)
 		    (void)printf("Y");
 		    break;
 		}
-		(void)printf(",");
 		return;
 		/* NOTREACHED */
 	case 'b':
@@ -207,7 +208,6 @@ csv_disp_at(double n, double perct)
 		(void)printf("Y");
 		break;
 	}
-	(void)printf(",");
 }
 
 void
@@ -231,14 +231,14 @@ csv_disp_type(struct list *lst, char *type)
 void
 csv_disp_inodes(unsigned long files, unsigned long favail)
 {
-	(void)printf("%ld,k,", files);
-	(void)printf("%ld,k,", favail);
+	(void)printf(",%ld,k", files);
+	(void)printf(",%ld,k", favail);
 }
 
 void
 csv_disp_mount(char *dir)
 {
-	(void)printf("%s", dir);
+	(void)printf(",%s", dir);
 }
 
 void
@@ -255,5 +255,5 @@ csv_disp_mopt(struct list *lst, char *dir, char *opts)
 void
 csv_disp_perct(double perct)
 {
-	(void)printf("%.f,%%,", perct);
+	(void)printf("%.f,%%", perct);
 }
