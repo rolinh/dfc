@@ -48,10 +48,14 @@ html_disp_init(void)
 	(void)puts("<!DOCTYPE html>");
 	(void)puts("<html>");
 	(void)puts("  <head>");
-	(void)puts("    <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\"/>");
+	(void)puts("    <meta http-equiv=\"Content-Type\" content=\"text/html; "
+			"charset=utf-8\"/>");
 	(void)puts("    <meta name=\"author\" content=\"Robin Hahling\"/>");
-	(void)puts("    <meta name=\"description\" content=\"dfc - Display file system space usage using graph and colors\"/>");
-	(void)puts("    <meta name=\"keywords\" content=\"dfc,file system, usage, display, cli, df\"/>");
+	(void)printf("    <meta name=\"description\" content=\"%s-%s - Display "
+			"file system space usage using graph and colors\"/>\n",
+			PACKAGE, VERSION);
+	(void)puts("    <meta name=\"keywords\" content=\"dfc,file system, usage, "
+			"display, cli, df\"/>");
 	(void)puts("    <title>dfc</title>");
 	(void)puts("  </head>\n  <body>");
 }
