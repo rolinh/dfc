@@ -56,6 +56,12 @@ html_disp_init(void)
 			PACKAGE, VERSION);
 	(void)puts("    <meta name=\"keywords\" content=\"dfc,file system, usage, "
 			"display, cli, df\"/>");
+	(void)puts("    <style type=\"text/css\">");
+	(void)puts("\ttable { }");
+	(void)puts("\ttd, th { padding: .3em; border: 1px #BBBBBB solid; }");
+	(void)puts("\tthead { background: #DDDDDD; }");
+	(void)puts("\ttbody { background: #F5F5F5; }");
+	(void)puts("    </style>");
 	(void)puts("    <title>dfc</title>");
 	(void)puts("  </head>\n  <body>");
 }
@@ -88,7 +94,7 @@ html_disp_header(struct list *lst)
 {
 	(void) lst;
 
-	(void)printf("    <table border=\"1\">\n\t<tr>\n");
+	(void)printf("    <table>\n\t<thead>\n\t<tr>\n");
 	(void)printf("\t  <th>%s</th>\n", _("FILESYSTEM"));
 
 	if (Tflag)
@@ -110,7 +116,7 @@ html_disp_header(struct list *lst)
 	if (oflag)
 		(void)printf("\t  <th>%s</th>\n", _("MOUNT OPTIONS"));
 
-	(void)puts("\t</tr>");
+	(void)puts("\t</tr>\n\t</thead>");
 }
 
 void
