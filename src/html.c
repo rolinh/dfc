@@ -312,7 +312,7 @@ html_disp_mopt(struct list *lst, char *dir, char *opts)
 	(void)lst;
 	(void)dir;
 
-	(void)printf("\t  <td>%s</td>\n", opts);
+	(void)printf("\n\t  <td>%s</td>", opts);
 }
 
 void
