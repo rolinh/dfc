@@ -45,253 +45,266 @@
 static void
 html_disp_init(void)
 {
-    (void) fprintf(stdout, "<!DOCTYPE html>");
-    (void) fprintf(stdout, "<html><head>");
-    (void) fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\"/>");
-    (void) fprintf(stdout, "<title>dfc</title></head><body>");
+	(void)printf("<!DOCTYPE html>");
+	(void)printf("<html><head>");
+	(void)printf("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\"/>");
+	(void)printf("<title>dfc</title></head><body>");
 }
 
 static void
 html_disp_deinit(void)
 {
-    (void) fprintf(stdout, "</tr></table></body></html>");
+    (void)printf("</tr></table></body></html>");
 }
 
 void
 init_disp_html(struct Display *disp)
 {
-    disp->init         = html_disp_init;
-    disp->deinit       = html_disp_deinit;
-    disp->print_header = html_disp_header;
-    disp->print_sum    = html_disp_sum;
-    disp->print_bar    = html_disp_bar;
-    disp->print_at     = html_disp_at;
-    disp->print_fs     = html_disp_fs;
-    disp->print_type   = html_disp_type;
-    disp->print_inodes = html_disp_inodes;
-    disp->print_mount  = html_disp_mount;
-    disp->print_mopt   = html_disp_mopt;
-    disp->print_perct  = html_disp_perct;
+	disp->init         = html_disp_init;
+	disp->deinit       = html_disp_deinit;
+	disp->print_header = html_disp_header;
+	disp->print_sum    = html_disp_sum;
+	disp->print_bar    = html_disp_bar;
+	disp->print_at     = html_disp_at;
+	disp->print_fs     = html_disp_fs;
+	disp->print_type   = html_disp_type;
+	disp->print_inodes = html_disp_inodes;
+	disp->print_mount  = html_disp_mount;
+	disp->print_mopt   = html_disp_mopt;
+	disp->print_perct  = html_disp_perct;
 }
 
 void
 html_disp_header(struct list *lst)
 {
-    (void) lst;
-    (void) fprintf(stdout, "<table border=\"1\"><tr>");
-    (void) fprintf(stdout, "<th>%s</th>", _("FILESYSTEM"));
-    if (Tflag)
-        (void) fprintf(stdout, "<th>%s</th>", _("TYPE"));
-    if (!bflag)
-        (void) fprintf(stdout, "<th>BAR</th>");
-    (void) fprintf(stdout, "<th>%s</th>", _("%USED"));
-    (void) fprintf(stdout, "<th>%s</th>", _("AVAILABLE"));
-    (void) fprintf(stdout, "<th>%s</th>", _("TOTAL"));
-    if (iflag) {
-        (void) fprintf(stdout, "<th>%s</th>", _("#INODES"));
-        (void) fprintf(stdout, "<th>%s</th>", _("AV.INODES,"));
-    }
-    (void) fprintf(stdout, "<th>%s</th>", _("MOUNTED ON"));
-    if (oflag)
-        (void) fprintf(stdout, "<th>%s</th></tr>", _("MOUNT OPTIONS"));
+	(void) lst;
+
+	(void)printf("<table border=\"1\"><tr>");
+	(void)printf("<th>%s</th>", _("FILESYSTEM"));
+
+	if (Tflag)
+		(void)printf("<th>%s</th>", _("TYPE"));
+	if (!bflag)
+		(void)printf("<th>BAR</th>");
+
+	(void)printf("<th>%s</th>", _("%USED"));
+	(void)printf("<th>%s</th>", _("AVAILABLE"));
+	(void)printf("<th>%s</th>", _("TOTAL"));
+
+	if (iflag) {
+		(void)printf("<th>%s</th>", _("#INODES"));
+		(void)printf("<th>%s</th>", _("AV.INODES,"));
+	}
+
+	(void)printf("<th>%s</th>", _("MOUNTED ON"));
+
+	if (oflag)
+		(void)printf("<th>%s</th></tr>", _("MOUNT OPTIONS"));
 }
 
 void
 html_disp_sum(struct list *lst, double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
-    (void) lst;
+	double ptot = stot == 0 ? 100.0 : 100.0 * (utot / stot);
 
-    double ptot = stot==0?100.0:100.0*(utot/stot);
+	(void)lst;
 
-    (void) fprintf(stdout, "</tr><tr>");
-    (void) fprintf(stdout, "<td>Sum</td>");
-    if (Tflag)
-        (void) fprintf(stdout, "<td>N/A</td>");
+	(void)fprintf(stdout, "</tr><tr>");
+	(void)fprintf(stdout, "<td>Sum</td>");
 
-    if (!bflag)
-        (void) fprintf(stdout, "<td>N/A</td>");
-    html_disp_perct(ptot);
-    if (uflag) {
-        stot = cvrt(stot);
-        atot = cvrt(atot);
-    }
-    html_disp_at(atot, ptot);
-    html_disp_at(stot, ptot);
+	if (Tflag)
+		(void)printf("<td>N/A</td>");
 
-    if (ifitot && ifatot) {
-        (void) fprintf(stdout, "<td>%9.fk</td>", ifitot/1000);
-        (void) fprintf(stdout, "<td>%9.fk</td>", ifatot/1000);
-    }
+	if (!bflag)
+		(void)fprintf(stdout, "<td>N/A</td>");
+
+	html_disp_perct(ptot);
+
+	if (uflag) {
+		stot = cvrt(stot);
+		atot = cvrt(atot);
+	}
+
+	html_disp_at(atot, ptot);
+	html_disp_at(stot, ptot);
+
+	if (ifitot && ifatot) {
+		(void)fprintf(stdout, "<td>%9.fk</td>", ifitot / 1000.0);
+		(void)fprintf(stdout, "<td>%9.fk</td>", ifatot / 1000.0);
+	}
 }
 
 void
 html_disp_bar(double perct)
 {
-    fprintf(stdout, "<td>");
-    int barwidth = 100; /* In pixels */
-    int barheight = 25; /* In pixels */
+	int barwidth = 100; /* In pixels */
+	int barheight = 25; /* In pixels */
+	int size;
 
-    if (wflag)
-        barwidth *= 2;
+	(void)printf("<td>");
 
-    if (!cflag) {
-        (void) fprintf(stdout,
-                       "<span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>",
+	if (wflag)
+		barwidth *= 2;
+
+	if (!cflag) {
+	(void)printf("<span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>",
                        (int)perct*barwidth/100, barheight);
-    } else { /* color */
-        int size = (perct < 50.0) ? (int)perct:50;
-        (void) fprintf(stdout,
-                       "<span style=\"width:%dpx; height:%dpx;background-color:green;float:left\"></span>",
-                       size*barwidth/100, barheight);
+	} else { /* color */
+		size = (perct < 50.0) ? (int)perct : 50;
+        (void)printf("<span style=\"width:%dpx; height:%dpx;background-color:green;float:left\"></span>",
+                       size * barwidth / 100, barheight);
 
         if (perct >= 50.0) {
-            size = (perct < 75.0) ? (int)perct:75;
-            size -= 50;
-            (void) fprintf(stdout,
-                           "<span style=\"width:%dpx; height:%dpx;background-color:yellow;float:left\"></span>",
-                           size*barwidth/100, barheight);
+		size = (perct < 75.0) ? (int)perct:75;
+		size -= 50;
+            (void)printf("<span style=\"width:%dpx; height:%dpx;background-color:yellow;float:left\"></span>",
+                           size * barwidth / 100, barheight);
         }
 
         if (perct >= 75.0) {
-            size = (int)perct - 75;
-            (void) fprintf(stdout,
-                           "<span style=\"width:%dpx; height:%dpx;background-color:red;float:left\"></span>",
-                           size*barwidth/100, barheight);
+		size = (int)perct - 75;
+		(void)printf("<span style=\"width:%dpx; height:%dpx;background-color:red;float:left\"></span>",
+                           size * barwidth / 100, barheight);
         }
 
         if (perct < 100.0) {
-            size = 100 - (int) perct;
-            (void) fprintf(stdout,
-                           "<span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>",
-                           size*barwidth/100, barheight);
+		size = 100 - (int)perct;
+		(void)printf("<span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>",
+                           size * barwidth / 100, barheight);
         }
     }
-    (void) fprintf(stdout, "</td>");
+    (void)printf("</td>");
 }
 
 void
 html_disp_at(double n, double perct)
 {
-    (void) perct;
-    int i;
-    (void) fprintf(stdout, "<td>");
-    /* XXX: This is a huge copy/paste of src/text.c. This should probably be
-     * factorized in src/util.c */
-    /* available  and total */
-    switch (unitflag) {
-        case 'h':
-            i = humanize(&n);
-            (void) fprintf(stdout, i == 0 ? "%9.f" : "%9.1f", n);
-            switch (i) {
-                case 0:	/* bytes */
-                    (void) fprintf(stdout, "B");
-                    break;
+	int i;
+
+	(void)perct;
+	(void)printf("<td>");
+
+	/* XXX: This is a huge copy/paste of src/text.c. This should probably be
+	* factorized in src/util.c */
+	/* available  and total */
+	switch (unitflag) {
+	case 'h':
+		i = humanize(&n);
+		(void)printf(i == 0 ? "%9.f" : "%9.1f", n);
+		switch (i) {
+		case 0:	/* bytes */
+			(void)printf("B");
+			break;
 		case 1: /* Kio  or Ko */
-                    (void) fprintf(stdout, "K");
-                    break;
-                case 2: /* Mio or Mo */
-                    (void) fprintf(stdout, "M");
-                    break;
-                case 3: /* Gio or Go*/
-                    (void) fprintf(stdout, "G");
-                    break;
-                case 4: /* Tio or To*/
-                    (void) fprintf(stdout, "T");
-                    break;
-                case 5: /* Pio or Po*/
-                    (void) fprintf(stdout, "P");
-                    break;
-                case 6: /* Eio or Eo*/
-                    (void) fprintf(stdout, "E");
-                     break;
-                case 7: /* Zio or Zo*/
-                    (void) fprintf(stdout, "Z");
-                    break;
-                case 8: /* Yio or Yo*/
-                    (void) fprintf(stdout, "Y");
-                     break;
-            }
-            return;
-        case 'b':
-            (void) fprintf(stdout, "%15.f", n);
-            (void) fprintf(stdout, "B");
-            return;
-        case 'k':
-            (void) fprintf(stdout, "%10.f", n);
-            (void) fprintf(stdout, "K");
-            return;
-    }
+			(void)printf("K");
+			break;
+		case 2: /* Mio or Mo */
+			(void)printf("M");
+			break;
+		case 3: /* Gio or Go*/
+			(void)printf("G");
+			break;
+		case 4: /* Tio or To*/
+			(void)printf("T");
+			break;
+		case 5: /* Pio or Po*/
+			(void)printf("P");
+			break;
+		case 6: /* Eio or Eo*/
+			(void)printf("E");
+			break;
+		case 7: /* Zio or Zo*/
+			(void)printf("Z");
+			break;
+		case 8: /* Yio or Yo*/
+			(void)printf("Y");
+			break;
+		}
+		return;
+	case 'b':
+		(void)printf("%15.f", n);
+		(void)printf("B");
+		return;
+	case 'k':
+		(void)printf("%10.f", n);
+		(void)printf("K");
+		return;
+	}
 
-    (void) fprintf(stdout, "%9.1f", n);
+	(void)printf("%9.1f", n);
 
-    switch (unitflag) {
-        case 'm':
-            (void) fprintf(stdout, "M");
-            break;
-        case 'g':
-            (void) fprintf(stdout, "G");
-            break;
-        case 't':
-            (void) fprintf(stdout, "T");
-            break;
-        case 'p':
-            (void) fprintf(stdout, "P");
-            break;
-        case 'e':
-            (void) fprintf(stdout, "E");
-            break;
-        case 'z':
-            (void) fprintf(stdout, "Z");
-            break;
-        case 'y':
-            (void) fprintf(stdout, "Y");
-            break;
-    }
-    (void) fprintf(stdout, "</td>");
+	switch (unitflag) {
+	case 'm':
+		(void)printf("M");
+		break;
+	case 'g':
+		(void)printf("G");
+		break;
+	case 't':
+		(void)printf("T");
+		break;
+	case 'p':
+		(void)printf("P");
+		break;
+	case 'e':
+		(void)printf("E");
+		break;
+	case 'z':
+		(void)printf("Z");
+		break;
+	case 'y':
+		(void)printf("Y");
+		break;
+	}
+	(void)printf("</td>");
 }
 
 void
 html_disp_fs(struct list *lst, char *fsname)
 {
-    (void) lst;
-    static int must_close = 0;
-    if (must_close == 1)
-        fprintf(stdout, "</tr>");
-    fprintf(stdout, "<tr><td>%s</td>", fsname);
-    must_close = 1;
+	static int must_close = 0;
+
+	(void)lst;
+
+	if (must_close == 1)
+		(void)printf("</tr>");
+
+	(void)printf("<tr><td>%s</td>", fsname);
+	must_close = 1;
 }
 
 void
 html_disp_type(struct list *lst, char *type)
 {
-    (void) lst;
-    fprintf(stdout, "<td>%s</td>", type);
+	(void)lst;
+	(void)printf("<td>%s</td>", type);
 }
 
 void
 html_disp_inodes(unsigned long files, unsigned long favail)
 {
-    (void) fprintf(stdout, "<td>%9ldk</td>", files);
-    (void) fprintf(stdout, "<td>%9ldk</td>", favail);
+	(void)printf("<td>%9ldk</td>", files);
+	(void)printf("<td>%9ldk</td>", favail);
 }
 
 void
 html_disp_mount(char *dir)
 {
-    (void) fprintf(stdout, "<td>%s</td>", dir);
+	(void)printf("<td>%s</td>", dir);
 }
 
 void
 html_disp_mopt(struct list *lst, char *dir, char *opts)
 {
-    (void) lst;
-    (void) dir;
-    (void) fprintf(stdout, "<td>%s</td>", opts);
+	(void)lst;
+	(void)dir;
+
+	(void)printf("<td>%s</td>", opts);
 }
 
 void
 html_disp_perct(double perct)
 {
-    (void) fprintf(stdout, "<td>%2.f</td>", perct);
+	(void)printf("<td>%2.f</td>", perct);
 }
