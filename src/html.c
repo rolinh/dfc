@@ -104,7 +104,7 @@ html_disp_header(struct list *lst)
 	(void)printf("\t  <th>%s</th>\n", _("MOUNTED ON"));
 
 	if (oflag)
-		(void)printf("\t  <th>%s</th></tr>\n", _("MOUNT OPTIONS"));
+		(void)printf("\t  <th>%s</th>\n", _("MOUNT OPTIONS"));
 
 	(void)puts("\t</tr>");
 }
@@ -117,7 +117,7 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 
 	(void)lst;
 
-	(void)puts("\t</tr>\n\t<tr>\n\t  <td>Sum</td>");
+	(void)puts("\t</tr>\n\t<tr>\n\t  <td><strong>SUM</strong></td>");
 
 	if (Tflag)
 		(void)puts("\t  <td>N/A</td>");
@@ -159,29 +159,37 @@ html_disp_bar(double perct)
 		barwidth *= 2;
 
 	if (!cflag) {
-	(void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>\n",
+	(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
+			"background-color:black; float:left\"></span>\n",
                        (int)perct*barwidth/100, barheight);
 	} else { /* color */
 		size = (perct < 50.0) ? (int)perct : 50;
-        (void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:green;float:left\"></span>\n",
-                       size * barwidth / 100, barheight);
+        (void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
+			"background-color:%s; float:left\"></span>\n",
+                       size * barwidth / 100, barheight,
+		       color_to_colorcode(cnf.clow));
 
         if (perct >= 50.0) {
 		size = (perct < 75.0) ? (int)perct:75;
 		size -= 50;
-            (void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:yellow;float:left\"></span>\n",
-                           size * barwidth / 100, barheight);
+            (void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
+			    "background-color:%s; float:left\"></span>\n",
+                           size * barwidth / 100, barheight,
+			   color_to_colorcode(cnf.cmedium));
         }
 
         if (perct >= 75.0) {
 		size = (int)perct - 75;
-		(void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:red;float:left\"></span>\n",
-                           size * barwidth / 100, barheight);
+		(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
+				"background-color:%s; float:left\"></span>\n",
+                           size * barwidth / 100, barheight,
+			   color_to_colorcode(cnf.chigh));
         }
 
         if (perct < 100.0) {
 		size = 100 - (int)perct;
-		(void)printf("\t    <span style=\"width:%dpx; height:%dpx;background-color:black;float:left\"></span>\n",
+		(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
+				"background-color:black; float:left\"></span>\n",
                            size * barwidth / 100, barheight);
         }
     }
