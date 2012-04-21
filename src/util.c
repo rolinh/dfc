@@ -517,7 +517,7 @@ color_to_colorcode(int color)
 {
 	switch (color) {
 	case BLACK:
-		return "#FFFFFF";
+		return "#000000";
 		/* NOTREACHED */
 	case RED:
 		return "#FF0000";
