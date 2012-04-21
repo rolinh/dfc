@@ -166,7 +166,12 @@ parse_conf(char *conf)
 				cnf.gmedium = tmp;
 		} else if (strcmp(key, "graph_high") == 0) {
 			tmp = (int)strtol(val, (char **) NULL, 10);
-			if (tmp < 0) {
+			if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
+				(void)fprintf(stderr, _("Value conversion failed"
+					" for graph_medium: %s. What were you "
+					"expecting with such a thing anyway?\n"),
+					val);
+			else if (tmp < 0) {
 				(void)fprintf(stderr, _("High value cannot be"
 					" set below 0: %s\n"), val);
 			} else if (tmp > 100) {
