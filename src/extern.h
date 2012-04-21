@@ -52,6 +52,9 @@ struct conf {
 	int chigh;	/* color when usage high */
 	int chead;	/* color used for the header */
 
+	int gmedium;	/* starting value from which usage is considered medium */
+	int ghigh;	/* starting value from which usage is considered high */
+
 	char gsymbol;	/* symbol used to draw the graph */
 };
 
