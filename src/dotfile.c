@@ -32,6 +32,8 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
+#include <limits.h>
 
 #include <sys/stat.h>
 #include <string.h>
@@ -94,7 +96,7 @@ int
 parse_conf(char *conf)
 {
 	FILE *fd;
-	int tmpcol;
+	int tmp;
 	char line[255];
 	char *key, *val;
 
@@ -116,32 +118,62 @@ parse_conf(char *conf)
 		val = strtok(NULL, "");
 
 		key = strtrim(key);
-		val = strtrim(val);
+		if ((val = strtrim(val)) == NULL) {
+			(void)fprintf(stderr, _("Error: no value for %s in configuration"
+				" file\n"), key);
+			return -1;
+			/* NOTREACHED */
+		}
 
 		if (strcmp(key, "color_header") == 0) {
-			if ((tmpcol = cvrt_color(val)) == -1)
+			if ((tmp = cvrt_color(val)) == -1)
 				(void)fprintf(stderr, _("Unknown color value: "
 						"%s\n"), val);
 			else
-				cnf.chead = tmpcol;
+				cnf.chead = tmp;
 		} else if (strcmp(key, "color_low") == 0) {
-			if ((tmpcol = cvrt_color(val)) == -1)
+			if ((tmp = cvrt_color(val)) == -1)
 				(void)fprintf(stderr, _("Unknown color value: "
 						"%s\n"), val);
 			else
-				cnf.clow = tmpcol;
+				cnf.clow = tmp;
 		} else if (strcmp(key, "color_medium") == 0) {
-			if ((tmpcol = cvrt_color(val)) == -1)
+			if ((tmp = cvrt_color(val)) == -1)
 				(void)fprintf(stderr, _("Unknown color value: "
 						"%s\n"), val);
 			else
-				cnf.cmedium = tmpcol;
+				cnf.cmedium = tmp;
 		} else if (strcmp(key, "color_high") == 0) {
-			if ((tmpcol = cvrt_color(val)) == -1)
+			if ((tmp = cvrt_color(val)) == -1)
 				(void)fprintf(stderr, _("Unknown color value: "
 						"%s\n"), val);
 			else
-				cnf.chigh = tmpcol;
+				cnf.chigh = tmp;
+		} else if (strcmp(key, "graph_medium") == 0) {
+			tmp = (int)strtol(val, (char **) NULL, 10);
+			if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
+				(void)fprintf(stderr, _("Value conversion failed"
+					" for graph_medium: %s. What were you "
+					"expecting with such a thing anyway?\n"),
+					val);
+			else if (tmp < 0)
+				(void)fprintf(stderr, _("Medium value cannot be"
+					" set below 0: %s\n"), val);
+			else if (tmp > 100)
+				(void)fprintf(stderr, _("Medium value cannot be"
+					" set above 100: %s\n"), val);
+			else
+				cnf.gmedium = tmp;
+		} else if (strcmp(key, "graph_high") == 0) {
+			tmp = (int)strtol(val, (char **) NULL, 10);
+			if (tmp < 0) {
+				(void)fprintf(stderr, _("High value cannot be"
+					" set below 0: %s\n"), val);
+			} else if (tmp > 100) {
+				(void)fprintf(stderr, _("High value cannot be"
+					" set above 100: %s\n"), val);
+			} else
+				cnf.ghigh = tmp;
 		} else if (strcmp(key, "graph_symbol") == 0) {
 			if (strlen(val) == 1)
 				cnf.gsymbol = val[0];
@@ -149,7 +181,7 @@ parse_conf(char *conf)
 				(void)fprintf(stderr, _("Wrong symbol value: "
 						"%s\n"), val);
 		} else
-			(void)fprintf(stderr, _("Unknown option in configuration "
+			(void)fprintf(stderr, _("Error: unknown option in configuration "
 					"file: %s\n"), key);
 	}
 
@@ -237,6 +269,9 @@ init_conf(struct conf *cnf)
 	cnf->cmedium =	YELLOW;
 	cnf->chigh =	RED;
 	cnf->chead =	BLUE;
+
+	cnf->gmedium =	50;
+	cnf->ghigh =	75;
 
 	cnf->gsymbol =	'=';
 }

@@ -210,12 +210,12 @@ text_disp_bar(double perct)
 
 		/* green */
 		(void)printf("\033[;%dm", cnf.clow);
-		for (i = 0; (i < 50) && (i < perct); i += barinc)
+		for (i = 0; (i < cnf.gmedium) && (i < perct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* yellow */
 		(void)printf("\033[;%dm", cnf.cmedium);
-		for (; (i < 75) && (i < perct); i += barinc)
+		for (; (i < cnf.ghigh) && (i < perct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* red */
