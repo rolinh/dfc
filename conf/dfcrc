@@ -21,6 +21,12 @@ color_medium = yellow
 # Color when usage is high
 color_high = red
 
+# Values in percent when color changes in the graph
+# starting value from which usage is considered medium
+graph_medium = 50
+# starting value from which usage is considered high
+graph_high = 75
+
 # Symbol used for the graph
 # Can be any ASCII symbol
 graph_symbol = =
