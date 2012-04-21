@@ -195,13 +195,6 @@ html_disp_bar(double perct)
                            size * barwidth / 100, barheight,
 			   color_to_colorcode(cnf.chigh));
         }
-
-        if (perct < 100.0) {
-		size = 100 - (int)perct;
-		(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
-				"background-color:black; float:left\"></span>\n",
-                           size * barwidth / 100, barheight);
-        }
     }
     (void)puts("\t  </td>");
 }
