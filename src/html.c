@@ -140,7 +140,7 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 		(void)puts("\t  <td>N/A</td>");
 
 	if (!bflag)
-		(void)puts("\t  <td>N/A</td>");
+		html_disp_bar(ptot);
 
 	html_disp_perct(ptot);
 
@@ -177,7 +177,7 @@ html_disp_bar(double perct)
 
 	if (!cflag) {
 		(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
-			"background-color:gray; float:left\"></span>\n",
+			"background-color:silver; float:left\"></span>\n",
                        (int)perct*barwidth/100, barheight);
 	} else { /* color */
 		size = (perct < cnf.gmedium) ? (int)perct : cnf.gmedium;
