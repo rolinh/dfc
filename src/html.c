@@ -57,10 +57,14 @@ html_disp_init(void)
 	(void)puts("    <meta name=\"keywords\" content=\"dfc,file system, usage, "
 			"display, cli, df\"/>");
 	(void)puts("    <style type=\"text/css\">");
-	(void)puts("\ttable { }");
-	(void)puts("\ttd, th { padding: .3em; border: 1px #BBBBBB solid; }");
-	(void)puts("\tthead { background: #DDDDDD; }");
-	(void)puts("\ttbody { background: #F5F5F5; }");
+	(void)puts("\ttable { border-collapse: collapse; border: 1px solid #333; }");
+	(void)puts("\ttr:hover { background-color: #FFFFFF; color: #000000; }");
+	(void)puts("\ttd, th { padding: 0.5em; border: 1px #BBBBBB solid; }");
+	if (cflag)
+		(void)puts("\tthead, tfoot { background-color: #970000; color: #FFFFFF; }");
+	else
+		(void)puts("\tthead, tfoot { background-color: gray; color: #FFFFFF; }");
+	(void)puts("\ttbody { background-color: #E9E9E9; }");
 	(void)puts("    </style>");
 	(void)puts("    <title>dfc</title>");
 	(void)puts("  </head>\n  <body>");
@@ -69,7 +73,10 @@ html_disp_init(void)
 static void
 html_disp_deinit(void)
 {
-    (void)puts("\t</tr>\n    </table>\n  </body>\n</html>");
+    (void)puts("\t</tr>");
+    if (sflag)
+	    (void)puts("\t</tfoot>");
+    (void)puts("    </table>\n  </body>\n</html>");
 }
 
 void
@@ -127,7 +134,7 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 
 	(void)lst;
 
-	(void)puts("\t</tr>\n\t<tr>\n\t  <td><strong>SUM</strong></td>");
+	(void)puts("\t</tr>\n\t<tfoot>\n\t<tr>\n\t  <td><strong>SUM</strong></td>");
 
 	if (Tflag)
 		(void)puts("\t  <td>N/A</td>");
@@ -170,7 +177,7 @@ html_disp_bar(double perct)
 
 	if (!cflag) {
 		(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
-			"background-color:black; float:left\"></span>\n",
+			"background-color:gray; float:left\"></span>\n",
                        (int)perct*barwidth/100, barheight);
 	} else { /* color */
 		size = (perct < cnf.gmedium) ? (int)perct : cnf.gmedium;
