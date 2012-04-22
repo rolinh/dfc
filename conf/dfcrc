@@ -31,4 +31,21 @@ graph_high = 75
 # Can be any ASCII symbol
 graph_symbol = =
 
+# You can also choose the colors for the html export
+# Colors can take any of html recognised value
+# For instance, this is white: #FFFFFF
+# This is red: #FF0000
+# Etc.
+# NOTE: you MUST ommit the # sign when setting it here
+# (white becomes FFFFFF and so on)
+
+# Header color for html output
+html_color_header = 970000
+# Color when usage is low for html output
+html_color_low = 348017
+# Color when usage is medium for html output
+html_color_medium = FDD017
+# Color when usage is high for html output
+html_color_high = F62217
+
 # vim: set noet syn=conf

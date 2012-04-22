@@ -79,6 +79,7 @@ main(int argc, char *argv[])
 	struct Display display;
 	int ch;
 	int width;
+	int ret = EXIT_SUCCESS;
 	char *fsnfilter = NULL;
 	char *fstfilter = NULL;
 	char *subopts;
@@ -142,14 +143,22 @@ main(int argc, char *argv[])
 	};
 
 	/* translation support */
-	if (setlocale(LC_ALL, "") == NULL)
+	if (setlocale(LC_ALL, "") == NULL) {
 		(void)fprintf(stderr, "Locale cannot be set\n");
-	if (bindtextdomain(PACKAGE, LOCALEDIR) == NULL)
+		ret = EXIT_FAILURE;
+	}
+	if (bindtextdomain(PACKAGE, LOCALEDIR) == NULL) {
 		(void)fprintf(stderr, "Cannot bind locale\n");
-	if (bind_textdomain_codeset(PACKAGE, "") == NULL)
+		ret = EXIT_FAILURE;
+	}
+	if (bind_textdomain_codeset(PACKAGE, "") == NULL) {
 		(void)fprintf(stderr, "Cannot bind locale codeset\n");
-	if (textdomain(PACKAGE) == NULL)
+		ret = EXIT_FAILURE;
+	}
+	if (textdomain(PACKAGE) == NULL) {
 		(void)fprintf(stderr, "Cannot set translation domain\n");
+		ret = EXIT_FAILURE;
+	}
 
 	/* default value for those globals */
 	cflag = 1; /* color enabled by default */
@@ -352,9 +361,11 @@ main(int argc, char *argv[])
 
 	/* change cnf value according to config file, it it exists */
 	if ((cfgfile = getconf()) != NULL) {
-		if (parse_conf(cfgfile) == -1)
+		if (parse_conf(cfgfile) == -1) {
 			(void)fprintf(stderr, "Error reading the configuration"
 					" file: %s\n", cfgfile);
+			ret = EXIT_FAILURE;
+		}
 	}
 
 	/* if nothing specified, text output is default */
@@ -374,7 +385,7 @@ main(int argc, char *argv[])
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &display);
 
-	return EXIT_SUCCESS;
+	return ret;
 	/* NOTREACHED */
 }
 

@@ -58,13 +58,14 @@ html_disp_init(void)
 			"display, cli, df\"/>");
 	(void)puts("    <style type=\"text/css\">");
 	(void)puts("\ttable { border-collapse: collapse; border: 1px solid #333; }");
-	(void)puts("\ttr:hover { background-color: #FFFFFF; color: #000000; }");
 	(void)puts("\ttd, th { padding: 0.5em; border: 1px #BBBBBB solid; }");
 	if (cflag)
-		(void)puts("\tthead, tfoot { background-color: #970000; color: #FFFFFF; }");
+		(void)printf("\tthead, tfoot { background-color: #%s; color: #FFFFFF; }\n",
+			cnf.hchead);
 	else
 		(void)puts("\tthead, tfoot { background-color: gray; color: #FFFFFF; }");
 	(void)puts("\ttbody { background-color: #E9E9E9; }");
+	(void)puts("\ttbody tr:hover { background-color: #FFFFFF; color: #000000; }");
 	(void)puts("    </style>");
 	(void)puts("    <title>dfc</title>");
 	(void)puts("  </head>\n  <body>");
@@ -176,31 +177,28 @@ html_disp_bar(double perct)
 		barwidth *= 2;
 
 	if (!cflag) {
-		(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
-			"background-color:silver; float:left\"></span>\n",
+		(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
+			"background-color:silver; float: left;\"></span>\n",
                        (int)perct*barwidth/100, barheight);
 	} else { /* color */
 		size = (perct < cnf.gmedium) ? (int)perct : cnf.gmedium;
-		(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
-			"background-color:%s; float:left\"></span>\n",
-                       size * barwidth / 100, barheight,
-		       color_to_colorcode(cnf.clow));
+		(void)printf("\t    <span style=\"width:%dpx; height: %dpx; "
+			"background-color: #%s; float: left;\"></span>\n",
+                       size * barwidth / 100, barheight, cnf.hclow);
 
 		if (perct >= cnf.gmedium) {
 			size = (perct < cnf.ghigh) ? (int)perct : cnf.ghigh;
 			size -= cnf.gmedium;
-			(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
-			    "background-color:%s; float:left\"></span>\n",
-                           size * barwidth / 100, barheight,
-			   color_to_colorcode(cnf.cmedium));
+			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
+			    "background-color: #%s; float: left;\"></span>\n",
+                           size * barwidth / 100, barheight, cnf.hcmedium);
 		}
 
 		if (perct >= cnf.ghigh) {
 			size = (int)perct - cnf.ghigh;
-			(void)printf("\t    <span style=\"width:%dpx; height:%dpx; "
-				"background-color:%s; float:left\"></span>\n",
-                           size * barwidth / 100, barheight,
-			   color_to_colorcode(cnf.chigh));
+			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
+				"background-color: #%s; float: left;\"></span>\n",
+                           size * barwidth / 100, barheight, cnf.hchigh);
 		}
 	}
 	(void)puts("\t  </td>");

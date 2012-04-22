@@ -30,6 +30,8 @@
  *
  * Handle configuration file
  */
+#define _BSD_SOURCE
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -96,9 +98,9 @@ int
 parse_conf(char *conf)
 {
 	FILE *fd;
-	int tmp;
 	char line[255];
 	char *key, *val;
+	int ret = 0;
 
 	if ((fd = fopen(conf, "r")) == NULL) {
 		(void)fprintf(stderr, "Cannot read file %s", conf);
@@ -121,79 +123,149 @@ parse_conf(char *conf)
 		if ((val = strtrim(val)) == NULL) {
 			(void)fprintf(stderr, _("Error: no value for %s in configuration"
 				" file\n"), key);
+			if (fclose(fd) == EOF)
+				perror("Could not close configuration file ");
 			return -1;
 			/* NOTREACHED */
 		}
 
-		if (strcmp(key, "color_header") == 0) {
-			if ((tmp = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, _("Unknown color value: "
-						"%s\n"), val);
-			else
-				cnf.chead = tmp;
-		} else if (strcmp(key, "color_low") == 0) {
-			if ((tmp = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, _("Unknown color value: "
-						"%s\n"), val);
-			else
-				cnf.clow = tmp;
-		} else if (strcmp(key, "color_medium") == 0) {
-			if ((tmp = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, _("Unknown color value: "
-						"%s\n"), val);
-			else
-				cnf.cmedium = tmp;
-		} else if (strcmp(key, "color_high") == 0) {
-			if ((tmp = cvrt_color(val)) == -1)
-				(void)fprintf(stderr, _("Unknown color value: "
-						"%s\n"), val);
-			else
-				cnf.chigh = tmp;
-		} else if (strcmp(key, "graph_medium") == 0) {
-			tmp = (int)strtol(val, (char **) NULL, 10);
-			if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
-				(void)fprintf(stderr, _("Value conversion failed"
-					" for graph_medium: %s. What were you "
-					"expecting with such a thing anyway?\n"),
-					val);
-			else if (tmp < 0)
-				(void)fprintf(stderr, _("Medium value cannot be"
-					" set below 0: %s\n"), val);
-			else if (tmp > 100)
-				(void)fprintf(stderr, _("Medium value cannot be"
-					" set above 100: %s\n"), val);
-			else
-				cnf.gmedium = tmp;
-		} else if (strcmp(key, "graph_high") == 0) {
-			tmp = (int)strtol(val, (char **) NULL, 10);
-			if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
-				(void)fprintf(stderr, _("Value conversion failed"
-					" for graph_medium: %s. What were you "
-					"expecting with such a thing anyway?\n"),
-					val);
-			else if (tmp < 0) {
-				(void)fprintf(stderr, _("High value cannot be"
-					" set below 0: %s\n"), val);
-			} else if (tmp > 100) {
-				(void)fprintf(stderr, _("High value cannot be"
-					" set above 100: %s\n"), val);
-			} else
-				cnf.ghigh = tmp;
-		} else if (strcmp(key, "graph_symbol") == 0) {
-			if (strlen(val) == 1)
-				cnf.gsymbol = val[0];
-			else
-				(void)fprintf(stderr, _("Wrong symbol value: "
-						"%s\n"), val);
-		} else
-			(void)fprintf(stderr, _("Error: unknown option in configuration "
-					"file: %s\n"), key);
+		ret += set_conf(key, val);
 	}
 
 	if (fclose(fd) == EOF)
 		perror("Could not close configuration file ");
 
-	return 0;
+	if (ret < 0)
+		return -1;
+		/* NOTREACHED */
+
+	return ret;
+	/* NOTREACHED */
+}
+
+/*
+ * Set configuration values taken from the configuration file
+ * Return 0 if no error occured, -1 otherwise.
+ * @key: key in configuration file
+ * @val: value corresponding to the key
+ */
+int
+set_conf(char *key, char *val)
+{
+	int tmp;
+	int ret = 0;
+
+	if (strcmp(key, "color_header") == 0) {
+		if ((tmp = cvrt_color(val)) == -1) {
+			(void)fprintf(stderr, _("Unknown color value: "
+					"%s\n"), val);
+			ret = -1;
+		} else
+			cnf.chead = tmp;
+	} else if (strcmp(key, "color_low") == 0) {
+		if ((tmp = cvrt_color(val)) == -1) {
+			(void)fprintf(stderr, _("Unknown color value: "
+					"%s\n"), val);
+			ret = -1;
+		} else
+			cnf.clow = tmp;
+	} else if (strcmp(key, "color_medium") == 0) {
+		if ((tmp = cvrt_color(val)) == -1) {
+			(void)fprintf(stderr, _("Unknown color value: "
+					"%s\n"), val);
+			ret = -1;
+		} else
+			cnf.cmedium = tmp;
+	} else if (strcmp(key, "color_high") == 0) {
+		if ((tmp = cvrt_color(val)) == -1) {
+			(void)fprintf(stderr, _("Unknown color value: "
+					"%s\n"), val);
+			ret = -1;
+		} else
+			cnf.chigh = tmp;
+	} else if (strcmp(key, "graph_medium") == 0) {
+		ret = -1;
+		tmp = (int)strtol(val, (char **) NULL, 10);
+		if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
+			(void)fprintf(stderr, _("Value conversion failed"
+				" for graph_medium: %s. What were you "
+				"expecting with such a thing anyway?\n"),
+				val);
+		else if (tmp < 0)
+			(void)fprintf(stderr, _("Medium value cannot be"
+				" set below 0: %s\n"), val);
+		else if (tmp > 100)
+			(void)fprintf(stderr, _("Medium value cannot be"
+				" set above 100: %s\n"), val);
+		else {
+			ret = 0;
+			cnf.gmedium = tmp;
+		}
+	} else if (strcmp(key, "graph_high") == 0) {
+		ret = -1;
+		tmp = (int)strtol(val, (char **) NULL, 10);
+		if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
+			(void)fprintf(stderr, _("Value conversion failed"
+				" for graph_medium: %s. What were you "
+				"expecting with such a thing anyway?\n"),
+				val);
+		else if (tmp < 0)
+			(void)fprintf(stderr, _("High value cannot be"
+				" set below 0: %s\n"), val);
+		else if (tmp > 100)
+			(void)fprintf(stderr, _("High value cannot be"
+				" set above 100: %s\n"), val);
+		else {
+			ret = 0;
+			cnf.ghigh = tmp;
+		}
+	} else if (strcmp(key, "graph_symbol") == 0) {
+		if (strlen(val) == 1)
+			cnf.gsymbol = val[0];
+		else {
+			(void)fprintf(stderr, _("Wrong symbol value: "
+					"%s\n"), val);
+			ret = -1;
+		}
+	} else if (strcmp(key, "html_color_header") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hchead = strdup(val);
+		else {
+			(void)fprintf(stderr, _("Not a valid HTML color: "
+					"%s\n"), val);
+			ret = -1;
+		}
+	} else if (strcmp(key, "html_color_low") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hclow = strdup(val);
+		else {
+			(void)fprintf(stderr, _("Not a valid HTML color: "
+					"%s\n"), val);
+			ret = -1;
+		}
+	} else if (strcmp(key, "html_color_medium") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hcmedium = strdup(val);
+		else {
+			(void)fprintf(stderr, _("Not a valid HTML color: "
+					"%s\n"), val);
+			ret = -1;
+		}
+	} else if (strcmp(key, "html_color_high") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hchigh = strdup(val);
+		else {
+			(void)fprintf(stderr, _("Not a valid HTML color: "
+					"%s\n"), val);
+			ret = -1;
+		}
+	} else {
+		(void)fprintf(stderr, _("Error: unknown option in configuration "
+				"file: %s\n"), key);
+		ret = -1;
+	}
+
+	return ret;
 	/* NOTREACHED */
 }
 
@@ -264,6 +336,31 @@ cvrt_color(char *col)
 }
 
 /*
+ * check if the input string is a valid html color code.
+ * ie: it should be an hexadecimal value
+ * Returns 0 if all went well, otherwise it returns -1
+ * @color: input color
+ * NOTE: color should ommit the #: white is FFFFFF and not #FFFFFF
+ */
+int
+chk_html_colorcode(char *color)
+{
+	int i;
+
+	if (strlen(color) != 6)
+		return -1;
+		/* NOTREACHED */
+
+	for (i = 0; i < 6; i++)
+		if (isxdigit(color[i]) == 0)
+			return -1;
+			/* NOTREACHED */
+
+	return 0;
+	/* NOTREACHED */
+}
+
+/*
  * init a conf structure
  * @cnf: structure to be initiated
  */
@@ -279,4 +376,9 @@ init_conf(struct conf *cnf)
 	cnf->ghigh =	75;
 
 	cnf->gsymbol =	'=';
+
+	cnf->hclow =	"348017";
+	cnf->hcmedium =	"FDD017";
+	cnf->hchigh =	"F62217";
+	cnf->hchead =	"970000";
 }
