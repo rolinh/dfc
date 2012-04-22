@@ -56,6 +56,11 @@ struct conf {
 	int ghigh;	/* starting value from which usage is considered high */
 
 	char gsymbol;	/* symbol used to draw the graph */
+
+	char *hclow;	/* color when usage is low (html) */
+	char *hcmedium;	/* color when usage is medium (html) */
+	char *hchigh;	/* color when usage is high (html) */
+	char *hchead;	/* color used for the header */
 };
 
 /* struct to store specific configuration from config file */
