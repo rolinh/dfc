@@ -344,5 +344,5 @@ html_disp_mopt(struct list *lst, char *dir, char *opts)
 void
 html_disp_perct(double perct)
 {
-	(void)printf("\t  <td style = \"text-align: right;\">%.f</td>\n", perct);
+	(void)printf("\t  <td style = \"text-align: right;\">%.f%%</td>\n", perct);
 }
