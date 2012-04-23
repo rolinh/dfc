@@ -156,32 +156,28 @@ set_conf(char *key, char *val)
 	int ret = 0;
 
 	if (strcmp(key, "color_header") == 0) {
-		if ((tmp = cvrt_color(val)) == -1) {
-			(void)fprintf(stderr, _("Unknown color value: "
-					"%s\n"), val);
-			ret = -1;
-		} else
+		if ((tmp = cvrt_color(val)) == -1)
+			goto unknown_color_value;
+			/* NOTREACHED */
+		else
 			cnf.chead = tmp;
 	} else if (strcmp(key, "color_low") == 0) {
-		if ((tmp = cvrt_color(val)) == -1) {
-			(void)fprintf(stderr, _("Unknown color value: "
-					"%s\n"), val);
-			ret = -1;
-		} else
+		if ((tmp = cvrt_color(val)) == -1)
+			goto unknown_color_value;
+			/* NOTREACHED */
+		else
 			cnf.clow = tmp;
 	} else if (strcmp(key, "color_medium") == 0) {
-		if ((tmp = cvrt_color(val)) == -1) {
-			(void)fprintf(stderr, _("Unknown color value: "
-					"%s\n"), val);
-			ret = -1;
-		} else
+		if ((tmp = cvrt_color(val)) == -1)
+			goto unknown_color_value;
+			/* NOTREACHED */
+		else
 			cnf.cmedium = tmp;
 	} else if (strcmp(key, "color_high") == 0) {
-		if ((tmp = cvrt_color(val)) == -1) {
-			(void)fprintf(stderr, _("Unknown color value: "
-					"%s\n"), val);
-			ret = -1;
-		} else
+		if ((tmp = cvrt_color(val)) == -1)
+			goto unknown_color_value;
+			/* NOTREACHED */
+		else
 			cnf.chigh = tmp;
 	} else if (strcmp(key, "graph_medium") == 0) {
 		ret = -1;
@@ -227,38 +223,61 @@ set_conf(char *key, char *val)
 					"%s\n"), val);
 			ret = -1;
 		}
-	} else if (strcmp(key, "html_color_header") == 0) {
+	} else if (strcmp(key, "html_color_header_bg") == 0) {
 		if (chk_html_colorcode(val) == 0)
-			cnf.hchead = strdup(val);
-		else {
-			(void)fprintf(stderr, _("Not a valid HTML color: "
-					"%s\n"), val);
-			ret = -1;
-		}
+			cnf.hcheadbg = strdup(val);
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
+	} else if (strcmp(key, "html_color_header_fg") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hcheadfg = strdup(val);
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
+	} else if (strcmp(key, "html_color_cell_bg") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hccellbg = strdup(val);
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
+	} else if (strcmp(key, "html_color_cell_fg") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hccellfg = strdup(val);
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
+	} else if (strcmp(key, "html_color_hover_bg") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hchoverbg = strdup(val);
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
+	} else if (strcmp(key, "html_color_hover_fg") == 0) {
+		if (chk_html_colorcode(val) == 0)
+			cnf.hchoverfg = strdup(val);
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_low") == 0) {
 		if (chk_html_colorcode(val) == 0)
 			cnf.hclow = strdup(val);
-		else {
-			(void)fprintf(stderr, _("Not a valid HTML color: "
-					"%s\n"), val);
-			ret = -1;
-		}
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_medium") == 0) {
 		if (chk_html_colorcode(val) == 0)
 			cnf.hcmedium = strdup(val);
-		else {
-			(void)fprintf(stderr, _("Not a valid HTML color: "
-					"%s\n"), val);
-			ret = -1;
-		}
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
+
 	} else if (strcmp(key, "html_color_high") == 0) {
 		if (chk_html_colorcode(val) == 0)
 			cnf.hchigh = strdup(val);
-		else {
-			(void)fprintf(stderr, _("Not a valid HTML color: "
-					"%s\n"), val);
-			ret = -1;
-		}
+		else
+			goto non_valid_html_color;
+			/* NOTREACHED */
 	} else {
 		(void)fprintf(stderr, _("Error: unknown option in configuration "
 				"file: %s\n"), key);
@@ -266,6 +285,16 @@ set_conf(char *key, char *val)
 	}
 
 	return ret;
+	/* NOTREACHED */
+
+unknown_color_value:
+	(void)fprintf(stderr, _("Unknown color value: %s\n"), val);
+	return -1;
+	/* NOTREACHED */
+
+non_valid_html_color:
+	(void)fprintf(stderr, _("Not a valid HTML color: %s\n"), val);
+	return -1;
 	/* NOTREACHED */
 }
 
@@ -367,18 +396,23 @@ chk_html_colorcode(char *color)
 void
 init_conf(struct conf *cnf)
 {
-	cnf->clow =	GREEN;
-	cnf->cmedium =	YELLOW;
-	cnf->chigh =	RED;
-	cnf->chead =	BLUE;
+	cnf->chead	= BLUE;
+	cnf->clow	= GREEN;
+	cnf->cmedium	= YELLOW;
+	cnf->chigh	= RED;
 
-	cnf->gmedium =	50;
-	cnf->ghigh =	75;
+	cnf->gmedium	= 50;
+	cnf->ghigh	= 75;
 
-	cnf->gsymbol =	'=';
+	cnf->gsymbol	= '=';
 
-	cnf->hclow =	"348017";
-	cnf->hcmedium =	"FDD017";
-	cnf->hchigh =	"F62217";
-	cnf->hchead =	"970000";
+	cnf->hcheadbg	= "970000";
+	cnf->hcheadfg	= "FFFFFF";
+	cnf->hccellbg	= "E9E9E9";
+	cnf->hccellfg	= "000000";
+	cnf->hchoverbg	= "FFFFFF";
+	cnf->hchoverfg	= "000000";
+	cnf->hclow	= "348017";
+	cnf->hcmedium	= "FDD017";
+	cnf->hchigh	= "F62217";
 }

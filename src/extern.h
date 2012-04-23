@@ -47,20 +47,25 @@
 #define WHITE	37
 
 struct conf {
+	int chead;	/* color used for the header */
 	int clow;	/* color when usage low */
 	int cmedium;	/* color when usage medium */
 	int chigh;	/* color when usage high */
-	int chead;	/* color used for the header */
 
 	int gmedium;	/* starting value from which usage is considered medium */
 	int ghigh;	/* starting value from which usage is considered high */
 
 	char gsymbol;	/* symbol used to draw the graph */
 
+	char *hcheadbg;	/* background color for header and footer (html) */
+	char *hcheadfg;	/* font color used in header and footer (html) */
+	char *hccellbg;	/* background color for cells (html) */
+	char *hccellfg;	/* font color for cells (html) */
+	char *hchoverbg;/* background color on hover (html) */
+	char *hchoverfg;/* font color on hover (html) */
 	char *hclow;	/* color when usage is low (html) */
 	char *hcmedium;	/* color when usage is medium (html) */
 	char *hchigh;	/* color when usage is high (html) */
-	char *hchead;	/* color used for the header */
 };
 
 /* struct to store specific configuration from config file */

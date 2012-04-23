@@ -39,8 +39,18 @@ graph_symbol = =
 # NOTE: you MUST ommit the # sign when setting it here
 # (white becomes FFFFFF and so on)
 
-# Header color for html output
-html_color_header = 970000
+# Header background color for html output (also used in footer)
+html_color_header_bg = 970000
+# Header font color for html output (also used in footer)
+html_color_header_fg = FFFFFF
+# Cell background color
+html_color_cell_bg = E9E9E9
+# Cell font color
+html_color_cell_fg = 000000
+# Background color on hover
+html_color_hover_bg = FFFFFF
+# Font color on hover
+html_color_hover_fg = 000000
 # Color when usage is low for html output
 html_color_low = 348017
 # Color when usage is medium for html output
