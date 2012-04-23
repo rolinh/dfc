@@ -39,9 +39,6 @@
 #include "html.h"
 #include "util.h"
 
-/*
- * TODO: Add some CSS to make this cool :)
- */
 static void
 html_disp_init(void)
 {
@@ -59,15 +56,18 @@ html_disp_init(void)
 	(void)puts("    <style type=\"text/css\">");
 	(void)puts("\ttable { border-collapse: collapse; border: 1px solid #333; }");
 	(void)puts("\ttd, th { padding: 0.5em; border: 1px #BBBBBB solid; }");
-	if (cflag)
+	if (cflag) {
 		(void)printf("\tthead, tfoot { background-color: #%s; color: #%s; }\n",
 			cnf.hcheadbg, cnf.hcheadfg);
-	else
-		(void)puts("\tthead, tfoot { background-color: gray; color: #FFFFFF; }");
-	(void)printf("\ttbody { background-color: #%s; color: #%s }\n",
+		(void)printf("\ttbody { background-color: #%s; color: #%s }\n",
 			cnf.hccellbg, cnf.hccellfg);
-	(void)printf("\ttbody tr:hover { background-color: #%s; color: #%s; }\n",
+		(void)printf("\ttbody tr:hover { background-color: #%s; color: #%s; }\n",
 			cnf.hchoverbg, cnf.hchoverfg);
+	} else {
+		(void)puts("\tthead, tfoot { background-color: gray; color: #FFFFFF; }");
+		(void)puts("\ttbody { background-color: #E9E9E9; color: #000000 }");
+		(void)puts("\ttbody tr:hover { background-color: #FFFFFF; color: #000000; }");
+	}
 	(void)puts("    </style>");
 	(void)puts("    <title>dfc</title>");
 	(void)puts("  </head>\n  <body>");
