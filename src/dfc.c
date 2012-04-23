@@ -443,9 +443,9 @@ usage(int status)
 void
 fetch_info(struct list *lst)
 {
-	FILE *mtab;
 	struct fsmntinfo *fmi;
 #ifdef __linux__
+	FILE *mtab;
 	struct mntent *entbuf;
 	struct statvfs vfsbuf;
 #else
