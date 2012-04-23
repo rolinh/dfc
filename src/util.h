@@ -48,5 +48,6 @@ int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
 void auto_adjust(struct list lst, int width);
 int req_width(struct list lst);
+char* getdate(void);
 
 #endif /* ndef UTIL_H */
