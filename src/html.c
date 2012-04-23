@@ -69,7 +69,7 @@ html_disp_init(void)
 		(void)puts("\ttbody tr:hover { background-color: #FFFFFF; color: #000000; }");
 	}
 	(void)puts("    </style>");
-	(void)puts("    <title>dfc</title>");
+	(void)printf("    <title>%s-%s</title>", PACKAGE, VERSION);
 	(void)puts("  </head>\n  <body>");
 }
 
