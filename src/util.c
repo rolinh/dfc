@@ -37,6 +37,7 @@
 
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 #include <sys/ioctl.h>
 
 #include <libintl.h>
@@ -504,5 +505,33 @@ req_width(struct list lst)
 	}
 
 	return ret;
+	/* NOTREACHED */
+}
+
+/*
+ * return the current date as of date(1) format
+ * NULL is returned in case of errors
+ */
+char *
+getdate(void)
+{
+	char date[255];
+	time_t t;
+	struct tm *tmp;
+
+	t = time(NULL);
+	if ((tmp = localtime(&t)) == NULL) {
+		perror("localtime");
+		return NULL;
+		/* NOTREACHED */
+	}
+
+	if (strftime(date, sizeof(date), "%c", tmp) == 0) {
+		(void)fputs(_("Could not retrieve date\n"), stderr);
+		return NULL;
+		/* NOTREACHED */
+	}
+
+	return strdup(date);
 	/* NOTREACHED */
 }
