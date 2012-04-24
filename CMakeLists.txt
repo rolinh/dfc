@@ -73,12 +73,6 @@ set(DFC_DOC_FILES
 	TRANSLATORS
 )
 
-# load gettext module for translation
-set(GettextTranslate_ALL true)
-set(GettextTranslate_GMO_BINARY true)
-include(GettextTranslate)
-add_subdirectory(po)
-
 # defines for installation
 if(DEFINED PREFIX)
 	set(PREFIX ${PREFIX} CACHE PATH "install prefix")
@@ -121,6 +115,12 @@ if(DEFINED DOC_PATH)
 else()
 	set(DFC_DOC_PATH ${PREFIX}/share/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
+
+# load gettext module for translation
+set(GettextTranslate_ALL true)
+set(GettextTranslate_GMO_BINARY true)
+include(GettextTranslate)
+add_subdirectory(po)
 
 mark_as_advanced(CMAKE_INSTALL_PREFIX)
 
