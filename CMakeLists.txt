@@ -18,6 +18,55 @@ set(MAN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
 set(CONF_DIR ${CMAKE_CURRENT_SOURCE_DIR}/conf)
 set(PO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/po)
 
+# defines for installation
+if(DEFINED PREFIX)
+	set(PREFIX ${PREFIX} CACHE PATH "install prefix")
+	set(CMAKE_INSTALL_PREFIX ${PREFIX})
+else()
+	set(PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "install prefix")
+endif()
+
+# use a sysconfdir if specified
+if(DEFINED SYSCONFDIR)
+	set(SYSCONFDIR ${SYSCONFDIR} CACHE PATH "config directory")
+else()
+	set(SYSCONFDIR ${PREFIX}/etc CACHE PATH "config directory")
+endif()
+
+# locale
+if(DEFINED LOCALEDIR)
+	set(LOCALEDIR ${LOCALEDIR} CACHE PATH "locale directory")
+else()
+	set(LOCALEDIR ${PREFIX}/share/locale CACHE PATH "locale directory")
+endif()
+
+# if XDG Config Dir is specified, use it
+if(DEFINED XDG_CONFIG_DIR)
+	set(XDG_CONFIG_DIR ${XDG_CONFIG_DIR} CACHE PATH "xdg config directory")
+else()
+	set(XDG_CONFIG_DIR ${SYSCONFDIR}/xdg CACHE PATH "xdf config directory")
+endif()
+
+# man path
+if(DEFINED MAN_PATH)
+	set(MAN_PATH ${MAN_PATH} CACHE PATH "manpage directory")
+else()
+	set(MAN_PATH ${PREFIX}/share/man CACHE PATH "manpage directory")
+endif()
+
+# doc path
+if(DEFINED DOC_PATH)
+	set(DFC_DOC_PATH ${DFC_DOC_PATH} CACHE PATH "doc directory")
+else()
+	set(DFC_DOC_PATH ${PREFIX}/share/doc/${PACKAGE} CACHE PATH "doc directory")
+endif()
+
+# load gettext module for translation
+set(GettextTranslate_ALL true)
+set(GettextTranslate_GMO_BINARY true)
+include(GettextTranslate)
+add_subdirectory(po)
+
 add_definitions(
 	-DLOCALE_DIR="${LOCALEDIR}"
 )
@@ -72,55 +121,6 @@ set(DFC_DOC_FILES
 	README
 	TRANSLATORS
 )
-
-# defines for installation
-if(DEFINED PREFIX)
-	set(PREFIX ${PREFIX} CACHE PATH "install prefix")
-	set(CMAKE_INSTALL_PREFIX ${PREFIX})
-else()
-	set(PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "install prefix")
-endif()
-
-# use a sysconfdir if specified
-if(DEFINED SYSCONFDIR)
-	set(SYSCONFDIR ${SYSCONFDIR} CACHE PATH "config directory")
-else()
-	set(SYSCONFDIR ${PREFIX}/etc CACHE PATH "config directory")
-endif()
-
-# locale
-if(DEFINED LOCALEDIR)
-	set(LOCALEDIR ${LOCALEDIR} CACHE PATH "locale directory")
-else()
-	set(LOCALEDIR ${PREFIX}/share/locale CACHE PATH "locale directory")
-endif()
-
-# if XDG Config Dir is specified, use it
-if(DEFINED XDG_CONFIG_DIR)
-	set(XDG_CONFIG_DIR ${XDG_CONFIG_DIR} CACHE PATH "xdg config directory")
-else()
-	set(XDG_CONFIG_DIR ${SYSCONFDIR}/xdg CACHE PATH "xdf config directory")
-endif()
-
-# man path
-if(DEFINED MAN_PATH)
-	set(MAN_PATH ${MAN_PATH} CACHE PATH "manpage directory")
-else()
-	set(MAN_PATH ${PREFIX}/share/man CACHE PATH "manpage directory")
-endif()
-
-# doc path
-if(DEFINED DOC_PATH)
-	set(DFC_DOC_PATH ${DFC_DOC_PATH} CACHE PATH "doc directory")
-else()
-	set(DFC_DOC_PATH ${PREFIX}/share/doc/${PACKAGE} CACHE PATH "doc directory")
-endif()
-
-# load gettext module for translation
-set(GettextTranslate_ALL true)
-set(GettextTranslate_GMO_BINARY true)
-include(GettextTranslate)
-add_subdirectory(po)
 
 mark_as_advanced(CMAKE_INSTALL_PREFIX)
 
