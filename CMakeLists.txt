@@ -19,11 +19,6 @@ set(CONF_DIR ${CMAKE_CURRENT_SOURCE_DIR}/conf)
 set(PO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/po)
 
 add_definitions(
-	-DPACKAGE_BIN_DIR="${CMAKE_INSTALL_PREFIX}/bin"
-	-DPACKAGE_DATA_DIR="${CMAKE_INSTALL_PREFIX}/share/${CMAKE_PROJECT_NAME}"
-)
-set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/locale")
-add_definitions(
 	-DLOCALEDIR="${LOCALEDIR}"
 )
 
@@ -97,6 +92,13 @@ if(DEFINED SYSCONFDIR)
 	set(SYSCONFDIR ${SYSCONFDIR} CACHE PATH "config directory")
 else()
 	set(SYSCONFDIR ${PREFIX}/etc CACHE PATH "config directory")
+endif()
+
+# locale
+if(DEFINED LOCALEDIR)
+	set(LOCALEDIR ${LOCALEDIR} CACHE PATH "locale directory")
+else()
+	set(LOCALEDIR ${PREFIX}/share/locale CACHE PATH "locale directory")
 endif()
 
 # if XDG Config Dir is specified, use it
