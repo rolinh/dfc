@@ -1,7 +1,7 @@
 *.swp
 *.o
 dfc
-mtab
-platform.mk
+Makefile
 po/dfc.pot
+po/Makefile
 po/*.mo
