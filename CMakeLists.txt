@@ -18,9 +18,9 @@ set(MAN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
 set(CONF_DIR ${CMAKE_CURRENT_SOURCE_DIR}/conf)
 set(PO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/po)
 
-set(LOCALE_DIR "${PREFIX}/share/locale")
+set(LOCALEDIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 add_definitions(
-	-DLOCALEDIR="${LOCALE_DIR}"
+	-DLOCALE_DIR="${PREFIX}/share/locale"
 )
 
 set(CMAKE_BUILD_TYPE RELEASE)
