@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-04-16 15:45+0200\n"
+"POT-Creation-Date: 2012-04-24 22:27+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -17,81 +17,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../src/csv.c:64
+#: src/csv.c:66
 #, c-format
 msgid "FILESYSTEM,"
 msgstr "SYSTÈME DE FICHIERS,"
 
-#: ../src/csv.c:67
+#: src/csv.c:69
 #, c-format
 msgid "TYPE,"
 msgstr "TYPE,"
 
-#: ../src/csv.c:69
+#: src/csv.c:71
 #, c-format
 msgid "%%USED,"
 msgstr "%%UTILISÉ,"
 
-#: ../src/csv.c:71
+#: src/csv.c:73
 #, c-format
 msgid "AVAILABLE,"
 msgstr "DISPONIBLE,"
 
-#: ../src/csv.c:73
+#: src/csv.c:75
 #, c-format
 msgid "TOTAL,"
 msgstr "TOTAL,"
 
-#: ../src/csv.c:76
+#: src/csv.c:78
 #, c-format
 msgid "#INODES,"
 msgstr "#INODES,"
 
-#: ../src/csv.c:77
+#: src/csv.c:79
 #, c-format
 msgid "AV.INODES,"
 msgstr "INODES DISP.,"
 
-#: ../src/csv.c:80
+#: src/csv.c:82
 #, c-format
 msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
-#: ../src/csv.c:83
+#: src/csv.c:85
 #, c-format
 msgid ",MOUNT OPTIONS"
 msgstr ",OPTIONS DE MONTAGE"
 
-#: ../src/csv.c:101
+#: src/csv.c:103
 #, c-format
 msgid "SUM:,"
 msgstr "SOMME:,"
 
-#: ../src/dfc.c:190
+#: src/dfc.c:199
 #, c-format
 msgid "-c: illegal sub option %s\n"
 msgstr "-c: sous-option illégale %s\n"
 
-#: ../src/dfc.c:217
+#: src/dfc.c:226
 #, c-format
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: ../src/dfc.c:261
+#: src/dfc.c:270
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: ../src/dfc.c:314
+#: src/dfc.c:323
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: ../src/dfc.c:389
+#: src/dfc.c:400
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: ../src/dfc.c:392
+#: src/dfc.c:403
 msgid ""
 "Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] [-u "
 "UNIT]\n"
@@ -103,8 +103,8 @@ msgid ""
 "\t-f\tdisable auto-adjust mode (force display)\n"
 "\t-h\tprint this message\n"
 msgstr ""
-"Utilisation: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] [-u "
-"UNIT]\n"
+"Utilisation: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] "
+"[-u UNIT]\n"
 "Options disponibles:\n"
 "\t-a\taffiche tous les systèmes de fichiers du mtab\n"
 "\t-b\tdésactive l'affichage du graphique\n"
@@ -113,7 +113,7 @@ msgstr ""
 "\t-f\tdésactive le mode d'auto-ajustement (force l'affichage)\n"
 "\t-h\taffiche ce message\n"
 
-#: ../src/dfc.c:403
+#: src/dfc.c:414
 msgid ""
 "\t-i\tinfo about inodes\n"
 "\t-m\tuse metric (SI unit)\n"
@@ -153,134 +153,170 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: ../src/dfc.c:466
+#: src/dfc.c:477
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: ../src/dfc.c:544
+#: src/dfc.c:555
 msgid "sorry, not available on MacOS..."
 msgstr "désolé, non disponible pour MacOS..."
 
-#: ../src/dfc.c:749
+#: src/dfc.c:766
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: ../src/dfc.c:824
+#: src/dfc.c:841
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: ../src/dotfile.c:123 ../src/dotfile.c:129 ../src/dotfile.c:135
-#: ../src/dotfile.c:141
-#, c-format
-msgid "Unknown color value: %s\n"
-msgstr "Couleur inconnue: %s\n"
+#: src/dotfile.c:124
+#, fuzzy, c-format
+msgid "Error: no value for %s in configuration file\n"
+msgstr "Option inconnue dans le fichier de configuration: %s\n"
 
-#: ../src/dotfile.c:149
+#: src/dotfile.c:186 src/dotfile.c:204
+#, c-format
+msgid ""
+"Value conversion failed for graph_medium: %s. What were you expecting with "
+"such a thing anyway?\n"
+msgstr ""
+
+#: src/dotfile.c:191
+#, c-format
+msgid "Medium value cannot be set below 0: %s\n"
+msgstr ""
+
+#: src/dotfile.c:194
+#, c-format
+msgid "Medium value cannot be set above 100: %s\n"
+msgstr ""
+
+#: src/dotfile.c:209
+#, c-format
+msgid "High value cannot be set below 0: %s\n"
+msgstr ""
+
+#: src/dotfile.c:212
+#, c-format
+msgid "High value cannot be set above 100: %s\n"
+msgstr ""
+
+#: src/dotfile.c:222
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: ../src/dotfile.c:152
-#, c-format
-msgid "Unknown option in configuration file: %s\n"
+#: src/dotfile.c:282
+#, fuzzy, c-format
+msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Option inconnue dans le fichier de configuration: %s\n"
 
-#: ../src/dotfile.c:200
+#: src/dotfile.c:291
+#, c-format
+msgid "Unknown color value: %s\n"
+msgstr "Couleur inconnue: %s\n"
+
+#: src/dotfile.c:296
+#, c-format
+msgid "Not a valid HTML color: %s\n"
+msgstr ""
+
+#: src/dotfile.c:338
 msgid "black"
 msgstr "noir"
 
-#: ../src/dotfile.c:203
+#: src/dotfile.c:341
 msgid "red"
 msgstr "rouge"
 
-#: ../src/dotfile.c:206
+#: src/dotfile.c:344
 msgid "green"
 msgstr "vert"
 
-#: ../src/dotfile.c:209
+#: src/dotfile.c:347
 msgid "yellow"
 msgstr "jaune"
 
-#: ../src/dotfile.c:212
+#: src/dotfile.c:350
 msgid "blue"
 msgstr "bleu"
 
-#: ../src/dotfile.c:215
+#: src/dotfile.c:353
 msgid "magenta"
 msgstr "magenta"
 
-#: ../src/dotfile.c:218
+#: src/dotfile.c:356
 msgid "cyan"
 msgstr "cyan"
 
-#: ../src/dotfile.c:221
+#: src/dotfile.c:359
 msgid "white"
 msgstr "blanc"
 
-#: ../src/text.c:73
+#: src/text.c:75
 #, c-format
 msgid "FILESYSTEM "
 msgstr "SYS. FICH. "
 
-#: ../src/text.c:78
+#: src/text.c:80
 #, c-format
 msgid " TYPE"
 msgstr " TYPE"
 
-#: ../src/text.c:91
+#: src/text.c:93
 #, c-format
 msgid " (=) USED"
 msgstr " (=) UT. "
 
-#: ../src/text.c:94
+#: src/text.c:96
 #, c-format
 msgid "FREE (-) "
 msgstr "LIB. (-) "
 
-#: ../src/text.c:97
+#: src/text.c:99
 #, c-format
 msgid "%%USED"
 msgstr "%%UT. "
 
-#: ../src/text.c:105
+#: src/text.c:107
 #, c-format
 msgid "AVAILABLE"
 msgstr "DISPO.   "
 
-#: ../src/text.c:115
+#: src/text.c:117
 #, c-format
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: ../src/text.c:118
+#: src/text.c:120
 #, c-format
 msgid "   #INODES"
 msgstr "   #INODES"
 
-#: ../src/text.c:119
+#: src/text.c:121
 #, c-format
 msgid " AV.INODES"
 msgstr " INODES D."
 
-#: ../src/text.c:122
+#: src/text.c:124
 #, c-format
 msgid " MOUNTED ON "
 msgstr " MONTÉ SUR  "
 
-#: ../src/text.c:127
+#: src/text.c:129
 #, c-format
 msgid "MOUNT OPTIONS\n"
 msgstr "OPT. DE MONT. \n"
 
-#: ../src/text.c:154
+#: src/text.c:156
 #, c-format
 msgid "SUM:"
 msgstr "SOM:"
 
-#: ../src/util.c:419
+#: src/util.c:420
 msgid ""
 "WARNING: TTY too narrow. Some options will be disabled to try to make dfc "
 "output fit.\n"
@@ -288,8 +324,13 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options seront désactivées "
 "afin d'ajuster l'affichage.\n"
 
-#: ../src/util.c:459
+#: src/util.c:460
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
+
+#: src/util.c:530
+#, fuzzy
+msgid "Could not retrieve date\n"
+msgstr "Impossible de récupérer les options de montage pour %s\n"

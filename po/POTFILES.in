@@ -1,0 +1,5 @@
+src/csv.c
+src/dfc.c
+src/dotfile.c
+src/text.c
+src/util.c

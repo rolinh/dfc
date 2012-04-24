@@ -1,0 +1,12 @@
+DOMAIN = dfc
+
+subdir = po
+top_builddir = ..
+
+XGETTEXT_OPTIONS = --keyword=_ --keyword=N_ -w 80 --from-code=UTF-8
+
+COPYRIGHT_HOLDER = Robin Hahling
+
+MSGID_BUGS_ADDRESS = robin.hahling@gw-computing.net
+
+EXTRA_LOCALE_CATEGORIES =
