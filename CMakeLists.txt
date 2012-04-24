@@ -18,7 +18,7 @@ set(MAN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
 set(CONF_DIR ${CMAKE_CURRENT_SOURCE_DIR}/conf)
 set(PO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/po)
 
-set(LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
+set(LOCALE_DIR "${PREFIX}/share/locale")
 add_definitions(
 	-DLOCALEDIR="${LOCALE_DIR}"
 )
