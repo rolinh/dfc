@@ -4,15 +4,35 @@ dfc is a simple tool that display file system space usage using graph and color
 
 ## BUILD
 
-simply use make:
+cmake is required in order to build dfc.
+I suggest you create a build directory to compile dfc but this os of course not
+required.
+
+Create the build directory:
+
+	mkdir build
+
+Navigate into it:
+
+	cd build
+
+Run the cmake command to generate a Makefile that works for your OS:
+
+	cmake ..
+
+Now you can use the make command to build dfc:
 
 	make
+
+The dfc binary will be placed into a bin directory.
 
 ## RUN
 
 Once built, you can run it by typing:
 
 	./dfc
+
+from within the directory where dfc is situated.
 
 see ./dfc -h for options and usage
 
@@ -22,10 +42,14 @@ By default, it will be installed in /usr/local/bin. As root, type:
 
 	make install
 
-If you want to override this, change the prefix.
-For instance:
+You can also choose some standards parameters like where the files need to be
+installed. This needs to be done when using the cmake command.
+Example (from the previously created build directory):
 
-	make PREFIX=/usr install
+	cmake .. -DPREFIX=/usr -DSYSSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RELEASE
+
+Then run the 'make install' and it will install dfc according to what you chose
+in previous step.
 
 ## CONFIGURATION FILE
 
@@ -49,7 +73,7 @@ Here is the list of dependencies:
   * glibc
 
 Yep, that should be it. :)
-If you package it for a BSD system, note the Makefile should be BSD make
-compliant so there is no need for gmake. If not, feel free to inform me.
+
+Of course, cmake is a build dependency.
 
 <!-- vim: set filetype=markdown textwidth=80 -->
