@@ -34,14 +34,11 @@
 
 #include <string.h>
 
+#include "text.h"
+
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
-
-#include "text.h"
-#include "extern.h"
-#include "util.h"
-#include "dotfile.h"
 
 void
 init_disp_text(struct Display *disp)

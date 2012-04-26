@@ -33,8 +33,10 @@
  * Header for html.c
  */
 
+#include "extern.h"
 #include "display.h"
 #include "list.h"
+#include "util.h"
 
 /* function declaration */
 void init_disp_html(struct Display *disp);

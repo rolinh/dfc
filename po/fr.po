@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-04-26 18:32+0200\n"
+"POT-Creation-Date: 2012-04-26 19:06+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -17,52 +17,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/csv.c:68
+#: src/csv.c:66
 #, c-format
 msgid "FILESYSTEM,"
 msgstr "SYSTÈME DE FICHIERS,"
 
-#: src/csv.c:71
+#: src/csv.c:69
 #, c-format
 msgid "TYPE,"
 msgstr "TYPE,"
 
-#: src/csv.c:73
+#: src/csv.c:71
 #, c-format
 msgid "%%USED,"
 msgstr "%%UTILISÉ,"
 
-#: src/csv.c:75
+#: src/csv.c:73
 #, c-format
 msgid "AVAILABLE,"
 msgstr "DISPONIBLE,"
 
-#: src/csv.c:77
+#: src/csv.c:75
 #, c-format
 msgid "TOTAL,"
 msgstr "TOTAL,"
 
-#: src/csv.c:80
+#: src/csv.c:78
 #, c-format
 msgid "#INODES,"
 msgstr "#INODES,"
 
-#: src/csv.c:81
+#: src/csv.c:79
 #, c-format
 msgid "AV.INODES,"
 msgstr "INODES DISP.,"
 
-#: src/csv.c:84
+#: src/csv.c:82
 #, c-format
 msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
-#: src/csv.c:87
+#: src/csv.c:85
 #, c-format
 msgid ",MOUNT OPTIONS"
 msgstr ",OPTIONS DE MONTAGE"
 
-#: src/csv.c:105
+#: src/csv.c:103
 #, c-format
 msgid "SUM:,"
 msgstr "SOMME:,"
@@ -172,146 +172,146 @@ msgstr "Impossible de récupérer les options de montage pour %s\n"
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: src/dotfile.c:127
+#: src/dotfile.c:126
 #, fuzzy, c-format
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:189 src/dotfile.c:207
+#: src/dotfile.c:188 src/dotfile.c:206
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
 "such a thing anyway?\n"
 msgstr ""
 
-#: src/dotfile.c:194
+#: src/dotfile.c:193
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr ""
 
-#: src/dotfile.c:197
+#: src/dotfile.c:196
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr ""
 
-#: src/dotfile.c:212
+#: src/dotfile.c:211
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr ""
 
-#: src/dotfile.c:215
+#: src/dotfile.c:214
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr ""
 
-#: src/dotfile.c:225
+#: src/dotfile.c:224
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: src/dotfile.c:285
+#: src/dotfile.c:284
 #, fuzzy, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:294
+#: src/dotfile.c:293
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: src/dotfile.c:299
+#: src/dotfile.c:298
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr ""
 
-#: src/dotfile.c:341
+#: src/dotfile.c:340
 msgid "black"
 msgstr "noir"
 
-#: src/dotfile.c:344
+#: src/dotfile.c:343
 msgid "red"
 msgstr "rouge"
 
-#: src/dotfile.c:347
+#: src/dotfile.c:346
 msgid "green"
 msgstr "vert"
 
-#: src/dotfile.c:350
+#: src/dotfile.c:349
 msgid "yellow"
 msgstr "jaune"
 
-#: src/dotfile.c:353
+#: src/dotfile.c:352
 msgid "blue"
 msgstr "bleu"
 
-#: src/dotfile.c:356
+#: src/dotfile.c:355
 msgid "magenta"
 msgstr "magenta"
 
-#: src/dotfile.c:359
+#: src/dotfile.c:358
 msgid "cyan"
 msgstr "cyan"
 
-#: src/dotfile.c:362
+#: src/dotfile.c:361
 msgid "white"
 msgstr "blanc"
 
-#: src/text.c:77
+#: src/text.c:74
 #, c-format
 msgid "FILESYSTEM "
 msgstr "SYS. FICH. "
 
-#: src/text.c:82
+#: src/text.c:79
 #, c-format
 msgid " TYPE"
 msgstr " TYPE"
 
-#: src/text.c:95
+#: src/text.c:92
 #, c-format
 msgid " (=) USED"
 msgstr " (=) UT. "
 
-#: src/text.c:98
+#: src/text.c:95
 #, c-format
 msgid "FREE (-) "
 msgstr "LIB. (-) "
 
-#: src/text.c:101
+#: src/text.c:98
 #, c-format
 msgid "%%USED"
 msgstr "%%UT. "
 
-#: src/text.c:109
+#: src/text.c:106
 #, c-format
 msgid "AVAILABLE"
 msgstr "DISPO.   "
 
-#: src/text.c:119
+#: src/text.c:116
 #, c-format
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: src/text.c:122
+#: src/text.c:119
 #, c-format
 msgid "   #INODES"
 msgstr "   #INODES"
 
-#: src/text.c:123
+#: src/text.c:120
 #, c-format
 msgid " AV.INODES"
 msgstr " INODES D."
 
-#: src/text.c:126
+#: src/text.c:123
 #, c-format
 msgid " MOUNTED ON "
 msgstr " MONTÉ SUR  "
 
-#: src/text.c:131
+#: src/text.c:128
 #, c-format
 msgid "MOUNT OPTIONS\n"
 msgstr "OPT. DE MONT. \n"
 
-#: src/text.c:158
+#: src/text.c:155
 #, c-format
 msgid "SUM:"
 msgstr "SOM:"

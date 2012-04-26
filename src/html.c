@@ -33,13 +33,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "html.h"
+
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
-
-#include "extern.h"
-#include "html.h"
-#include "util.h"
 
 static void
 html_disp_init(void)

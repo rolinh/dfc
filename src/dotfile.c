@@ -41,12 +41,11 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "dotfile.h"
+
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
-
-#include "dotfile.h"
-#include "extern.h"
 
 /*
  * Finds the configuration file and returns it.
