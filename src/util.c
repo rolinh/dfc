@@ -40,7 +40,9 @@
 #include <time.h>
 #include <sys/ioctl.h>
 
+#ifdef NLS_ENABLED
 #include <libintl.h>
+#endif
 
 #include "util.h"
 

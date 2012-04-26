@@ -34,7 +34,9 @@
 
 #include <string.h>
 
+#ifdef NLS_ENABLED
 #include <libintl.h>
+#endif
 
 #include "text.h"
 #include "extern.h"

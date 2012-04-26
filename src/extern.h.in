@@ -37,7 +37,11 @@
 #cmakedefine VERSION "${VERSION}"
 
 /* to ugly to use gettext in each string that needs translation... */
+#ifdef NLS_ENABLED
 #define _(STRING) gettext(STRING)
+#else
+#define _(STRING) STRING
+#endif
 
 /* color defines */
 #define BLACK	30

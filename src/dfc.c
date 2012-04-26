@@ -53,8 +53,10 @@
 #include <errno.h>
 #include <err.h>
 
+#ifdef NLS_ENABLED
 #include <locale.h>
 #include <libintl.h>
+#endif
 
 #ifdef __linux__
 #include <mntent.h>
@@ -142,6 +144,7 @@ main(int argc, char *argv[])
 		NULL
 	};
 
+#ifdef NLS_ENABLED
 	/* translation support */
 	if (setlocale(LC_ALL, "") == NULL) {
 		(void)fprintf(stderr, "Locale cannot be set\n");
@@ -159,6 +162,7 @@ main(int argc, char *argv[])
 		(void)fprintf(stderr, "Cannot set translation domain\n");
 		ret = EXIT_FAILURE;
 	}
+#endif /* NLS_ENABLED */
 
 	/* default value for those globals */
 	cflag = 1; /* color enabled by default */

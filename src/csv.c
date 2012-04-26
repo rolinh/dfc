@@ -34,7 +34,9 @@
  */
 #include <stdio.h>
 
+#ifdef NLS_ENABLED
 #include <libintl.h>
+#endif
 
 #include "csv.h"
 #include "extern.h"

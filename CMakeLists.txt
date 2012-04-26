@@ -69,15 +69,19 @@ else()
 	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
 
-# load gettext module for translation
-set(GettextTranslate_ALL true)
-set(GettextTranslate_GMO_BINARY true)
-include(GettextTranslate)
-add_subdirectory(po)
+option(NLS_ENABLED "Translation support with gettext" off)
 
-add_definitions(
-	-DLOCALE_DIR="${LOCALEDIR}"
-)
+if(NLS_ENABLED)
+	# load gettext module for translation
+	set(GettextTranslate_ALL true)
+	set(GettextTranslate_GMO_BINARY true)
+	include(GettextTranslate)
+	add_subdirectory(po)
+
+	add_definitions(
+		-DLOCALE_DIR="${LOCALEDIR}"
+	)
+endif()
 
 set(CMAKE_BUILD_TYPE RELEASE)
 
