@@ -33,11 +33,19 @@ else()
 	set(SYSCONFDIR ${PREFIX}/etc CACHE PATH "config directory")
 endif()
 
+# share directory
+
+if(DEFINED SHAREDIR)
+	set(SHAREDIR ${SHAREDIR} CACHE PATH "share directory")
+else()
+	set(SHAREDIR ${PREFIX}/share CACHE PATH "share directory")
+endif()
+
 # locale
 if(DEFINED LOCALEDIR)
 	set(LOCALEDIR ${LOCALEDIR} CACHE PATH "locale directory")
 else()
-	set(LOCALEDIR ${PREFIX}/share/locale CACHE PATH "locale directory")
+	set(LOCALEDIR ${SHAREDIR}/locale CACHE PATH "locale directory")
 endif()
 
 # if XDG Config Dir is specified, use it
@@ -51,14 +59,14 @@ endif()
 if(DEFINED MAN_PATH)
 	set(MAN_PATH ${MAN_PATH} CACHE PATH "manpage directory")
 else()
-	set(MAN_PATH ${PREFIX}/share/man CACHE PATH "manpage directory")
+	set(MAN_PATH ${SHAREDIR}/man CACHE PATH "manpage directory")
 endif()
 
 # doc path
 if(DEFINED DOC_PATH)
 	set(DFC_DOC_PATH ${DFC_DOC_PATH} CACHE PATH "doc directory")
 else()
-	set(DFC_DOC_PATH ${PREFIX}/share/doc/${PACKAGE} CACHE PATH "doc directory")
+	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
 
 # load gettext module for translation
