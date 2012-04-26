@@ -34,13 +34,11 @@
  */
 #include <stdio.h>
 
+#include "csv.h"
+
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
-
-#include "csv.h"
-#include "extern.h"
-#include "util.h"
 
 void
 init_disp_csv(struct Display *disp)

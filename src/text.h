@@ -35,6 +35,9 @@
 
 #include "display.h"
 #include "list.h"
+#include "extern.h"
+#include "util.h"
+#include "dotfile.h"
 
 /* function declaration */
 void init_disp_text(struct Display *disp);

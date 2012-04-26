@@ -40,11 +40,11 @@
 #include <time.h>
 #include <sys/ioctl.h>
 
+#include "util.h"
+
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
-
-#include "util.h"
 
 /*
  * Return the longest of the two parameters

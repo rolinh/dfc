@@ -53,11 +53,6 @@
 #include <errno.h>
 #include <err.h>
 
-#ifdef NLS_ENABLED
-#include <locale.h>
-#include <libintl.h>
-#endif
-
 #ifdef __linux__
 #include <mntent.h>
 #endif
@@ -73,6 +68,11 @@
 #endif
 
 #include "dfc.h"
+
+#ifdef NLS_ENABLED
+#include <locale.h>
+#include <libintl.h>
+#endif
 
 int
 main(int argc, char *argv[])
