@@ -33,7 +33,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef NLS_ENABLED
 #include <libintl.h>
+#endif
 
 #include "extern.h"
 #include "html.h"

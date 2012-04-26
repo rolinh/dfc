@@ -40,7 +40,10 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <ctype.h>
+
+#ifdef NLS_ENABLED
 #include <libintl.h>
+#endif
 
 #include "dotfile.h"
 #include "extern.h"
