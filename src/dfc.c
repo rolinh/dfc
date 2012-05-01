@@ -692,12 +692,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 #ifdef __linux__
 		size = (double)p->blocks *(double)p->frsize;
 		avail = (double)p->bavail * (double)p->frsize;
-		used = size - avail;
 #else
-		size = p->bsize * p->blocks;
-		avail = p->bsize * p->bavail;
-		used = p->bsize * (p->blocks - p->bfree);
+		size = (double)p->bsize * (double)p->blocks;
+		avail = (double)p->bsize * (double)p->bavail;
 #endif
+		used = size - avail;
 		/* calculate the % used */
 		if ((int)size == 0)
 			perctused = 100.0;
