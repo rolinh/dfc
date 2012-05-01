@@ -48,7 +48,7 @@ void usage(int status);
 void fetch_info(struct list *lst);
 void disp(struct list *lst, char *fsfilter, char *fsnfilter, struct Display *disp);
 
-#ifdef __FreeBSD__
+#if defined(__FreeBSD__) || defined(__OpenBSD__)
 /* avoid struct statfs declared inside parameter list warning */
 struct statfs;
 
