@@ -102,14 +102,14 @@ getttywidth(void)
 
 #ifdef TIOCGSIZE
 	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
-#ifdef __MACH__
+#if defined(__MACH__) || defined(__OpenBSD__)
 		width = win.ts_cols;
 #else
 		width = win.ws_col;
 #endif
 #elif defined(TIOCGWINSZ)
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
-#ifdef __MACH__
+#if defined(__MACH__) || defined(__OpenBSD__)
 		width = win.ts_cols;
 #else
 		width = win.ws_col;

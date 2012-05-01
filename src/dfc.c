@@ -753,7 +753,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 }
 
 /* does not work on Mac OS */
-#ifdef __FreeBSD__
+#if defined(__FreeBSD__) || defined(__OpenBSD__)
 /*
  * Turn the f_flags member of the given struct statfs to a human-readable string
  * of the form "opt1,opt2..."
@@ -797,16 +797,17 @@ statfs_flags_to_str(struct statfs *s)
                if (strlcat(buffer, ",nosuid", bufsize) >= bufsize)
                        goto truncated;
 			/* NOTREACHED */
-       if (flags & MNT_UNION)
-               if (strlcat(buffer, ",union", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
        if (flags & MNT_ASYNC)
                if (strlcat(buffer, ",async", bufsize) >= bufsize)
                        goto truncated;
 			/* NOTREACHED */
        if (flags & MNT_NOATIME)
                if (strlcat(buffer, ",noatime", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+#ifdef __FreeBSD__
+       if (flags & MNT_UNION)
+               if (strlcat(buffer, ",union", bufsize) >= bufsize)
                        goto truncated;
 			/* NOTREACHED */
        if (flags & MNT_NOCLUSTERR)
@@ -837,7 +838,7 @@ statfs_flags_to_str(struct statfs *s)
                if (strlcat(buffer, ",nfsv4acls", bufsize) >= bufsize)
 		       goto truncated;
 			/* NOTREACHED */
-
+#endif
        return buffer;
        /* NOTREACHED */
 
