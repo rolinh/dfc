@@ -62,7 +62,12 @@ getconf(void)
 	char *conf;
 
 	if ((xdg_c_h = getenv("XDG_CONFIG_HOME")) != NULL) {
-		conf = strcat(xdg_c_h, "/dfc/dfcrc");
+		if ((conf = strcat(xdg_c_h, "/dfc/dfcrc")) == NULL) {
+			(void)fprintf(stderr, "strcat failed while guessing "
+					"configuration file\n");
+			return NULL;
+			/* NOTREACHED */
+		}
 		if (stat(conf, &buf) == 0)
 			return conf;
 			/* NOTREACHED */
@@ -72,12 +77,26 @@ getconf(void)
 	} else { /* maybe XDG_CONFIG_HOME is just not exported */
 		/* lets assume that XDG_CONFIG_HOME is simply $HOME/.config */
 		if ((home = getenv("HOME")) != NULL) {
-			conf = strcat(home, "/.config/dfc/dfcrc");
+			if ((conf = strcat(strdup(home), "/.config/dfc/dfcrc"))
+					== NULL) {
+				(void)fprintf(stderr, "strcat failed while "
+						"guessing "
+						"configuration file\n");
+				return NULL;
+				/* NOTREACHED */
+			}
 			if (stat(conf, &buf) == 0)
 				return conf;
 				/* NOTREACHED */
 			else { /* support $HOME/.dfcrc */
-				conf = strcat(home, "/.dfcrc");
+				if ((conf = strcat(strdup(home), "/.dfcrc"))
+						== NULL) {
+					(void)fprintf(stderr, "strcat failed"
+							"while guessing "
+							"configuration file\n");
+					return NULL;
+					/* NOTREACHED */
+				}
 				if (stat(conf, &buf) == 0)
 					return conf;
 					/* NOTREACHED */
