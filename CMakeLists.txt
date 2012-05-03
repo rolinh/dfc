@@ -69,7 +69,7 @@ else()
 	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
 
-option(NLS_ENABLED "Translation support with gettext" off)
+option(NLS_ENABLED "Translation support with gettext" on)
 
 if(NLS_ENABLED)
 	# load gettext module for translation

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-04-26 19:06+0200\n"
+"POT-Creation-Date: 2012-05-03 22:30+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -32,37 +32,42 @@ msgstr "TYPE,"
 msgid "%%USED,"
 msgstr "%%UTILISÉ,"
 
-#: src/csv.c:73
+#: src/csv.c:74
+#, fuzzy, c-format
+msgid "USED,"
+msgstr "%%UTILISÉ,"
+
+#: src/csv.c:76
 #, c-format
 msgid "AVAILABLE,"
 msgstr "DISPONIBLE,"
 
-#: src/csv.c:75
+#: src/csv.c:78
 #, c-format
 msgid "TOTAL,"
 msgstr "TOTAL,"
 
-#: src/csv.c:78
+#: src/csv.c:81
 #, c-format
 msgid "#INODES,"
 msgstr "#INODES,"
 
-#: src/csv.c:79
+#: src/csv.c:82
 #, c-format
 msgid "AV.INODES,"
 msgstr "INODES DISP.,"
 
-#: src/csv.c:82
+#: src/csv.c:85
 #, c-format
 msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
-#: src/csv.c:85
+#: src/csv.c:88
 #, c-format
 msgid ",MOUNT OPTIONS"
 msgstr ",OPTIONS DE MONTAGE"
 
-#: src/csv.c:103
+#: src/csv.c:106
 #, c-format
 msgid "SUM:,"
 msgstr "SOMME:,"
@@ -72,26 +77,27 @@ msgstr "SOMME:,"
 msgid "-c: illegal sub option %s\n"
 msgstr "-c: sous-option illégale %s\n"
 
-#: src/dfc.c:230
+#: src/dfc.c:233
 #, c-format
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:274
+#: src/dfc.c:277
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:327
+#: src/dfc.c:330
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:404
+#: src/dfc.c:407
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:407
+#: src/dfc.c:410
+#, fuzzy
 msgid ""
 "Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] [-u "
 "UNIT]\n"
@@ -100,6 +106,7 @@ msgid ""
 "\t-b\tdo not show the graph bar\n"
 "\t-c\tchoose color mode. Read the manpage\n"
 "\t\tfor details\n"
+"\t-d\tshow used size\n"
 "\t-f\tdisable auto-adjust mode (force display)\n"
 "\t-h\tprint this message\n"
 msgstr ""
@@ -113,7 +120,7 @@ msgstr ""
 "\t-f\tdésactive le mode d'auto-ajustement (force l'affichage)\n"
 "\t-h\taffiche ce message\n"
 
-#: src/dfc.c:418
+#: src/dfc.c:422
 msgid ""
 "\t-i\tinfo about inodes\n"
 "\t-m\tuse metric (SI unit)\n"
@@ -153,21 +160,21 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:481
+#: src/dfc.c:485
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:559
+#: src/dfc.c:563
 msgid "sorry, not available on MacOS..."
 msgstr "désolé, non disponible pour MacOS..."
 
-#: src/dfc.c:770
+#: src/dfc.c:778
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:845
+#: src/dfc.c:854
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
@@ -281,37 +288,42 @@ msgstr "LIB. (-) "
 msgid "%%USED"
 msgstr "%%UT. "
 
-#: src/text.c:106
+#: src/text.c:107
+#, fuzzy, c-format
+msgid "USED"
+msgstr "%%UT. "
+
+#: src/text.c:117
 #, c-format
 msgid "AVAILABLE"
 msgstr "DISPO.   "
 
-#: src/text.c:116
+#: src/text.c:127
 #, c-format
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: src/text.c:119
+#: src/text.c:130
 #, c-format
 msgid "   #INODES"
 msgstr "   #INODES"
 
-#: src/text.c:120
+#: src/text.c:131
 #, c-format
 msgid " AV.INODES"
 msgstr " INODES D."
 
-#: src/text.c:123
+#: src/text.c:134
 #, c-format
 msgid " MOUNTED ON "
 msgstr " MONTÉ SUR  "
 
-#: src/text.c:128
+#: src/text.c:139
 #, c-format
 msgid "MOUNT OPTIONS\n"
 msgstr "OPT. DE MONT. \n"
 
-#: src/text.c:155
+#: src/text.c:166
 #, c-format
 msgid "SUM:"
 msgstr "SOM:"
@@ -330,7 +342,7 @@ msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:532
+#: src/util.c:538
 #, fuzzy
 msgid "Could not retrieve date\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
