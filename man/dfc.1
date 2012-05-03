@@ -10,7 +10,7 @@ can change this with "\-c" option).
 
 The available size correspond to the space available to a user point of
 view and not from root's perspective (ie: use f_bavail instead of f_bfree).
-In the same idea, used space is computed simply by substracting the available
+In the same idea, used space is computed simply by subtracting the available
 space from the total size.
 
 Without any argument, size is displayed in human readable format.
@@ -112,7 +112,7 @@ filter "ext4" and "tmpfs", you would use the following:
 
 You can also use negative matching to filter the output. To do so, you just
 need to prepend a "\-" to FSTYPE. In the following example, dfc(1) will
-display all file system type except those mentionned:
+display all file system type except those mentioned:
 
 	dfc \-t \-rootfs,tmpfs
 
