@@ -70,6 +70,9 @@ csv_disp_header(struct list *lst)
 
 	(void)printf(_("%%USED,"));
 
+	if (dflag)
+		(void)printf(_("USED,"));
+
 	(void)printf(_("AVAILABLE,"));
 
 	(void)printf(_("TOTAL,"));
@@ -107,8 +110,12 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 	if (uflag) {
 		stot = cvrt(stot);
 		atot = cvrt(atot);
+		if (dflag)
+			utot = cvrt(utot);
 	}
 
+	if (dflag)
+		csv_disp_at(utot, ptot);
 	csv_disp_at(atot, ptot);
 	csv_disp_at(stot, ptot);
 

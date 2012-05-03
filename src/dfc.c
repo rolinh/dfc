@@ -177,7 +177,7 @@ main(int argc, char *argv[])
 	 /* Init default colors and symbol sign */
 	init_conf(&cnf);
 
-	while ((ch = getopt(argc, argv, "abc:e:fhimnop:q:st:Tu:vwW")) != -1) {
+	while ((ch = getopt(argc, argv, "abc:de:fhimnop:q:st:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -206,6 +206,9 @@ main(int argc, char *argv[])
 					/* NOTREACHED */
 				}
 			}
+			break;
+		case 'd':
+			dflag = 1;
 			break;
 		case 'e':
 			eflag = 1;
@@ -411,6 +414,7 @@ usage(int status)
 			"\t-b\tdo not show the graph bar\n"
 			"\t-c\tchoose color mode. Read the manpage\n"
 			"\t\tfor details\n"
+			"\t-d\tshow used size\n"
 			"\t-f\tdisable auto-adjust mode (force display)\n"
 			"\t-h\tprint this message\n"),
 			stdout);
@@ -715,12 +719,17 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		/* %used */
 		disp->print_perct(perctused);
 
+
 		/* format to requested format */
 		if (uflag) {
 			size = cvrt(size);
 			avail = cvrt(avail);
+			if (dflag)
+				used = cvrt(used);
 		}
 
+		if (dflag)
+			disp->print_at(used, perctused);
 		/* avail  and total */
 		disp->print_at(avail, perctused);
 		disp->print_at(size, perctused);

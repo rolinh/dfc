@@ -96,6 +96,17 @@ text_disp_header(struct list *lst)
 	}
 
 	(void)printf(_("%%USED"));
+
+	if (dflag) {
+		if (unitflag == 'k')
+			(void)printf("       ");
+		else if (unitflag == 'b')
+			(void)printf("            ");
+		else
+			(void)printf("      ");
+		(void)printf(_("USED"));
+	}
+
 	if (unitflag == 'k')
 		(void)printf("  ");
 	else if (unitflag == 'b')
@@ -168,8 +179,12 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
 	if (uflag) {
 		stot = cvrt(stot);
 		atot = cvrt(atot);
+		if (dflag)
+			utot = cvrt(utot);
 	}
 
+	if (dflag)
+		text_disp_at(utot, ptot);
 	text_disp_at(atot, ptot);
 	text_disp_at(stot, ptot);
 
@@ -240,7 +255,7 @@ text_disp_bar(double perct)
 void
 text_disp_at(double n, double perct)
 {
-    int i;
+    	int i;
 
 	change_color(perct);
 

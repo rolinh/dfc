@@ -121,6 +121,8 @@ html_disp_header(struct list *lst)
 		(void)printf("\t  <th>USAGE</th>\n");
 
 	(void)printf("\t  <th>%s</th>\n", _("%USED"));
+	if (dflag)
+		(void)printf("\t  <th>%s</th>\n", _("USED"));
 	(void)printf("\t  <th>%s</th>\n", _("AVAILABLE"));
 	(void)printf("\t  <th>%s</th>\n", _("TOTAL"));
 
@@ -158,7 +160,12 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 	if (uflag) {
 		stot = cvrt(stot);
 		atot = cvrt(atot);
+		if (dflag)
+			utot = cvrt(utot);
 	}
+
+	if (dflag)
+		html_disp_at(utot, ptot);
 
 	html_disp_at(atot, ptot);
 	html_disp_at(stot, ptot);

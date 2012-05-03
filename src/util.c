@@ -497,12 +497,18 @@ req_width(struct list lst)
 	case 'z': /* FALLTHROUGH */
 	case 'y': /* FALLTHROUGH */
 		ret += 25;
+		if (dflag)
+			ret += 12;
 		break;
 	case 'b':
 		ret += 33;
+		if (dflag)
+			ret += 16;
 		break;
 	case 'k':
 		ret += 23;
+		if (dflag)
+			ret += 11;
 		break;
 	}
 
