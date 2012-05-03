@@ -154,7 +154,7 @@ parse_conf(char *conf)
 int
 set_conf(char *key, char *val)
 {
-	int tmp;
+	long int tmp;
 	int ret = 0;
 
 	if (strcmp(key, "color_header") == 0) {
@@ -183,7 +183,7 @@ set_conf(char *key, char *val)
 			cnf.chigh = tmp;
 	} else if (strcmp(key, "graph_medium") == 0) {
 		ret = -1;
-		tmp = (int)strtol(val, (char **) NULL, 10);
+		tmp = strtol(val, (char **) NULL, 10);
 		if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
 			(void)fprintf(stderr, _("Value conversion failed"
 				" for graph_medium: %s. What were you "
@@ -197,11 +197,11 @@ set_conf(char *key, char *val)
 				" set above 100: %s\n"), val);
 		else {
 			ret = 0;
-			cnf.gmedium = tmp;
+			cnf.gmedium = (int)tmp;
 		}
 	} else if (strcmp(key, "graph_high") == 0) {
 		ret = -1;
-		tmp = (int)strtol(val, (char **) NULL, 10);
+		tmp = strtol(val, (char **) NULL, 10);
 		if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
 			(void)fprintf(stderr, _("Value conversion failed"
 				" for graph_medium: %s. What were you "
@@ -215,7 +215,7 @@ set_conf(char *key, char *val)
 				" set above 100: %s\n"), val);
 		else {
 			ret = 0;
-			cnf.ghigh = tmp;
+			cnf.ghigh = (int)tmp;
 		}
 	} else if (strcmp(key, "graph_symbol") == 0) {
 		if (strlen(val) == 1)
