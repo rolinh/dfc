@@ -2,7 +2,7 @@
 .SH NAME
 dfc \- display file system space usage using graph and colors
 .SH SYNOPSIS
-.B dfc [OPTION(S)] [\-c WHEN] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
+.B dfc [OPTION(S)] [\-c WHEN] [\-e FORMAT] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
 .SH DESCRIPTION
 dfc(1) is a tool similar to df(1) except that it is able to show a graph along with the
 data and is able to use color (color mode is "color\-auto" by default but you
@@ -33,19 +33,37 @@ Do not show the graph bar.
 Choose color mode where WHEN is one of the following sub\-option:
 
 "always":
-	Color will always be used, no matter what stdout is.
+Color will always be used, no matter what stdout is.
 
 "auto":
-	This is default when "\-c" is not activated. Color is used only if "stdout"
+This is default when "\-c" is not activated. Color is used only if "stdout"
 is a terminal. For instance, color will be disabled with this option if you
 pipe the output of dfc(1) into another command.
 
 "never":
-	Color will never be used.
+Color will never be used.
 
 .TP
 \-d
 Show used size.
+.TP
+\-e FORMAT
+Allows you to export dfc(1) ouput to specified FORMAT.
+FORMAT is one of the following:
+
+"csv":
+Output as "comma separated value" file type. Example:
+
+	dfc -e csv > foo.csv
+
+"html":
+Output is HTML formated. Example:
+
+	dfc -e html -Tadiso -c always > index.html
+
+"text":
+Text output to stdout (default).
+
 .TP
 \-f
 Override auto\-adjust behavior by forcing information to be displayed.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-03 22:30+0200\n"
+"POT-Creation-Date: 2012-05-04 16:24+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -99,14 +99,17 @@ msgstr "Essayez dfc -h pour plus d'informations\n"
 #: src/dfc.c:410
 #, fuzzy
 msgid ""
-"Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] [-u "
-"UNIT]\n"
+"Usage:  dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
+"FSTYPE]\n"
+"\t[-u UNIT]\n"
 "Available options:\n"
 "\t-a\tprint all fs from mtab\n"
 "\t-b\tdo not show the graph bar\n"
 "\t-c\tchoose color mode. Read the manpage\n"
 "\t\tfor details\n"
 "\t-d\tshow used size\n"
+"\t-e\texport to specified format. Read the manpage\n"
+"\t\tfor details\n"
 "\t-f\tdisable auto-adjust mode (force display)\n"
 "\t-h\tprint this message\n"
 msgstr ""
@@ -120,7 +123,7 @@ msgstr ""
 "\t-f\tdésactive le mode d'auto-ajustement (force l'affichage)\n"
 "\t-h\taffiche ce message\n"
 
-#: src/dfc.c:422
+#: src/dfc.c:425
 msgid ""
 "\t-i\tinfo about inodes\n"
 "\t-m\tuse metric (SI unit)\n"
@@ -160,106 +163,106 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:485
+#: src/dfc.c:488
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:563
+#: src/dfc.c:566
 msgid "sorry, not available on MacOS..."
 msgstr "désolé, non disponible pour MacOS..."
 
-#: src/dfc.c:778
+#: src/dfc.c:781
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:854
+#: src/dfc.c:857
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: src/dotfile.c:126
+#: src/dotfile.c:145
 #, fuzzy, c-format
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:188 src/dotfile.c:206
+#: src/dotfile.c:207 src/dotfile.c:225
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
 "such a thing anyway?\n"
 msgstr ""
 
-#: src/dotfile.c:193
+#: src/dotfile.c:212
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr ""
 
-#: src/dotfile.c:196
+#: src/dotfile.c:215
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr ""
 
-#: src/dotfile.c:211
+#: src/dotfile.c:230
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr ""
 
-#: src/dotfile.c:214
+#: src/dotfile.c:233
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr ""
 
-#: src/dotfile.c:224
+#: src/dotfile.c:243
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: src/dotfile.c:284
+#: src/dotfile.c:303
 #, fuzzy, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:293
+#: src/dotfile.c:312
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: src/dotfile.c:298
+#: src/dotfile.c:317
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr ""
 
-#: src/dotfile.c:340
+#: src/dotfile.c:359
 msgid "black"
 msgstr "noir"
 
-#: src/dotfile.c:343
+#: src/dotfile.c:362
 msgid "red"
 msgstr "rouge"
 
-#: src/dotfile.c:346
+#: src/dotfile.c:365
 msgid "green"
 msgstr "vert"
 
-#: src/dotfile.c:349
+#: src/dotfile.c:368
 msgid "yellow"
 msgstr "jaune"
 
-#: src/dotfile.c:352
+#: src/dotfile.c:371
 msgid "blue"
 msgstr "bleu"
 
-#: src/dotfile.c:355
+#: src/dotfile.c:374
 msgid "magenta"
 msgstr "magenta"
 
-#: src/dotfile.c:358
+#: src/dotfile.c:377
 msgid "cyan"
 msgstr "cyan"
 
-#: src/dotfile.c:361
+#: src/dotfile.c:380
 msgid "white"
 msgstr "blanc"
 

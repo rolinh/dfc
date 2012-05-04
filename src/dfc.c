@@ -407,14 +407,17 @@ usage(int status)
 		(void)fputs(_("Try dfc -h for more information\n"), stderr);
 	else {
 		/* 2 fputs because string length limit is 509 */
-		(void)fputs(_("Usage: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME] "
-			" [-q SORTBY] [-t FSTYPE] [-u UNIT]\n"
+		(void)fputs(_("Usage:  dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] "
+					"[-p FSNAME] [-q SORTBY] [-t FSTYPE]\n"
+					"\t[-u UNIT]\n"
 			"Available options:\n"
 			"\t-a\tprint all fs from mtab\n"
 			"\t-b\tdo not show the graph bar\n"
 			"\t-c\tchoose color mode. Read the manpage\n"
 			"\t\tfor details\n"
 			"\t-d\tshow used size\n"
+			"\t-e\texport to specified format. Read the manpage\n"
+			"\t\tfor details\n"
 			"\t-f\tdisable auto-adjust mode (force display)\n"
 			"\t-h\tprint this message\n"),
 			stdout);
