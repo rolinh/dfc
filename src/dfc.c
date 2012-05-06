@@ -369,8 +369,8 @@ main(int argc, char *argv[])
 	/* change cnf value according to config file, it it exists */
 	if ((cfgfile = getconf()) != NULL) {
 		if (parse_conf(cfgfile) == -1) {
-			(void)fprintf(stderr, "Error reading the configuration"
-					" file: %s\n", cfgfile);
+			(void)fprintf(stderr, _("Error reading the configuration"
+					" file: %s\n"), cfgfile);
 			ret = EXIT_FAILURE;
 		}
 	}
