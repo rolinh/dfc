@@ -535,7 +535,7 @@ getdate(void)
 	}
 
 	if (strftime(date, sizeof(date), "%c", tmp) == 0) {
-		(void)fputs(_("Could not retrieve date\n"), stderr);
+		(void)fputs("Could not retrieve date\n", stderr);
 		return NULL;
 		/* NOTREACHED */
 	}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-04 16:24+0200\n"
+"POT-Creation-Date: 2012-05-06 11:25+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -35,7 +35,7 @@ msgstr "%%UTILISÉ,"
 #: src/csv.c:74
 #, fuzzy, c-format
 msgid "USED,"
-msgstr "%%UTILISÉ,"
+msgstr "UTILISÉ,"
 
 #: src/csv.c:76
 #, c-format
@@ -113,12 +113,15 @@ msgid ""
 "\t-f\tdisable auto-adjust mode (force display)\n"
 "\t-h\tprint this message\n"
 msgstr ""
-"Utilisation: dfc [OPTIONS(S)] [-c WHEN] [-p FSNAME]  [-q SORTBY] [-t FSTYPE] "
-"[-u UNIT]\n"
+"Utilisation: dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] [-p FSNAME]  [-q SORTBY] "
+"[-t FSTYPE]\n\t[-u UNIT]\n"
 "Options disponibles:\n"
 "\t-a\taffiche tous les systèmes de fichiers du mtab\n"
-"\t-b\tdésactive l'affichage du graphique\n"
+"\t-b\tdésactive l'affichage du graphe\n"
 "\t-c\tpermet de choisir le mode pour la couleur. Lisez le manuel\n"
+"\t\tpour les détails\n"
+"\t-d\taffiche la taille de l'utilisation\n"
+"\t-e\texporte dans le format spécifié. Lisez le manuel\n"
 "\t\tpour les détails\n"
 "\t-f\tdésactive le mode d'auto-ajustement (force l'affichage)\n"
 "\t-h\taffiche ce message\n"
@@ -145,7 +148,7 @@ msgid ""
 "\t-W\twide filename (un truncate)\n"
 msgstr ""
 "\t-i\tinformations sur les inodes\n"
-"\t-m\tutilise les unités metriques (unités SI)\n"
+"\t-m\tutilise les unités métriques (unités SI)\n"
 "\t-n\tdésactive l'affichage du titre\n"
 "\t-o\taffiche les options de montage\n"
 "\t-p\tfiltre par nom de système de fichiers. Lisez le manuel\n"
@@ -185,7 +188,7 @@ msgstr "Troncation des options de montage pour %s\n"
 #: src/dotfile.c:145
 #, fuzzy, c-format
 msgid "Error: no value for %s in configuration file\n"
-msgstr "Option inconnue dans le fichier de configuration: %s\n"
+msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
 
 #: src/dotfile.c:207 src/dotfile.c:225
 #, c-format
@@ -197,22 +200,22 @@ msgstr ""
 #: src/dotfile.c:212
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
-msgstr ""
+msgstr "La valeur medianne ne peut pas être fixée en dessous de 0: %s\n"
 
 #: src/dotfile.c:215
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
-msgstr ""
+msgstr "La valeur médianne ne peut pas être fixée en dessus de 100: %s\n"
 
 #: src/dotfile.c:230
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
-msgstr ""
+msgstr "La valeur haute ne peut pas être fixée en dessous de 0: %s\n"
 
 #: src/dotfile.c:233
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
-msgstr ""
+msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
 
 #: src/dotfile.c:243
 #, c-format
@@ -222,7 +225,7 @@ msgstr "Symbole impossible: %s\n"
 #: src/dotfile.c:303
 #, fuzzy, c-format
 msgid "Error: unknown option in configuration file: %s\n"
-msgstr "Option inconnue dans le fichier de configuration: %s\n"
+msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 
 #: src/dotfile.c:312
 #, c-format
@@ -232,7 +235,7 @@ msgstr "Couleur inconnue: %s\n"
 #: src/dotfile.c:317
 #, c-format
 msgid "Not a valid HTML color: %s\n"
-msgstr ""
+msgstr "Couleur HTML invalide: %s\n"
 
 #: src/dotfile.c:359
 msgid "black"
@@ -279,7 +282,7 @@ msgstr " TYPE"
 #: src/text.c:92
 #, c-format
 msgid " (=) USED"
-msgstr " (=) UT. "
+msgstr " (=)  UT."
 
 #: src/text.c:95
 #, c-format
@@ -289,17 +292,17 @@ msgstr "LIB. (-) "
 #: src/text.c:98
 #, c-format
 msgid "%%USED"
-msgstr "%%UT. "
+msgstr " %%UT."
 
 #: src/text.c:107
 #, fuzzy, c-format
 msgid "USED"
-msgstr "%%UT. "
+msgstr " UT."
 
 #: src/text.c:117
 #, c-format
 msgid "AVAILABLE"
-msgstr "DISPO.   "
+msgstr "   DISPO."
 
 #: src/text.c:127
 #, c-format
@@ -319,12 +322,12 @@ msgstr " INODES D."
 #: src/text.c:134
 #, c-format
 msgid " MOUNTED ON "
-msgstr " MONTÉ SUR  "
+msgstr "  MONTÉ SUR "
 
 #: src/text.c:139
 #, c-format
 msgid "MOUNT OPTIONS\n"
-msgstr "OPT. DE MONT. \n"
+msgstr " OPT. DE MONT.\n"
 
 #: src/text.c:166
 #, c-format
@@ -344,8 +347,3 @@ msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
-
-#: src/util.c:538
-#, fuzzy
-msgid "Could not retrieve date\n"
-msgstr "Impossible de récupérer les options de montage pour %s\n"
