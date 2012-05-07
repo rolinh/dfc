@@ -26,6 +26,11 @@ Now you can use the make command to build dfc:
 
 The dfc binary will be placed into a bin directory.
 
+Note: if you do not want to build translation, you can use the following at the
+cmake step:
+
+	cmake .. -DNLS_ENABLED=false
+
 ## RUN
 
 Once built, you can run it by typing:
