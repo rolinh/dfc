@@ -141,6 +141,22 @@ set(DFC_SYSCONFDIR	${XDG_CONFIG_DIR}/${PACKAGE})
 file(STRINGS ${PO_DIR}/LINGUAS LINGUAS REGEX "^[^#].*")
 string(REGEX MATCHALL "[^ ]+" languages ${LINGUAS})
 
+# rule to generate a source tarball
+set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${VERSION}")
+set(CPACK_SOURCE_IGNORE_FILES
+	"~$"
+	".swp$"
+	"^${PROJECT_SOURCE_DIR}/.git/"
+	"^${PROJECT_SOURCE_DIR}/build/"
+	"${PROJECT_SOURCE_DIR}/.gitignore$"
+	"${PROJECT_SOURCE_DIR}/po/dfc.pot$"
+	"${PROJECT_SOURCE_DIR}/src/extern.h$"
+	"${CPACK_SOURCE_IGNORE_FILES}")
+include(CPack)
+add_custom_target(dist
+	COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+
 # installation
 install(TARGETS ${EXECUTABLE_NAME} RUNTIME DESTINATION bin)
 install(FILES ${MAN_DIR}/dfc.1 DESTINATION ${MAN_PATH}/man1)

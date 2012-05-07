@@ -1,9 +1,5 @@
 *.swp
 *.o
-dfc
-Makefile
 build
 po/dfc.pot
-po/Makefile
-po/*.mo
 src/extern.h
