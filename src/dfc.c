@@ -562,14 +562,14 @@ fetch_info(struct list *lst)
 						12))) == NULL) {
 				fmi->type = "unknown";
 			}
-#ifdef __MACH__
+#ifdef __APPLE__
 			/* TODO: implement feature for MacOS */
 			fmi->opts = _("sorry, not available on MacOS...");
 #else
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
 				fmi->opts = "none";
 			}
-#endif /* __MACH__ */
+#endif /* __APPLE__ */
 #endif
 			/* infos from statvfs */
 			fmi->bsize	= vfsbuf.f_bsize;
