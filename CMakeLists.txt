@@ -117,7 +117,7 @@ SET(SRCS
 	${SOURCE_DIR}/dfc.c
 	${SOURCE_DIR}/html.c
 	${SOURCE_DIR}/list.c
-	#${SOURCE_DIR}/tex.c
+	${SOURCE_DIR}/tex.c
 	${SOURCE_DIR}/text.c
 	${SOURCE_DIR}/util.c
 )

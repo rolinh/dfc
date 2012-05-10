@@ -226,7 +226,8 @@ main(int argc, char *argv[])
 					init_disp_html(&display);
 					break;
 				case ETEX:
-					/* init_disp_tex(&display); */
+					bflag = 1; /* FIXME */
+					init_disp_tex(&display);
 					break;
 				case -1:
 					(void)fprintf(stderr,

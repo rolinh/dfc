@@ -35,9 +35,12 @@
 
 #include "display.h"
 #include "list.h"
+#include "util.h"
 
 /* function declaration */
 void init_disp_tex(struct Display *disp);
+void tex_disp_init(void);
+void tex_disp_deinit(void);
 void tex_disp_header(struct list *lst);
 void tex_disp_sum(struct list *lst, double stot, double utot, double ftot,
                   double ifitot, double ifatot);
