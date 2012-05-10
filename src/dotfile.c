@@ -142,8 +142,8 @@ parse_conf(char *conf)
 
 		key = strtrim(key);
 		if ((val = strtrim(val)) == NULL) {
-			(void)fprintf(stderr, _("Error: no value for %s in configuration"
-				" file\n"), key);
+			(void)fprintf(stderr, _("Error: no value for %s in "
+				"configuration file\n"), key);
 			if (fclose(fd) == EOF)
 				perror("Could not close configuration file ");
 			return -1;
@@ -300,8 +300,8 @@ set_conf(char *key, char *val)
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else {
-		(void)fprintf(stderr, _("Error: unknown option in configuration "
-				"file: %s\n"), key);
+		(void)fprintf(stderr, _("Error: unknown option in configuration"
+				" file: %s\n"), key);
 		ret = -1;
 	}
 
