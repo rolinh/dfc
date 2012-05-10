@@ -83,6 +83,49 @@ shortenstr(char *str, int len)
 }
 
 /*
+ * Given a string S, returns the same string where the '_' character is replaced
+ * by "\_". The returned string must be freed by the caller.
+ */
+char *
+sanitize_string(const char *s)
+{
+	int i;
+	int nchars = 1; /* Trailing \0 */
+	int j = 0;
+	char *new = malloc(nchars);
+
+	for (i = 0; s[i] != '\0'; i++) {
+		if (s[i] == '_')
+			nchars += 2;
+		else
+			nchars++;
+	}
+
+	if (i == nchars) /* No '_' was found. */
+		return strdup(s);
+		/* NOTREACHED */
+
+
+	if (new == NULL)
+		exit(EXIT_FAILURE);
+
+	for (i = 0; s[i] != '\0'; i++) {
+		if (s[i] == '_') {
+			new[j] = '\\';
+			new[j+1] = '_';
+			j += 2;
+		} else {
+			new[j] = s[i];
+			j++;
+		}
+	}
+
+	new[nchars-1] = '\0';
+	return new;
+	/* NOTREACHED */
+}
+
+/*
  * Get the width of tty and return it.
  * Return 0 if stdout is not a tty.
  */

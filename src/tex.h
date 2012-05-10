@@ -33,6 +33,7 @@
  * Header for tex.c
  */
 
+#include "extern.h"
 #include "display.h"
 #include "list.h"
 #include "util.h"

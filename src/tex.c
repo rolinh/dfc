@@ -39,47 +39,10 @@
 #include <string.h>
 
 #include "tex.h"
-#include "extern.h"
 
-/*
- * Given a string S, returns the same string where the '_' character is replaced
- * by "\_". The returned string must be freed by the caller.
- */
-static char *
-sanitize_string(const char *s)
-{
-	unsigned nchars = 1; /* Trailing \0 */
-	unsigned i;
-	for (i = 0; s[i] != '\0'; i++) {
-		if (s[i] == '_')
-			nchars += 2;
-		else
-			nchars++;
-	}
-
-	if (i == nchars) /* No '_' was found. */
-		return strdup(s);
-
-
-	char *new = malloc(nchars);
-	if (new == NULL)
-		exit(EXIT_FAILURE);
-
-	unsigned j = 0;
-	for (i = 0; s[i] != '\0'; i++) {
-		if (s[i] == '_') {
-			new[j] = '\\';
-			new[j+1] = '_';
-			j += 2;
-		} else {
-			new[j] = s[i];
-			j++;
-		}
-	}
-
-	new[nchars-1] = '\0';
-	return new;
-}
+#ifdef NLS_ENABLED
+#include <libintl.h>
+#endif
 
 void
 init_disp_tex(struct Display *disp)
@@ -101,11 +64,13 @@ init_disp_tex(struct Display *disp)
 void
 tex_disp_init(void)
 {
+	int i;
+	int ncolumns = 5;
+
 	(void)puts("\\documentclass[a4]{report}");
 	(void)puts("\\usepackage[landscape]{geometry}");
 	(void)puts("\\begin{document}");
 
-	unsigned ncolumns = 5;
 	if (Tflag)
 		ncolumns++;
 	if (!bflag)
@@ -117,7 +82,6 @@ tex_disp_init(void)
 	if (oflag)
 		ncolumns++;
 	(void)printf("\\begin{tabular}{");
-	unsigned i;
 	for (i = 0; i < ncolumns; i++)
 		(void)printf("|l");
 	printf("|}\n");
@@ -136,6 +100,8 @@ tex_disp_deinit(void)
 void
 tex_disp_header(struct list *lst)
 {
+	(void)lst;
+
 	(void)puts("\\hline");
 	(void)printf("%s", _("FILESYSTEM"));
 	if (Tflag)
@@ -150,7 +116,7 @@ tex_disp_header(struct list *lst)
 	if (iflag) {
 		(void)printf(" & %s ", _("\\#INODES"));
 		(void)printf(" & %s ", _("AV.INODES,"));
-	} 
+	}
 	(void)printf(" & %s ", _("MOUNTED ON"));
 	if (oflag)
 		(void)printf(" & %s ", _("MOUNT OPTIONS"));
@@ -163,9 +129,10 @@ void
 tex_disp_sum(struct list *lst, double stot, double atot, double utot,
              double ifitot, double ifatot)
 {
+	double ptot = stot == 0 ? 100.0 : 100.0 * (utot / stot);
+
 	(void)lst;
 
-	double ptot = stot == 0 ? 100.0 : 100.0 * (utot / stot);
 	(void)printf("\\\\ SUM");
 
 	if (Tflag)
@@ -289,13 +256,14 @@ tex_disp_at(double n, double perct)
 void
 tex_disp_fs(struct list *lst, char *fsname)
 {
+	static int must_close = 0;
+	char *cleaned_fsname = sanitize_string(fsname);
+
 	(void) lst;
 
-	static int must_close = 0;
 	if (must_close == 1)
 		(void) puts("\\\\");
 
-	char *cleaned_fsname = sanitize_string(fsname);
 	(void)printf("%s", cleaned_fsname);
 	free(cleaned_fsname);
 
@@ -305,9 +273,10 @@ tex_disp_fs(struct list *lst, char *fsname)
 void
 tex_disp_type(struct list *lst, char *type)
 {
+	char *cleaned_type = sanitize_string(type);
+
 	(void) lst;
 
-	char *cleaned_type = sanitize_string(type);
 	(void) printf(" & %s", cleaned_type);
 	free(cleaned_type);
 }
@@ -322,6 +291,7 @@ void
 tex_disp_mount(char *dir)
 {
 	char *cleaned_dir = sanitize_string(dir);
+
 	(void) printf(" & %s", cleaned_dir);
 	free(cleaned_dir);
 }
@@ -329,10 +299,11 @@ tex_disp_mount(char *dir)
 void
 tex_disp_mopt(struct list *lst, char *dir, char *opts)
 {
+	char *cleaned_opts = sanitize_string(opts);
+
 	(void) lst;
 	(void) dir;
 
-	char *cleaned_opts = sanitize_string(opts);
 	(void) printf(" & %s", cleaned_opts);
 	free(cleaned_opts);
 }
@@ -340,5 +311,5 @@ tex_disp_mopt(struct list *lst, char *dir, char *opts)
 void
 tex_disp_perct(double perct)
 {
-	(void) printf(" & %.f\%", perct);
+	(void) printf(" & %.f\\%%", perct);
 }
