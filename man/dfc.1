@@ -24,7 +24,7 @@ terminal width. If you want to override this behavior, use the "\-f" option.
 .SH OPTIONS
 .TP
 \-a
-Show information about all file systems found in the mtab file.
+Show all (do not ommit any file system).
 .TP
 \-b
 Do not show the graph bar.
@@ -52,14 +52,19 @@ Allows you to export dfc(1) ouput to specified FORMAT.
 FORMAT is one of the following:
 
 "csv":
-Output as "comma separated value" file type. Example:
+Output as "comma separated value" file type. Example usage:
 
 	dfc -e csv > foo.csv
 
 "html":
-Output is HTML formated. Example:
+Output is HTML formated. Example usage:
 
 	dfc -e html -Tadiso -c always > index.html
+
+"tex":
+Ouput is TeX formated. Example usage:
+
+	dfc -e tex -c always > report.tex
 
 "text":
 Text output (default).
