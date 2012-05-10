@@ -259,10 +259,10 @@ tex_disp_fs(struct list *lst, char *fsname)
 	static int must_close = 0;
 	char *cleaned_fsname = sanitize_string(fsname);
 
-	(void) lst;
+	(void)lst;
 
 	if (must_close == 1)
-		(void) puts("\\\\");
+		(void)puts("\\\\");
 
 	(void)printf("%s", cleaned_fsname);
 	free(cleaned_fsname);
@@ -292,7 +292,7 @@ tex_disp_mount(char *dir)
 {
 	char *cleaned_dir = sanitize_string(dir);
 
-	(void) printf(" & %s", cleaned_dir);
+	(void)printf(" & %s", cleaned_dir);
 	free(cleaned_dir);
 }
 
@@ -301,15 +301,15 @@ tex_disp_mopt(struct list *lst, char *dir, char *opts)
 {
 	char *cleaned_opts = sanitize_string(opts);
 
-	(void) lst;
-	(void) dir;
+	(void)lst;
+	(void)dir;
 
-	(void) printf(" & %s", cleaned_opts);
+	(void)printf(" & %s", cleaned_opts);
 	free(cleaned_opts);
 }
 
 void
 tex_disp_perct(double perct)
 {
-	(void) printf(" & %.f\\%%", perct);
+	(void)printf(" & %.f\\%%", perct);
 }
