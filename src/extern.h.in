@@ -80,8 +80,8 @@ struct conf {
 struct conf cnf;
 
 /* set flags for options */
-int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, mflag, nflag,
-    oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
+int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
+    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
 int Tflag, Wflag;
 
 /* flag that determines which unit is in use (Ko, Mo, etc.) */
