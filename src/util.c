@@ -37,6 +37,7 @@
 
 #include <unistd.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
 #include <sys/ioctl.h>
 
@@ -55,6 +56,36 @@ int
 imax(int a, int b)
 {
 	return (a > b ? a : b);
+	/* NOTREACHED */
+}
+
+/*
+ * trim withespaces from the input string and returns it
+ * @str: string that needs to be trimmed
+ */
+char *
+strtrim(char *str)
+{
+	char *end;
+
+	if (!str)
+		return NULL;
+		/* NOTREACHED */
+
+	while (isspace(*str))
+		str++;
+
+	if (*str == '\0')
+		return str;
+		/* NOTREACHED */
+
+	end = str + strlen(str) - 1;
+	while (end > str && isspace(*end))
+		end--;
+
+	*(end + 1) = '\0';
+
+	return str;
 	/* NOTREACHED */
 }
 

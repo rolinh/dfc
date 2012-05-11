@@ -38,6 +38,7 @@
 
 /* function declaration */
 int imax(int a, int b);
+char * strtrim(char *str);
 char* shortenstr(char *str, int len);
 char* sanitize_string(const char *s);
 int getttywidth(void);

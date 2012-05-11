@@ -34,12 +34,12 @@
  */
 
 #include "extern.h"
+#include "util.h"
 
 /* function declaration */
 char * getconf(void);
 int parse_conf(char *dfcrc);
 int set_conf(char *key, char *val);
-char * strtrim(char *str);
 int cvrt_color(char *col);
 int chk_html_colorcode(char *color);
 void init_conf(struct conf *cnf);

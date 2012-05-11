@@ -324,36 +324,6 @@ non_valid_html_color:
 }
 
 /*
- * trim withespaces from the input string and returns it
- * @str: string that needs to be trimmed
- */
-char *
-strtrim(char *str)
-{
-	char *end;
-
-	if (!str)
-		return NULL;
-		/* NOTREACHED */
-
-	while (isspace(*str))
-		str++;
-
-	if (*str == '\0')
-		return str;
-		/* NOTREACHED */
-
-	end = str + strlen(str) - 1;
-	while (end > str && isspace(*end))
-		end--;
-
-	*(end + 1) = '\0';
-
-	return str;
-	/* NOTREACHED */
-}
-
-/*
  * convert color from natural name into correponding number and return it
  * @col: color name
  */

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-11 11:03+0200\n"
+"POT-Creation-Date: 2012-05-11 11:08+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -243,35 +243,35 @@ msgstr "Couleur inconnue: %s\n"
 msgid "Not a valid HTML color: %s\n"
 msgstr "Couleur HTML invalide: %s\n"
 
-#: src/dotfile.c:363
+#: src/dotfile.c:333
 msgid "black"
 msgstr "noir"
 
-#: src/dotfile.c:366
+#: src/dotfile.c:336
 msgid "red"
 msgstr "rouge"
 
-#: src/dotfile.c:369
+#: src/dotfile.c:339
 msgid "green"
 msgstr "vert"
 
-#: src/dotfile.c:372
+#: src/dotfile.c:342
 msgid "yellow"
 msgstr "jaune"
 
-#: src/dotfile.c:375
+#: src/dotfile.c:345
 msgid "blue"
 msgstr "bleu"
 
-#: src/dotfile.c:378
+#: src/dotfile.c:348
 msgid "magenta"
 msgstr "magenta"
 
-#: src/dotfile.c:381
+#: src/dotfile.c:351
 msgid "cyan"
 msgstr "cyan"
 
-#: src/dotfile.c:384
+#: src/dotfile.c:354
 msgid "white"
 msgstr "blanc"
 
@@ -340,7 +340,7 @@ msgstr " OPT. DE MONT.\n"
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/util.c:465
+#: src/util.c:496
 msgid ""
 "WARNING: TTY too narrow. Some options will be disabled to try to make dfc "
 "output fit.\n"
@@ -348,7 +348,7 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options seront désactivées "
 "afin d'ajuster l'affichage.\n"
 
-#: src/util.c:505
+#: src/util.c:536
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
