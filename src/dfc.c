@@ -177,7 +177,7 @@ main(int argc, char *argv[])
 	 /* Init default colors and symbol sign */
 	init_conf(&cnf);
 
-	while ((ch = getopt(argc, argv, "abc:de:fhimnop:q:st:Tu:vwW")) != -1) {
+	while ((ch = getopt(argc, argv, "abc:de:fhilmnop:q:st:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -246,6 +246,9 @@ main(int argc, char *argv[])
 			break;
 		case 'i':
 			iflag = 1;
+			break;
+		case 'l':
+			lflag = 1;
 			break;
 		case 'm':
 			mflag = 1;
@@ -420,10 +423,12 @@ usage(int status)
 			"\t-e\texport to specified format. Read the manpage\n"
 			"\t\tfor details\n"
 			"\t-f\tdisable auto-adjust mode (force display)\n"
-			"\t-h\tprint this message\n"),
+			"\t-h\tprint this message\n"
+			"\t-i\tinfo about inodes\n"
+			"\t-l\tonly show information about locally mounted\n"
+			"\t\tfile systems\n"),
 			stdout);
 		(void)fputs(_(
-			"\t-i\tinfo about inodes\n"
 			"\t-m\tuse metric (SI unit)\n"
 			"\t-n\tdo not print header\n"
 			"\t-o\tshow mount flags\n"
@@ -687,6 +692,15 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 			p = p->next;
 			continue;
 			/* NOTREACHED */
+		}
+
+		/* skip remote file systems */
+		if (lflag) {
+			if (is_remote(p->type)) {
+				p = p->next;
+				continue;
+				/* NOTREACHED */
+			}
 		}
 
 		/* filesystem */

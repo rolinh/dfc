@@ -46,6 +46,7 @@ int humanize(double *n);
 double cvrt(double n);
 int fstypefilter(char *type, char *filter, int nm);
 int fsnamefilter(char *fsname, char *filter, int nm);
+int is_remote(char *fstype);
 int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
 void auto_adjust(struct list lst, int width);

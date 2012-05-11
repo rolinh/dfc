@@ -386,6 +386,28 @@ fsnamefilter(char *fsname, char *filter, int nm)
 }
 
 /*
+ * Determine if the fstype is remote or only local.
+ * Return 1 if remote, otherwise return 0.
+ * @fstype: type of file system
+ */
+int
+is_remote(char *fstype)
+{
+	/* assume it is local by default */
+	int ret = 0;
+
+	if (!strcmp(fstype, "afs") || !strcmp(fstype, "cifs") ||
+		!strcmp(fstype, "coda") || !strcmp(fstype, "fuse.sshfs") ||
+		!strcmp(fstype, "mfs") || !strcmp(fstype, "ncpfs") ||
+		!strcmp(fstype, "ftpfs") || !strcmp(fstype, "nfs") ||
+		!strcmp(fstype, "smbfs") || !strcmp(fstype, "sshfs"))
+		ret = 1;
+
+	return ret;
+	/* NOTREACHED */
+}
+
+/*
  * Compares regarding the qflag
  * @a: first element of comparison
  * @b: second element of comparison

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-11 11:08+0200\n"
+"POT-Creation-Date: 2012-05-11 12:40+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -82,26 +82,26 @@ msgstr "-c: sous-option illégale %s\n"
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:278
+#: src/dfc.c:281
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:331
+#: src/dfc.c:334
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:373
+#: src/dfc.c:376
 #, fuzzy, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:408
+#: src/dfc.c:411
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:411
+#: src/dfc.c:414
 #, fuzzy
 msgid ""
 "Usage:  dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
@@ -117,6 +117,9 @@ msgid ""
 "\t\tfor details\n"
 "\t-f\tdisable auto-adjust mode (force display)\n"
 "\t-h\tprint this message\n"
+"\t-i\tinfo about inodes\n"
+"\t-l\tonly show information about locally mounted\n"
+"\t\tfile systems\n"
 msgstr ""
 "Utilisation: dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] [-p FSNAME]  [-q SORTBY] "
 "[-t FSTYPE]\n"
@@ -132,9 +135,9 @@ msgstr ""
 "\t-f\tdésactive le mode d'auto-ajustement (force l'affichage)\n"
 "\t-h\taffiche ce message\n"
 
-#: src/dfc.c:426
+#: src/dfc.c:432
+#, fuzzy
 msgid ""
-"\t-i\tinfo about inodes\n"
 "\t-m\tuse metric (SI unit)\n"
 "\t-n\tdo not print header\n"
 "\t-o\tshow mount flags\n"
@@ -172,21 +175,21 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:489
+#: src/dfc.c:494
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:567
+#: src/dfc.c:572
 msgid "sorry, not available on MacOS..."
 msgstr "désolé, non disponible pour MacOS..."
 
-#: src/dfc.c:782
+#: src/dfc.c:796
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:858
+#: src/dfc.c:872
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
@@ -340,7 +343,7 @@ msgstr " OPT. DE MONT.\n"
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/util.c:496
+#: src/util.c:518
 msgid ""
 "WARNING: TTY too narrow. Some options will be disabled to try to make dfc "
 "output fit.\n"
@@ -348,7 +351,7 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options seront désactivées "
 "afin d'ajuster l'affichage.\n"
 
-#: src/util.c:536
+#: src/util.c:558
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
