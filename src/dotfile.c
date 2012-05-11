@@ -173,7 +173,7 @@ parse_conf(char *conf)
 int
 set_conf(char *key, char *val)
 {
-	long int tmp;
+	int tmp;
 	int ret = 0;
 
 	if (strcmp(key, "color_header") == 0) {
@@ -202,8 +202,10 @@ set_conf(char *key, char *val)
 			cnf.chigh = tmp;
 	} else if (strcmp(key, "graph_medium") == 0) {
 		ret = -1;
-		tmp = strtol(val, (char **) NULL, 10);
-		if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
+		/* reset errno value for strtol (see strtol(3)) */
+		errno = 0;
+		tmp = (int)strtol(val, (char **) NULL, 10);
+		if (errno)
 			(void)fprintf(stderr, _("Value conversion failed"
 				" for graph_medium: %s. What were you "
 				"expecting with such a thing anyway?\n"),
@@ -216,12 +218,14 @@ set_conf(char *key, char *val)
 				" set above 100: %s\n"), val);
 		else {
 			ret = 0;
-			cnf.gmedium = (int)tmp;
+			cnf.gmedium = tmp;
 		}
 	} else if (strcmp(key, "graph_high") == 0) {
 		ret = -1;
-		tmp = strtol(val, (char **) NULL, 10);
-		if ((tmp == LONG_MIN || tmp == LONG_MAX) && errno == ERANGE)
+		/* reset errno value for strtol (see strtol(3)) */
+		errno = 0;
+		tmp = (int)strtol(val, (char **) NULL, 10);
+		if (errno)
 			(void)fprintf(stderr, _("Value conversion failed"
 				" for graph_medium: %s. What were you "
 				"expecting with such a thing anyway?\n"),
@@ -234,7 +238,7 @@ set_conf(char *key, char *val)
 				" set above 100: %s\n"), val);
 		else {
 			ret = 0;
-			cnf.ghigh = (int)tmp;
+			cnf.ghigh = tmp;
 		}
 	} else if (strcmp(key, "graph_symbol") == 0) {
 		if (strlen(val) == 1)
