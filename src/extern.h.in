@@ -84,9 +84,7 @@ int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, mflag, nflag,
     oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
 int Tflag, Wflag;
 
-
-/* struct to store specific configuration from config file */
-struct conf cnf;
+/* flag that determines which unit is in use (Ko, Mo, etc.) */
 char unitflag;
 
 #endif /* ndef EXTERN_H */
