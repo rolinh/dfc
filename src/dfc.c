@@ -62,7 +62,7 @@
 #include <sys/param.h>
 #include <sys/statvfs.h>
 
-#ifdef BSD
+#if defined(BSD) || defined(__APPLE__)
 #include <sys/ucred.h>
 #include <sys/mount.h>
 #endif
@@ -567,14 +567,9 @@ fetch_info(struct list *lst)
 						12))) == NULL) {
 				fmi->type = "unknown";
 			}
-#ifdef __APPLE__
-			/* TODO: implement feature for MacOS */
-			fmi->opts = _("sorry, not available on MacOS...");
-#else
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
 				fmi->opts = "none";
 			}
-#endif /* __APPLE__ */
 #endif
 			/* infos from statvfs */
 			fmi->bsize	= vfsbuf.f_bsize;
@@ -778,8 +773,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		disp->deinit();
 }
 
-/* does not work on Mac OS */
-#if defined(__FreeBSD__) || defined(__OpenBSD__)
+#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
 /*
  * Turn the f_flags member of the given struct statfs to a human-readable string
  * of the form "opt1,opt2..."
@@ -832,10 +826,6 @@ statfs_flags_to_str(struct statfs *s)
                        goto truncated;
 			/* NOTREACHED */
 #ifdef __FreeBSD__
-       if (flags & MNT_UNION)
-               if (strlcat(buffer, ",union", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
        if (flags & MNT_NOCLUSTERR)
                if (strlcat(buffer, ",noclusterr", bufsize) >= bufsize)
                        goto truncated;
@@ -852,10 +842,6 @@ statfs_flags_to_str(struct statfs *s)
                if (strlcat(buffer, ",suiddir", bufsize) >= bufsize)
                        goto truncated;
 			/* NOTREACHED */
-       if (flags & MNT_MULTILABEL)
-               if (strlcat(buffer, ",multilabel", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
        if (flags & MNT_ACLS)
                if (strlcat(buffer, ",acls", bufsize) >= bufsize)
                        goto truncated;
@@ -865,6 +851,65 @@ statfs_flags_to_str(struct statfs *s)
 		       goto truncated;
 			/* NOTREACHED */
 #endif
+
+#if defined(__FreeBSD__) || defined(__APPLE__)
+       if (flags & MNT_UNION)
+               if (strlcat(buffer, ",union", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+       if (flags & MNT_MULTILABEL)
+               if (strlcat(buffer, ",multilabel", bufsize) >= bufsize)
+                       goto truncated;
+			/* NOTREACHED */
+#endif
+
+#ifdef __APPLE__
+	if (flags & MNT_DOVOLFS)
+		if (strlcat(buffer, ",dovolfs", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_EXPORTED)
+		if (strlcat(buffer, ",exported", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_UNKNOWNPERMISSIONS)
+		if (strlcat(buffer, "unknownpermissions", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_LOCAL)
+		if (strlcat(buffer, "local", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_AUTOMOUNTED)
+		if (strlcat(buffer, "automounted", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_QUOTA)
+		if (strlcat(buffer, "quota", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_ROOTFS)
+		if (strlcat(buffer, "rootfs", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & DEFWRITE)
+		if (strlcat(buffer, "defwrite", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_NODEV)
+		if (strlcat(buffer, "nodev", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_DONTBROWSE)
+		if (strlcat(buffer, "dontbrowse", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_JOURNALED)
+		if (strlcat(buffer, "journaled", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+#endif /* __APPLE__ */
+
        return buffer;
        /* NOTREACHED */
 
@@ -875,4 +920,4 @@ truncated:
        /* NOTREACHED */
 }
 
-#endif /* __FreeBSD__ */
+#endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ */
