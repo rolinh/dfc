@@ -5,7 +5,7 @@ dfc is a simple tool that display file system space usage using graph and color
 ## BUILD
 
 cmake is required in order to build dfc.
-I suggest you create a build directory to compile dfc but this os of course not
+I suggest you create a build directory to compile dfc but this is of course not
 required.
 
 Create the build directory:
@@ -54,13 +54,18 @@ Example (from the previously created build directory):
 	cmake .. -DPREFIX=/usr -DSYSSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RELEASE
 
 Then run the 'make install' and it will install dfc according to what you chose
-in previous step.
+in the previous step.
 
 ## CONFIGURATION FILE
 
 The configuration file found in conf/dfcrc needs to be placed here:
 
 	$XDG_CONFIG_HOME/dfc/dfcrc
+
+Note that if, for instance, french is the language you use, you should then use
+the configuration file that has been translated into french
+(found in conf/fr/dfcrc) and so on for any language into which dfc has beed
+translated.
 
 If your operating system does not support XDG Base Directory Specification it
 can then be placed in this directory:
@@ -78,6 +83,10 @@ Here is the list of dependencies:
   * glibc
 
 Yep, that should be it. :)
+
+Please, note that gettext is required in order to build translation.
+If you do not want to package dfc with translation support, use the option to
+disable translation as explained in the build section.
 
 Of course, cmake is a build dependency.
 
