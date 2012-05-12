@@ -10,7 +10,7 @@ set(VERSION_BRANCH "devel")
 set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}-${VERSION_BRANCH})
 
 # useful defines
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin/${CMAKE_BUILD_TYPE})
@@ -69,19 +69,7 @@ else()
 	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
 
-option(NLS_ENABLED "Translation support with gettext" on)
 
-if(NLS_ENABLED)
-	# load gettext module for translation
-	set(GettextTranslate_ALL true)
-	set(GettextTranslate_GMO_BINARY true)
-	include(GettextTranslate)
-	add_subdirectory(po)
-
-	add_definitions(
-		-DLOCALE_DIR="${LOCALEDIR}"
-	)
-endif()
 
 set(CMAKE_BUILD_TYPE RELEASE)
 
@@ -125,6 +113,28 @@ add_executable(
 	${EXECUTABLE_NAME}
 	${SRCS}
 )
+
+# Check for libintl
+find_package(Libintl)
+if (LIBINTL_FOUND)
+	option(NLS_ENABLED "Translation support with gettext" on)
+else()
+	option(NLS_ENABLED "Translation support with gettext" off)
+endif()
+
+if(NLS_ENABLED)
+	# load gettext module for translation
+	set(GettextTranslate_ALL true)
+	set(GettextTranslate_GMO_BINARY true)
+	include(GettextTranslate)
+	add_subdirectory(po)
+
+	add_definitions(
+		-DLOCALE_DIR="${LOCALEDIR}"
+	)
+	include_directories(${LIBINTL_INCLUDE_DIR})
+	target_link_libraries(${EXECUTABLE_NAME} ${LIBINTL_LIBRARIES})
+endif()
 
 set(DFC_DOC_FILES
 	AUTHORS
