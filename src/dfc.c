@@ -707,18 +707,24 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		}
 
 #ifdef __linux__
-		size = (double)p->blocks *(double)p->frsize;
-		avail = (double)p->bavail * (double)p->frsize;
+		size  = (double)p->frsize * (double)p->blocks;
+		avail = (double)p->frsize * (double)p->bavail;
+		used  = (double)p->frsize * ((double)p->blocks - (double)p->bfree);
 #else
-		size = (double)p->bsize * (double)p->blocks;
-		avail = (double)p->bsize * (double)p->bavail;
+		size  = (double)p->bsize * (double)p->blocks;
+		avail = (double)p->bsize * (double)p->bfree;
+		used  = (double)p->bsize * ((double)p->blocks - (double)p->bfree);
 #endif
-		used = size - avail;
 		/* calculate the % used */
 		if ((int)size == 0)
 			perctused = 100.0;
 		else
-			perctused = (used / size) * 100.0;
+			/*
+			 * compute percent based on bfree as it is a given
+			 * value and not a computed one like used size
+			 */
+			perctused = 100.0 -
+				((double)p->bavail / (double)p->blocks) * 100.0;
 
 		if (sflag) {
 			stot += size;
