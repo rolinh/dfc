@@ -39,10 +39,11 @@ translation.
 Here are the steps you need to follow in order to translate dfc into a new
 language:
 
-  * Create a new pot file:
+  * Build dfc as explained in the README file. This will generate an updated
+    dfc.pot file in the po directory which you will use to generate a po file
+	for your own language.
 
-		cd po
-		make dfc.pot
+  * Navigate to the po directory.
 
   * Generate a new po file for the language you want to translate into. In the
     example below, I assume it will be translated into French:
@@ -74,10 +75,8 @@ file:
 
 ### UPDATING A TRANSLATION
 
-  * Create the pot file:
-
-		cd po
-		make dfc.pot
+  * Build dfc as explained in the README file in order to generate the dfc.pot
+    file.
 
   * Issue this command to merge the existing po file (here, I assume it is French):
 
@@ -101,12 +100,11 @@ Two things though:
   * Colors value must have exactly the same translation as the
     one you did for the po file.
 
-  * Do NOT translate those values:
+  * Do NOT translate the values before the equal sign:
 
 	  * color_header
 	  * color_low
 	  * color_medium
-	  * color_high
-	  * grah_symbol
+	  * ...
 
 <!-- vim: set filetype=markdown textwidth=80 -->
