@@ -121,9 +121,9 @@ char *
 sanitize_string(const char *s)
 {
 	int i;
-	int nchars = 1; /* Trailing \0 */
+	size_t nchars = 1; /* Trailing \0 */
 	int j = 0;
-	char *new = malloc(nchars);
+	char *new;
 
 	for (i = 0; s[i] != '\0'; i++) {
 		if (s[i] == '_')
@@ -136,7 +136,7 @@ sanitize_string(const char *s)
 		return strdup(s);
 		/* NOTREACHED */
 
-
+ 	new = malloc(nchars);
 	if (new == NULL)
 		exit(EXIT_FAILURE);
 
