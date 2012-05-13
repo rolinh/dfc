@@ -76,22 +76,16 @@ set(CMAKE_BUILD_TYPE RELEASE)
 # CFLAGS
 add_definitions(-O2 -std=c89)
 
-if(CMAKE_COMPILER_IS_GNUCC)
-	option(GRIM "Very strict compiler options" off)
-	if(GRIM)
-		set(CMAKE_BUILD_TYPE GRIM)
-		add_definitions(
-			-g
-			-pedantic
-			-Wall
-			-Wunused-parameter
-			-Wlong-long
-			-Wconversion
-			-Wsign-conversion
-			-Wimplicit-function-declaration
-			-Wstrict-prototypes)
-	endif(GRIM)
-endif(CMAKE_COMPILER_IS_GNUCC)
+option(GRIM "Very strict compiler options" off)
+if(GRIM)
+	set(CMAKE_BUILD_TYPE GRIM)
+	include(CheckCCompilerFlag)
+	check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pedantic -Wall -Wunused-parameter -Wlong-long -Wconversion -Wimplicit-function-declaration -Wstrict-prototypes")
+	if (HAS_WSIGN_CONVERSION)
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wsign-conversion")
+	endif()
+endif()
 
 configure_file(
 	${SOURCE_DIR}/extern.h.in
