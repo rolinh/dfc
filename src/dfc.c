@@ -898,7 +898,7 @@ statfs_flags_to_str(struct statfs *s)
 		if (strlcat(buffer, "rootfs", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
-	if (flags & DEFWRITE)
+	if (flags & MNT_DEFWRITE)
 		if (strlcat(buffer, "defwrite", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
