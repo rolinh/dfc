@@ -255,7 +255,7 @@ text_disp_bar(double perct)
 void
 text_disp_at(double n, double perct)
 {
-    	int i;
+	int i;
 
 	change_color(perct);
 

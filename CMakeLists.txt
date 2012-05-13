@@ -69,22 +69,20 @@ else()
 	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
 
-
-
-set(CMAKE_BUILD_TYPE RELEASE)
-
 # CFLAGS
 add_definitions(-O2 -std=c89)
 
-option(GRIM "Very strict compiler options" off)
+option(GRIM "Very strict compiler options (use it to debug dfc)" off)
 if(GRIM)
-	set(CMAKE_BUILD_TYPE GRIM)
+	set(CMAKE_BUILD_TYPE GRIM CACHE STRING "Very strict compiler options")
 	include(CheckCCompilerFlag)
 	check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pedantic -Wall -Wunused-parameter -Wlong-long -Wconversion -Wimplicit-function-declaration -Wstrict-prototypes")
 	if (HAS_WSIGN_CONVERSION)
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wsign-conversion")
 	endif()
+else()
+	set(CMAKE_BUILD_TYPE RELEASE CACHE STRING "Build optimized for release")
 endif()
 
 configure_file(

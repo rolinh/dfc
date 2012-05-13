@@ -136,7 +136,7 @@ sanitize_string(const char *s)
 		return strdup(s);
 		/* NOTREACHED */
 
- 	new = malloc(nchars);
+	new = malloc(nchars);
 	if (new == NULL)
 		exit(EXIT_FAILURE);
 
