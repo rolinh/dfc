@@ -48,12 +48,11 @@ void usage(int status);
 void fetch_info(struct list *lst);
 void disp(struct list *lst, char *fsfilter, char *fsnfilter, struct Display *disp);
 
-#if defined(__FreeBSD__) || defined(__OpenBSD__)
+#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
 /* avoid struct statfs declared inside parameter list warning */
 struct statfs;
 
-char *
-statfs_flags_to_str(struct statfs *s);
+char * statfs_flags_to_str(struct statfs *s);
 #endif
 
 #endif /* ndef DFC_H */
