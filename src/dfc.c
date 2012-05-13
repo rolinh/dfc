@@ -879,39 +879,39 @@ statfs_flags_to_str(struct statfs *s)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_UNKNOWNPERMISSIONS)
-		if (strlcat(buffer, "unknownpermissions", bufsize) >= bufsize)
+		if (strlcat(buffer, ",unknownpermissions", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_LOCAL)
-		if (strlcat(buffer, "local", bufsize) >= bufsize)
+		if (strlcat(buffer, ",local", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_AUTOMOUNTED)
-		if (strlcat(buffer, "automounted", bufsize) >= bufsize)
+		if (strlcat(buffer, ",automounted", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_QUOTA)
-		if (strlcat(buffer, "quota", bufsize) >= bufsize)
+		if (strlcat(buffer, ",quota", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_ROOTFS)
-		if (strlcat(buffer, "rootfs", bufsize) >= bufsize)
+		if (strlcat(buffer, ",rootfs", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_DEFWRITE)
-		if (strlcat(buffer, "defwrite", bufsize) >= bufsize)
+		if (strlcat(buffer, ",defwrite", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_NODEV)
-		if (strlcat(buffer, "nodev", bufsize) >= bufsize)
+		if (strlcat(buffer, ",nodev", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_DONTBROWSE)
-		if (strlcat(buffer, "dontbrowse", bufsize) >= bufsize)
+		if (strlcat(buffer, ",dontbrowse", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_JOURNALED)
-		if (strlcat(buffer, "journaled", bufsize) >= bufsize)
+		if (strlcat(buffer, ",journaled", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 #endif /* __APPLE__ */
