@@ -106,7 +106,7 @@ html_disp_header(struct list *lst)
 
 	(void) lst;
 
-	if ((date = getdate()) == NULL)
+	if ((date = fetchdate()) == NULL)
 		date = _("Unknown date");
 
 	(void)printf("    <table>\n    <caption style = \"caption-side: bottom;\">");

@@ -39,8 +39,8 @@
 /* function declaration */
 int imax(int a, int b);
 char * strtrim(char *str);
-char* shortenstr(char *str, int len);
-char* sanitize_string(const char *s);
+char * shortenstr(char *str, int len);
+char * sanitize_string(const char *s);
 int getttywidth(void);
 int humanize(double *n);
 double cvrt(double n);
@@ -51,6 +51,6 @@ int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
 void auto_adjust(struct list lst, int width);
 int req_width(struct list lst);
-char* getdate(void);
+char * fetchdate(void);
 
 #endif /* ndef UTIL_H */

@@ -617,7 +617,7 @@ req_width(struct list lst)
  * NULL is returned in case of errors
  */
 char *
-getdate(void)
+fetchdate(void)
 {
 	char date[255];
 	time_t t;
