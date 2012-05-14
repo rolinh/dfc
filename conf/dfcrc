@@ -27,35 +27,34 @@ graph_medium = 50
 # starting value from which usage is considered high
 graph_high = 75
 
-# Symbol used for the graph
-# Can be any ASCII symbol
+# Symbol used for the graph (can be any ASCII symbol)
 graph_symbol = =
 
-# You can also choose the colors for the html export
-# Colors can take any of html recognised value
+# You can also choose the colors for the HTML export
+# Color values can take any of html recognized value
 # For instance, this is white: #FFFFFF
 # This is red: #FF0000
 # Etc.
 # NOTE: you MUST ommit the # sign when setting it here
 # (white becomes FFFFFF and so on)
 
-# Header background color for html output (also used in footer)
+# Header background color (also used in footer)
 html_color_header_bg = 970000
-# Header font color for html output (also used in footer)
+# Header font color (also used in footer)
 html_color_header_fg = FFFFFF
 # Cell background color
 html_color_cell_bg = E9E9E9
 # Cell font color
 html_color_cell_fg = 000000
-# Background color on hover
+# Background color on mouse hover
 html_color_hover_bg = FFFFFF
-# Font color on hover
+# Font color on mouse hover
 html_color_hover_fg = 000000
-# Color when usage is low for html output
+# Color when usage is low
 html_color_low = 348017
-# Color when usage is medium for html output
+# Color when usage is medium
 html_color_medium = FDD017
-# Color when usage is high for html output
+# Color when usage is high
 html_color_high = F62217
 
 # vim: set noet syn=conf
