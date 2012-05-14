@@ -779,7 +779,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		disp->deinit();
 }
 
-#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__) || defined(__DragonFly__)
 /*
  * Turn the f_flags member of the given struct statfs to a human-readable string
  * of the form "opt1,opt2..."
@@ -869,25 +869,13 @@ statfs_flags_to_str(struct statfs *s)
 			/* NOTREACHED */
 #endif
 
-#ifdef __APPLE__
-	if (flags & MNT_DOVOLFS)
-		if (strlcat(buffer, ",dovolfs", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_EXPORTED)
-		if (strlcat(buffer, ",exported", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_UNKNOWNPERMISSIONS)
-		if (strlcat(buffer, ",unknownpermissions", bufsize) >= bufsize)
+#if defined(__APPLE__) || defined(__DragonFly__)
+	if (flags & MNT_NODEV)
+		if (strlcat(buffer, ",nodev", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_LOCAL)
 		if (strlcat(buffer, ",local", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_AUTOMOUNTED)
-		if (strlcat(buffer, ",automounted", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_QUOTA)
@@ -898,12 +886,27 @@ statfs_flags_to_str(struct statfs *s)
 		if (strlcat(buffer, ",rootfs", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
-	if (flags & MNT_DEFWRITE)
-		if (strlcat(buffer, ",defwrite", bufsize) >= bufsize)
+	if (flags & MNT_EXPORTED)
+		if (strlcat(buffer, ",exported", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
-	if (flags & MNT_NODEV)
-		if (strlcat(buffer, ",nodev", bufsize) >= bufsize)
+#endif /* __APPLE__ || DragonFly */
+
+#ifdef __APPLE__
+	if (flags & MNT_DOVOLFS)
+		if (strlcat(buffer, ",dovolfs", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_UNKNOWNPERMISSIONS)
+		if (strlcat(buffer, ",unknownpermissions", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_AUTOMOUNTED)
+		if (strlcat(buffer, ",automounted", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_DEFWRITE)
+		if (strlcat(buffer, ",defwrite", bufsize) >= bufsize)
 			goto truncated;
 			/* NOTREACHED */
 	if (flags & MNT_DONTBROWSE)
@@ -915,6 +918,25 @@ statfs_flags_to_str(struct statfs *s)
 			goto truncated;
 			/* NOTREACHED */
 #endif /* __APPLE__ */
+
+#if defined(__DragonFly__)
+	if (flags & MNT_EXRDONLY)
+		if (strlcat(buffer, ",exrdonly", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_DEFEXPORTED)
+		if (strlcat(buffer, ",defexported", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_EXPORTANON)
+		if (strlcat(buffer, ",exportanon", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+	if (flags & MNT_EXKERB)
+		if (strlcat(buffer, ",exkerb", bufsize) >= bufsize)
+			goto truncated;
+			/* NOTREACHED */
+#endif /* __DragonFly__ */
 
        return buffer;
        /* NOTREACHED */
