@@ -168,7 +168,7 @@ getttywidth(void)
 	struct ttysize win;
 #elif defined(TIOCGWINSZ)
 	struct winsize win;
-#endif
+#endif /* TIOCGSIZE */
 
 	if (!isatty(STDOUT_FILENO))
 		return 0;
@@ -180,15 +180,15 @@ getttywidth(void)
 		width = win.ts_cols;
 #else
 		width = win.ws_col;
-#endif
+#endif /* __APPLE__ || __OpenBSD__ || __DragonFly__ */
 #elif defined(TIOCGWINSZ)
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
 #if defined(__APPLE__) || defined(__OpenBSD__) || defined(__DragonFly__)
 		width = win.ts_cols;
 #else
 		width = win.ws_col;
-#endif
-#endif
+#endif /* __APPLE__ || __OpenBSD__ || __DragonFly__ */
+#endif /* TIOCGSIZE */
 	return width == 0 ? 80 : width;
 	/* NOTREACHED */
 }

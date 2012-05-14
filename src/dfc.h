@@ -53,6 +53,6 @@ void disp(struct list *lst, char *fsfilter, char *fsnfilter, struct Display *dis
 struct statfs;
 
 char * statfs_flags_to_str(struct statfs *s);
-#endif
+#endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ */
 
 #endif /* ndef DFC_H */

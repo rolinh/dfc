@@ -33,17 +33,12 @@
  * Displays free disk space in an elegant manner.
  */
 
-/* What works for FreeBSD works for MacOS */
-#ifndef __linux__
-#define BSD
-#endif
-
 #define _BSD_SOURCE
 
 #ifdef __linux
 #define _POSIX_C_SOURCE 2
 #define _XOPEN_SOURCE 500
-#endif
+#endif /* __linux__ */
 
 #define STRMAXLEN 24
 
@@ -55,24 +50,24 @@
 
 #ifdef __linux__
 #include <mntent.h>
-#endif
+#endif /* __linux__ */
 #include <string.h>
 
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/statvfs.h>
 
-#if defined(BSD) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__) || defined(__DragonFly__)
 #include <sys/ucred.h>
 #include <sys/mount.h>
-#endif
+#endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ */
 
 #include "dfc.h"
 
 #ifdef NLS_ENABLED
 #include <locale.h>
 #include <libintl.h>
-#endif
+#endif /* NLS_ENABLED */
 
 int
 main(int argc, char *argv[])
@@ -465,11 +460,11 @@ fetch_info(struct list *lst)
 	FILE *mtab;
 	struct mntent *entbuf;
 	struct statvfs vfsbuf;
-#else
+#else /* *BSD */
 	int nummnt;
 	struct statfs *entbuf;
 	struct statfs vfsbuf, **fs;
-#endif
+#endif /* __linux__ */
 	/* init fsmntinfo */
 	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
 		(void)fputs("Error while allocating memory to fmi", stderr);
@@ -503,14 +498,14 @@ fetch_info(struct list *lst)
 				/* NOTREACHED */
 			}
 		} else {
-#else
+#else /* BSD */
 	if ((nummnt = getmntinfo(&entbuf, MNT_NOWAIT)) <= 0)
 		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
 		/* NOTREACHED */
 
 	for (fs = &entbuf; nummnt--; (*fs)++) {
 		vfsbuf = **fs;
-#endif
+#endif /* __linux__ */
 #ifdef __linux__
 			/* infos from getmntent */
 			if (Wflag) { /* Wflag to avoid name truncation */
@@ -540,7 +535,7 @@ fetch_info(struct list *lst)
 			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
 				fmi->opts = "none";
 			}
-#else
+#else /* BSD */
 			if (Wflag) { /* Wflag to avoid name truncation */
 				if ((fmi->fsname = strdup(
 						entbuf->f_mntfromname))	== NULL) {
@@ -570,14 +565,14 @@ fetch_info(struct list *lst)
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
 				fmi->opts = "none";
 			}
-#endif
+#endif /* __linux__ */
 			/* infos from statvfs */
 			fmi->bsize	= vfsbuf.f_bsize;
 #ifdef __linux__
 			fmi->frsize	= vfsbuf.f_frsize;
 #else			/* *BSD do not have frsize */
 			fmi->frsize	= 0;
-#endif
+#endif /* __linux__ */
 			fmi->blocks	= vfsbuf.f_blocks;
 			fmi->bfree	= vfsbuf.f_bfree;
 			fmi->bavail	= vfsbuf.f_bavail;
@@ -587,7 +582,7 @@ fetch_info(struct list *lst)
 			fmi->favail	= vfsbuf.f_favail;
 #else			/* *BSD do not have favail */
 			fmi->favail	= 0;
-#endif
+#endif /* __linux__ */
 			/* pointer to the next element */
 			fmi->next = NULL;
 
@@ -611,7 +606,7 @@ fetch_info(struct list *lst)
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
-#endif
+#endif /* __linux__ */
 }
 
 /*
@@ -710,11 +705,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		size  = (double)p->frsize * (double)p->blocks;
 		avail = (double)p->frsize * (double)p->bavail;
 		used  = (double)p->frsize * ((double)p->blocks - (double)p->bfree);
-#else
+#else /* *BSD */
 		size  = (double)p->bsize * (double)p->blocks;
 		avail = (double)p->bsize * (double)p->bavail;
 		used  = (double)p->bsize * ((double)p->blocks - (double)p->bfree);
-#endif
+#endif /* __linux__ */
 		/* calculate the % used */
 		if ((int)size == 0)
 			perctused = 100.0;
@@ -856,7 +851,7 @@ statfs_flags_to_str(struct statfs *s)
                if (strlcat(buffer, ",nfsv4acls", bufsize) >= bufsize)
 		       goto truncated;
 			/* NOTREACHED */
-#endif
+#endif /* __FreeBSD__ */
 
 #if defined(__FreeBSD__) || defined(__APPLE__)
        if (flags & MNT_UNION)
@@ -867,7 +862,7 @@ statfs_flags_to_str(struct statfs *s)
                if (strlcat(buffer, ",multilabel", bufsize) >= bufsize)
                        goto truncated;
 			/* NOTREACHED */
-#endif
+#endif /* __FreeBSD || __APPLE__ */
 
 #if defined(__APPLE__) || defined(__DragonFly__)
 	if (flags & MNT_NODEV)
@@ -948,4 +943,4 @@ truncated:
        /* NOTREACHED */
 }
 
-#endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ */
+#endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ */
