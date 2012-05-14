@@ -712,7 +712,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		used  = (double)p->frsize * ((double)p->blocks - (double)p->bfree);
 #else
 		size  = (double)p->bsize * (double)p->blocks;
-		avail = (double)p->bsize * (double)p->bfree;
+		avail = (double)p->bsize * (double)p->bavail;
 		used  = (double)p->bsize * ((double)p->blocks - (double)p->bfree);
 #endif
 		/* calculate the % used */
