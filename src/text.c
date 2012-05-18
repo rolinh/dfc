@@ -34,11 +34,32 @@
 
 #include <string.h>
 
-#include "text.h"
+#include "display.h"
+#include "dotfile.h"
+#include "export.h"
+#include "extern.h"
+#include "list.h"
+#include "util.h"
 
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
+
+/* static function declaration */
+static void text_disp_header(struct list *lst);
+static void text_disp_sum(struct list *lst, double stot, double utot, double ftot,
+                   double ifitot, double ifatot);
+static void text_disp_bar(double perct);
+static void text_disp_at(double n, double perct);
+static void text_disp_fs(struct list *lst, char *fsname);
+static void text_disp_type(struct list *lst, char *type);
+static void text_disp_inodes(unsigned long files, unsigned long favail);
+static void text_disp_mount(char *dir);
+static void text_disp_mopt(struct list *lst, char *dir, char *opts);
+static void text_disp_perct(double perct);
+
+static void change_color(double perct);
+static void reset_color(void);
 
 void
 init_disp_text(struct Display *disp)
@@ -61,7 +82,7 @@ init_disp_text(struct Display *disp)
  * Display header
  * @lst: queue containing the informations
  */
-void
+static void
 text_disp_header(struct list *lst)
 {
 	int i;
@@ -152,7 +173,7 @@ text_disp_header(struct list *lst)
  * @ifitot: total number of inodes
  * @ifatot: total number of available inodes
  */
-void
+static void
 text_disp_sum(struct list *lst, double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
@@ -200,7 +221,7 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
  * Display the nice usage bar
  * @perct: percentage value
  */
-void
+static void
 text_disp_bar(double perct)
 {
 	int i, j;
@@ -252,7 +273,7 @@ text_disp_bar(double perct)
  * @n: number to print
  * @perct: percentage (useful for finding which color to use)
  */
-void
+static void
 text_disp_at(double n, double perct)
 {
 	int i;
@@ -344,7 +365,7 @@ text_disp_at(double n, double perct)
  * @lst: list containing the information
  * @fsname: list of the file system to print
  */
-void
+static void
 text_disp_fs(struct list *lst, char *fsname)
 {
 	int i;
@@ -359,7 +380,7 @@ text_disp_fs(struct list *lst, char *fsname)
  * @lst: list containing the information
  * @type: the file system type to print
  */
-void
+static void
 text_disp_type(struct list* lst, char *type)
 {
 	int i;
@@ -374,7 +395,7 @@ text_disp_type(struct list* lst, char *type)
  *@files: number of inodes
  *@favail: number of available inodes
  */
-void
+static void
 text_disp_inodes(unsigned long files, unsigned long favail)
 {
 	(void)printf("%9ldk", files);
@@ -385,7 +406,7 @@ text_disp_inodes(unsigned long files, unsigned long favail)
  * display mount point
  * @dir: mount point
  */
-void
+static void
 text_disp_mount(char *dir)
 {
 	(void)printf(" %s", dir);
@@ -397,7 +418,7 @@ text_disp_mount(char *dir)
  * @dir: mount point
  * @opts: mount options
  */
-void
+static void
 text_disp_mopt(struct list* lst, char *dir, char *opts)
 {
 	int i;
@@ -412,7 +433,7 @@ text_disp_mopt(struct list* lst, char *dir, char *opts)
  * Display percentage
  * @perct: percentage
  */
-void
+static void
 text_disp_perct(double perct)
 {
 	change_color(perct);
@@ -425,7 +446,7 @@ text_disp_perct(double perct)
  * Change color according to perct
  * @perct: percentage
  */
-void
+static void
 change_color(double perct)
 {
 	if (cflag) {
@@ -441,7 +462,7 @@ change_color(double perct)
 /*
  * Reset color attribute to default
  */
-void
+static void
 reset_color(void)
 {
 	if (cflag)

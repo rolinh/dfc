@@ -33,11 +33,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "html.h"
+#include "extern.h"
+#include "export.h"
+#include "display.h"
+#include "list.h"
+#include "util.h"
 
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
+
+/* static functions declaration */
+static void html_disp_init(void);
+static void html_disp_deinit(void);
+static void html_disp_header(struct list *lst);
+static void html_disp_sum(struct list *lst, double stot, double utot, double ftot,
+                   double ifitot, double ifatot);
+static void html_disp_bar(double perct);
+static void html_disp_at(double n, double perct);
+static void html_disp_fs(struct list *lst, char *fsname);
+static void html_disp_type(struct list *lst, char *type);
+static void html_disp_inodes(unsigned long files, unsigned long favail);
+static void html_disp_mount(char *dir);
+static void html_disp_mopt(struct list *lst, char *dir, char *opts);
+static void html_disp_perct(double perct);
+
+void
+init_disp_html(struct Display *disp)
+{
+	disp->init         = html_disp_init;
+	disp->deinit       = html_disp_deinit;
+	disp->print_header = html_disp_header;
+	disp->print_sum    = html_disp_sum;
+	disp->print_bar    = html_disp_bar;
+	disp->print_at     = html_disp_at;
+	disp->print_fs     = html_disp_fs;
+	disp->print_type   = html_disp_type;
+	disp->print_inodes = html_disp_inodes;
+	disp->print_mount  = html_disp_mount;
+	disp->print_mopt   = html_disp_mopt;
+	disp->print_perct  = html_disp_perct;
+}
 
 static void
 html_disp_init(void)
@@ -82,24 +118,7 @@ html_disp_deinit(void)
     (void)puts("    </table>\n  </body>\n</html>");
 }
 
-void
-init_disp_html(struct Display *disp)
-{
-	disp->init         = html_disp_init;
-	disp->deinit       = html_disp_deinit;
-	disp->print_header = html_disp_header;
-	disp->print_sum    = html_disp_sum;
-	disp->print_bar    = html_disp_bar;
-	disp->print_at     = html_disp_at;
-	disp->print_fs     = html_disp_fs;
-	disp->print_type   = html_disp_type;
-	disp->print_inodes = html_disp_inodes;
-	disp->print_mount  = html_disp_mount;
-	disp->print_mopt   = html_disp_mopt;
-	disp->print_perct  = html_disp_perct;
-}
-
-void
+static void
 html_disp_header(struct list *lst)
 {
 	char *date;
@@ -139,7 +158,7 @@ html_disp_header(struct list *lst)
 	(void)puts("\t</tr>\n\t</thead>");
 }
 
-void
+static void
 html_disp_sum(struct list *lst, double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
@@ -181,7 +200,7 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 		(void)puts("\t  <td>N/A</td>");
 }
 
-void
+static void
 html_disp_bar(double perct)
 {
 	int barwidth = 100; /* In pixels */
@@ -221,7 +240,7 @@ html_disp_bar(double perct)
 	(void)puts("\t  </td>");
 }
 
-void
+static void
 html_disp_at(double n, double perct)
 {
 	int i;
@@ -305,7 +324,7 @@ html_disp_at(double n, double perct)
 	(void)puts("\t  </td>");
 }
 
-void
+static void
 html_disp_fs(struct list *lst, char *fsname)
 {
 	static int must_close = 0;
@@ -319,27 +338,27 @@ html_disp_fs(struct list *lst, char *fsname)
 	must_close = 1;
 }
 
-void
+static void
 html_disp_type(struct list *lst, char *type)
 {
 	(void)lst;
 	(void)printf("\t  <td>%s</td>\n", type);
 }
 
-void
+static void
 html_disp_inodes(unsigned long files, unsigned long favail)
 {
 	(void)printf("\t  <td style = \"text-align: right;\">%ldk</td>\n", files);
 	(void)printf("\t  <td style = \"text-align: right;\">%ldk</td>\n", favail);
 }
 
-void
+static void
 html_disp_mount(char *dir)
 {
 	(void)printf("\t  <td>%s</td>", dir);
 }
 
-void
+static void
 html_disp_mopt(struct list *lst, char *dir, char *opts)
 {
 	(void)lst;
@@ -348,7 +367,7 @@ html_disp_mopt(struct list *lst, char *dir, char *opts)
 	(void)printf("\n\t  <td>%s</td>", opts);
 }
 
-void
+static void
 html_disp_perct(double perct)
 {
 	(void)printf("\t  <td style = \"text-align: right;\">%.f%%</td>\n", perct);

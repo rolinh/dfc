@@ -38,11 +38,30 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "tex.h"
+#include "extern.h"
+#include "export.h"
+#include "display.h"
+#include "list.h"
+#include "util.h"
 
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
+
+/* static function declaration */
+static void tex_disp_init(void);
+static void tex_disp_deinit(void);
+static void tex_disp_header(struct list *lst);
+static void tex_disp_sum(struct list *lst, double stot, double utot, double ftot,
+                  double ifitot, double ifatot);
+static void tex_disp_bar(double perct);
+static void tex_disp_at(double n, double perct);
+static void tex_disp_fs(struct list *lst, char *fsname);
+static void tex_disp_type(struct list *lst, char *type);
+static void tex_disp_inodes(unsigned long files, unsigned long favail);
+static void tex_disp_mount(char *dir);
+static void tex_disp_mopt(struct list *lst, char *dir, char *opts);
+static void tex_disp_perct(double perct);
 
 void
 init_disp_tex(struct Display *disp)
@@ -61,7 +80,7 @@ init_disp_tex(struct Display *disp)
 	disp->print_perct  = tex_disp_perct;
 }
 
-void
+static void
 tex_disp_init(void)
 {
 	int i;
@@ -90,7 +109,7 @@ tex_disp_init(void)
 
 }
 
-void
+static void
 tex_disp_deinit(void)
 {
 	(void)puts("\\\\");
@@ -99,7 +118,7 @@ tex_disp_deinit(void)
 	(void)puts("\\end{document}");
 }
 
-void
+static void
 tex_disp_header(struct list *lst)
 {
 	(void)lst;
@@ -127,7 +146,7 @@ tex_disp_header(struct list *lst)
 	(void)puts("\\hline");
 }
 
-void
+static void
 tex_disp_sum(struct list *lst, double stot, double atot, double utot,
              double ifitot, double ifatot)
 {
@@ -169,7 +188,7 @@ tex_disp_sum(struct list *lst, double stot, double atot, double utot,
 		(void)printf(" & NA ");
 }
 
-void
+static void
 tex_disp_bar(double perct)
 {
 	/*
@@ -216,7 +235,7 @@ tex_disp_bar(double perct)
 	}
 }
 
-void
+static void
 tex_disp_at(double n, double perct)
 {
 	int i;
@@ -295,7 +314,7 @@ tex_disp_at(double n, double perct)
 	}
 }
 
-void
+static void
 tex_disp_fs(struct list *lst, char *fsname)
 {
 	static int must_close = 0;
@@ -312,7 +331,7 @@ tex_disp_fs(struct list *lst, char *fsname)
 	must_close = 1;
 }
 
-void
+static void
 tex_disp_type(struct list *lst, char *type)
 {
 	char *cleaned_type = sanitize_string(type);
@@ -323,13 +342,13 @@ tex_disp_type(struct list *lst, char *type)
 	free(cleaned_type);
 }
 
-void
+static void
 tex_disp_inodes(unsigned long files, unsigned long favail)
 {
 	(void) printf(" & %ldk & %ldk ", files, favail);
 }
 
-void
+static void
 tex_disp_mount(char *dir)
 {
 	char *cleaned_dir = sanitize_string(dir);
@@ -338,7 +357,7 @@ tex_disp_mount(char *dir)
 	free(cleaned_dir);
 }
 
-void
+static void
 tex_disp_mopt(struct list *lst, char *dir, char *opts)
 {
 	char *cleaned_opts = sanitize_string(opts);
@@ -350,7 +369,7 @@ tex_disp_mopt(struct list *lst, char *dir, char *opts)
 	free(cleaned_opts);
 }
 
-void
+static void
 tex_disp_perct(double perct)
 {
 	(void)printf(" & %.f\\%%", perct);

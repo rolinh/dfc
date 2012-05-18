@@ -33,15 +33,12 @@
  * header file for dfc.c
  */
 
+#include "display.h"
+#include "dotfile.h"
+#include "export.h"
 #include "extern.h"
 #include "list.h"
-#include "display.h"
-#include "text.h"
-#include "tex.h"
-#include "csv.h"
-#include "html.h"
 #include "util.h"
-#include "dotfile.h"
 
 /* function declaration */
 void usage(int status);

@@ -25,33 +25,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef H_TEX
-#define H_TEX
+#ifndef H_EXPORT
+#define H_EXPORT
 /*
- * tex.h
+ * export.h
  *
- * Header for tex.c
+ * Header file for public export functions
  */
 
-#include "extern.h"
 #include "display.h"
-#include "list.h"
-#include "util.h"
 
-/* function declaration */
+void init_disp_csv(struct Display *disp);
+void init_disp_html(struct Display *disp);
 void init_disp_tex(struct Display *disp);
-void tex_disp_init(void);
-void tex_disp_deinit(void);
-void tex_disp_header(struct list *lst);
-void tex_disp_sum(struct list *lst, double stot, double utot, double ftot,
-                  double ifitot, double ifatot);
-void tex_disp_bar(double perct);
-void tex_disp_at(double n, double perct);
-void tex_disp_fs(struct list *lst, char *fsname);
-void tex_disp_type(struct list *lst, char *type);
-void tex_disp_inodes(unsigned long files, unsigned long favail);
-void tex_disp_mount(char *dir);
-void tex_disp_mopt(struct list *lst, char *dir, char *opts);
-void tex_disp_perct(double perct);
+void init_disp_text(struct Display *disp);
 
-#endif /* ndef H_TEX */
+#endif /* ndef H_EXPORT */
+

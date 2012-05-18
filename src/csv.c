@@ -34,11 +34,28 @@
  */
 #include <stdio.h>
 
-#include "csv.h"
+#include "extern.h"
+#include "export.h"
+#include "display.h"
+#include "list.h"
+#include "util.h"
 
 #ifdef NLS_ENABLED
 #include <libintl.h>
 #endif
+
+/* static function declaration */
+static void csv_disp_header(struct list *lst);
+static void csv_disp_sum(struct list *lst, double stot, double utot, double ftot,
+                  double ifitot, double ifatot);
+static void csv_disp_bar(double perct);
+static void csv_disp_at(double n, double perct);
+static void csv_disp_fs(struct list *lst, char *fsname);
+static void csv_disp_type(struct list *lst, char *type);
+static void csv_disp_inodes(unsigned long files, unsigned long favail);
+static void csv_disp_mount(char *dir);
+static void csv_disp_mopt(struct list *lst, char *dir, char *opts);
+static void csv_disp_perct(double perct);
 
 void
 init_disp_csv(struct Display *disp)
@@ -57,7 +74,7 @@ init_disp_csv(struct Display *disp)
     disp->print_perct  = csv_disp_perct;
 }
 
-void
+static void
 csv_disp_header(struct list *lst)
 {
 	/* do not care about lst in CSV output */
@@ -90,7 +107,7 @@ csv_disp_header(struct list *lst)
 	(void)printf("\n");
 }
 
-void
+static void
 csv_disp_sum(struct list *lst, double stot, double atot, double utot,
              double ifitot, double ifatot)
 {
@@ -127,14 +144,14 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 	(void)printf("\n");
 }
 
-void
+static void
 csv_disp_bar(double perct)
 {
 	(void)perct;
 	/* DUMMY */
 }
 
-void
+static void
 csv_disp_at(double n, double perct)
 {
 	int i;
@@ -217,7 +234,7 @@ csv_disp_at(double n, double perct)
 	}
 }
 
-void
+static void
 csv_disp_fs(struct list *lst, char *fsname)
 {
 	/* we do not care about lst here */
@@ -226,7 +243,7 @@ csv_disp_fs(struct list *lst, char *fsname)
 	(void)printf("%s,",fsname);
 }
 
-void
+static void
 csv_disp_type(struct list *lst, char *type)
 {
 	/* we do not care about lst here */
@@ -235,20 +252,20 @@ csv_disp_type(struct list *lst, char *type)
 	(void)printf("%s,", type);
 }
 
-void
+static void
 csv_disp_inodes(unsigned long files, unsigned long favail)
 {
 	(void)printf(",%ld,k", files);
 	(void)printf(",%ld,k", favail);
 }
 
-void
+static void
 csv_disp_mount(char *dir)
 {
 	(void)printf(",%s", dir);
 }
 
-void
+static void
 csv_disp_mopt(struct list *lst, char *dir, char *opts)
 {
 	/* we do not care about lst here */
@@ -259,7 +276,7 @@ csv_disp_mopt(struct list *lst, char *dir, char *opts)
 	(void)printf(",%s", opts);
 }
 
-void
+static void
 csv_disp_perct(double perct)
 {
 	(void)printf("%.f,%%", perct);
