@@ -69,6 +69,8 @@ tex_disp_init(void)
 
 	(void)puts("\\documentclass[a4]{report}");
 	(void)puts("\\usepackage[landscape]{geometry}");
+	if (cflag)
+		(void)puts("\\usepackage{color}");
 	(void)puts("\\begin{document}");
 
 	if (Tflag)
@@ -170,8 +172,48 @@ tex_disp_sum(struct list *lst, double stot, double atot, double utot,
 void
 tex_disp_bar(double perct)
 {
-	(void) perct;
-	/* TODO */
+	/*
+	 * It could be nice to have a non-ASCII graph bar but it requires TeX
+	 * packages usually using postscript and so on. So stick with ASCII for
+	 * now until someone shows up with a better idea.
+	 */
+	int i, j;
+	int barinc = 5;
+
+	(void)printf(" & ");
+
+	/* option to display a wider bar */
+	if (wflag) {
+		barinc = 2;
+	}
+
+	if (!cflag) {
+		for (i = 0; i < perct; i += barinc)
+			(void)printf("%c", cnf.gsymbol);
+
+		for (j = i; j < 100; j += barinc)
+			(void)printf("\\-");
+	} else { /* color */
+		/* green */
+		(void)printf("\\textcolor{%s}{", colortostr(cnf.clow));
+		for (i = 0; (i < cnf.gmedium) && (i < perct); i += barinc)
+			(void)printf("%c", cnf.gsymbol);
+
+		/* yellow */
+		(void)printf("}\\textcolor{%s}{", colortostr(cnf.cmedium));
+		for (; (i < cnf.ghigh) && (i < perct); i += barinc)
+			(void)printf("%c", cnf.gsymbol);
+
+		/* red */
+		(void)printf("}\\textcolor{%s}{", colortostr(cnf.chigh));
+		for (; (i < 100) && (i < perct); i += barinc)
+			(void)printf("%c", cnf.gsymbol);
+
+		(void)printf("}");
+
+		for (j = i; j < 100; j += barinc)
+			(void)printf("\\-");
+	}
 }
 
 void
@@ -312,4 +354,29 @@ void
 tex_disp_perct(double perct)
 {
 	(void)printf(" & %.f\\%%", perct);
+}
+
+char *
+colortostr(int color)
+{
+	switch (color) {
+	case BLACK:
+		return "black";
+	case RED:
+		return "red";
+	case GREEN:
+		return "green";
+	case YELLOW:
+		return "yellow";
+	case BLUE:
+		return "blue";
+	case MAGENTA:
+		return "magenta";
+	case CYAN:
+		return "cyan";
+	case WHITE:
+		return "white";
+	default:
+		return NULL;
+	}
 }

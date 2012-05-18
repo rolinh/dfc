@@ -218,10 +218,11 @@ main(int argc, char *argv[])
 					init_disp_csv(&display);
 					break;
 				case EHTML:
+					Wflag = 1;
 					init_disp_html(&display);
 					break;
 				case ETEX:
-					bflag = 1; /* FIXME */
+					Wflag = 1;
 					init_disp_tex(&display);
 					break;
 				case -1:

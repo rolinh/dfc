@@ -54,4 +54,6 @@ void tex_disp_mount(char *dir);
 void tex_disp_mopt(struct list *lst, char *dir, char *opts);
 void tex_disp_perct(double perct);
 
+char * colortostr(int color);
+
 #endif /* ndef H_TEX */
