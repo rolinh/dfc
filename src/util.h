@@ -52,5 +52,6 @@ struct fsmntinfo * msort(struct fsmntinfo *fmi);
 void auto_adjust(struct list lst, int width);
 int req_width(struct list lst);
 char * fetchdate(void);
+char * colortostr(int color);
 
 #endif /* ndef UTIL_H */

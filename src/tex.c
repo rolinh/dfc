@@ -355,28 +355,3 @@ tex_disp_perct(double perct)
 {
 	(void)printf(" & %.f\\%%", perct);
 }
-
-char *
-colortostr(int color)
-{
-	switch (color) {
-	case BLACK:
-		return "black";
-	case RED:
-		return "red";
-	case GREEN:
-		return "green";
-	case YELLOW:
-		return "yellow";
-	case BLUE:
-		return "blue";
-	case MAGENTA:
-		return "magenta";
-	case CYAN:
-		return "cyan";
-	case WHITE:
-		return "white";
-	default:
-		return NULL;
-	}
-}

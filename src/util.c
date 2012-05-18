@@ -639,3 +639,32 @@ fetchdate(void)
 	return strdup(date);
 	/* NOTREACHED */
 }
+
+/*
+ * Return the name of the given color or NULL
+ * @color: color as defined in extern.h
+ */
+char *
+colortostr(int color)
+{
+	switch (color) {
+	case BLACK:
+		return "black";
+	case RED:
+		return "red";
+	case GREEN:
+		return "green";
+	case YELLOW:
+		return "yellow";
+	case BLUE:
+		return "blue";
+	case MAGENTA:
+		return "magenta";
+	case CYAN:
+		return "cyan";
+	case WHITE:
+		return "white";
+	default:
+		return NULL;
+	}
+}
