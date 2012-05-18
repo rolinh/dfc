@@ -668,3 +668,64 @@ colortostr(int color)
 		return NULL;
 	}
 }
+
+/*
+ * convert color from natural name into correponding number and return it
+ * @col: color name
+ */
+int
+colortoint(char *col)
+{
+	if (strcmp(col, _("black")) == 0)
+		return BLACK;
+		/* NOTREACHED */
+	else if (strcmp(col, _("red")) == 0)
+		return RED;
+		/* NOTREACHED */
+	else if (strcmp(col, _("green")) == 0)
+		return GREEN;
+		/* NOTREACHED */
+	else if (strcmp(col, _("yellow")) == 0)
+		return YELLOW;
+		/* NOTREACHED */
+	else if (strcmp(col, _("blue")) == 0)
+		return BLUE;
+		/* NOTREACHED */
+	else if (strcmp(col, _("magenta")) == 0)
+		return MAGENTA;
+		/* NOTREACHED */
+	else if (strcmp(col, _("cyan")) == 0)
+		return CYAN;
+		/* NOTREACHED */
+	else if (strcmp(col, _("white")) == 0)
+		return WHITE;
+		/* NOTREACHED */
+	else
+		return -1;
+		/* NOTREACHED */
+}
+
+/*
+ * check if the input string is a valid html color code.
+ * ie: it should be an hexadecimal value
+ * Returns 0 if all went well, otherwise it returns -1
+ * @color: input color
+ * NOTE: color should ommit the #: white is FFFFFF and not #FFFFFF
+ */
+int
+chk_html_colorcode(char *color)
+{
+	int i;
+
+	if (strlen(color) != 6)
+		return -1;
+		/* NOTREACHED */
+
+	for (i = 0; i < 6; i++)
+		if (isxdigit(color[i]) == 0)
+			return -1;
+			/* NOTREACHED */
+
+	return 0;
+	/* NOTREACHED */
+}
