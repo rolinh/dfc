@@ -65,8 +65,8 @@ static void reset_color(void);
 void
 init_disp_text(struct Display *disp)
 {
-    disp->init         = NULL;
-    disp->deinit       = NULL;
+    disp->init         = NULL; /* not required --> not implemented here */
+    disp->deinit       = NULL; /* not required --> not implemented here */
     disp->print_header = text_disp_header;
     disp->print_sum    = text_disp_sum;
     disp->print_bar    = text_disp_bar;

@@ -58,6 +58,7 @@ static void html_disp_mount(char *dir);
 static void html_disp_mopt(struct list *lst, char *dir, char *opts);
 static void html_disp_perct(double perct);
 
+/* init pointers from Display structure to the functions found here */
 void
 init_disp_html(struct Display *disp)
 {
@@ -75,6 +76,9 @@ init_disp_html(struct Display *disp)
 	disp->print_perct  = html_disp_perct;
 }
 
+/*
+ * Print DOCTYPE and everything that is required before the html body
+ */
 static void
 html_disp_init(void)
 {
@@ -109,6 +113,9 @@ html_disp_init(void)
 	(void)puts("  </head>\n  <body>");
 }
 
+/*
+ * Close all open html tag that need to be closed after html body
+ */
 static void
 html_disp_deinit(void)
 {
@@ -118,6 +125,10 @@ html_disp_deinit(void)
     (void)puts("    </table>\n  </body>\n</html>");
 }
 
+/*
+ * Display header
+ * @lst: is ignored here
+ */
 static void
 html_disp_header(struct list *lst)
 {
@@ -158,6 +169,15 @@ html_disp_header(struct list *lst)
 	(void)puts("\t</tr>\n\t</thead>");
 }
 
+/*
+ * display the sum (useful when -s option is used
+ * @lst: is ignored here
+ * @stot: total size of "total"
+ * @atot: total size of "available"
+ * @utot: total size of "used"
+ * @ifitot: total number of inodes
+ * @ifatot: total number of available inodes
+ */
 static void
 html_disp_sum(struct list *lst, double stot, double atot, double utot,
               double ifitot, double ifatot)
@@ -200,6 +220,10 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 		(void)puts("\t  <td>N/A</td>");
 }
 
+/*
+ * Display the nice usage bar
+ * @perct: percentage value
+ */
 static void
 html_disp_bar(double perct)
 {
@@ -324,6 +348,11 @@ html_disp_at(double n, double perct)
 	(void)puts("\t  </td>");
 }
 
+/*
+ * display file system
+ * @lst: is ignored here
+ * @fsname: list of the file system to print
+ */
 static void
 html_disp_fs(struct list *lst, char *fsname)
 {
@@ -338,6 +367,11 @@ html_disp_fs(struct list *lst, char *fsname)
 	must_close = 1;
 }
 
+/*
+ * display file system type
+ * @lst: is ignored here
+ * @type: the file system type to print
+ */
 static void
 html_disp_type(struct list *lst, char *type)
 {
@@ -345,6 +379,11 @@ html_disp_type(struct list *lst, char *type)
 	(void)printf("\t  <td>%s</td>\n", type);
 }
 
+/*
+ * display inodes
+ *@files: number of inodes
+ *@favail: number of available inodes
+ */
 static void
 html_disp_inodes(unsigned long files, unsigned long favail)
 {
@@ -352,12 +391,22 @@ html_disp_inodes(unsigned long files, unsigned long favail)
 	(void)printf("\t  <td style = \"text-align: right;\">%ldk</td>\n", favail);
 }
 
+/*
+ * display mount point
+ * @dir: mount point
+ */
 static void
 html_disp_mount(char *dir)
 {
 	(void)printf("\t  <td>%s</td>", dir);
 }
 
+/*
+ * display mount options
+ * @lst: is ignored here
+ * @dir: is ignored here
+ * @opts: mount options
+ */
 static void
 html_disp_mopt(struct list *lst, char *dir, char *opts)
 {
@@ -367,6 +416,10 @@ html_disp_mopt(struct list *lst, char *dir, char *opts)
 	(void)printf("\n\t  <td>%s</td>", opts);
 }
 
+/*
+ * Display percentage
+ * @perct: percentage
+ */
 static void
 html_disp_perct(double perct)
 {
