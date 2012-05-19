@@ -1,9 +1,9 @@
 .TH dfc 1  "Le 3 Avril 2012" "version 2.5.0" "COMMANDES UTILISATEURS"
 .SH NOM
-dfc \- affiche le taux d'utilisation des systèmes de fichiers avec couleurs
-et graphes.
+dfc \- affiche le taux d'utilisation des systèmes de fichiers avec graphes
+et couleurs.
 .SH SYNOPSIS
-.B dfc [OPTION(S)] [\-c WHEN] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
+.B dfc [OPTION(S)] [\-c WHEN] [\-e FORMAT] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
 .SH DESCRIPTION
 dfc(1) est un outil similaire à df(1) mise à part le fait qu'il est capable
 d'afficher un graphe en plus des données et qu'il peut utiliser des couleurs
@@ -13,13 +13,11 @@ biais de l'option "\-c").
 La taille disponible correspond à l'espace disponible du point de vue de
 l'utilisateur et non de la perspective de l'utilisateur root (càd: dfc(1)
 utilise f_bavail au lieu de f_bfree).
-Dans le même ordre d'idée, l'espace utilisé est calculé simplement par
-soustraction de l'espace disponible à la taille totale.
 
 Sans option, la taille est affichée dans un format lisible par l'être humain.
 Faites attention au fait qu'en utilisant ce format, quelques erreurs d'arrondis
 peuvent survenir lors du calcul de la taille. Si vous souhaitez une précision
-maximum, utilisez l'option "\-u" et choisissez l'unité désirée.
+maximale, utilisez l'option "\-u" et choisissez l'unité désirée.
 
 dfc(1) possède également une fonctionnalité permettant à l'affichage de
 s'auto\-ajuster en fonction de la taille du terminal. Si vous désirez
@@ -28,8 +26,7 @@ outrepasser ce comportement, utilisez l'option "\-f".
 .SH OPTIONS
 .TP
 \-a
-Affiche les informations à propos de tous les systèmes de fichiers trouvé dans
-le fichier mtab.
+Affiche tout (n'omet aucun système de fichiers).
 .TP
 \-b
 Désactive l'affichage du graphe.
@@ -38,27 +35,57 @@ Désactive l'affichage du graphe.
 Permet de choisir la couleur où WHEN est une des sous\-options suivantes:
 
 "always":
-	Les couleurs seront toujours utilisées, peu importe stdout.
+Les couleurs seront toujours utilisées, peu importe "stdout".
 
 "auto":
-	Il s'agit de l'option par défaut lorsque "\-c" n'est pas activée. Les
+Il s'agit de l'option par défaut lorsque "\-c" n'est pas activée. Les
 couleurs sont utilisées seulement si "stdout" est un terminal. Par exemple,
 les couleurs seront désactivées avec cette option si vous faites une redirection de la sortie de dfc(1) vers une autre commande.
 
 "never":
-	Les couleurs ne seront jamais utilisées.
+Les couleurs ne seront jamais utilisées.
+
+.TP
+\-d
+Affiche la taille utilisée.
+.TP
+\-e [FORMAT]
+Permet d'exporter la sortie de dfc(1) dans le format spécifié FORMAT.
+FORMAT est un des suivant:
+
+"csv":
+Exporte vers le format CSV. Exemple d'utilisation:
+
+	dfc -e csv > foo.csv
+
+"html":
+Exporte avers le format HTML. Exemple d'utilisation:
+
+	dfc -e html -Tadiso -c always > index.html
+
+"tex":
+Exporte vers le foramt TeX. Exemple d'utilisation:
+
+	dfc -e tex -c always > report.tex
+
+"text":
+Sortie texte (defaut).
+
 
 .TP
 \-f
 Outrepasse le comportement d'auto\-ajustement en forçant l'affichage
-des informations. Vous ne souhaitez probablement pas activer cette option mais
-vous avez le choix.
+des informations. Cette option peut être utile lorsque vous redirigez la
+sortie de dfc(1).
 .TP
 \-h
 Affiche une brève aide.
 .TP
 \-i
 Affiche des informations sur les inodes.
+.TP
+\-l
+Affiche les informations uniquement sur les systèmes de fichiers montés localement.
 .TP
 \-m
 Utilise les unités SI (càd: la taille est calculée en utilisant des puissances
