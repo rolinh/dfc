@@ -40,7 +40,7 @@
 int imax(int a, int b);
 char * strtrim(char *str);
 char * shortenstr(char *str, int len);
-char * sanitize_string(const char *s);
+char * sanitizestr(const char *str);
 int getttywidth(void);
 int humanize(double *n);
 double cvrt(double n);

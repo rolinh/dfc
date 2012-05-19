@@ -318,7 +318,13 @@ static void
 tex_disp_fs(struct list *lst, char *fsname)
 {
 	static int must_close = 0;
-	char *cleaned_fsname = sanitize_string(fsname);
+	char *cleaned_fsname = sanitizestr(fsname);
+
+	if (cleaned_fsname == NULL) {
+		(void)fprintf(stderr, "Cannot print file system name\n");
+		return;
+		/* NOTREACHED */
+	}
 
 	(void)lst;
 
@@ -334,7 +340,13 @@ tex_disp_fs(struct list *lst, char *fsname)
 static void
 tex_disp_type(struct list *lst, char *type)
 {
-	char *cleaned_type = sanitize_string(type);
+	char *cleaned_type = sanitizestr(type);
+
+	if (cleaned_type == NULL) {
+		(void)fprintf(stderr, "Cannot print type\n");
+		return;
+		/* NOTREACHED */
+	}
 
 	(void) lst;
 
@@ -351,7 +363,13 @@ tex_disp_inodes(unsigned long files, unsigned long favail)
 static void
 tex_disp_mount(char *dir)
 {
-	char *cleaned_dir = sanitize_string(dir);
+	char *cleaned_dir = sanitizestr(dir);
+
+	if (cleaned_dir == NULL) {
+		(void)fprintf(stderr, "Cannot print mount point\n");
+		return;
+		/* NOTREACHED */
+	}
 
 	(void)printf(" & %s", cleaned_dir);
 	free(cleaned_dir);
@@ -360,7 +378,13 @@ tex_disp_mount(char *dir)
 static void
 tex_disp_mopt(struct list *lst, char *dir, char *opts)
 {
-	char *cleaned_opts = sanitize_string(opts);
+	char *cleaned_opts = sanitizestr(opts);
+
+	if (cleaned_opts == NULL) {
+		(void)fprintf(stderr, "Cannot print mount options\n");
+		return;
+		/* NOTREACHED */
+	}
 
 	(void)lst;
 	(void)dir;

@@ -116,42 +116,46 @@ shortenstr(char *str, int len)
 /*
  * Given a string S, returns the same string where the '_' character is replaced
  * by "\_". The returned string must be freed by the caller.
+ * Return NULL if it fails.
  */
 char *
-sanitize_string(const char *s)
+sanitizestr(const char *str)
 {
 	int i;
 	size_t nchars = 1; /* Trailing \0 */
 	int j = 0;
 	char *new;
 
-	for (i = 0; s[i] != '\0'; i++) {
-		if (s[i] == '_')
+	for (i = 0; str[i] != '\0'; i++) {
+		if (str[i] == '_')
 			nchars += 2;
 		else
 			nchars++;
 	}
 
 	if (i == nchars) /* No '_' was found. */
-		return strdup(s);
+		return strdup(str);
 		/* NOTREACHED */
 
-	new = malloc(nchars);
-	if (new == NULL)
-		exit(EXIT_FAILURE);
+	if ((new = malloc(nchars)) == NULL) {
+		(void)fprintf(stderr, "malloc failed\n");
+		return NULL;
+		/* NOTREACHED */
+	}
 
-	for (i = 0; s[i] != '\0'; i++) {
-		if (s[i] == '_') {
+	for (i = 0; str[i] != '\0'; i++) {
+		if (str[i] == '_') {
 			new[j] = '\\';
 			new[j+1] = '_';
 			j += 2;
 		} else {
-			new[j] = s[i];
+			new[j] = str[i];
 			j++;
 		}
 	}
 
 	new[nchars-1] = '\0';
+
 	return new;
 	/* NOTREACHED */
 }
