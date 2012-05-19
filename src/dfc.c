@@ -777,7 +777,91 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		disp->deinit();
 }
 
-#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__) || defined(__DragonFly__)
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+/*
+ * All the flags found in *BSD and Mac OS X, alphabetically sorted.
+ */
+struct flag_str {
+	long long   flag;
+	const char  *str;
+} possible_flags[] = {
+#if defined(__FreeBSD__)
+	{ MNT_ACLS,               "acls"               },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined (__APPLE__)
+	{ MNT_ASYNC,              "async"              },
+#endif
+#if defined(__APPLE__)
+	{ MNT_AUTOMOUNTED,        "automounted"        },
+#endif
+#if defined(__DragonFly__)
+	{ MNT_DEFEXPORTED,        "defexported"        },
+#endif
+#if defined(__APPLE__)
+	{ MNT_DEFWRITE,           "defwrite"           },
+	{ MNT_DONTBROWSE          "dontbrowse"         },
+	{ MNT_DOVOLFS,            "dovolfs"            },
+#endif
+#if defined(__DragonFly__)
+	{ MNT_EXKERB              "exkerb"             },
+	{ MNT_EXPORTANON,         "exportanon"         },
+#endif
+#if defined (__DragonFly__) || defined(__APPLE__)
+	{ MNT_EXPORTED,           "exported"           },
+#endif
+#if defined(__DragonFly__)
+	{ MNT_EXRDONLY,           "exrdonly"           },
+#endif
+#if defined(__APPLE__)
+	{ MNT_JOURNALED,          "journaled"          },
+#endif
+#if defined(__DragonFly__) || defined(__APPLE__)
+	{ MNT_LOCAL,              "local"              },
+#endif
+#if defined(__FreeBSD__) || defined(__APPLE__)
+	{ MNT_MULTILABEL,         "multilabel"         },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_NFS4ACLS,           "nfs4acls"           },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+	{ MNT_NOATIME,            "noatime"            },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_NOCLUSTERR,         "noclusterr"         },
+	{ MNT_NOCLUSTERW,         "noclusterw"         },
+#endif
+#if defined(__DragonFly__) || defined(__APPLE__)
+	{ MNT_NODEV,              "nodev"              },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+	{ MNT_NOEXEC,             "noexec"             },
+	{ MNT_NOSUID,             "nosuid"             },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_NOSYMFOLLOW,        "nosymfollow"        },
+#endif
+#if defined(__DragonFly__) || defined(__APPLE__)
+	{ MNT_QUOTA,              "quota"              },
+#endif
+	/* MNT_RDONLY is treated separately in statfs_flags_to_str(). */
+#if defined(__DragonFly__) || defined(__APPLE__)
+	{ MNT_ROOTFS,             "rootfs"             },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_SUIDDIR,            "suiddir"            },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+	{ MNT_SYNCHRONOUS,        "sync"               },
+#endif
+#if defined(__FreeBSD__) || defined(__APPLE__)
+	{ MNT_UNION,              "union"              },
+#endif
+#if defined(__APPLE__)
+	{ MNT_UNKNOWNPERMISSIONS, "unknownpermissions" },
+#endif
+};
+
 /*
  * Turn the f_flags member of the given struct statfs to a human-readable string
  * of the form "opt1,opt2..."
@@ -787,163 +871,51 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 char *
 statfs_flags_to_str(struct statfs *s)
 {
-       uint64_t flags = s->f_flags;
-       size_t bufsize = 128;
-       char *buffer = malloc(bufsize);
-       if (!buffer) {
-               (void)fprintf(stderr, _("Could not retrieve mount flags for %s\n"),
-                       s->f_mntonname);
-               return NULL;
-	       /* NOTREACHED */
-       }
-       buffer[0] = '\0';
+	int i;
+	unsigned n_flags;
+	uint64_t flags = s->f_flags;
+	size_t bufsize = 128;
+	char *buffer = malloc(bufsize);
+	if (!buffer) {
+		(void)fprintf(stderr,
+				_("Could not retrieve mount flags for %s\n"),
+				s->f_mntonname);
+		return NULL;
+		/* NOTREACHED */
+	}
+	buffer[0] = '\0';
 
-       /* Comparing flags to all possible flags, in the same order as mount -p */
-       if (flags & MNT_RDONLY) {
-               if (strlcat(buffer, "ro", bufsize) >= bufsize)
-                       goto truncated;
+	/* There is no MNT_RDWRITE flag, so we have to do this. */
+	if (flags & MNT_RDONLY) {
+		if (strlcat(buffer, "ro", bufsize) >= bufsize)
+			goto truncated;
 			/* NOTREACHED */
-       } else {
-               if (strlcat(buffer, "rw", bufsize) >= bufsize)
-                       goto truncated;
+	} else {
+		if (strlcat(buffer, "rw", bufsize) >= bufsize)
+			goto truncated;
 			/* NOTREACHED */
-       }
+	}
 
-       if (flags & MNT_SYNCHRONOUS)
-               if (strlcat(buffer, ",sync", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_NOEXEC)
-               if (strlcat(buffer, ",noexec", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_NOSUID)
-               if (strlcat(buffer, ",nosuid", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_ASYNC)
-               if (strlcat(buffer, ",async", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_NOATIME)
-               if (strlcat(buffer, ",noatime", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-#ifdef __FreeBSD__
-       if (flags & MNT_NOCLUSTERR)
-               if (strlcat(buffer, ",noclusterr", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_NOCLUSTERW)
-               if (strlcat(buffer, ",noclusterw", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_NOSYMFOLLOW)
-               if (strlcat(buffer, ",nosymfollow", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_SUIDDIR)
-               if (strlcat(buffer, ",suiddir", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_ACLS)
-               if (strlcat(buffer, ",acls", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_NFS4ACLS)
-               if (strlcat(buffer, ",nfsv4acls", bufsize) >= bufsize)
-		       goto truncated;
-			/* NOTREACHED */
-#endif /* __FreeBSD__ */
+	/* Comparing flags to all possible flags. */
+	n_flags = sizeof(possible_flags)/sizeof(possible_flags[0]);
+	for (i = 0; i < n_flags; i++)
+	{
+		if (!(flags & possible_flags[i].flag))
+			continue;
 
-#if defined(__FreeBSD__) || defined(__APPLE__)
-       if (flags & MNT_UNION)
-               if (strlcat(buffer, ",union", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-       if (flags & MNT_MULTILABEL)
-               if (strlcat(buffer, ",multilabel", bufsize) >= bufsize)
-                       goto truncated;
-			/* NOTREACHED */
-#endif /* __FreeBSD || __APPLE__ */
+		if (strlcat(buffer, ",", bufsize) >= bufsize)
+			goto truncated;
+		if (strlcat(buffer, possible_flags[i].str, bufsize) >= bufsize)
+			goto truncated;
+	}
 
-#if defined(__APPLE__) || defined(__DragonFly__)
-	if (flags & MNT_NODEV)
-		if (strlcat(buffer, ",nodev", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_LOCAL)
-		if (strlcat(buffer, ",local", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_QUOTA)
-		if (strlcat(buffer, ",quota", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_ROOTFS)
-		if (strlcat(buffer, ",rootfs", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_EXPORTED)
-		if (strlcat(buffer, ",exported", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-#endif /* __APPLE__ || DragonFly */
-
-#ifdef __APPLE__
-	if (flags & MNT_DOVOLFS)
-		if (strlcat(buffer, ",dovolfs", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_UNKNOWNPERMISSIONS)
-		if (strlcat(buffer, ",unknownpermissions", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_AUTOMOUNTED)
-		if (strlcat(buffer, ",automounted", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_DEFWRITE)
-		if (strlcat(buffer, ",defwrite", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_DONTBROWSE)
-		if (strlcat(buffer, ",dontbrowse", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_JOURNALED)
-		if (strlcat(buffer, ",journaled", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-#endif /* __APPLE__ */
-
-#if defined(__DragonFly__)
-	if (flags & MNT_EXRDONLY)
-		if (strlcat(buffer, ",exrdonly", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_DEFEXPORTED)
-		if (strlcat(buffer, ",defexported", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_EXPORTANON)
-		if (strlcat(buffer, ",exportanon", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-	if (flags & MNT_EXKERB)
-		if (strlcat(buffer, ",exkerb", bufsize) >= bufsize)
-			goto truncated;
-			/* NOTREACHED */
-#endif /* __DragonFly__ */
-
-       return buffer;
-       /* NOTREACHED */
+	return buffer;
+	/* NOTREACHED */
 
 truncated:
        (void)fprintf(stderr, _("Truncating mount options for %s\n"),
-                       s->f_mntonname);
-       return buffer;
-       /* NOTREACHED */
+			s->f_mntonname);
+	return buffer;
+	/* NOTREACHED */
 }
-
 #endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ */
