@@ -646,6 +646,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		}
 	}
 
+	/* only required for html and tex export (csv and text point to NULL) */
 	if (disp->init)
 		disp->init();
 
@@ -753,7 +754,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		if (iflag) {
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
-			disp->print_inodes(p->files / 1000, p->files / 1000);
+			disp->print_inodes(p->files / 1000.0, p->files / 1000.0);
 		}
 
 		/* mounted on */
@@ -771,6 +772,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 	if (sflag)
 		disp->print_sum(lst, stot, atot, utot, ifitot, ifatot);
 
+	/* only required for html and tex export (csv and text point to NULL) */
 	if (disp->deinit)
 		disp->deinit();
 }
