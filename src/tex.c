@@ -63,6 +63,7 @@ static void tex_disp_mount(char *dir);
 static void tex_disp_mopt(struct list *lst, char *dir, char *opts);
 static void tex_disp_perct(double perct);
 
+/* init pointers from Display structure to the functions found here */
 void
 init_disp_tex(struct Display *disp)
 {
@@ -80,6 +81,10 @@ init_disp_tex(struct Display *disp)
 	disp->print_perct  = tex_disp_perct;
 }
 
+/*
+ * Print all that is required for the TeX file like documentclass and so on
+ * Also, computes and print the required amount of columns for the table.
+ */
 static void
 tex_disp_init(void)
 {
@@ -109,6 +114,9 @@ tex_disp_init(void)
 
 }
 
+/*
+ * Close TeX file (end document and so on)
+ */
 static void
 tex_disp_deinit(void)
 {
@@ -118,6 +126,10 @@ tex_disp_deinit(void)
 	(void)puts("\\end{document}");
 }
 
+/*
+ * Display header
+ * @lst: is ignored here
+ */
 static void
 tex_disp_header(struct list *lst)
 {
@@ -146,6 +158,15 @@ tex_disp_header(struct list *lst)
 	(void)puts("\\hline");
 }
 
+/*
+ * display the sum (useful when -s option is used
+ * @lst: is ignored here
+ * @stot: total size of "total"
+ * @atot: total size of "available"
+ * @utot: total size of "used"
+ * @ifitot: total number of inodes
+ * @ifatot: total number of available inodes
+ */
 static void
 tex_disp_sum(struct list *lst, double stot, double atot, double utot,
              double ifitot, double ifatot)
@@ -188,6 +209,10 @@ tex_disp_sum(struct list *lst, double stot, double atot, double utot,
 		(void)printf(" & NA ");
 }
 
+/*
+ * Display the nice usage bar
+ * @perct: percentage value
+ */
 static void
 tex_disp_bar(double perct)
 {
@@ -314,6 +339,11 @@ tex_disp_at(double n, double perct)
 	}
 }
 
+/*
+ * display file system
+ * @lst: is ignored here
+ * @fsname: list of the file system to print
+ */
 static void
 tex_disp_fs(struct list *lst, char *fsname)
 {
@@ -337,6 +367,11 @@ tex_disp_fs(struct list *lst, char *fsname)
 	must_close = 1;
 }
 
+/*
+ * display file system type
+ * @lst: is ignored here
+ * @type: the file system type to print
+ */
 static void
 tex_disp_type(struct list *lst, char *type)
 {
@@ -354,12 +389,21 @@ tex_disp_type(struct list *lst, char *type)
 	free(cleaned_type);
 }
 
+/*
+ * display inodes
+ *@files: number of inodes
+ *@favail: number of available inodes
+ */
 static void
 tex_disp_inodes(unsigned long files, unsigned long favail)
 {
 	(void) printf(" & %ldk & %ldk ", files, favail);
 }
 
+/*
+ * display mount point
+ * @dir: mount point
+ */
 static void
 tex_disp_mount(char *dir)
 {
@@ -375,6 +419,12 @@ tex_disp_mount(char *dir)
 	free(cleaned_dir);
 }
 
+/*
+ * display mount options
+ * @lst: is ignored here
+ * @dir: is ignored here
+ * @opts: mount options
+ */
 static void
 tex_disp_mopt(struct list *lst, char *dir, char *opts)
 {
@@ -393,6 +443,10 @@ tex_disp_mopt(struct list *lst, char *dir, char *opts)
 	free(cleaned_opts);
 }
 
+/*
+ * Display percentage
+ * @perct: percentage
+ */
 static void
 tex_disp_perct(double perct)
 {
