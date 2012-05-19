@@ -1,6 +1,6 @@
 .TH dfc 1  "April 3, 2012" "version 2.5.0" "USER COMMANDS"
 .SH NAME
-dfc \- display file system space usage using graph and colors
+dfc \- display file system space usage using graphs and colors
 .SH SYNOPSIS
 .B dfc [OPTION(S)] [\-c WHEN] [\-e FORMAT] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
 .SH DESCRIPTION
@@ -10,10 +10,8 @@ can change this with "\-c" option).
 
 The available size correspond to the space available to a user point of
 view and not from root's perspective (ie: use f_bavail instead of f_bfree).
-In the same idea, used space is computed simply by subtracting the available
-space from the total size.
 
-Without any argument, size is displayed in human readable format.
+Without any argument, size is displayed in human\-readable format.
 Be aware that when using human\-readable format, there might be some rounding
 when computing the size. If you want maximum precision, use the "\-u"
 option and choose the unit.
@@ -214,10 +212,10 @@ Base Directory Specification.
 .SH BUGS
 If you find one, please contact the author and explain what you encounter.
 .SH AUTHORS
-Robin Hahling (robin.hahling (at) gw\-computing.net)
+Robin Hahling <robin.hahling\(atgw\-computing.net>
 .SH COPYRIGHT
 Copyright \(co 2012 Robin Hahling
 .SH LICENSE
-3 Clauses BSD
+BSD 3-clause
 .SH SEE ALSO
 df(1), du(1)
