@@ -57,6 +57,7 @@ static void csv_disp_mount(char *dir);
 static void csv_disp_mopt(struct list *lst, char *dir, char *opts);
 static void csv_disp_perct(double perct);
 
+/* init pointers from Display structure to the functions found here */
 void
 init_disp_csv(struct Display *disp)
 {
@@ -74,6 +75,10 @@ init_disp_csv(struct Display *disp)
     disp->print_perct  = csv_disp_perct;
 }
 
+/*
+ * Display header
+ * @lst: queue containing the informations
+ */
 static void
 csv_disp_header(struct list *lst)
 {
@@ -107,6 +112,15 @@ csv_disp_header(struct list *lst)
 	(void)printf("\n");
 }
 
+/*
+ * display the sum (useful when -s option is used
+ * @lst: queue containing the informations
+ * @stot: total size of "total"
+ * @atot: total size of "available"
+ * @utot: total size of "used"
+ * @ifitot: total number of inodes
+ * @ifatot: total number of available inodes
+ */
 static void
 csv_disp_sum(struct list *lst, double stot, double atot, double utot,
              double ifitot, double ifatot)
@@ -144,6 +158,12 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 	(void)printf("\n");
 }
 
+/*
+ * Should display the nice usage bar but this makes no sense in CSV export
+ * Therefore, this is a dummy function that does nothing when called from
+ * dfc.c but it is required in order to avoid stupid checks in dfc.c
+ * @perct: is ignored
+ */
 static void
 csv_disp_bar(double perct)
 {
@@ -234,6 +254,11 @@ csv_disp_at(double n, double perct)
 	}
 }
 
+/*
+ * display file system
+ * @lst: is ignored here
+ * @fsname: list of the file system to print
+ */
 static void
 csv_disp_fs(struct list *lst, char *fsname)
 {
@@ -243,6 +268,11 @@ csv_disp_fs(struct list *lst, char *fsname)
 	(void)printf("%s,",fsname);
 }
 
+/*
+ * display file system type
+ * @lst: is ignored here
+ * @type: the file system type to print
+ */
 static void
 csv_disp_type(struct list *lst, char *type)
 {
@@ -252,6 +282,11 @@ csv_disp_type(struct list *lst, char *type)
 	(void)printf("%s,", type);
 }
 
+/*
+ * display inodes
+ *@files: number of inodes
+ *@favail: number of available inodes
+ */
 static void
 csv_disp_inodes(unsigned long files, unsigned long favail)
 {
@@ -259,12 +294,22 @@ csv_disp_inodes(unsigned long files, unsigned long favail)
 	(void)printf(",%ld,k", favail);
 }
 
+/*
+ * display mount point
+ * @dir: mount point
+ */
 static void
 csv_disp_mount(char *dir)
 {
 	(void)printf(",%s", dir);
 }
 
+/*
+ * display mount options
+ * @lst: is ignored here
+ * @dir: is ignored here
+ * @opts: mount options
+ */
 static void
 csv_disp_mopt(struct list *lst, char *dir, char *opts)
 {
@@ -276,6 +321,10 @@ csv_disp_mopt(struct list *lst, char *dir, char *opts)
 	(void)printf(",%s", opts);
 }
 
+/*
+ * Display percentage
+ * @perct: percentage
+ */
 static void
 csv_disp_perct(double perct)
 {

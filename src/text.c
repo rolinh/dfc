@@ -61,6 +61,7 @@ static void text_disp_perct(double perct);
 static void change_color(double perct);
 static void reset_color(void);
 
+/* init pointers from Display structure to the functions found here */
 void
 init_disp_text(struct Display *disp)
 {
