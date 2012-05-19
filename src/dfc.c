@@ -411,7 +411,7 @@ usage(int status)
 					"[-p FSNAME] [-q SORTBY] [-t FSTYPE]\n"
 					"\t[-u UNIT]\n"
 			"Available options:\n"
-			"\t-a\tprint all fs from mtab\n"
+			"\t-a\tprint all mounted filesystem\n"
 			"\t-b\tdo not show the graph bar\n"
 			"\t-c\tchoose color mode. Read the manpage\n"
 			"\t\tfor details\n"
