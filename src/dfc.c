@@ -871,9 +871,12 @@ struct flag_str {
 char *
 statfs_flags_to_str(struct statfs *s)
 {
-	int i;
-	unsigned n_flags;
+	int i, n_flags;
+#if defined(__DragonFly__)
+	int flags = s->f_flags;
+#else
 	uint64_t flags = s->f_flags;
+#endif /* __DragonFly__ */
 	size_t bufsize = 128;
 	char *buffer = malloc(bufsize);
 	if (!buffer) {
