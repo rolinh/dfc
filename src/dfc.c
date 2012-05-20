@@ -798,7 +798,7 @@ struct flag_str {
 #if defined(__APPLE__)
 	{ MNT_AUTOMOUNTED,        "automounted"        },
 #endif
-#if defined(__DragonFly__)
+#if defined(__FreeBSD__) || defined(__DragonFly__)
 	{ MNT_DEFEXPORTED,        "defexported"        },
 #endif
 #if defined(__APPLE__)
@@ -806,20 +806,26 @@ struct flag_str {
 	{ MNT_DONTBROWSE,         "dontbrowse"         },
 	{ MNT_DOVOLFS,            "dovolfs"            },
 #endif
-#if defined(__DragonFly__)
+#if defined(__FreeBSD__) || defined(__DragonFly__)
 	{ MNT_EXKERB,              "exkerb"             },
 	{ MNT_EXPORTANON,         "exportanon"         },
 #endif
-#if defined (__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 	{ MNT_EXPORTED,           "exported"           },
 #endif
-#if defined(__DragonFly__)
+#if defined(__FreeBSD__)
+	{ MNT_EXPUBLIC,           "expublic"            },
+#endif
+#if defined(__FreeBSD__) || defined(__DragonFly__)
 	{ MNT_EXRDONLY,           "exrdonly"           },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_GJOURNAL,           "gjournal"            },
 #endif
 #if defined(__APPLE__)
 	{ MNT_JOURNALED,          "journaled"          },
 #endif
-#if defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 	{ MNT_LOCAL,              "local"              },
 #endif
 #if defined(__FreeBSD__) || defined(__APPLE__)
@@ -835,7 +841,7 @@ struct flag_str {
 	{ MNT_NOCLUSTERR,         "noclusterr"         },
 	{ MNT_NOCLUSTERW,         "noclusterw"         },
 #endif
-#if defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__DragonFly__) || defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_NODEV,              "nodev"              },
 #endif
 #if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
@@ -845,12 +851,15 @@ struct flag_str {
 #if defined(__FreeBSD__)
 	{ MNT_NOSYMFOLLOW,        "nosymfollow"        },
 #endif
-#if defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 	{ MNT_QUOTA,              "quota"              },
 #endif
 	/* MNT_RDONLY is treated separately in statfs_flags_to_str(). */
-#if defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__DragonFly__) || defined(__APPLE__)
 	{ MNT_ROOTFS,             "rootfs"             },
+#endif
+#if defined(__FreeBSD__) || defined(__OpenBSD__)
+	{ MNT_SOFTDEP,            "softdep"            },
 #endif
 #if defined(__FreeBSD__)
 	{ MNT_SUIDDIR,            "suiddir"            },
@@ -860,6 +869,9 @@ struct flag_str {
 #endif
 #if defined(__FreeBSD__) || defined(__APPLE__)
 	{ MNT_UNION,              "union"              },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_USER, "user" },
 #endif
 #if defined(__APPLE__)
 	{ MNT_UNKNOWNPERMISSIONS, "unknownpermissions" },
