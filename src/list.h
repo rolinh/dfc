@@ -82,7 +82,7 @@ struct fsmntinfo {
 	u_int64_t	blocks;	/* size of fs in frsize unit */
 	u_int64_t	bfree;	/* # of free blocks */
 	int64_t		bavail;	/* # of available blocks */
-	U_int64_t	files;	/* # of inodes */
+	u_int64_t	files;	/* # of inodes */
 	u_int64_t	ffree;	/* # of free inodes */
 	int64_t		favail;	/* # of available inodes */
 #endif /* __OpenBSD__ */

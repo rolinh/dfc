@@ -782,8 +782,8 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
  * All the flags found in *BSD and Mac OS X, alphabetically sorted.
  */
 struct flag_str {
-	long long   flag;
-	const char  *str;
+	long flag;
+	const char *str;
 } possible_flags[] = {
 #if defined(__FreeBSD__)
 	{ MNT_ACLS,               "acls"               },
