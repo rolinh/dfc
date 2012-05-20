@@ -803,7 +803,7 @@ struct flag_str {
 	{ MNT_DOVOLFS,            "dovolfs"            },
 #endif
 #if defined(__DragonFly__)
-	{ MNT_EXKERB              "exkerb"             },
+	{ MNT_EXKERB,              "exkerb"             },
 	{ MNT_EXPORTANON,         "exportanon"         },
 #endif
 #if defined (__DragonFly__) || defined(__APPLE__)

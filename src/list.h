@@ -33,6 +33,10 @@
  * list structure
  */
 
+#ifdef __linux__
+#include <sys/types.h>
+#endif /* __linux__ */
+
 /*
  * structure needed to store informations about mounted fs
  * It should contain brut datas.
@@ -49,14 +53,56 @@ struct fsmntinfo {
 	char *opts;	/* mount options (see mntent.h) */
 
 	/* infos to get from statvfs(3) */
-	unsigned long bsize;	/* file system block size */
-	unsigned long frsize;	/* fragment size */
-	unsigned long blocks;	/* size of fs in frsize unit */
-	unsigned long bfree;	/* # of free blocks */
-	unsigned long bavail;	/* # of available blocks */
-	unsigned long files;	/* # of inodes */
-	unsigned long ffree;	/* # of free inodes */
-	unsigned long favail;	/* # of available inodes */
+#if defined(__linux__)
+	unsigned long	bsize;	/* file system block size */
+	unsigned long	frsize;	/* fragment size */
+	fsblkcnt_t	blocks;	/* size of fs in frsize unit */
+	fsblkcnt_t	bfree;	/* # of free blocks */
+	fsblkcnt_t	bavail;	/* # of available blocks */
+	fsfilcnt_t	files;	/* # of inodes */
+	fsfilcnt_t	ffree;	/* # of free inodes */
+	fsfilcnt_t	favail;	/* # of available inodes */
+#endif /* __linux__ */
+#if defined(__FreeBSD__)
+	uint64_t	bsize;	/* file system block size */
+	unsigned long   frsize;	/* XXX: does not exist on FreeBSD */
+	uint64_t	blocks;	/* size of fs in frsize unit */
+	uint64_t	bfree;	/* # of free blocks */
+	uint64_t	bavail;	/* # of available blocks */
+	uint64_t	files;	/* # of inodes */
+	int64_t		ffree;	/* # of free nodes to non super-user */
+	unsigned long	favail;	/* XXX: does not exist on FreeBSD */
+#endif /* __FreeBSD__ */
+#if defined(__OpenBSD__)
+	u_int32_t	bsize;	/* file system block size */
+	unsigned long	frsize;	/* XXX: does not exist on OpenBSD */
+	u_int64_t	blocks;	/* size of fs in frsize unit */
+	u_int64_t	bfree;	/* # of free blocks */
+	int64_t		bavail;	/* # of available blocks */
+	U_int64_t	files;	/* # of inodes */
+	u_int64_t	ffree;	/* # of free inodes */
+	int64_t		favail;	/* # of available inodes */
+#endif /* __OpenBSD__ */
+#if defined(__DragonFly__)
+	long bsize;		/* file system block size */
+	unsigned long frsize;	/* XXX: does not exist on DragonFly */
+	long blocks;		/* size of fs in frsize unit */
+	long bfree;		/* # of free blocks */
+	long bavail;		/* # of available blocks */
+	long files;		/* # of inodes */
+	long ffree;		/* # of free inodes */
+	unsigned long favail;	/* XXX: does not exist on DragonFly */
+#endif /* __DragonFly__ */
+#if defined(__APPLE__)
+	uint32_t	bsize;	/* file system block size */
+	unsigned long	frsize;	/* XXX: does not exist on OSX */
+	uint64_t	blocks;	/* size of fs in frsize unit */
+	uint64_t	bfree;	/* # of free blocks */
+	uint64_t	bavail;	/* # of available blocks */
+	uint64_t	files;	/* # of inodes */
+	uint64_t	ffree;	/* # of free inodes */
+	unsigned long	favail;	/* XXX: does not exist on OSX */
+#endif /* __APPLE__ */
 
 	/* pointer to the next element of the list */
 	struct fsmntinfo *next;
