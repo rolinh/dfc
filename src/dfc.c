@@ -754,7 +754,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
 		if (iflag) {
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
-			disp->print_inodes(p->files / 1000, p->files / 1000);
+#if defined(__linux__)
+			disp->print_inodes(p->files / 1000, p->favail / 1000);
+#else
+			disp->print_inodes(p->files / 1000, p->ffree / 1000);
+#endif /* __linux__ */
 		}
 
 		/* mounted on */
