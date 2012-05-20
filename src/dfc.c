@@ -825,7 +825,7 @@ struct flag_str {
 #if defined(__APPLE__)
 	{ MNT_JOURNALED,          "journaled"          },
 #endif
-#if defined(__FreeBSD__) || defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__DragonFly__) || defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_LOCAL,              "local"              },
 #endif
 #if defined(__FreeBSD__) || defined(__APPLE__)
