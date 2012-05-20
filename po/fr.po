@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-19 21:07+0200\n"
+"POT-Creation-Date: 2012-05-20 16:17+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -180,12 +180,12 @@ msgstr ""
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:794
+#: src/dfc.c:881
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:943
+#: src/dfc.c:917
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
@@ -200,8 +200,9 @@ msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
 "such a thing anyway?\n"
-msgstr "La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez"
-"-vous de toute façon?\n"
+msgstr ""
+"La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez-vous "
+"de toute façon?\n"
 
 #: src/dotfile.c:214
 #, c-format
@@ -265,14 +266,17 @@ msgid "%USED"
 msgstr "%UTILISÉ"
 
 #: src/html.c:155 src/tex.c:146 src/text.c:129
+#, c-format
 msgid "USED"
 msgstr " UTILISÉ"
 
 #: src/html.c:156 src/tex.c:147 src/text.c:139
+#, c-format
 msgid "AVAILABLE"
 msgstr "DISPONIBLE"
 
 #: src/html.c:157 src/tex.c:148 src/text.c:149
+#, c-format
 msgid "TOTAL"
 msgstr "TOTAL"
 

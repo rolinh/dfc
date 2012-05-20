@@ -897,16 +897,17 @@ statfs_flags_to_str(struct statfs *s)
 	}
 
 	/* Comparing flags to all possible flags. */
-	n_flags = sizeof(possible_flags)/sizeof(possible_flags[0]);
-	for (i = 0; i < n_flags; i++)
-	{
+	n_flags = sizeof(possible_flags) / sizeof(possible_flags[0]);
+	for (i = 0; i < n_flags; i++) {
 		if (!(flags & possible_flags[i].flag))
 			continue;
-
+			/* NOTREACHED */
 		if (strlcat(buffer, ",", bufsize) >= bufsize)
 			goto truncated;
+			/* NOTREACHED */
 		if (strlcat(buffer, possible_flags[i].str, bufsize) >= bufsize)
 			goto truncated;
+			/* NOTREACHED */
 	}
 
 	return buffer;
