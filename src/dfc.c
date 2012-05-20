@@ -799,7 +799,7 @@ struct flag_str {
 #endif
 #if defined(__APPLE__)
 	{ MNT_DEFWRITE,           "defwrite"           },
-	{ MNT_DONTBROWSE          "dontbrowse"         },
+	{ MNT_DONTBROWSE,         "dontbrowse"         },
 	{ MNT_DOVOLFS,            "dovolfs"            },
 #endif
 #if defined(__DragonFly__)
