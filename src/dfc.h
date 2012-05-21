@@ -43,7 +43,7 @@
 /* function declaration */
 void usage(int status);
 void fetch_info(struct list *lst);
-void disp(struct list *lst, char *fsfilter, char *fsnfilter, struct display *disp);
+void disp(struct list *lst, char *fsfilter, char *fsnfilter, struct display *sdisp);
 
 #if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__) || defined(__DragonFly__)
 /* avoid struct statfs declared inside parameter list warning */

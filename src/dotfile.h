@@ -40,6 +40,6 @@
 char * getconf(void);
 int parse_conf(char *dfcrc);
 int set_conf(char *key, char *val);
-void init_conf(struct conf *cnf);
+void init_conf(struct conf *config);
 
 #endif /* ndef H_DOTFILE */

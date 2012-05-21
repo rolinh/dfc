@@ -194,7 +194,8 @@ main(int argc, char *argv[])
 				case CAUTO:
 					cflag = 1;
 					break;
-				case -1:
+				case -1: /* FALLTHROUGH */
+				default:
 					(void)fprintf(stderr,
 						_("-c: illegal sub option %s\n"),
 						subopts);
@@ -226,7 +227,8 @@ main(int argc, char *argv[])
 					Wflag = 1;
 					init_disp_tex(&sdisp);
 					break;
-				case -1:
+				case -1: /* FALLTHROUGH */
+				default:
 					(void)fprintf(stderr,
 						_("-e: illegal sub option %s\n"),
 						subopts);
@@ -273,7 +275,8 @@ main(int argc, char *argv[])
 				case SFSDIR:
 					qflag = 3;
 					break;
-				case -1:
+				case -1: /* FALLTHROUGH */
+				default:
 					(void)fprintf(stderr,
 						_("-q: illegal sub option %s\n"),
 						subopts);
@@ -326,7 +329,8 @@ main(int argc, char *argv[])
 					break;
 				case Y: unitflag = 'y';
 					break;
-				case -1:
+				case -1: /* FALLTHROUGH */
+				default:
 					(void)fprintf(stderr,
 						_("-u: illegal sub option %s\n"),
 						subopts);
@@ -616,11 +620,11 @@ fetch_info(struct list *lst)
  * @lst: queue containing all required information
  * @fstfilter: fstype to filter (can be NULL)
  * @fsnfilter: fsname to filter (can be NULL)
- * @disp: display structure that points to the respective functions regarding
+ * @sdisp: display structure that points to the respective functions regarding
  *	  the selected output type
  */
 void
-disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
+disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 {
 	struct fsmntinfo *p = NULL;
 	int n;
@@ -648,12 +652,12 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
 	}
 
 	/* only required for html and tex export (csv and text point to NULL) */
-	if (disp->init)
-		disp->init();
+	if (sdisp->init)
+		sdisp->init();
 
 	/* legend on top */
 	if (!nflag)
-		disp->print_header(lst);
+		sdisp->print_header(lst);
 
 	if (lst->fsmaxlen < 11)
 		lst->fsmaxlen = 11;
@@ -697,11 +701,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
 		}
 
 		/* filesystem */
-		disp->print_fs(lst, p->fsname);
+		sdisp->print_fs(lst, p->fsname);
 
 		/* type */
 		if (Tflag) {
-			disp->print_type(lst, p->type);
+			sdisp->print_type(lst, p->type);
 		}
 
 #ifdef __linux__
@@ -731,10 +735,10 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
 		}
 
 		if (!bflag)
-			disp->print_bar(perctused);
+			sdisp->print_bar(perctused);
 
 		/* %used */
-		disp->print_perct(perctused);
+		sdisp->print_perct(perctused);
 
 
 		/* format to requested format */
@@ -746,30 +750,30 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
 		}
 
 		if (dflag)
-			disp->print_at(used, perctused);
+			sdisp->print_at(used, perctused);
 		/* avail  and total */
-		disp->print_at(avail, perctused);
-		disp->print_at(size, perctused);
+		sdisp->print_at(avail, perctused);
+		sdisp->print_at(size, perctused);
 
 		/* info about inodes */
 		if (iflag) {
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
 #if defined(__linux__)
-			disp->print_inodes((uint64_t)(p->files),
+			sdisp->print_inodes((uint64_t)(p->files),
 					(uint64_t)(p->favail));
 #else
-			disp->print_inodes((uint64_t)(p->files),
+			sdisp->print_inodes((uint64_t)(p->files),
 					(uint64_t)( p->ffree));
 #endif /* __linux__ */
 		}
 
 		/* mounted on */
-		disp->print_mount(p->dir);
+		sdisp->print_mount(p->dir);
 
 		/* info about mount option */
 		if (oflag)
-			disp->print_mopt(lst, p->dir, p->opts);
+			sdisp->print_mopt(lst, p->dir, p->opts);
 
 		(void)printf("\n");
 
@@ -777,11 +781,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
 	}
 
 	if (sflag)
-		disp->print_sum(lst, stot, atot, utot, ifitot, ifatot);
+		sdisp->print_sum(lst, stot, atot, utot, ifitot, ifatot);
 
 	/* only required for html and tex export (csv and text point to NULL) */
-	if (disp->deinit)
-		disp->deinit();
+	if (sdisp->deinit)
+		sdisp->deinit();
 }
 
 #if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__)

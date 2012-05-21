@@ -185,7 +185,12 @@ static void
 html_disp_sum(struct list *lst, double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
-	double ptot = stot == 0 ? 100.0 : 100.0 * (utot / stot);
+	double ptot = 0;
+
+	if ((int)stot == 0)
+		ptot = 100.0;
+	else
+		ptot = (utot / stot) * 100.0;
 
 	(void)lst;
 

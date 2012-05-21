@@ -262,37 +262,40 @@ print_unit(int i, int mode)
 			return;
 			/* NOTREACHED */
 		case 1: /* Kio  or Ko */
-		    (void)printf("K");
+			(void)printf("K");
 			return;
 			/* NOTREACHED */
 		case 2: /* Mio or Mo */
-		    (void)printf("M");
+			(void)printf("M");
 			return;
 			/* NOTREACHED */
 		case 3: /* Gio or Go*/
-		    (void)printf("G");
+			(void)printf("G");
 			return;
 			/* NOTREACHED */
 		case 4: /* Tio or To*/
-		    (void)printf("T");
+			(void)printf("T");
 			return;
 			/* NOTREACHED */
 		case 5: /* Pio or Po*/
-		    (void)printf("P");
+			(void)printf("P");
 			return;
 			/* NOTREACHED */
 		case 6: /* Eio or Eo*/
-		    (void)printf("E");
+			   (void)printf("E");
 			return;
 			/* NOTREACHED */
 		case 7: /* Zio or Zo*/
-		    (void)printf("Z");
+			(void)printf("Z");
 			return;
 			/* NOTREACHED */
 		case 8: /* Yio or Yo*/
-		    (void)printf("Y");
+			(void)printf("Y");
 			return;
 			/* NOTREACHED */
+		default:
+			(void)fputs("Could not print unit type in"
+					" human-readable format\n", stderr);
 		}
 	case 'b':
 		if (mode)
@@ -333,6 +336,8 @@ print_unit(int i, int mode)
 		(void)printf("Y");
 		return;
 		/* NOTREACHED */
+	default:
+		(void)fputs("Could not print unit type\n", stderr);
 	}
 }
 
@@ -407,11 +412,11 @@ cvrt(double n)
 		else /* 1024^7 */
 			return n / 1180591620717411303424.0;
 			/* NOTREACHED */
+	default:
+		(void)fputs("Could not convert unit size\n", stderr);
+		return n;
+		/* NOTREACHED */
 	}
-
-	/* should not be able to reach this point but just in case... */
-	return n;
-	/* NOTREACHED */
 }
 
 /*
@@ -725,6 +730,8 @@ req_width(struct list lst)
 		if (dflag)
 			ret += 11;
 		break;
+	default:
+		(void)fputs("Unkown unit type\n", stderr);
 	}
 
 	return ret;

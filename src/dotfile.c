@@ -328,25 +328,25 @@ non_valid_html_color:
  * @cnf: structure to be initiated
  */
 void
-init_conf(struct conf *cnf)
+init_conf(struct conf *config)
 {
-	cnf->chead	= BLUE;
-	cnf->clow	= GREEN;
-	cnf->cmedium	= YELLOW;
-	cnf->chigh	= RED;
+	config->chead	= BLUE;
+	config->clow	= GREEN;
+	config->cmedium	= YELLOW;
+	config->chigh	= RED;
 
-	cnf->gmedium	= 50;
-	cnf->ghigh	= 75;
+	config->gmedium	= 50;
+	config->ghigh	= 75;
 
-	cnf->gsymbol	= '=';
+	config->gsymbol	= '=';
 
-	cnf->hcheadbg	= "970000";
-	cnf->hcheadfg	= "FFFFFF";
-	cnf->hccellbg	= "E9E9E9";
-	cnf->hccellfg	= "000000";
-	cnf->hchoverbg	= "FFFFFF";
-	cnf->hchoverfg	= "000000";
-	cnf->hclow	= "348017";
-	cnf->hcmedium	= "FDD017";
-	cnf->hchigh	= "F62217";
+	config->hcheadbg	= "970000";
+	config->hcheadfg	= "FFFFFF";
+	config->hccellbg	= "E9E9E9";
+	config->hccellfg	= "000000";
+	config->hchoverbg	= "FFFFFF";
+	config->hchoverfg	= "000000";
+	config->hclow		= "348017";
+	config->hcmedium	= "FDD017";
+	config->hchigh		= "F62217";
 }

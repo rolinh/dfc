@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-21 17:20+0200\n"
+"POT-Creation-Date: 2012-05-21 18:31+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -72,36 +72,36 @@ msgstr ",OPTIONS DE MONTAGE"
 msgid "SUM:,"
 msgstr "SOMME:,"
 
-#: src/dfc.c:199
+#: src/dfc.c:200
 #, c-format
 msgid "-c: illegal sub option %s\n"
 msgstr "-c: sous-option illégale %s\n"
 
-#: src/dfc.c:231
+#: src/dfc.c:233
 #, c-format
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:278
+#: src/dfc.c:281
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:331
+#: src/dfc.c:335
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:373
+#: src/dfc.c:377
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:408
+#: src/dfc.c:412
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:411
+#: src/dfc.c:415
 msgid ""
 "Usage:  dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -137,7 +137,7 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
 "\t\tlocalement uniquement\n"
 
-#: src/dfc.c:429
+#: src/dfc.c:433
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-n\tdo not print header\n"
@@ -175,17 +175,17 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:491
+#: src/dfc.c:495
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:903
+#: src/dfc.c:907
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:939
+#: src/dfc.c:943
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
@@ -350,7 +350,7 @@ msgstr " OPT. DE MONT.\n"
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/util.c:637
+#: src/util.c:642
 msgid ""
 "WARNING: TTY too narrow. Some options will be disabled to try to make dfc "
 "output fit.\n"
@@ -358,40 +358,40 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options seront désactivées "
 "afin d'ajuster l'affichage.\n"
 
-#: src/util.c:677
+#: src/util.c:682
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:798
+#: src/util.c:805
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:801
+#: src/util.c:808
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:804
+#: src/util.c:811
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:807
+#: src/util.c:814
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:810
+#: src/util.c:817
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:813
+#: src/util.c:820
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:816
+#: src/util.c:823
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:819
+#: src/util.c:826
 msgid "white"
 msgstr "blanc"
