@@ -69,8 +69,8 @@ else()
 	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
 
-# CFLAGS
-add_definitions(-O2 -std=c89)
+# CFLAGS (using c99 only for long long, all the rest should be c89 compliant)
+add_definitions(-O2 -std=c99)
 
 option(GRIM "Very strict compiler options (use it to debug dfc)" off)
 if(GRIM)

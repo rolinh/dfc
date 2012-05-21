@@ -3,6 +3,7 @@ Patches are welcome!
 Just keep in mind the following:
 
   * keep the same coding style
+  * use c89 (the only exception being for using uint64_t type)
   * your code must fit in 80 columns wide with a TAB of 8
   * always check what a function returns if it is non-void. If you do not care
     about what's returned, explicitly declare it by casting it to void.
