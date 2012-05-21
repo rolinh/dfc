@@ -32,6 +32,7 @@
  *
  * Util functions
  */
+#include <inttypes.h>
 
 #include "extern.h"
 #include "list.h"
@@ -43,6 +44,7 @@ char * shortenstr(char *str, int len);
 char * sanitizestr(const char *str);
 int getttywidth(void);
 int humanize(double *n);
+int humanize_i(uint64_t *n);
 double cvrt(double n);
 int fstypefilter(char *type, char *filter, int nm);
 int fsnamefilter(char *fsname, char *filter, int nm);

@@ -40,6 +40,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/ioctl.h>
+#include <inttypes.h>
 
 #include "util.h"
 
@@ -214,6 +215,25 @@ humanize(double *n)
 
 	while ((*n >= 1000) && (i < 8)) {
 		*n /= divider;
+		i++;
+	}
+
+    return i;
+    /* NOTREACHED */
+}
+
+/*
+ * convert to human readable format and return the information i to format
+ * correctly the output. This one is intended to convert inodes to h-r
+ * @n: address of the number to convert
+ */
+int
+humanize_i(uint64_t *n)
+{
+	int i = 0;
+
+	while ((*n >= 1000) && (i < 8)) {
+		*n /= 1000;
 		i++;
 	}
 
@@ -412,7 +432,7 @@ is_remote(char *fstype)
 }
 
 /*
- * Compares regarding the qflag
+ * Compares regarding qflag
  * @a: first element of comparison
  * @b: second element of comparison
  */
