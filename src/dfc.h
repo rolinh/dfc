@@ -52,4 +52,9 @@ struct statfs;
 char * statfs_flags_to_str(struct statfs *s);
 #endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ */
 
+#ifdef __NetBSD__
+struct statvfs;
+char *statfs_flags_to_str(struct statvfs *s);
+#endif
+
 #endif /* ndef DFC_H */

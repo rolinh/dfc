@@ -56,7 +56,7 @@ struct fsmntinfo {
 	char *opts;	/* mount options (see mntent.h) */
 
 	/* infos to get from statvfs(3) */
-#if defined(__linux__)
+#if defined(__linux__) || defined(__NetBSD__)
 	unsigned long	bsize;	/* file system block size */
 	unsigned long	frsize;	/* fragment size */
 	fsblkcnt_t	blocks;	/* size of fs in frsize unit */
@@ -65,7 +65,7 @@ struct fsmntinfo {
 	fsfilcnt_t	files;	/* # of inodes */
 	fsfilcnt_t	ffree;	/* # of free inodes */
 	fsfilcnt_t	favail;	/* # of available inodes */
-#endif /* __linux__ */
+#endif /* __linux__ || __NetBSD__ */
 #if defined(__FreeBSD__)
 	uint64_t	bsize;	/* file system block size */
 	unsigned long   frsize;	/* XXX: does not exist on FreeBSD */
