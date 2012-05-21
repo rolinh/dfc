@@ -242,6 +242,97 @@ humanize_i(uint64_t *n)
 }
 
 /*
+ * Print a letter according to the desired unit
+ * @i: should be the result of the humanize or humanize_i function when humanize
+ *     is used
+ * @mode: either 0 or 1. 1 mode should be used when called to print filesystem
+ *	  unit and 1 should be used when wanting to display "inodes unit"
+ */
+void
+print_unit(int i, int mode)
+{
+	switch (unitflag) {
+	case 'h':
+		switch (i) {
+		case 0:	/* bytes */
+		    if (mode)
+			    (void)printf("B");
+			return;
+			/* NOTREACHED */
+		case 1: /* Kio  or Ko */
+		    (void)printf("K");
+			return;
+			/* NOTREACHED */
+		case 2: /* Mio or Mo */
+		    (void)printf("M");
+			return;
+			/* NOTREACHED */
+		case 3: /* Gio or Go*/
+		    (void)printf("G");
+			return;
+			/* NOTREACHED */
+		case 4: /* Tio or To*/
+		    (void)printf("T");
+			return;
+			/* NOTREACHED */
+		case 5: /* Pio or Po*/
+		    (void)printf("P");
+			return;
+			/* NOTREACHED */
+		case 6: /* Eio or Eo*/
+		    (void)printf("E");
+			return;
+			/* NOTREACHED */
+		case 7: /* Zio or Zo*/
+		    (void)printf("Z");
+			return;
+			/* NOTREACHED */
+		case 8: /* Yio or Yo*/
+		    (void)printf("Y");
+			return;
+			/* NOTREACHED */
+		}
+	case 'b':
+		if (mode)
+			(void)printf("B");
+		return;
+		/* NOTREACHED */
+	case 'k':
+		(void)printf("K");
+		return;
+		/* NOTREACHED */
+	case 'm':
+		(void)printf("M");
+		return;
+		/* NOTREACHED */
+	case 'g':
+		(void)printf("G");
+		return;
+		/* NOTREACHED */
+	case 't':
+		(void)printf("T");
+		return;
+		/* NOTREACHED */
+	case 'p':
+		(void)printf("P");
+		return;
+		/* NOTREACHED */
+	case 'e':
+		(void)printf("E");
+		return;
+		/* NOTREACHED */
+	case 'z':
+		(void)printf("Z");
+		return;
+		/* NOTREACHED */
+	case 'y':
+		(void)printf("Y");
+		return;
+		/* NOTREACHED */
+	}
+}
+
+/*
  * Converts the argument to the correct unit
  * TODO: pretty crapy function... should do it in a smart way!
  * Plus there probably is some roundings errors...

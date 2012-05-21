@@ -174,6 +174,11 @@ csv_disp_bar(double perct)
 	/* DUMMY */
 }
 
+/*
+ * Display available and total correctly formated
+ * @n: number to print
+ * @perct: percentage (useful for finding which color to use)
+ */
 static void
 csv_disp_at(double n, double perct)
 {
@@ -184,76 +189,18 @@ csv_disp_at(double n, double perct)
 
 	(void)printf(",");
 
-	/* available  and total */
-	switch (unitflag) {
-	case 'h':
+	if (unitflag == 'h') {
 		i = humanize(&n);
 		(void)printf(i == 0 ? "%.f," : "%.1f,", n);
-		switch (i) {
-		case 0:	/* bytes */
-		    (void)printf("B");
-		    break;
-		case 1: /* Kio  or Ko */
-		    (void)printf("K");
-		    break;
-		case 2: /* Mio or Mo */
-		    (void)printf("M");
-		    break;
-		case 3: /* Gio or Go*/
-		    (void)printf("G");
-		    break;
-		case 4: /* Tio or To*/
-		    (void)printf("T");
-		    break;
-		case 5: /* Pio or Po*/
-		    (void)printf("P");
-		    break;
-		case 6: /* Eio or Eo*/
-		    (void)printf("E");
-		    break;
-		case 7: /* Zio or Zo*/
-		    (void)printf("Z");
-		    break;
-		case 8: /* Yio or Yo*/
-		    (void)printf("Y");
-		    break;
-		}
-		return;
-		/* NOTREACHED */
-	case 'b':
-		(void)printf("%f,B,", n);
-		return;
-		/* NOTREACHED */
-	case 'k':
-		(void)printf("%f,K,", n);
-		return;
-		/* NOTREACHED */
-	}
-
-	(void)printf("%.1f,", n);
-
-	switch (unitflag) {
-	case 'm':
-		(void)printf("M");
-		break;
-	case 'g':
-		(void)printf("G");
-		break;
-	case 't':
-		(void)printf("T");
-		break;
-	case 'p':
-		(void)printf("P");
-		break;
-	case 'e':
-		(void)printf("E");
-		break;
-	case 'z':
-		(void)printf("Z");
-		break;
-	case 'y':
-		(void)printf("Y");
-		break;
+		print_unit(i, 1);
+	} else {
+		if (unitflag == 'b')
+			(void)printf("%f,", n);
+		else if (unitflag == 'k')
+			(void)printf("%f,", n);
+		else
+			(void)printf("%.1f,", n);
+		print_unit(0, 1);
 	}
 }
 

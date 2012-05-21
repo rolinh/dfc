@@ -45,6 +45,7 @@ char * sanitizestr(const char *str);
 int getttywidth(void);
 int humanize(double *n);
 int humanize_i(uint64_t *n);
+void print_unit(int i, int mode);
 double cvrt(double n);
 int fstypefilter(char *type, char *filter, int nm);
 int fsnamefilter(char *fsname, char *filter, int nm);

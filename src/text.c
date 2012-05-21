@@ -272,7 +272,6 @@ text_disp_bar(double perct)
 
 /*
  * Display available and total correctly formated
- * TODO: men... this is really UGLY! Just figure out something!!
  * @n: number to print
  * @perct: percentage (useful for finding which color to use)
  */
@@ -283,83 +282,23 @@ text_disp_at(double n, double perct)
 
 	change_color(perct);
 
-	/* available  and total */
-	switch (unitflag) {
-	case 'h':
+	if (unitflag == 'h') {
 		i = humanize(&n);
 		change_color(perct);
 		(void)printf(i == 0 ? "%9.f" : "%9.1f", n);
 		reset_color();
-		switch (i) {
-		case 0:	/* bytes */
-		    (void)printf("B");
-		    break;
-		case 1: /* Kio  or Ko */
-		    (void)printf("K");
-		    break;
-		case 2: /* Mio or Mo */
-		    (void)printf("M");
-		    break;
-		case 3: /* Gio or Go*/
-		    (void)printf("G");
-		    break;
-		case 4: /* Tio or To*/
-		    (void)printf("T");
-		    break;
-		case 5: /* Pio or Po*/
-		    (void)printf("P");
-		    break;
-		case 6: /* Eio or Eo*/
-		    (void)printf("E");
-		    break;
-		case 7: /* Zio or Zo*/
-		    (void)printf("Z");
-		    break;
-		case 8: /* Yio or Yo*/
-		    (void)printf("Y");
-		    break;
-		}
-		return;
-		/* NOTREACHED */
-	case 'b':
-		(void)printf("%15.f", n);
-		reset_color();
-		(void)printf("B");
-		return;
-		/* NOTREACHED */
-	case 'k':
-		(void)printf("%10.f", n);
-		reset_color();
-		(void)printf("K");
-		return;
-		/* NOTREACHED */
-	}
+		print_unit(i, 1);
+	} else {
+		change_color(perct);
+		if (unitflag == 'b')
+			(void)printf("%15.f", n);
+		else if (unitflag == 'k')
+			(void)printf("%10.f", n);
+		else
+			(void)printf("%9.1f", n);
 
-	(void)printf("%9.1f", n);
-	reset_color();
-
-	switch (unitflag) {
-	case 'm':
-		(void)printf("M");
-		break;
-	case 'g':
-		(void)printf("G");
-		break;
-	case 't':
-		(void)printf("T");
-		break;
-	case 'p':
-		(void)printf("P");
-		break;
-	case 'e':
-		(void)printf("E");
-		break;
-	case 'z':
-		(void)printf("Z");
-		break;
-	case 'y':
-		(void)printf("Y");
-		break;
+		reset_color();
+		print_unit(0, 1);
 	}
 }
 
