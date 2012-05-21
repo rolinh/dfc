@@ -701,7 +701,7 @@ req_width(struct list lst)
 	if (oflag)
 		ret += lst.mntoptmaxlen + 1;
 	if (iflag)
-		ret += 12;
+		ret += 14;
 	if (!bflag) {
 		ret += 24;
 		if (wflag)
@@ -716,19 +716,19 @@ req_width(struct list lst)
 	case 'e': /* FALLTHROUGH */
 	case 'z': /* FALLTHROUGH */
 	case 'y': /* FALLTHROUGH */
-		ret += 25;
+		ret += 26;
 		if (dflag)
-			ret += 12;
+			ret += 13;
 		break;
 	case 'b':
-		ret += 33;
+		ret += 34;
 		if (dflag)
-			ret += 16;
+			ret += 17;
 		break;
 	case 'k':
-		ret += 23;
+		ret += 24;
 		if (dflag)
-			ret += 11;
+			ret += 12;
 		break;
 	default:
 		(void)fputs("Unkown unit type\n", stderr);
