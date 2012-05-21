@@ -33,6 +33,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <sys/types.h>
+
 #include "extern.h"
 #include "export.h"
 #include "display.h"
@@ -58,9 +60,9 @@ static void html_disp_mount(char *dir);
 static void html_disp_mopt(struct list *lst, char *dir, char *opts);
 static void html_disp_perct(double perct);
 
-/* init pointers from Display structure to the functions found here */
+/* init pointers from display structure to the functions found here */
 void
-init_disp_html(struct Display *disp)
+init_disp_html(struct display *disp)
 {
 	disp->init         = html_disp_init;
 	disp->deinit       = html_disp_deinit;
@@ -170,7 +172,7 @@ html_disp_header(struct list *lst)
 }
 
 /*
- * display the sum (useful when -s option is used
+ * Display the sum (useful when -s option is used
  * @lst: is ignored here
  * @stot: total size of "total"
  * @atot: total size of "available"
@@ -349,7 +351,7 @@ html_disp_at(double n, double perct)
 }
 
 /*
- * display file system
+ * Display file system
  * @lst: is ignored here
  * @fsname: list of the file system to print
  */
@@ -368,7 +370,7 @@ html_disp_fs(struct list *lst, char *fsname)
 }
 
 /*
- * display file system type
+ * Display file system type
  * @lst: is ignored here
  * @type: the file system type to print
  */
@@ -380,19 +382,29 @@ html_disp_type(struct list *lst, char *type)
 }
 
 /*
- * display inodes
+ * Display inodes
  *@files: number of inodes
  *@favail: number of available inodes
  */
 static void
-html_disp_inodes(unsigned long files, unsigned long favail)
+#if defined(__linux__)
+html_disp_inodes(fsfilcnt_t files, fsfilcnt_t favail)
+#elif defined(__FreeBSD__)
+html_disp_inodes(uint64_t files, int64_t favail)
+#elif defined(__OpenBSD__)
+html_disp_inodes(u_int64_t files, u_int64_t favail)
+#elif defined(__DragonFly__)
+html_disp_inodes(long files, long favail)
+#elif defined(__APPLE__)
+html_disp_inodes(uint64_t files, uint64_t favail)
+#endif
 {
 	(void)printf("\t  <td style = \"text-align: right;\">%ldk</td>\n", files);
 	(void)printf("\t  <td style = \"text-align: right;\">%ldk</td>\n", favail);
 }
 
 /*
- * display mount point
+ * Display mount point
  * @dir: mount point
  */
 static void
@@ -402,7 +414,7 @@ html_disp_mount(char *dir)
 }
 
 /*
- * display mount options
+ * Display mount options
  * @lst: is ignored here
  * @dir: is ignored here
  * @opts: mount options

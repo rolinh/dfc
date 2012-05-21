@@ -27,10 +27,17 @@
 #ifndef H_DISPLAY
 #define H_DISPLAY
 
+#include <sys/types.h>
+
+#if defined(__APPLE__)
+#include <sys/mount.h>
+#include <sys/param.h>
+#endif /* __APPLE__ */
+
 #include "list.h"
 
 /* Structure to handle the display interface. */
-struct Display
+struct display
 {
     /* Some interfaces may need to initialize/deinitialize stuff */
     void (*init)         (void);
@@ -42,7 +49,17 @@ struct Display
     void (*print_at)     (double, double);
     void (*print_fs)	 (struct list*, char *);
     void (*print_type)	 (struct list*, char *);
-    void (*print_inodes) (unsigned long, unsigned long);
+#if defined(__linux__)
+    void (*print_inodes) (fsfilcnt_t, fsfilcnt_t);
+#elif defined(__FreeBSD__)
+    void (*print_inodes) (uint64_t, int64_t);
+#elif defined(__OpenBSD__)
+    void (*print_inodes) (u_int64_t, u_int64_t);
+#elif defined(__DragonFly__)
+    void (*print_inodes) (long, long);
+#elif defined(__APPLE__)
+    void (*print_inodes) (uint64_t, uint64_t);
+#endif
     void (*print_mount)	 (char *);
     void (*print_mopt)	 (struct list*, char *, char *);
     void (*print_perct)  (double);

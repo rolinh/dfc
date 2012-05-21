@@ -35,10 +35,10 @@
 
 #include "display.h"
 
-void init_disp_csv(struct Display *disp);
-void init_disp_html(struct Display *disp);
-void init_disp_tex(struct Display *disp);
-void init_disp_text(struct Display *disp);
+void init_disp_csv(struct display *disp);
+void init_disp_html(struct display *disp);
+void init_disp_tex(struct display *disp);
+void init_disp_text(struct display *disp);
 
 #endif /* ndef H_EXPORT */
 

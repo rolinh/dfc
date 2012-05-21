@@ -73,7 +73,7 @@ int
 main(int argc, char *argv[])
 {
 	struct list queue;
-	struct Display display;
+	struct display sdisp;
 	int ch;
 	int width;
 	int ret = EXIT_SUCCESS;
@@ -215,15 +215,15 @@ main(int argc, char *argv[])
 					break;
 				case ECSV:
 					Wflag = 1;
-					init_disp_csv(&display);
+					init_disp_csv(&sdisp);
 					break;
 				case EHTML:
 					Wflag = 1;
-					init_disp_html(&display);
+					init_disp_html(&sdisp);
 					break;
 				case ETEX:
 					Wflag = 1;
-					init_disp_tex(&display);
+					init_disp_tex(&sdisp);
 					break;
 				case -1:
 					(void)fprintf(stderr,
@@ -377,7 +377,7 @@ main(int argc, char *argv[])
 
 	/* if nothing specified, text output is default */
 	if (!eflag)
-		init_disp_text(&display);
+		init_disp_text(&sdisp);
 
 	/* initializes the queue */
 	init_queue(&queue);
@@ -390,7 +390,7 @@ main(int argc, char *argv[])
 		auto_adjust(queue, width);
 
 	/* actually displays the info we have got */
-	disp(&queue, fstfilter, fsnfilter, &display);
+	disp(&queue, fstfilter, fsnfilter, &sdisp);
 
 	return ret;
 	/* NOTREACHED */
@@ -619,7 +619,7 @@ fetch_info(struct list *lst)
  *	  the selected output type
  */
 void
-disp(struct list *lst, char *fstfilter, char *fsnfilter, struct Display *disp)
+disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
 {
 	struct fsmntinfo *p = NULL;
 	int n;

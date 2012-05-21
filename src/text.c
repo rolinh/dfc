@@ -31,8 +31,9 @@
  * Text display functions
  */
 #include <stdio.h>
-
 #include <string.h>
+
+#include <sys/types.h>
 
 #include "display.h"
 #include "dotfile.h"
@@ -61,9 +62,9 @@ static void text_disp_perct(double perct);
 static void change_color(double perct);
 static void reset_color(void);
 
-/* init pointers from Display structure to the functions found here */
+/* init pointers from display structure to the functions found here */
 void
-init_disp_text(struct Display *disp)
+init_disp_text(struct display *disp)
 {
     disp->init         = NULL; /* not required --> not implemented here */
     disp->deinit       = NULL; /* not required --> not implemented here */
@@ -166,7 +167,7 @@ text_disp_header(struct list *lst)
 }
 
 /*
- * display the sum (useful when -s option is used
+ * Display the sum (useful when -s option is used
  * @lst: queue containing the informations
  * @stot: total size of "total"
  * @atot: total size of "available"
@@ -362,7 +363,7 @@ text_disp_at(double n, double perct)
 }
 
 /*
- * display file system
+ * Display file system
  * @lst: list containing the information
  * @fsname: list of the file system to print
  */
@@ -377,7 +378,7 @@ text_disp_fs(struct list *lst, char *fsname)
 }
 
 /*
- * display file system type
+ * Display file system type
  * @lst: list containing the information
  * @type: the file system type to print
  */
@@ -392,19 +393,29 @@ text_disp_type(struct list* lst, char *type)
 }
 
 /*
- * display inodes
+ * Display inodes
  *@files: number of inodes
  *@favail: number of available inodes
  */
 static void
-text_disp_inodes(unsigned long files, unsigned long favail)
+#if defined(__linux__)
+text_disp_inodes(fsfilcnt_t files, fsfilcnt_t favail)
+#elif defined(__FreeBSD__)
+text_disp_inodes(uint64_t files, int64_t favail)
+#elif defined(__OpenBSD__)
+text_disp_inodes(u_int64_t files, u_int64_t favail)
+#elif defined(__DragonFly__)
+text_disp_inodes(long files, long favail)
+#elif defined(__APPLE__)
+text_disp_inodes(uint64_t files, uint64_t favail)
+#endif
 {
 	(void)printf("%9ldk", files);
 	(void)printf("%9ldk", favail);
 }
 
 /*
- * display mount point
+ * Display mount point
  * @dir: mount point
  */
 static void
@@ -414,7 +425,7 @@ text_disp_mount(char *dir)
 }
 
 /*
- * display mount options
+ * Display mount options
  * @lst: structure containing information
  * @dir: mount point
  * @opts: mount options

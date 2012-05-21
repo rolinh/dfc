@@ -34,6 +34,8 @@
  */
 #include <stdio.h>
 
+#include <sys/types.h>
+
 #include "extern.h"
 #include "export.h"
 #include "display.h"
@@ -57,9 +59,9 @@ static void csv_disp_mount(char *dir);
 static void csv_disp_mopt(struct list *lst, char *dir, char *opts);
 static void csv_disp_perct(double perct);
 
-/* init pointers from Display structure to the functions found here */
+/* init pointers from display structure to the functions found here */
 void
-init_disp_csv(struct Display *disp)
+init_disp_csv(struct display *disp)
 {
     disp->init         = NULL; /* not required --> not implemented here */
     disp->deinit       = NULL; /* not required --> not implemented here */
@@ -113,7 +115,7 @@ csv_disp_header(struct list *lst)
 }
 
 /*
- * display the sum (useful when -s option is used
+ * Display the sum (useful when -s option is used
  * @lst: queue containing the informations
  * @stot: total size of "total"
  * @atot: total size of "available"
@@ -255,7 +257,7 @@ csv_disp_at(double n, double perct)
 }
 
 /*
- * display file system
+ * Display file system
  * @lst: is ignored here
  * @fsname: list of the file system to print
  */
@@ -269,7 +271,7 @@ csv_disp_fs(struct list *lst, char *fsname)
 }
 
 /*
- * display file system type
+ * Display file system type
  * @lst: is ignored here
  * @type: the file system type to print
  */
@@ -283,19 +285,29 @@ csv_disp_type(struct list *lst, char *type)
 }
 
 /*
- * display inodes
+ * Display inodes
  *@files: number of inodes
  *@favail: number of available inodes
  */
 static void
-csv_disp_inodes(unsigned long files, unsigned long favail)
+#if defined(__linux__)
+csv_disp_inodes(fsfilcnt_t files, fsfilcnt_t favail)
+#elif defined(__FreeBSD__)
+csv_disp_inodes(uint64_t files, int64_t favail)
+#elif defined(__OpenBSD__)
+csv_disp_inodes(u_int64_t files, u_int64_t favail)
+#elif defined(__DragonFly__)
+csv_disp_inodes(long files, long favail)
+#elif defined(__APPLE__)
+csv_disp_inodes(uint64_t files, uint64_t favail)
+#endif
 {
 	(void)printf(",%ld,k", files);
 	(void)printf(",%ld,k", favail);
 }
 
 /*
- * display mount point
+ * Display mount point
  * @dir: mount point
  */
 static void
@@ -305,7 +317,7 @@ csv_disp_mount(char *dir)
 }
 
 /*
- * display mount options
+ * Display mount options
  * @lst: is ignored here
  * @dir: is ignored here
  * @opts: mount options
