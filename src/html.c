@@ -332,10 +332,25 @@ html_disp_type(struct list *lst, char *type)
 static void
 html_disp_inodes(uint64_t files, uint64_t favail)
 {
-	(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64 "k</td>\n",
-			files);
-	(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64 "k</td>\n",
-			favail);
+	int i;
+
+	if (unitflag == 'h') {
+		i = humanize_i(&files);
+		(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64,
+				files);
+		print_unit(i, 0);
+		(void)printf("</td>\n");
+		i = humanize_i(&favail);
+		(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64,
+				favail);
+		print_unit(i, 0);
+		(void)printf("</td>\n");
+	} else {
+		(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64
+				"</td>\n", files);
+		(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64
+				"</td>\n", favail);
+	}
 }
 
 /*

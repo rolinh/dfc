@@ -346,7 +346,17 @@ tex_disp_type(struct list *lst, char *type)
 static void
 tex_disp_inodes(uint64_t files, uint64_t favail)
 {
-	(void)printf(" & %" PRIu64 "k & %" PRIu64 "k", files, favail);
+	int i;
+
+	if (unitflag == 'h') {
+		i = humanize_i(&files);
+		(void)printf(" & %" PRIu64, files);
+		print_unit(i, 0);
+		i = humanize_i(&favail);
+		(void)printf(" & %" PRIu64, favail);
+		print_unit(i, 0);
+	} else
+		(void)printf(" & %" PRIu64 " & %" PRIu64, files, favail);
 }
 
 /*

@@ -232,7 +232,7 @@ humanize_i(uint64_t *n)
 {
 	int i = 0;
 
-	while ((*n >= 1000) && (i < 8)) {
+	while ((*n >= 10000) && (i < 8)) {
 		*n /= 1000;
 		i++;
 	}
@@ -246,7 +246,7 @@ humanize_i(uint64_t *n)
  * @i: should be the result of the humanize or humanize_i function when humanize
  *     is used
  * @mode: either 0 or 1. 1 mode should be used when called to print filesystem
- *	  unit and 1 should be used when wanting to display "inodes unit"
+ *	  unit and 0 should be used when wanting to display "inodes unit"
  */
 void
 print_unit(int i, int mode)
@@ -257,6 +257,8 @@ print_unit(int i, int mode)
 		case 0:	/* bytes */
 		    if (mode)
 			    (void)printf("B");
+		    else
+			    (void)printf(" ");
 			return;
 			/* NOTREACHED */
 		case 1: /* Kio  or Ko */
@@ -295,6 +297,8 @@ print_unit(int i, int mode)
 	case 'b':
 		if (mode)
 			(void)printf("B");
+		else
+			(void)printf(" ");
 		return;
 		/* NOTREACHED */
 	case 'k':
