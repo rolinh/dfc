@@ -789,7 +789,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
  * All the flags found in *BSD and Mac OS X, alphabetically sorted.
  */
 struct flag_str {
-	long flag;
+	long long flag;
 	const char *str;
 } possible_flags[] = {
 #if defined(__FreeBSD__)
