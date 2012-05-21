@@ -134,7 +134,7 @@ sanitizestr(const char *str)
 			nchars++;
 	}
 
-	if (i == nchars) /* No '_' was found. */
+	if (i == (int)nchars) /* No '_' was found. */
 		return strdup(str);
 		/* NOTREACHED */
 
