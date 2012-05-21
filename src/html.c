@@ -34,6 +34,7 @@
 #include <stdlib.h>
 
 #include <sys/types.h>
+#include <inttypes.h>
 
 #include "extern.h"
 #include "export.h"
@@ -55,7 +56,7 @@ static void html_disp_bar(double perct);
 static void html_disp_at(double n, double perct);
 static void html_disp_fs(struct list *lst, char *fsname);
 static void html_disp_type(struct list *lst, char *type);
-static void html_disp_inodes(unsigned long files, unsigned long favail);
+static void html_disp_inodes(uint64_t files, uint64_t favail);
 static void html_disp_mount(char *dir);
 static void html_disp_mopt(struct list *lst, char *dir, char *opts);
 static void html_disp_perct(double perct);
@@ -387,20 +388,12 @@ html_disp_type(struct list *lst, char *type)
  *@favail: number of available inodes
  */
 static void
-#if defined(__linux__)
-html_disp_inodes(fsfilcnt_t files, fsfilcnt_t favail)
-#elif defined(__FreeBSD__)
-html_disp_inodes(uint64_t files, int64_t favail)
-#elif defined(__OpenBSD__)
-html_disp_inodes(u_int64_t files, u_int64_t favail)
-#elif defined(__DragonFly__)
-html_disp_inodes(long files, long favail)
-#elif defined(__APPLE__)
 html_disp_inodes(uint64_t files, uint64_t favail)
-#endif
 {
-	(void)printf("\t  <td style = \"text-align: right;\">%ldk</td>\n", files);
-	(void)printf("\t  <td style = \"text-align: right;\">%ldk</td>\n", favail);
+	(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64 "k</td>\n",
+			files);
+	(void)printf("\t  <td style = \"text-align: right;\">%" PRIu64 "k</td>\n",
+			favail);
 }
 
 /*

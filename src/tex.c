@@ -39,6 +39,7 @@
 #include <string.h>
 
 #include <sys/types.h>
+#include <inttypes.h>
 
 #include "extern.h"
 #include "export.h"
@@ -60,7 +61,7 @@ static void tex_disp_bar(double perct);
 static void tex_disp_at(double n, double perct);
 static void tex_disp_fs(struct list *lst, char *fsname);
 static void tex_disp_type(struct list *lst, char *type);
-static void tex_disp_inodes(unsigned long files, unsigned long favail);
+static void tex_disp_inodes(uint64_t files, uint64_t favail);
 static void tex_disp_mount(char *dir);
 static void tex_disp_mopt(struct list *lst, char *dir, char *opts);
 static void tex_disp_perct(double perct);
@@ -397,19 +398,9 @@ tex_disp_type(struct list *lst, char *type)
  *@favail: number of available inodes
  */
 static void
-#if defined(__linux__)
-tex_disp_inodes(fsfilcnt_t files, fsfilcnt_t favail)
-#elif defined(__FreeBSD__)
-tex_disp_inodes(uint64_t files, int64_t favail)
-#elif defined(__OpenBSD__)
-tex_disp_inodes(u_int64_t files, u_int64_t favail)
-#elif defined(__DragonFly__)
-tex_disp_inodes(long files, long favail)
-#elif defined(__APPLE__)
 tex_disp_inodes(uint64_t files, uint64_t favail)
-#endif
 {
-	(void) printf(" & %ldk & %ldk ", files, favail);
+	(void)printf(" & %" PRIu64 "k & %" PRIu64 "k", files, favail);
 }
 
 /*

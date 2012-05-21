@@ -35,6 +35,7 @@
 #include <stdio.h>
 
 #include <sys/types.h>
+#include <inttypes.h>
 
 #include "extern.h"
 #include "export.h"
@@ -54,7 +55,7 @@ static void csv_disp_bar(double perct);
 static void csv_disp_at(double n, double perct);
 static void csv_disp_fs(struct list *lst, char *fsname);
 static void csv_disp_type(struct list *lst, char *type);
-static void csv_disp_inodes(unsigned long files, unsigned long favail);
+static void csv_disp_inodes(uint64_t files, uint64_t favail);
 static void csv_disp_mount(char *dir);
 static void csv_disp_mopt(struct list *lst, char *dir, char *opts);
 static void csv_disp_perct(double perct);
@@ -290,20 +291,10 @@ csv_disp_type(struct list *lst, char *type)
  *@favail: number of available inodes
  */
 static void
-#if defined(__linux__)
-csv_disp_inodes(fsfilcnt_t files, fsfilcnt_t favail)
-#elif defined(__FreeBSD__)
-csv_disp_inodes(uint64_t files, int64_t favail)
-#elif defined(__OpenBSD__)
-csv_disp_inodes(u_int64_t files, u_int64_t favail)
-#elif defined(__DragonFly__)
-csv_disp_inodes(long files, long favail)
-#elif defined(__APPLE__)
 csv_disp_inodes(uint64_t files, uint64_t favail)
-#endif
 {
-	(void)printf(",%ld,k", files);
-	(void)printf(",%ld,k", favail);
+	(void)printf(",%" PRIu64 ",k", files);
+	(void)printf(",%" PRIu64 ",k", favail);
 }
 
 /*

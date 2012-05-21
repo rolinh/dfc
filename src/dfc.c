@@ -54,6 +54,7 @@
 #include <string.h>
 
 #include <sys/types.h>
+#include <inttypes.h>
 #include <sys/param.h>
 #include <sys/statvfs.h>
 
@@ -755,9 +756,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *disp)
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
 #if defined(__linux__)
-			disp->print_inodes(p->files / 1000, p->favail / 1000);
+			disp->print_inodes((uint64_t)(p->files / 1000),
+					(uint64_t)(p->favail / 1000));
 #else
-			disp->print_inodes(p->files / 1000, p->ffree / 1000);
+			disp->print_inodes((uint64_t)(p->files / 1000),
+					(uint64_t)( p->ffree / 1000));
 #endif /* __linux__ */
 		}
 
