@@ -130,7 +130,7 @@ parse_conf(char *conf)
 		/* NOTREACHED */
 	}
 
-	while ((fgets(line, sizeof(line), fd)) != NULL) {
+	while ((fgets(line, (int)sizeof(line), fd)) != NULL) {
 
 		/* skip empty lines and lines beginning with # */
 		if (!strlen(strtrim(line)) || line[0] == '#')
