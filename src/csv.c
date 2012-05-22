@@ -153,10 +153,8 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 	csv_disp_at(atot, ptot);
 	csv_disp_at(stot, ptot);
 
-	if (iflag) {
-		(void)printf(",%.f,k", ifitot / 1000);
-		(void)printf(",%.f,k", ifatot / 1000);
-	}
+	if (iflag)
+		csv_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
 
 	(void)printf("\n");
 }

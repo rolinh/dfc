@@ -206,10 +206,8 @@ tex_disp_sum(struct list *lst, double stot, double atot, double utot,
 	tex_disp_at(atot, ptot);
 	tex_disp_at(stot, ptot);
 
-	if (iflag) {
-		(void)printf(" & %.fk", ifitot/1000.0);
-		(void)printf(" & %.fk", ifatot/1000.0);
-	}
+	if (iflag)
+		tex_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
 
 	/* keep same amount of columns in table */
 	(void)printf(" & NA");

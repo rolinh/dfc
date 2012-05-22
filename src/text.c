@@ -219,10 +219,8 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
 	text_disp_at(atot, ptot);
 	text_disp_at(stot, ptot);
 
-	if (iflag) {
-		(void)printf("%9.fk", ifitot / 1000);
-		(void)printf("%9.fk", ifatot / 1000);
-	}
+	if (iflag)
+		text_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
 
 	(void)printf("\n");
 }
