@@ -164,7 +164,8 @@ text_disp_header(struct list *lst)
 	} else
 		(void)printf("\n");
 
-	reset_color();
+	if (cflag)
+		reset_color();
 }
 
 /*
@@ -187,7 +188,13 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
 		ptot = 100.0;
 	else
 		ptot = (utot / stot) * 100.0;
+
+	/* use color option is triggered */
+	if (cflag)
+		(void)printf("\033[;%dm", cnf.chead);
 	(void)printf(_("SUM:"));
+	if (cflag)
+		reset_color();
 
 	j = lst->fsmaxlen + 1;
 	if (Tflag)
