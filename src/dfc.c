@@ -146,7 +146,7 @@ main(int argc, char *argv[])
 		(void)fprintf(stderr, "Locale cannot be set\n");
 		ret = EXIT_FAILURE;
 	}
-	if (bindtextdomain(PACKAGE, LOCALE_DIR) == NULL) {
+	if (bindtextdomain(PACKAGE, LOCALEDIR) == NULL) {
 		(void)fprintf(stderr, "Cannot bind locale\n");
 		ret = EXIT_FAILURE;
 	}

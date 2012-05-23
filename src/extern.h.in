@@ -40,6 +40,7 @@
 /* too ugly to use gettext in each string that needs translation... */
 #ifdef NLS_ENABLED
 #define _(STRING) gettext(STRING)
+#cmakedefine LOCALEDIR "${LOCALEDIR}"
 #else
 #define _(STRING) STRING
 #endif

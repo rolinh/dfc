@@ -34,7 +34,6 @@ else()
 endif()
 
 # share directory
-
 if(DEFINED SHAREDIR)
 	set(SHAREDIR ${SHAREDIR} CACHE PATH "share directory")
 else()
@@ -67,6 +66,14 @@ if(DEFINED DOC_PATH)
 	set(DFC_DOC_PATH ${DFC_DOC_PATH} CACHE PATH "doc directory")
 else()
 	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
+endif()
+
+# Check for libintl
+find_package(Libintl)
+if (LIBINTL_FOUND)
+	option(NLS_ENABLED "Translation support with gettext" on)
+else()
+	option(NLS_ENABLED "Translation support with gettext" off)
 endif()
 
 # CFLAGS (using c99 only for long long, all the rest should be c89 compliant)
@@ -114,14 +121,6 @@ add_executable(
 	${SRCS}
 )
 
-# Check for libintl
-find_package(Libintl)
-if (LIBINTL_FOUND)
-	option(NLS_ENABLED "Translation support with gettext" on)
-else()
-	option(NLS_ENABLED "Translation support with gettext" off)
-endif()
-
 if(NLS_ENABLED)
 	# load gettext module for translation
 	set(GettextTranslate_ALL true)
@@ -129,9 +128,6 @@ if(NLS_ENABLED)
 	include(GettextTranslate)
 	add_subdirectory(po)
 
-	add_definitions(
-		-DLOCALE_DIR="${LOCALEDIR}"
-	)
 	include_directories(${LIBINTL_INCLUDE_DIR})
 	target_link_libraries(${EXECUTABLE_NAME} ${LIBINTL_LIBRARIES})
 endif()
