@@ -338,7 +338,7 @@ msgstr " INODES D."
 #: src/text.c:158
 #, c-format
 msgid " MOUNTED ON "
-msgstr "  MONTÉ SUR "
+msgstr " MONTÉ SUR  "
 
 #: src/text.c:163
 #, c-format
