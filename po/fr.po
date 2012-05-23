@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-24 00:30+0200\n"
+"POT-Creation-Date: 2012-05-24 00:45+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -190,12 +190,12 @@ msgstr "Impossible de récupérer les options de montage pour %s\n"
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: src/dotfile.c:144
+#: src/dotfile.c:146
 #, c-format
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
 
-#: src/dotfile.c:208 src/dotfile.c:228
+#: src/dotfile.c:210 src/dotfile.c:230
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
@@ -204,42 +204,42 @@ msgstr ""
 "La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez-vous "
 "de toute façon?\n"
 
-#: src/dotfile.c:213
+#: src/dotfile.c:215
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr "La valeur medianne ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:216
+#: src/dotfile.c:218
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr "La valeur médianne ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:233
+#: src/dotfile.c:235
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:236
+#: src/dotfile.c:238
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:246
+#: src/dotfile.c:248
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: src/dotfile.c:306
+#: src/dotfile.c:308
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:315
+#: src/dotfile.c:317
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: src/dotfile.c:320
+#: src/dotfile.c:322
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr "Couleur HTML invalide: %s\n"
@@ -350,7 +350,7 @@ msgstr " OPT. DE MONT.\n"
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/util.c:642
+#: src/util.c:652
 msgid ""
 "WARNING: TTY too narrow. Some options will be disabled to try to make dfc "
 "output fit.\n"
@@ -358,40 +358,40 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options seront désactivées "
 "afin d'ajuster l'affichage.\n"
 
-#: src/util.c:682
+#: src/util.c:692
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:805
+#: src/util.c:815
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:808
+#: src/util.c:818
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:811
+#: src/util.c:821
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:814
+#: src/util.c:824
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:817
+#: src/util.c:827
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:820
+#: src/util.c:830
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:823
+#: src/util.c:833
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:826
+#: src/util.c:836
 msgid "white"
 msgstr "blanc"

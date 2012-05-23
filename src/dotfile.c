@@ -77,7 +77,8 @@ getconf(void)
 	} else { /* maybe XDG_CONFIG_HOME is just not exported */
 		/* lets assume that XDG_CONFIG_HOME is simply $HOME/.config */
 		if ((home = getenv("HOME")) != NULL) {
-			if ((conf = strcat(strdup(home), "/.config/dfc/dfcrc"))
+			if ((conf = strcat(non_null(strdup(home)),
+							"/.config/dfc/dfcrc"))
 					== NULL) {
 				(void)fputs("strcat failed while guessing "
 						"configuration file\n", stderr);
@@ -88,7 +89,8 @@ getconf(void)
 				return conf;
 				/* NOTREACHED */
 			else { /* support $HOME/.dfcrc */
-				if ((conf = strcat(strdup(home), "/.dfcrc"))
+				if ((conf = strcat(non_null(strdup(home)),
+								"/.dfcrc"))
 						== NULL) {
 					(void)fputs("strcat failed while guessing "
 							"configuration file\n",
