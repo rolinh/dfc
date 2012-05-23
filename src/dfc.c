@@ -58,7 +58,8 @@
 #include <sys/param.h>
 #include <sys/statvfs.h>
 
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__) || defined(__DragonFly__)
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) \
+	|| defined(__APPLE__) || defined(__DragonFly__)
 #include <sys/ucred.h>
 #include <sys/mount.h>
 #endif /* __FreeBSD__ || __NetBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ */
@@ -793,7 +794,8 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 		sdisp->deinit();
 }
 
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
 /*
  * All the flags found in *BSD and Mac OS X, alphabetically sorted.
  */
@@ -804,7 +806,8 @@ struct flag_str {
 #if defined(__FreeBSD__)
 	{ MNT_ACLS,               "acls"               },
 #endif
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined (__APPLE__)
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined (__APPLE__)
 	{ MNT_ASYNC,              "async"              },
 #endif
 #if defined(__APPLE__)
@@ -827,7 +830,8 @@ struct flag_str {
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
 	{ MNT_EXPORTANON,         "exportanon"         },
 #endif
-#if defined(__FreeBSD__) || defined(__NetBSD__) ||  defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__NetBSD__) ||  defined(__DragonFly__) \
+	|| defined(__APPLE__)
 	{ MNT_EXPORTED,           "exported"           },
 #endif
 #if defined(__FreeBSD__) || defined(__NetBSD__)
@@ -842,7 +846,8 @@ struct flag_str {
 #if defined(__APPLE__)
 	{ MNT_JOURNALED,          "journaled"          },
 #endif
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_LOCAL,              "local"              },
 #endif
 #if defined(__FreeBSD__) || defined(__APPLE__)
@@ -851,7 +856,8 @@ struct flag_str {
 #if defined(__FreeBSD__)
 	{ MNT_NFS4ACLS,           "nfs4acls"           },
 #endif
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_NOATIME,            "noatime"            },
 #endif
 #if defined(__FreeBSD__)
@@ -861,24 +867,28 @@ struct flag_str {
 #if defined(__NetBSD__)
 	{ MNT_NOCOREDUMP,         "nocoredump"         },
 #endif
-#if defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+#if defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) \
+	|| defined(__APPLE__)
 	{ MNT_NODEV,              "nodev"              },
 #endif
 #if defined(__NetBSD__)
 	{ MNT_NODEVMTIME,         "nodevmtime"         },
 #endif
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_NOEXEC,             "noexec"             },
 	{ MNT_NOSUID,             "nosuid"             },
 #endif
 #if defined(__FreeBSD__)
 	{ MNT_NOSYMFOLLOW,        "nosymfollow"        },
 #endif
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
+	|| defined(__APPLE__)
 	{ MNT_QUOTA,              "quota"              },
 #endif
 	/* MNT_RDONLY is treated separately in statfs_flags_to_str(). */
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__APPLE__)
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
+	|| defined(__APPLE__)
 	{ MNT_ROOTFS,             "rootfs"             },
 #endif
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
@@ -890,7 +900,8 @@ struct flag_str {
 #if defined(__NetBSD__)
 	{ MNT_SYMPERM,            "symperm"            },
 #endif
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_SYNCHRONOUS,        "sync"               },
 #endif
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)

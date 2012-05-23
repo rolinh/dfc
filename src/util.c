@@ -122,12 +122,12 @@ shortenstr(char *str, int len)
 char *
 sanitizestr(const char *str)
 {
-	int i;
-	size_t nchars = 1; /* Trailing \0 */
+	int i = 0;
 	int j = 0;
+	size_t nchars = 1; /* Trailing \0 */
 	char *new;
 
-	for (i = 0; str[i] != '\0'; i++) {
+	while (str[i++] != '\0') {
 		if (str[i] == '_')
 			nchars += 2;
 		else
