@@ -408,9 +408,9 @@ static void
 change_color(double perct)
 {
 	if (cflag) {
-		if (perct < 50.0) /* green */
+		if (perct < (double)cnf.gmedium) /* green */
 			(void)printf("\033[;%dm", cnf.clow);
-		else if (perct < 75.0) /* yellow */
+		else if (perct < (double)cnf.ghigh) /* yellow */
 			(void)printf("\033[;%dm", cnf.cmedium);
 		else /* red */
 			(void)printf("\033[;%dm", cnf.chigh);
