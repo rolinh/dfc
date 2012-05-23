@@ -268,12 +268,12 @@ msgstr "%UTILISÉ"
 #: src/html.c:158 src/tex.c:149 src/text.c:131
 #, c-format
 msgid "USED"
-msgstr " UTILISÉ"
+msgstr " UT."
 
 #: src/html.c:159 src/tex.c:150 src/text.c:141
 #, c-format
 msgid "AVAILABLE"
-msgstr "DISPONIBLE"
+msgstr "   DISPO."
 
 #: src/html.c:160 src/tex.c:151 src/text.c:151
 #, c-format
