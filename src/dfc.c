@@ -144,19 +144,19 @@ main(int argc, char *argv[])
 #ifdef NLS_ENABLED
 	/* translation support */
 	if (setlocale(LC_ALL, "") == NULL) {
-		(void)fprintf(stderr, "Locale cannot be set\n");
+		(void)fputs("Locale cannot be set\n", stderr);
 		ret = EXIT_FAILURE;
 	}
 	if (bindtextdomain(PACKAGE, LOCALEDIR) == NULL) {
-		(void)fprintf(stderr, "Cannot bind locale\n");
+		(void)fputs("Cannot bind locale\n", stderr);
 		ret = EXIT_FAILURE;
 	}
 	if (bind_textdomain_codeset(PACKAGE, "") == NULL) {
-		(void)fprintf(stderr, "Cannot bind locale codeset\n");
+		(void)fputs("Cannot bind locale codeset\n", stderr);
 		ret = EXIT_FAILURE;
 	}
 	if (textdomain(PACKAGE) == NULL) {
-		(void)fprintf(stderr, "Cannot set translation domain\n");
+		(void)fputs("Cannot set translation domain\n", stderr);
 		ret = EXIT_FAILURE;
 	}
 #endif /* NLS_ENABLED */

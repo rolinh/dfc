@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-24 00:14+0200\n"
+"POT-Creation-Date: 2012-05-24 00:30+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -190,12 +190,12 @@ msgstr "Impossible de récupérer les options de montage pour %s\n"
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: src/dotfile.c:145
+#: src/dotfile.c:144
 #, c-format
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
 
-#: src/dotfile.c:209 src/dotfile.c:229
+#: src/dotfile.c:208 src/dotfile.c:228
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
@@ -204,42 +204,42 @@ msgstr ""
 "La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez-vous "
 "de toute façon?\n"
 
-#: src/dotfile.c:214
+#: src/dotfile.c:213
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr "La valeur medianne ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:217
+#: src/dotfile.c:216
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr "La valeur médianne ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:234
+#: src/dotfile.c:233
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:237
+#: src/dotfile.c:236
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:247
+#: src/dotfile.c:246
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: src/dotfile.c:307
+#: src/dotfile.c:306
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:316
+#: src/dotfile.c:315
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: src/dotfile.c:321
+#: src/dotfile.c:320
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr "Couleur HTML invalide: %s\n"

@@ -139,7 +139,7 @@ sanitizestr(const char *str)
 		/* NOTREACHED */
 
 	if ((new = malloc(nchars)) == NULL) {
-		(void)fprintf(stderr, "malloc failed\n");
+		(void)fputs("malloc failed\n", stderr);
 		return NULL;
 		/* NOTREACHED */
 	}
@@ -255,10 +255,10 @@ print_unit(int i, int mode)
 	case 'h':
 		switch (i) {
 		case 0:	/* bytes */
-		    if (mode)
-			    (void)printf("B");
-		    else
-			    (void)printf(" ");
+			if (mode)
+				(void)printf("B");
+			else
+				(void)printf(" ");
 			return;
 			/* NOTREACHED */
 		case 1: /* Kio  or Ko */
@@ -436,7 +436,7 @@ fstypefilter(char *type, char *filter, int nm)
 
 	if (tflag) {
 		if ((strtmp = strdup(filter)) == NULL) {
-			(void)fprintf(stderr, "Cannot duplicate filter\n");
+			(void)fputs("Cannot duplicate filter\n", stderr);
 			exit(EXIT_FAILURE);
 			/* NOTREACHED */
 		}
@@ -481,7 +481,7 @@ fsnamefilter(char *fsname, char *filter, int nm)
 
 	if (pflag) {
 		if ((strtmp = strdup(filter)) == NULL) {
-			(void)fprintf(stderr, "Cannot duplicate filter\n");
+			(void)fputs("Cannot duplicate filter\n", stderr);
 			exit(EXIT_FAILURE);
 			/* NOTREACHED */
 		}

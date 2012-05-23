@@ -63,8 +63,8 @@ getconf(void)
 
 	if ((xdg_c_h = getenv("XDG_CONFIG_HOME")) != NULL) {
 		if ((conf = strcat(xdg_c_h, "/dfc/dfcrc")) == NULL) {
-			(void)fprintf(stderr, "strcat failed while guessing "
-					"configuration file\n");
+			(void)fputs("strcat failed while guessing "
+					"configuration file\n", stderr);
 			return NULL;
 			/* NOTREACHED */
 		}
@@ -79,9 +79,8 @@ getconf(void)
 		if ((home = getenv("HOME")) != NULL) {
 			if ((conf = strcat(strdup(home), "/.config/dfc/dfcrc"))
 					== NULL) {
-				(void)fprintf(stderr, "strcat failed while "
-						"guessing "
-						"configuration file\n");
+				(void)fputs("strcat failed while guessing "
+						"configuration file\n", stderr);
 				return NULL;
 				/* NOTREACHED */
 			}
@@ -91,9 +90,9 @@ getconf(void)
 			else { /* support $HOME/.dfcrc */
 				if ((conf = strcat(strdup(home), "/.dfcrc"))
 						== NULL) {
-					(void)fprintf(stderr, "strcat failed"
-							"while guessing "
-							"configuration file\n");
+					(void)fputs("strcat failed while guessing "
+							"configuration file\n",
+							stderr);
 					return NULL;
 					/* NOTREACHED */
 				}
