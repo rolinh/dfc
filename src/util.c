@@ -644,6 +644,8 @@ auto_adjust(struct list lst, int width)
 
 	req = req_width(lst);
 
+	printf("Width: %d\nRequi: %d\n", width, req);
+
 	/* nothing to adjust here */
 	if ((gap = (width - req)) >= 0)
 		return;
@@ -703,46 +705,65 @@ req_width(struct list lst)
 	int ret;
 
 	/* dir and fs are always displayed */
-	ret = lst.fsmaxlen + lst.dirmaxlen + 3;
-	ret += 6; /* percentage */
+	ret = imax(lst.fsmaxlen, 11);
 
 	if (Tflag)
-		ret += lst.typemaxlen + 1;
-	if (oflag)
-		ret += lst.mntoptmaxlen + 1;
-	if (iflag)
-		ret += 14;
+		ret += imax(lst.typemaxlen, 5);
 	if (!bflag) {
-		ret += 24;
+		ret += 23;
 		if (wflag)
 			ret += 30;
 	}
+	/* % */
+	ret += 5;
+
+	if (dflag) {
+		if (unitflag == 'k')
+			ret += 7;
+		else if (unitflag == 'b')
+			ret += 12;
+		else
+			ret += 6;
+		ret += 4;
+	}
+
+	/* available */
+	ret += 9;
+
 	switch (unitflag) {
+	case 'b':
+		ret += 7 + 11;
+		break;
+	case 'k':
+		ret += 2 + 6;
+		break;
+	case 'm':
+		ret += 5;
+		break;
 	case 'h': /* FALLTHROUGH */
-	case 'm': /* FALLTHROUGH */
 	case 'g': /* FALLTHROUGH */
 	case 't': /* FALLTHROUGH */
 	case 'p': /* FALLTHROUGH */
 	case 'e': /* FALLTHROUGH */
 	case 'z': /* FALLTHROUGH */
 	case 'y': /* FALLTHROUGH */
-		ret += 26;
-		if (dflag)
-			ret += 13;
-		break;
-	case 'b':
-		ret += 34;
-		if (dflag)
-			ret += 17;
-		break;
-	case 'k':
-		ret += 24;
-		if (dflag)
-			ret += 12;
+		ret += 1 + 5;
 		break;
 	default:
 		(void)fputs("Unkown unit type\n", stderr);
 	}
+
+	/* total */
+	ret += 5;
+
+	if (iflag)
+		ret += 20;
+
+	/* mounted on */
+	ret += imax(lst.dirmaxlen, 12);
+
+	if (oflag)
+		ret += imax(lst.mntoptmaxlen, 13);
 
 	return ret;
 	/* NOTREACHED */
