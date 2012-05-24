@@ -176,6 +176,7 @@ set_conf(char *key, char *val)
 {
 	int tmp;
 	int ret = 0;
+	char *tmpc;
 
 	if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)
@@ -250,58 +251,94 @@ set_conf(char *key, char *val)
 			ret = -1;
 		}
 	} else if (strcmp(key, "html_color_header_bg") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hcheadbg = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hcheadbg = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_header_fg") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hcheadfg = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hcheadfg = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_cell_bg") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hccellbg = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hccellbg = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_cell_fg") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hccellfg = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hccellfg = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_hover_bg") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hchoverbg = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hchoverbg = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_hover_fg") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hchoverfg = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hchoverfg = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_low") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hclow = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hclow = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_medium") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hcmedium = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hcmedium = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 
 	} else if (strcmp(key, "html_color_high") == 0) {
-		if (chk_html_colorcode(val) == 0)
-			cnf.hchigh = strdup(val);
-		else
+		if (chk_html_colorcode(val) == 0) {
+			if (!(tmpc = strdup(val)))
+				goto strdup_failed;
+				/* NOTREACHED */
+			else
+				cnf.hchigh = tmpc;
+		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
 	} else {
@@ -320,6 +357,12 @@ unknown_color_value:
 
 non_valid_html_color:
 	(void)fprintf(stderr, _("Not a valid HTML color: %s\n"), val);
+	return -1;
+	/* NOTREACHED */
+
+strdup_failed:
+	(void)fprintf(stderr, "Could not assign value from configuration file: "
+			"%s\n", val);
 	return -1;
 	/* NOTREACHED */
 }
