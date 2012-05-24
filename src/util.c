@@ -137,7 +137,7 @@ sanitizestr(const char *str)
 	size_t nchars = 1; /* Trailing \0 */
 	char *new;
 
-	while (str[i++] != '\0') {
+	for (i = 0; str[i] != '\0'; i++) {
 		if (str[i] == '_')
 			nchars += 2;
 		else
