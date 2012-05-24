@@ -644,8 +644,6 @@ auto_adjust(struct list lst, int width)
 
 	req = req_width(lst);
 
-	printf("Width: %d\nRequi: %d\n", width, req);
-
 	/* nothing to adjust here */
 	if ((gap = (width - req)) >= 0)
 		return;
@@ -697,6 +695,7 @@ auto_adjust(struct list lst, int width)
 
 /*
  * compute the required width needed for the output and return it
+ * (computation based on text_disp_header function)
  * @lst: list containing the info
  */
 int
