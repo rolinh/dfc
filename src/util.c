@@ -749,7 +749,7 @@ req_width(struct list lst)
 		ret += 1 + 5;
 		break;
 	default:
-		(void)fputs("Unkown unit type\n", stderr);
+		(void)fputs("Unknown unit type\n", stderr);
 	}
 
 	/* total */
