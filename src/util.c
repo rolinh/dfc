@@ -652,28 +652,41 @@ auto_adjust(struct list lst, int width)
 				/* NOTREACHED */
 		}
 		bflag = 1;
-		gap += 24;
+		gap += 23;
+		if (gap >= 0)
+			return;
+			/* NOTREACHED */
+	}
+	if (dflag) {
+		dflag = 0;
+		gap += 4;
+		if (unitflag == 'k')
+			gap += 7;
+		else if (unitflag == 'b')
+			gap += 12;
+		else
+			gap += 6;
 		if (gap >= 0)
 			return;
 			/* NOTREACHED */
 	}
 	if (Tflag) {
 		Tflag = 0;
-		gap += lst.typemaxlen + 1;
+		gap += imax(lst.typemaxlen, 5);
 		if (gap >= 0)
 			return;
 			/* NOTREACHED */
 	}
 	if (iflag) {
 		iflag = 0;
-		gap += 12;
+		gap += 20;
 		if (gap >= 0)
 			return;
 			/* NOTREACHED */
 	}
 	if (oflag) {
 		oflag = 0;
-		gap += lst.mntoptmaxlen + 1;
+		gap += imax(lst.mntoptmaxlen, 13);
 		if (gap >= 0)
 			return;
 			/* NOTREACHED */
