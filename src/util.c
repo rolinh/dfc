@@ -639,8 +639,8 @@ auto_adjust(struct list lst, int width)
 		return;
 		/* NOTREACHED */
 
-	(void)fputs(_("WARNING: TTY too narrow. Some options will be disabled "
-			"to try to make dfc output fit.\n"), stderr);
+	(void)fputs(_("WARNING: TTY too narrow. Some options have been disabled"
+		" to make dfc output fit (use -f to override).\n"), stderr);
 
 	if (!bflag) {
 		/* large graph should be the first option to disable */
