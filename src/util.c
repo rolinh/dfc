@@ -61,16 +61,6 @@ imax(int a, int b)
 }
 
 /*
- * Return the input char or "" if char * is NULL
- * @str: input char *
- */
-char *
-non_null(char *str)
-{
-	return (str == NULL ? "" : str);
-}
-
-/*
  * trim withespaces from the input string and returns it
  * @str: string that needs to be trimmed
  */
