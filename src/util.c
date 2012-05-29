@@ -515,14 +515,12 @@ fsnamefilter(char *fsname, char *filter, int nm)
 int
 is_remote(char *fstype)
 {
+    const char remote_fs[] = "afs cifs coda fuse.sshfs mfs "
+                             "ncpfs ftpfs nfs smbfs sshfs";
 	/* assume it is local by default */
 	int ret = 0;
 
-	if (!strcmp(fstype, "afs") || !strcmp(fstype, "cifs") ||
-		!strcmp(fstype, "coda") || !strcmp(fstype, "fuse.sshfs") ||
-		!strcmp(fstype, "mfs") || !strcmp(fstype, "ncpfs") ||
-		!strcmp(fstype, "ftpfs") || !strcmp(fstype, "nfs") ||
-		!strcmp(fstype, "smbfs") || !strcmp(fstype, "sshfs"))
+	if (strstr(fstype, remote_fs))
 		ret = 1;
 
 	return ret;
