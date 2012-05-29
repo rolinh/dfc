@@ -98,15 +98,13 @@ strtrim(char *str)
 char *
 shortenstr(char *str, int len)
 {
-	int i = 0;
 	int slen = (int)strlen(str);
 
 	if (slen < len + 1)
 		return str;
 		/* NOTREACHED */
 
-	while (i++ < (slen - len))
-		str++;
+	str += (slen - len);
 
 	str[0] = '+';
 

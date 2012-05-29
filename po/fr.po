@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-05-25 15:53+0200\n"
+"POT-Creation-Date: 2012-05-29 22:22+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -350,7 +350,7 @@ msgstr " OPT. DE MONT.\n"
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/util.c:642
+#: src/util.c:640
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
@@ -358,40 +358,40 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
 "afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
 
-#: src/util.c:695
+#: src/util.c:693
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:838
+#: src/util.c:836
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:841
+#: src/util.c:839
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:844
+#: src/util.c:842
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:847
+#: src/util.c:845
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:850
+#: src/util.c:848
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:853
+#: src/util.c:851
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:856
+#: src/util.c:854
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:859
+#: src/util.c:857
 msgid "white"
 msgstr "blanc"
