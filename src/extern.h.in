@@ -55,6 +55,9 @@
 #define CYAN	36
 #define WHITE	37
 
+/* html color code length (type of #FF0000, etc.) without the # */
+#define HTMLCOLORCODELENGTH 6
+
 struct conf {
 	int chead;	/* color used for the header */
 	int clow;	/* color when usage low */

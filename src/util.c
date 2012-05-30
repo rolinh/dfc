@@ -872,11 +872,11 @@ chk_html_colorcode(char *color)
 {
 	int i;
 
-	if (strlen(color) != 6)
+	if (strlen(color) != HTMLCOLORCODELENGTH)
 		return -1;
 		/* NOTREACHED */
 
-	for (i = 0; i < 6; i++)
+	for (i = 0; i < HTMLCOLORCODELENGTH; i++)
 		if (isxdigit(color[i]) == 0)
 			return -1;
 			/* NOTREACHED */
