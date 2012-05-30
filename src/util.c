@@ -831,28 +831,28 @@ colortostr(int color)
 int
 colortoint(char *col)
 {
-	if (strcmp(col, _("black")) == 0)
+	if (strcoll(col, _("black")) == 0)
 		return BLACK;
 		/* NOTREACHED */
-	else if (strcmp(col, _("red")) == 0)
+	else if (strcoll(col, _("red")) == 0)
 		return RED;
 		/* NOTREACHED */
-	else if (strcmp(col, _("green")) == 0)
+	else if (strcoll(col, _("green")) == 0)
 		return GREEN;
 		/* NOTREACHED */
-	else if (strcmp(col, _("yellow")) == 0)
+	else if (strcoll(col, _("yellow")) == 0)
 		return YELLOW;
 		/* NOTREACHED */
-	else if (strcmp(col, _("blue")) == 0)
+	else if (strcoll(col, _("blue")) == 0)
 		return BLUE;
 		/* NOTREACHED */
-	else if (strcmp(col, _("magenta")) == 0)
+	else if (strcoll(col, _("magenta")) == 0)
 		return MAGENTA;
 		/* NOTREACHED */
-	else if (strcmp(col, _("cyan")) == 0)
+	else if (strcoll(col, _("cyan")) == 0)
 		return CYAN;
 		/* NOTREACHED */
-	else if (strcmp(col, _("white")) == 0)
+	else if (strcoll(col, _("white")) == 0)
 		return WHITE;
 		/* NOTREACHED */
 	else
