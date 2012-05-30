@@ -520,7 +520,7 @@ is_remote(char *fstype)
 	/* assume it is local by default */
 	int ret = 0;
 
-	if (strstr(fstype, remote_fs))
+	if (strstr(remote_fs, fstype))
 		ret = 1;
 
 	return ret;
