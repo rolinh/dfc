@@ -1,51 +1,52 @@
-# French translations for dfc package.
-# Copyright (C) 2012 THE dfc'S COPYRIGHT HOLDER
+# Swedish translations for dfc package
+# Svenska översättningar för paket dfc.
+# Copyright (C) 2012 Robin Hahling
 # This file is distributed under the same license as the dfc package.
-# Robin Hahling <robin.hahling@gw-computing.net>, 2012.
-#
+# Andreas Rönnquist <gusnan@gusnan.se>, 2012.
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: dfc 3.0.0-devel\n"
+"Project-Id-Version: dfc 3.0.0\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
 "POT-Creation-Date: 2012-08-19 22:51+0200\n"
-"PO-Revision-Date: 2012-04-15 13:52+0200\n"
-"Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
-"Language-Team: French\n"
-"Language: fr\n"
+"PO-Revision-Date: 2012-08-19 20:01+0200\n"
+"Last-Translator: Andreas Rönnquist <gusnan@gusnan.se>\n"
+"Language-Team: Swedish\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/csv.c:91
 #, c-format
 msgid "FILESYSTEM,"
-msgstr "SYSTÈME DE FICHIERS,"
+msgstr "FILSYSTEM, "
 
 #: src/csv.c:94
 #, c-format
 msgid "TYPE,"
-msgstr "TYPE,"
+msgstr "TYP, "
 
 #: src/csv.c:96
 #, c-format
 msgid "%%USED,"
-msgstr "%%UTILISÉ,"
+msgstr "%%ANVÄNT,"
 
 #: src/csv.c:99
 #, c-format
 msgid "USED,"
-msgstr "UTILISÉ,"
+msgstr "ANVÄNT,"
 
 #: src/csv.c:101
 #, c-format
 msgid "AVAILABLE,"
-msgstr "DISPONIBLE,"
+msgstr "TILLGÄNGLIGT,"
 
 #: src/csv.c:103
 #, c-format
 msgid "TOTAL,"
-msgstr "TOTAL,"
+msgstr "TOTALT,"
 
 #: src/csv.c:106
 #, c-format
@@ -55,51 +56,51 @@ msgstr "#INODES,"
 #: src/csv.c:107 src/html.c:164 src/tex.c:154
 #, c-format
 msgid "AV.INODES,"
-msgstr "INODES DISP.,"
+msgstr "AV.INODES,"
 
 #: src/csv.c:110 src/html.c:167 src/tex.c:156
 #, c-format
 msgid "MOUNTED ON"
-msgstr "MONTÉ SUR"
+msgstr "MONTERAD PÅ"
 
 #: src/csv.c:113
 #, c-format
 msgid ",MOUNT OPTIONS"
-msgstr ",OPTIONS DE MONTAGE"
+msgstr ",MONTERINGS-ALTERNATIV"
 
 #: src/csv.c:140
 #, c-format
 msgid "SUM:,"
-msgstr "SOMME:,"
+msgstr "SUM:,"
 
 #: src/dfc.c:201
 #, c-format
 msgid "-c: illegal sub option %s\n"
-msgstr "-c: sous-option illégale %s\n"
+msgstr "-c: ogiltigt underalternativ %s\n"
 
 #: src/dfc.c:234
 #, c-format
 msgid "-e: illegal sub option %s\n"
-msgstr "-e: sous-option illégale %s\n"
+msgstr "-e: ogiltigt underalternativ %s\n"
 
 #: src/dfc.c:282
 #, c-format
 msgid "-q: illegal sub option %s\n"
-msgstr "-q: sous-option illégale %s\n"
+msgstr "-q: ogiltigt underalternativ %s\n"
 
 #: src/dfc.c:336
 #, c-format
 msgid "-u: illegal sub option %s\n"
-msgstr "-u: sous-option illégale %s\n"
+msgstr "-u: ogiltigt underalternativ %s\n"
 
 #: src/dfc.c:378
 #, c-format
 msgid "Error reading the configuration file: %s\n"
-msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
+msgstr "Fel vid läsning av konfigurationsfilen: %s\n"
 
 #: src/dfc.c:413
 msgid "Try dfc -h for more information\n"
-msgstr "Essayez dfc -h pour plus d'informations\n"
+msgstr "Använd dfc -h för mer information\n"
 
 #: src/dfc.c:416
 msgid ""
@@ -120,22 +121,22 @@ msgid ""
 "\t-l\tonly show information about locally mounted\n"
 "\t\tfile systems\n"
 msgstr ""
-"Utilisation: dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] [-p FSNAME]  [-q SORTBY] "
-"[-t FSTYPE]\n"
-"\t[-u UNIT]\n"
-"Options disponibles:\n"
-"\t-a\taffiche tous les systèmes de fichiers montés\n"
-"\t-b\tdésactive l'affichage du graphe\n"
-"\t-c\tpermet de choisir le mode pour la couleur. Lisez le manuel\n"
-"\t\tpour les détails\n"
-"\t-d\taffiche la taille de l'utilisation\n"
-"\t-e\texporte dans le format spécifié. Lisez le manuel\n"
-"\t\tpour les détails\n"
-"\t-f\tdésactive le mode d'auto-ajustement (force l'affichage)\n"
-"\t-h\taffiche ce message\n"
-"\t-i\tinformations sur les inodes\n"
-"\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
-"\t\tlocalement uniquement\n"
+"Användning: dfc [INSTÄLLNING(AR)] [-c NÄR] [-e FORMAT] [-p FSNAMN] [-q "
+"SORTERAEFTER] [-t FSTYP]\n"
+"\t[-u ENHET]\n"
+"Tillgängliga inställningar:\n"
+"\t-a\tskriv ut alla monterade filsystem\n"
+"\t-b\tVisa inte diagrammet\n"
+"\t-c\tvälj färg-mod. Läs man-sidan\n"
+"\t\tför detaljer\n"
+"\t-d\tvisa använd storlek\n"
+"\t-e\texportera till specificerat format. Läs the man-sidan\n"
+"\t\tför detailjer\n"
+"\t-f\tinaktivera auto-adjust-mod (tvinga display)\n"
+"\t-h\tskriv ut denna information\n"
+"\t-i\tinfo om inoder\n"
+"\t-l\tvisa bara information om lokalt monterade\n"
+"\t\tfilsystem\n"
 
 #: src/dfc.c:434
 msgid ""
@@ -157,43 +158,43 @@ msgid ""
 "\t-w\tuse a wider bar\n"
 "\t-W\twide filename (un truncate)\n"
 msgstr ""
-"\t-m\tutilise les unités métriques (unités SI)\n"
-"\t-n\tdésactive l'affichage du titre\n"
-"\t-o\taffiche les options de montage\n"
-"\t-p\tfiltre par nom de système de fichiers. Lisez le manuel\n"
-"\t\tpour les détails\n"
-"\t-q\ttrie l'affichage. Lisez le manuel\n"
-"\t\tpour les détails.\n"
-"\t-s\tsomme l'utilisation totale\n"
-"\t-t\tfiltre par type de système de fichiers. Lisez le manuel\n"
-"\t\tpour les détails\n"
-"\t-T\taffiche le type de système de fichiers\n"
-"\t-u\tpermet de choisir l'unité dans laquelle\n"
-"\t\tles valeurs sont affichées. Lisez le manuel\n"
-"\t\tpour les détails\n"
-"\t-v\taffiche la version du programme\n"
-"\t-w\tutilise une barre plus large\n"
-"\t-W\tlong nom de fichiers (dé-tronque)\n"
+"\t-m\tanvänd metriskt system (SI-enhet)\n"
+"\t-n\tskriv inte ut tabellhuvud\n"
+"\t-o\tvisa monterings-flaggor\n"
+"\t-p\tfiltrera efter filsystems-namn. Läs man-sidan\n"
+"\t\tför detaljer\n"
+"\t-q\tsortera utskrift. Läs man-sidan\n"
+"\t\tför detaljer\n"
+"\t-s\tsummera total användning\n"
+"\t-t\tfiltrera efter filsystem-typ. Läs man-sidan\n"
+"\t\tför detaljer\n"
+"\t-T\tvisa filsystems-typ\n"
+"\t-u\tvälj enhet att använda för att\n"
+"\t\tvisa värden. Läs man-sidan\n"
+"\t\tför detaljer\n"
+"\t-v\tskriv ut programversion\n"
+"\t-w\tuse a wider bar\n"
+"\t-W\tlångt filnamn (klipp inte av)\n"
 
 #: src/dfc.c:501
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
-msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
+msgstr "VARNING: %s skippades eftersom information om den inte kunde hämtas "
 
 #: src/dfc.c:945
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
-msgstr "Impossible de récupérer les options de montage pour %s\n"
+msgstr "Kunde inte hämta monterings-flaggor för %s\n"
 
 #: src/dfc.c:981
 #, c-format
 msgid "Truncating mount options for %s\n"
-msgstr "Troncation des options de montage pour %s\n"
+msgstr "Trunkerar monterings-inställningar för %s\n"
 
 #: src/dotfile.c:147
 #, c-format
 msgid "Error: no value for %s in configuration file\n"
-msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
+msgstr "Fel: inget värde för %s i konfigurations-filen\n"
 
 #: src/dotfile.c:212 src/dotfile.c:232
 #, c-format
@@ -201,79 +202,79 @@ msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
 "such a thing anyway?\n"
 msgstr ""
-"La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez-vous "
-"de toute façon?\n"
+"Värde-konvertering misslyckades för graph_medium: %s. Vad hade du väntat dig "
+"med en sån sak?\n"
 
 #: src/dotfile.c:217
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
-msgstr "La valeur medianne ne peut pas être fixée en dessous de 0: %s\n"
+msgstr "Medium-värdet kan inte sättas under 0: %s\n"
 
 #: src/dotfile.c:220
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
-msgstr "La valeur médianne ne peut pas être fixée en dessus de 100: %s\n"
+msgstr "Medium-värdet kan inte sättas över 100: %s\n"
 
 #: src/dotfile.c:237
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
-msgstr "La valeur haute ne peut pas être fixée en dessous de 0: %s\n"
+msgstr "Höga värdet kan inte sättas under 0: %s\n"
 
 #: src/dotfile.c:240
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
-msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
+msgstr "Höga värdet kan inte sättas över 100: %s\n"
 
 #: src/dotfile.c:250
 #, c-format
 msgid "Wrong symbol value: %s\n"
-msgstr "Symbole impossible: %s\n"
+msgstr "Felaktig symbol-värde: %s\n"
 
 #: src/dotfile.c:346
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
-msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
+msgstr "Fel: okänd inställning i konfigurationsfilen: %s\n"
 
 #: src/dotfile.c:355
 #, c-format
 msgid "Unknown color value: %s\n"
-msgstr "Couleur inconnue: %s\n"
+msgstr "Okänt färg-värde: %s\n"
 
 #: src/dotfile.c:360
 #, c-format
 msgid "Not a valid HTML color: %s\n"
-msgstr "Couleur HTML invalide: %s\n"
+msgstr "Inte en giltig HTML-färg: %s\n"
 
 #: src/html.c:143
 msgid "Unknown date"
-msgstr "Date inconnue"
+msgstr "Okänt datum"
 
 #: src/html.c:146
 #, c-format
 msgid "Generated by %s-%s on %s"
-msgstr "Généré par %s-%s le %s"
+msgstr "Genererad av %s-%s på %s"
 
 #: src/html.c:149 src/tex.c:142
 msgid "FILESYSTEM"
-msgstr "SYSTÈME DE FICHIERS"
+msgstr "FILSYSTEM"
 
 #: src/html.c:152 src/tex.c:144
 msgid "TYPE"
-msgstr "TYPE"
+msgstr "TYP"
 
 #: src/html.c:156
 msgid "%USED"
-msgstr "%UTILISÉ"
+msgstr "%ANVÄNT"
 
 #: src/html.c:158 src/tex.c:149 src/text.c:131
 #, c-format
 msgid "USED"
-msgstr " UT."
+msgstr "ANVÄNT"
 
 #: src/html.c:159 src/tex.c:150 src/text.c:141
 #, c-format
 msgid "AVAILABLE"
-msgstr "   DISPO."
+msgstr "    TILLG"
 
 #: src/html.c:160 src/tex.c:151 src/text.c:151
 #, c-format
@@ -286,15 +287,15 @@ msgstr "#INODES"
 
 #: src/html.c:170 src/tex.c:158
 msgid "MOUNT OPTIONS"
-msgstr "OPTIONS DE MONTAGE"
+msgstr "MONTERINGS-ALTERNATIV"
 
 #: src/tex.c:146
 msgid "USAGE"
-msgstr "UTILISATION"
+msgstr "ANVÄNDNING"
 
 #: src/tex.c:147
 msgid "\\%USED"
-msgstr "\\%UTILISÉ"
+msgstr "\\%ANVÄNT"
 
 #: src/tex.c:153
 msgid "\\#INODES"
@@ -303,27 +304,27 @@ msgstr "\\#INODES"
 #: src/text.c:98
 #, c-format
 msgid "FILESYSTEM "
-msgstr "SYS. FICH. "
+msgstr "FILSYSTEM  "
 
 #: src/text.c:103
 #, c-format
 msgid " TYPE"
-msgstr " TYPE"
+msgstr " TYP "
 
 #: src/text.c:116
 #, c-format
 msgid " (=) USED"
-msgstr " (=)  UT."
+msgstr "  ANVÄNT "
 
 #: src/text.c:119
 #, c-format
 msgid "FREE (-) "
-msgstr "LIB. (-) "
+msgstr " LEDIGT  "
 
 #: src/text.c:122
 #, c-format
 msgid "%%USED"
-msgstr " %%UT."
+msgstr " %%ANV"
 
 #: src/text.c:154
 #, c-format
@@ -333,56 +334,56 @@ msgstr "   #INODES"
 #: src/text.c:155
 #, c-format
 msgid " AV.INODES"
-msgstr " INODES D."
+msgstr " AV.INODES"
 
 #: src/text.c:158
 #, c-format
 msgid " MOUNTED ON "
-msgstr " MONTÉ SUR  "
+msgstr " MONTERAT PÅ"
 
 #: src/text.c:163
 #, c-format
 msgid "MOUNT OPTIONS\n"
-msgstr " OPT. DE MONT.\n"
+msgstr "MONTERINGS-ALTERNATIV\n"
 
 #: src/text.c:194
 #, c-format
 msgid "SUM:"
-msgstr "SOM:"
+msgstr "TOT:"
 
 #: src/util.c:638
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
 msgstr ""
-"AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
-"afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
+"VARNING: TTYn är för smal. Några inställningar har blivit deaktiverade för "
+"att få dfc att få plats (använd -f för att åsidosätta).\n"
 
 #: src/util.c:691
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
-"AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
-"si cela est possible...\n"
+"VARNING: Utskriften är fortfarande felaktig. Gör din terminal större om du "
+"kan...\n"
 
 #: src/util.c:834
 msgid "black"
-msgstr "noir"
+msgstr "svart"
 
 #: src/util.c:837
 msgid "red"
-msgstr "rouge"
+msgstr "röd"
 
 #: src/util.c:840
 msgid "green"
-msgstr "vert"
+msgstr "grön"
 
 #: src/util.c:843
 msgid "yellow"
-msgstr "jaune"
+msgstr "gul"
 
 #: src/util.c:846
 msgid "blue"
-msgstr "bleu"
+msgstr "blå"
 
 #: src/util.c:849
 msgid "magenta"
@@ -394,4 +395,4 @@ msgstr "cyan"
 
 #: src/util.c:855
 msgid "white"
-msgstr "blanc"
+msgstr "vit"
