@@ -4,16 +4,16 @@
 
 BUGS:
   * fixed CMake minimal required version
+  * fixed hyphens and spelling mistakes in manpages
 
 FEATURES:
-  * Swedish translation
   * added this changelog file
 
 ## version 3.0.0
 
 BUGS:
   * fixed wrong usage values for FreeBSD
-  * fixed wrong inodes count on FreeBSD 
+  * fixed wrong inodes count on FreeBSD
 
 FEATURES:
   * DragonFly BSD support
