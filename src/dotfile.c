@@ -342,6 +342,14 @@ set_conf(char *key, char *val)
 		} else
 			goto non_valid_html_color;
 			/* NOTREACHED */
+	} else if (strcmp(key, "csv_separator") == 0) {
+		if (strlen(val) == 1)
+			cnf.csvsep = val[0];
+		else {
+			(void)fprintf(stderr, _("Wrong csv separator: "
+					"%s\n"), val);
+			ret = -1;
+		}
 	} else {
 		(void)fprintf(stderr, _("Error: unknown option in configuration"
 				" file: %s\n"), key);
@@ -394,4 +402,6 @@ init_conf(struct conf *config)
 	config->hclow		= "348017";
 	config->hcmedium	= "FDD017";
 	config->hchigh		= "F62217";
+
+	config->csvsep = ',';
 }

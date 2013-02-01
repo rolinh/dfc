@@ -57,4 +57,7 @@ html_color_medium = FDD017
 # Couleur lorsque le taux d'utilisation est élevé
 html_color_high = F62217
 
+# Séparateur pour l'export en CSV
+csv_separator = ,
+
 # vim: set noet syn=conf

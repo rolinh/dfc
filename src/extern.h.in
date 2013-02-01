@@ -78,6 +78,8 @@ struct conf {
 	char *hclow;	/* color when usage is low (html) */
 	char *hcmedium;	/* color when usage is medium (html) */
 	char *hchigh;	/* color when usage is high (html) */
+
+	char csvsep;	/* separator used for csv export */
 };
 
 /* struct to store specific configuration from config file */

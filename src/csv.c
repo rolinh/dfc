@@ -88,29 +88,29 @@ csv_disp_header(struct list *lst)
 	/* do not care about lst in CSV output */
 	(void)lst;
 
-	(void)printf(_("FILESYSTEM,"));
+	(void)printf(_("FILESYSTEM%c"), cnf.csvsep);
 
 	if (Tflag)
-		(void)printf(_("TYPE,"));
+		(void)printf(_("TYPE%c"), cnf.csvsep);
 
-	(void)printf(_("%%USED,"));
+	(void)printf(_("%%USED%c"), cnf.csvsep);
 
 	if (dflag)
-		(void)printf(_("USED,"));
+		(void)printf(_("USED%c"), cnf.csvsep);
 
-	(void)printf(_("AVAILABLE,"));
+	(void)printf(_("AVAILABLE%c"), cnf.csvsep);
 
-	(void)printf(_("TOTAL,"));
+	(void)printf(_("TOTAL%c"), cnf.csvsep);
 
 	if (iflag) {
-		(void)printf(_("#INODES,"));
-		(void)printf(_("AV.INODES,"));
+		(void)printf(_("#INODES%c"), cnf.csvsep);
+		(void)printf(_("AV.INODES%c"), cnf.csvsep);
 	}
 
 	(void)printf(_("MOUNTED ON"));
 
 	if (oflag)
-		(void)printf(_(",MOUNT OPTIONS"));
+		(void)printf(_("%cMOUNT OPTIONS"), cnf.csvsep);
 
 	(void)printf("\n");
 }
@@ -137,7 +137,7 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 		ptot = 100.0;
 	else
 		ptot = (utot / stot) * 100.0;
-	(void)printf(_("SUM:,"));
+	(void)printf(_("SUM:%c"), cnf.csvsep);
 
 	csv_disp_perct(ptot);
 
@@ -185,19 +185,19 @@ csv_disp_at(double n, double perct)
 	/* do not care about perct here */
 	(void)perct;
 
-	(void)printf(",");
+	(void)printf("%c", cnf.csvsep);
 
 	if (unitflag == 'h') {
 		i = humanize(&n);
-		(void)printf(i == 0 ? "%.f," : "%.1f,", n);
+		(void)printf(i == 0 ? "%.f%c" : "%.1f%c", n, cnf.csvsep);
 		print_unit(i, 1);
 	} else {
 		if (unitflag == 'b')
-			(void)printf("%f,", n);
+			(void)printf("%f%c", n, cnf.csvsep);
 		else if (unitflag == 'k')
-			(void)printf("%f,", n);
+			(void)printf("%f%c", n, cnf.csvsep);
 		else
-			(void)printf("%.1f,", n);
+			(void)printf("%.1f%c", n, cnf.csvsep);
 		print_unit(0, 1);
 	}
 }
@@ -213,7 +213,7 @@ csv_disp_fs(struct list *lst, char *fsname)
 	/* we do not care about lst here */
 	(void)lst;
 
-	(void)printf("%s,",fsname);
+	(void)printf("%s%c",fsname, cnf.csvsep);
 }
 
 /*
@@ -227,7 +227,7 @@ csv_disp_type(struct list *lst, char *type)
 	/* we do not care about lst here */
 	(void)lst;
 
-	(void)printf("%s,", type);
+	(void)printf("%s%c", type, cnf.csvsep);
 }
 
 /*
@@ -242,14 +242,14 @@ csv_disp_inodes(uint64_t files, uint64_t favail)
 
 	if (unitflag == 'h') {
 		i = humanize_i(&files);
-		(void)printf(",%" PRIu64 ",", files);
+		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, files, cnf.csvsep);
 		print_unit(i, 0);
 		i = humanize_i(&favail);
-		(void)printf(",%" PRIu64 ",", favail);
+		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, favail, cnf.csvsep);
 		print_unit(i, 0);
 	} else {
-		(void)printf(",%" PRIu64 ",", files);
-		(void)printf(",%" PRIu64 ",", favail);
+		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, files, cnf.csvsep);
+		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, favail, cnf.csvsep);
 	}
 }
 
@@ -260,7 +260,7 @@ csv_disp_inodes(uint64_t files, uint64_t favail)
 static void
 csv_disp_mount(char *dir)
 {
-	(void)printf(",%s", dir);
+	(void)printf("%c%s", cnf.csvsep, dir);
 }
 
 /*
@@ -277,7 +277,7 @@ csv_disp_mopt(struct list *lst, char *dir, char *opts)
 	/* neither about dir */
 	(void)dir;
 
-	(void)printf(",%s", opts);
+	(void)printf("%c%s", cnf.csvsep, opts);
 }
 
 /*
@@ -287,5 +287,5 @@ csv_disp_mopt(struct list *lst, char *dir, char *opts)
 static void
 csv_disp_perct(double perct)
 {
-	(void)printf("%.f,%%", perct);
+	(void)printf("%.f%c%%", perct, cnf.csvsep);
 }
