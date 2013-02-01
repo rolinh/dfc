@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-08-19 22:51+0200\n"
+"POT-Creation-Date: 2013-02-01 20:18+0100\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -18,44 +18,36 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/csv.c:91
-#, c-format
-msgid "FILESYSTEM,"
-msgstr "SYSTÈME DE FICHIERS,"
+msgid "FILESYSTEM%c"
+msgstr "SYSTÈME DE FICHIERS%c"
 
 #: src/csv.c:94
-#, c-format
-msgid "TYPE,"
-msgstr "TYPE,"
+msgid "TYPE%c"
+msgstr "TYPE%c"
 
 #: src/csv.c:96
-#, c-format
-msgid "%%USED,"
-msgstr "%%UTILISÉ,"
+msgid "%%USED%c"
+msgstr " %%UT.%c"
 
 #: src/csv.c:99
-#, c-format
-msgid "USED,"
-msgstr "UTILISÉ,"
+msgid "USED%c"
+msgstr " UT.%c"
 
 #: src/csv.c:101
-#, c-format
-msgid "AVAILABLE,"
-msgstr "DISPONIBLE,"
+msgid "AVAILABLE%c"
+msgstr "DISPO.%c"
 
 #: src/csv.c:103
-#, c-format
-msgid "TOTAL,"
-msgstr "TOTAL,"
+msgid "TOTAL%c"
+msgstr "TOTAL%c"
 
 #: src/csv.c:106
-#, c-format
-msgid "#INODES,"
-msgstr "#INODES,"
+msgid "#INODES%c"
+msgstr "#INODES%c"
 
-#: src/csv.c:107 src/html.c:164 src/tex.c:154
-#, c-format
-msgid "AV.INODES,"
-msgstr "INODES DISP.,"
+#: src/csv.c:107
+msgid "AV.INODES%c"
+msgstr "INODES DISP.%c"
 
 #: src/csv.c:110 src/html.c:167 src/tex.c:156
 #, c-format
@@ -63,14 +55,12 @@ msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
 #: src/csv.c:113
-#, c-format
-msgid ",MOUNT OPTIONS"
-msgstr ",OPTIONS DE MONTAGE"
+msgid "%cMOUNT OPTIONS"
+msgstr "%cOPTIONS DE MONTAGE"
 
 #: src/csv.c:140
-#, c-format
-msgid "SUM:,"
-msgstr "SOMME:,"
+msgid "SUM:%c"
+msgstr "SOM:%c"
 
 #: src/dfc.c:201
 #, c-format
@@ -229,17 +219,22 @@ msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: src/dotfile.c:346
+#: src/dotfile.c:349
+#, c-format
+msgid "Wrong csv separator: %s\n"
+msgstr ""
+
+#: src/dotfile.c:354
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:355
+#: src/dotfile.c:363
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: src/dotfile.c:360
+#: src/dotfile.c:368
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr "Couleur HTML invalide: %s\n"
@@ -283,6 +278,10 @@ msgstr "TOTAL"
 #: src/html.c:163
 msgid "#INODES"
 msgstr "#INODES"
+
+#: src/html.c:164 src/tex.c:154
+msgid "AV.INODES,"
+msgstr "INODES DISP.,"
 
 #: src/html.c:170 src/tex.c:158
 msgid "MOUNT OPTIONS"
