@@ -8,7 +8,7 @@ dfc(1) is a tool similar to df(1) except that it is able to show a graph along w
 data and is able to use color (color mode is "color\-auto" by default but you
 can change this with "\-c" option).
 
-The available size correspond to the space available to a user point of
+The available size corresponds to the space available from a user point of
 view and not from root's perspective (ie: use f_bavail instead of f_bfree).
 
 Without any argument, size is displayed in human\-readable format.
@@ -98,7 +98,7 @@ For instance, if you want to see only file system which name starts with
 
 	dfc \-p /dev
 
-This will output only file system which names are, for instance,
+This will output only file systems which names are, for instance,
 "/dev/sda1", "/dev/root", "/dev", etc.
 
 Multiple selection is supported. In this case, FSNAME needs to be a comma
@@ -148,7 +148,7 @@ display all file system type except those mentioned:
 Show file system type.
 .TP
 \-u [UNIT]
-Show size using unit specified. UNIT can take one of the following value:
+Show size using the unit specified. UNIT can take one of the following values:
 
 "h":
 	Human readable (default when not using "\-u" option).

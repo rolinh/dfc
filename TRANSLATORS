@@ -7,9 +7,9 @@ translation.
 
 If you want to translate dfc, there are three things to translate:
 
-  * The program itself.
-  * The manpage.
-  * The configuration file.
+  * The program itself
+  * The manpage
+  * The configuration file
 
 Once you translated all of this, send those three file to the author:
 
@@ -41,7 +41,7 @@ language:
 
   * Build dfc as explained in the README file. This will generate an updated
     dfc.pot file in the po directory which you will use to generate a po file
-	for your own language.
+    for your own language.
 
   * Navigate to the po directory.
 

@@ -207,7 +207,7 @@ humanize(double *n)
 	int i = 0;
 	double divider = 1024.0;
 
-	/* when using SI unit... */
+	/* when using SI units... */
 	if (mflag)
 		divider = 1000.0;
 
@@ -252,7 +252,7 @@ print_unit(int i, int mode)
 	switch (unitflag) {
 	case 'h':
 		switch (i) {
-		case 0:	/* bytes */
+		case 0: /* bytes */
 			if (mode)
 				(void)printf("B");
 			else

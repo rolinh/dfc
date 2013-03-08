@@ -1,11 +1,11 @@
 # README
 
-dfc is a simple tool that display file system space usage using graph and color
+dfc is a simple tool that displays file system space usage using graph and color.
 
 ## BUILD
 
 cmake is required in order to build dfc.
-I suggest you create a build directory to compile dfc but this is of course not
+I suggest you create a build directory to compile dfc, but this is of course not
 required.
 
 Create the build directory:
@@ -39,7 +39,7 @@ Once built, you can run it by typing:
 
 from within the directory where dfc is situated.
 
-see ./dfc -h for options and usage
+see ./dfc -h for options and usage.
 
 ## INSTALL
 
