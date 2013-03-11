@@ -40,13 +40,6 @@
 #include <sys/param.h>
 #endif /* __APPLE__ */
 
-/*
- * These two variables are used when we don't need to alloc some mem for the
- * fsmntinfo struct. So we can know that and don't free the pointers
- */
-
-extern char *unknown_str;
-extern char *none_str;
 
 /*
  * structure needed to store informations about mounted fs
@@ -135,6 +128,6 @@ void init_queue(struct list *lst);
 int is_empty(struct list lst);
 int enqueue(struct list *lst, struct fsmntinfo elt);
 struct fsmntinfo fmi_init(void);
-struct fsmntinfo *delete_struct(struct fsmntinfo *p);
+struct fsmntinfo *delete_struct_and_get_next(struct fsmntinfo *p);
 
 #endif /* ndef LIST_H */
