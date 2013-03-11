@@ -523,77 +523,78 @@ fetch_info(struct list *lst)
 			if (Wflag) { /* Wflag to avoid name truncation */
 				if ((fmi->fsname = strdup(entbuf->mnt_fsname))
 						== NULL) {
-					fmi->fsname = "unknown";
+					/* unknown_str is def. in list.h/c */
+					fmi->fsname = unknown_str;
 				}
 				if ((fmi->dir = strdup(entbuf->mnt_dir))
 						== NULL) {
-					fmi->dir = "unknown";
+					fmi->dir = unknown_str; 
 				}
 			} else {
 				if ((fmi->fsname = strdup(shortenstr(
 					entbuf->mnt_fsname,
 					STRMAXLEN))) == NULL) {
-				fmi->fsname = "unknown";
+					fmi->fsname = unknown_str;
 				}
 				if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
 							STRMAXLEN))) == NULL) {
-					fmi->dir = "unknown";
+					fmi->dir = unknown_str;
 				}
 			}
 			if ((fmi->type = strdup(shortenstr(entbuf->mnt_type,
 							12))) == NULL) {
-				fmi->type = "unknown";
+				fmi->type = unknown_str;
 			}
 			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
-				fmi->opts = "none";
+				fmi->opts = none_str;
 			}
 #else /* BSD */
 			if (Wflag) { /* Wflag to avoid name truncation */
 				if ((fmi->fsname = strdup(
 						entbuf->f_mntfromname))	== NULL) {
-					fmi->fsname = "unknown";
+					fmi->fsname = unknown_str;
 				}
 				if ((fmi->dir = strdup((
 						entbuf->f_mntonname ))) == NULL) {
-					fmi->dir = "unknown";
+					fmi->dir = unknown_str;
 				}
 			} else {
 				if ((fmi->fsname = strdup(shortenstr(
 							entbuf->f_mntfromname,
 							STRMAXLEN))) == NULL) {
-					fmi->fsname = "unknown";
+					fmi->fsname = unknown_str;
 				}
 				if ((fmi->dir = strdup(shortenstr(
 							entbuf->f_mntonname,
 							STRMAXLEN))) == NULL) {
-					fmi->dir = "unknown";
+					fmi->dir = unknown_str;
 				}
 			}
 			if ((fmi->type = strdup(shortenstr(
 						entbuf->f_fstypename,
 						12))) == NULL) {
-				fmi->type = "unknown";
+				fmi->type = unknown_str;
 			}
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
-				fmi->opts = "none";
+				fmi->opts = none_str;
 			}
 #endif /* __linux__ */
 			/* infos from statvfs */
-			fmi->bsize	= vfsbuf.f_bsize;
+			fmi->bsize    = vfsbuf.f_bsize;
 #if defined(__linux__) || defined(__NetBSD__)
-			fmi->frsize	= vfsbuf.f_frsize;
+			fmi->frsize   = vfsbuf.f_frsize;
 #else			/* *BSD do not have frsize */
-			fmi->frsize	= 0;
+			fmi->frsize   = 0;
 #endif /* __linux__ */
-			fmi->blocks	= vfsbuf.f_blocks;
-			fmi->bfree	= vfsbuf.f_bfree;
-			fmi->bavail	= vfsbuf.f_bavail;
-			fmi->files	= vfsbuf.f_files;
-			fmi->ffree	= vfsbuf.f_ffree;
+			fmi->blocks   = vfsbuf.f_blocks;
+			fmi->bfree    = vfsbuf.f_bfree;
+			fmi->bavail   = vfsbuf.f_bavail;
+			fmi->files    = vfsbuf.f_files;
+			fmi->ffree    = vfsbuf.f_ffree;
 #if defined(__linux__) || defined(__NetBSD__)
-			fmi->favail	= vfsbuf.f_favail;
+			fmi->favail   = vfsbuf.f_favail;
 #else			/* *BSD do not have favail */
-			fmi->favail	= 0;
+			fmi->favail   = 0;
 #endif /* __linux__ */
 			/* pointer to the next element */
 			fmi->next = NULL;
@@ -783,7 +784,8 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 
 		(void)printf("\n");
 
-		p = p->next;
+		p = delete_struct(p); /* XXX returns p->next! */
+
 	}
 
 	if (sflag)
