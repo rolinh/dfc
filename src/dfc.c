@@ -529,60 +529,60 @@ fetch_info(struct list *lst)
 			if (Wflag) { /* Wflag to avoid name truncation */
 				if ((fmi->fsname = strdup(entbuf->mnt_fsname))
 						== NULL) {
-					/* unknown_str is def. in list.h/c */
-					fmi->fsname = unknown_str;
+					/* g_unknown_str is def. in extern.h(.in) */
+					fmi->fsname = g_unknown_str;
 				}
 				if ((fmi->dir = strdup(entbuf->mnt_dir))
 						== NULL) {
-					fmi->dir = unknown_str; 
+					fmi->dir = g_unknown_str; 
 				}
 			} else {
 				if ((fmi->fsname = strdup(shortenstr(
 					entbuf->mnt_fsname,
 					STRMAXLEN))) == NULL) {
-					fmi->fsname = unknown_str;
+					fmi->fsname = g_unknown_str;
 				}
 				if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
 							STRMAXLEN))) == NULL) {
-					fmi->dir = unknown_str;
+					fmi->dir = g_unknown_str;
 				}
 			}
 			if ((fmi->type = strdup(shortenstr(entbuf->mnt_type,
 							12))) == NULL) {
-				fmi->type = unknown_str;
+				fmi->type = g_unknown_str;
 			}
 			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
-				fmi->opts = none_str;
+				fmi->opts = g_none_str;
 			}
 #else /* BSD */
 			if (Wflag) { /* Wflag to avoid name truncation */
 				if ((fmi->fsname = strdup(
 						entbuf->f_mntfromname))	== NULL) {
-					fmi->fsname = unknown_str;
+					fmi->fsname = g_unknown_str;
 				}
 				if ((fmi->dir = strdup((
 						entbuf->f_mntonname ))) == NULL) {
-					fmi->dir = unknown_str;
+					fmi->dir = g_unknown_str;
 				}
 			} else {
 				if ((fmi->fsname = strdup(shortenstr(
 							entbuf->f_mntfromname,
 							STRMAXLEN))) == NULL) {
-					fmi->fsname = unknown_str;
+					fmi->fsname = g_unknown_str;
 				}
 				if ((fmi->dir = strdup(shortenstr(
 							entbuf->f_mntonname,
 							STRMAXLEN))) == NULL) {
-					fmi->dir = unknown_str;
+					fmi->dir = g_unknown_str;
 				}
 			}
 			if ((fmi->type = strdup(shortenstr(
 						entbuf->f_fstypename,
 						12))) == NULL) {
-				fmi->type = unknown_str;
+				fmi->type = g_unknown_str;
 			}
 			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
-				fmi->opts = none_str;
+				fmi->opts = g_none_str;
 			}
 #endif /* __linux__ */
 			/* infos from statvfs */
@@ -790,8 +790,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 
 		(void)printf("\n");
 
-		p = delete_struct(p); /* XXX returns p->next! */
-
+		p = delete_struct_and_get_next(p); /* XXX returns p->next! */
 	}
 
 	if (sflag)

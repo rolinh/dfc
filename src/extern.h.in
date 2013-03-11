@@ -58,6 +58,15 @@
 /* html color code length (type of #FF0000, etc.) without the # */
 #define HTMLCOLORCODELENGTH 6
 
+/*
+ * These two variables are used when we don't need to alloc some mem for the
+ * fsmntinfo struct. So we can know that and don't free the pointers
+ */
+
+extern char *g_unknown_str;
+extern char *g_none_str;
+
+
 struct conf {
 	int chead;	/* color used for the header */
 	int clow;	/* color when usage low */

@@ -34,9 +34,10 @@
 #include <stdlib.h>
 
 #include "list.h"
+#include "extern.h"
 
-char *unknown_str = "unknown";
-char *none_str    = "none";
+char *g_unknown_str = "unknown";
+char *g_none_str    = "none";
 
 /*
  * Initializes a queue structure
@@ -114,10 +115,10 @@ fmi_init(void)
 {
 	struct fsmntinfo fmi;
 
-	fmi.fsname = unknown_str;
-	fmi.dir    = unknown_str;
-	fmi.type   = unknown_str;
-	fmi.opts   = none_str;
+	fmi.fsname = g_unknown_str;
+	fmi.dir    = g_unknown_str;
+	fmi.type   = g_unknown_str;
+	fmi.opts   = g_none_str;
 
 	fmi.bsize  = 0;
 	fmi.frsize = 0;
@@ -135,7 +136,7 @@ fmi_init(void)
 }
 
 struct fsmntinfo
-*delete_struct(struct fsmntinfo *p)
+*delete_struct_and_get_next(struct fsmntinfo *p)
 {
 	struct fsmntinfo *next;
 	if(p == NULL) /* sanity check, we never know */
@@ -143,13 +144,13 @@ struct fsmntinfo
 
 	next = p->next;
 
-	if(p->fsname != unknown_str) /* we malloc'd a string */
+	if(p->fsname != g_unknown_str) /* we malloc'd a string */
 		free(p->fsname);
-	if(p->dir != unknown_str)
+	if(p->dir != g_unknown_str)
 		free(p->dir);
-	if(p->type != unknown_str)
+	if(p->type != g_unknown_str)
 		free(p->type);
-	if(p->opts != none_str)
+	if(p->opts != g_none_str)
 		free(p->opts);
 
 	free(p);
