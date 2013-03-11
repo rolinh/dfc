@@ -35,6 +35,9 @@
 
 #include "list.h"
 
+char *unknown_str = "unknown";
+char *none_str    = "none";
+
 /*
  * Initializes a queue structure
  * @lst: queue pointer
@@ -42,12 +45,12 @@
 void
 init_queue(struct list *lst)
 {
-	lst->head = NULL;
-	lst->tail = NULL;
+	lst->head  = NULL;
+	lst->tail   = NULL;
 	lst->fsmaxlen = -1;
 	lst->dirmaxlen = -1;
 	lst->typemaxlen = -1;
-	lst->mntoptmaxlen = -1;
+	lst->mntoptmaxlen = -1; /* stairway to heaven ! */
 }
 
 /*
@@ -111,22 +114,45 @@ fmi_init(void)
 {
 	struct fsmntinfo fmi;
 
-	fmi.fsname	= "unknown";
-	fmi.dir		= "unknown";
-	fmi.type	= "unknown";
-	fmi.opts	= "none";
+	fmi.fsname = unknown_str;
+	fmi.dir    = unknown_str;
+	fmi.type   = unknown_str;
+	fmi.opts   = none_str;
 
-	fmi.bsize	= 0;
-	fmi.frsize	= 0;
-	fmi.blocks	= 0;
-	fmi.bfree	= 0;
-	fmi.bavail	= 0;
-	fmi.files	= 0;
-	fmi.ffree	= 0;
-	fmi.favail	= 0;
+	fmi.bsize  = 0;
+	fmi.frsize = 0;
+	fmi.blocks = 0;
+	fmi.bfree  = 0;
+	fmi.bavail = 0;
+	fmi.files  = 0;
+	fmi.ffree  = 0;
+	fmi.favail = 0;
 
-	fmi.next	= NULL;
+	fmi.next   = NULL;
 
 	return fmi;
 	/* NOTREACHED */
+}
+
+struct fsmntinfo
+*delete_struct(struct fsmntinfo *p)
+{
+	struct fsmntinfo *next;
+	if(p == NULL) /* sanity check, we never know */
+		return NULL;
+
+	next = p->next;
+
+	if(p->fsname != unknown_str) /* we malloc'd a string */
+		free(p->fsname);
+	if(p->dir != unknown_str)
+		free(p->dir);
+	if(p->type != unknown_str)
+		free(p->type);
+	if(p->opts != none_str)
+		free(p->opts);
+
+	free(p);
+
+	return next;
 }
