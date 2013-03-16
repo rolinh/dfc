@@ -679,7 +679,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 		if (!aflag) {
 			/* skip (pseudo)devices (which have a size of 0 usually) */
 			if (p->blocks == 0) {
-				p = p->next;
+				p = delete_struct_and_get_next(p);
 				continue;
 				/*NOTREACHED */
 			}
@@ -687,13 +687,13 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 
 		/* apply filtering on fs type */
 		if (fstypefilter(p->type, fstfilter, nmt) == 0) {
-			p = p->next;
+			p = delete_struct_and_get_next(p);
 			continue;
 			/* NOTREACHED */
 		}
 		/* apply filtering on fs name */
 		if (fsnamefilter(p->fsname, fsnfilter, nmn) == 0) {
-			p = p->next;
+			p = delete_struct_and_get_next(p);
 			continue;
 			/* NOTREACHED */
 		}
@@ -701,7 +701,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 		/* skip remote file systems */
 		if (lflag) {
 			if (is_remote(p->type)) {
-				p = p->next;
+				p = delete_struct_and_get_next(p);
 				continue;
 				/* NOTREACHED */
 			}
