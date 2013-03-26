@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-02-01 20:18+0100\n"
+"POT-Creation-Date: 2013-03-26 09:08+0100\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -18,34 +18,42 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/csv.c:91
+#, c-format
 msgid "FILESYSTEM%c"
 msgstr "SYSTÈME DE FICHIERS%c"
 
 #: src/csv.c:94
+#, c-format
 msgid "TYPE%c"
 msgstr "TYPE%c"
 
 #: src/csv.c:96
+#, c-format
 msgid "%%USED%c"
 msgstr " %%UT.%c"
 
 #: src/csv.c:99
+#, c-format
 msgid "USED%c"
 msgstr " UT.%c"
 
 #: src/csv.c:101
+#, c-format
 msgid "AVAILABLE%c"
 msgstr "DISPO.%c"
 
 #: src/csv.c:103
+#, c-format
 msgid "TOTAL%c"
 msgstr "TOTAL%c"
 
 #: src/csv.c:106
+#, c-format
 msgid "#INODES%c"
 msgstr "#INODES%c"
 
 #: src/csv.c:107
+#, c-format
 msgid "AV.INODES%c"
 msgstr "INODES DISP.%c"
 
@@ -55,10 +63,12 @@ msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
 #: src/csv.c:113
+#, c-format
 msgid "%cMOUNT OPTIONS"
 msgstr "%cOPTIONS DE MONTAGE"
 
 #: src/csv.c:140
+#, c-format
 msgid "SUM:%c"
 msgstr "SOM:%c"
 
@@ -170,12 +180,12 @@ msgstr ""
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:945
+#: src/dfc.c:946
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:981
+#: src/dfc.c:982
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
