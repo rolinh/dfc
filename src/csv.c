@@ -139,6 +139,9 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 		ptot = (utot / stot) * 100.0;
 	(void)printf(_("SUM:,"));
 
+	if (Tflag)
+		(void)printf("%c", cnf.csvsep);
+
 	csv_disp_perct(ptot);
 
 	if (uflag) {
