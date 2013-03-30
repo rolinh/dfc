@@ -6,7 +6,7 @@ Just keep in mind the following:
   * use c89 (the only exception being for using uint64_t type)
   * your code must fit in 80 columns wide with a TAB of 8
   * always check what a function returns if it is non-void. If you do not care
-    about what's returned, explicitly declare it by casting it to void.
+    about what is returned, explicitly declare it by casting it to void.
   * preferably use 'git format patch' to generate your patch
   * your patch must improve dfc in one way or another
 
@@ -14,12 +14,12 @@ If this is OK, you can send your patch via email to the author:
 
 	Robin Hahling: <robin.hahling@gw-computing.net>
 
-OR, better solution, register to the official website:
+or register to the official website:
 
 	http://projects.gw-computing.net/projects/dfc
 
 and add an issue with your patch attached.
 
-Thanks for making dfc better!
+Thanks for your contribution!
 
 <!-- vim: set filetype=markdown textwidth=80 -->

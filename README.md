@@ -80,7 +80,7 @@ Or, last choice, directly in $HOME (but the name has to be preceeded by a dot):
 
 Here is the list of dependencies:
 
-  * glibc
+  * standard C library
 
 Yep, that should be it. :)
 

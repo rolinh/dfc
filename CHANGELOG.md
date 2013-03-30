@@ -3,19 +3,23 @@
 ## version 3.0.1
 
 BUGS:
+
   * fixed CMake minimal required version
   * fixed hyphens and spelling mistakes in manpages
 
 FEATURES:
+
   * added this changelog file
 
 ## version 3.0.0
 
 BUGS:
+
   * fixed wrong usage values for FreeBSD
   * fixed wrong inodes count on FreeBSD
 
 FEATURES:
+
   * DragonFly BSD support
   * NetBSD support
   * OpenBSD support
@@ -37,11 +41,13 @@ makefile to using CMake
 ## version 2.5.0
 
 BUGS:
+
   * paths that have more than 3 / are not weirdly truncated anymore
   * no more overlap when using the -o option
   * various minor bug fixes and optimizations
 
 FEATURES:
+
   * Makefile is now compatible with BSD-make
   * Mac OSX support (still misses the -o option)
   * -o option support for FreeBSD
@@ -51,15 +57,18 @@ FEATURES:
 ## version 2.4.0
 
 FEATURES:
+
   * FreeBSD support
   * reorganised code to make it less monolithic
 
 ## version 2.3.0
 
 BUGS:
+
   * fixed width of display when aflag not triggered
 
 FEATURES:
+
   * strings that are too long to be displayed correctly are now truncated
     and a + sign indicates it. Example:
     "/dev/mapper/foo-lv_lxc23764-home" ==> "+pper/foo-lv_lxc23764-home"
@@ -71,9 +80,11 @@ FEATURES:
 ## version 2.2.0
 
 BUGS:
+
   * various small bug fixes
 
 FEATURES:
+
   * color option is now improved: you can choose between 3 modes (auto, always,
     never); by default, auto is activated
   * multiple selection is now possible when filtering with -t option
@@ -81,11 +92,13 @@ FEATURES:
 ## version 2.1.0
 
 BUGS:
+
   * -s option now sum the total of inodes when -i option is triggered
   * when using human readable, sizes in bytes were displayed like so 3.0B which
     does not make sense at all cause there is no half-byte
 
 FEATURES:
+
   * color is now automatically in "color-auto" mode
   * unit option has been completely reorganized; they have all been replaced by
     the new -u option
@@ -100,11 +113,13 @@ FEATURES:
 ## version 2.0.2
 
 BUGS:
+
   * fixed a bug messing up display of information when have gvfs-fuse-daemon
 
 ## version 2.0.1
 
 BUGS:
+
   * fixed display error when using humanize
   * fixed a bug causing some special devices not to be skipped
   * updated manpage
@@ -112,12 +127,14 @@ BUGS:
 ## version 2.0.0
 
 FEATURES:
+
   * color support (enabled by default but can be disabled using -c option)
   * new option (-o) shows information about mount options
 
 ## version 1.2.0
 
 FEATURES:
+
   * filesystem name is now being less truncated
   * default behavior is now to print size in human-readable format
   * new option (-b) to display size in bytes (used to be the default display)
@@ -127,33 +144,39 @@ FEATURES:
 ## version 1.1.4
 
 BUGS:
+
   * fixed a graphical bug that occured when displaying fsname and type
 
 ## version 1.1.3
 
 BUGS:
+
   * fixed a bug that was causing header to be messed up when using -K, -M or -G
     option when producing the grand total
 
 ## version 1.1.2
 
 BUGS:
+
   * fixed percentage calculation for the total
 
 ## version 1.1.1
 
 BUGS:
+
   * fixed a bug in the function that truncates str
   * fixed bogus display when using -n option
 
 ## version 1.1.0
 
 BUGS:
+
   * large filesystem names should now be truncated to avoid messing up what is
     displayed
   * Makefile now supports the DESTDIR option
 
 FEATURES:
+
   * proc, sys and devpts are not displayed anymore
   * new option to hide the filesystem type by using -t
   * first decimal is now displayed when using Mio and Mo
@@ -165,6 +188,7 @@ FEATURES:
 ## version 1.0.1
 
 BUGS:
+
   * fixed bugs in Makefile
 
 ## version 1.0.0
