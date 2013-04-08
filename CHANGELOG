@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## version 3.0.2
+
+BUGS:
+  * fixed dfc failing when getting volume size information from volume >= 4 To
+    on 32-bit hosts (added LFS option, which can be triggered on or off but is
+    on by default)
+  * fixed missing separator on CSV export when -T and -s options where triggered
+
 ## version 3.0.1
 
 BUGS:
