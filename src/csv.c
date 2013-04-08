@@ -140,7 +140,7 @@ csv_disp_sum(struct list *lst, double stot, double atot, double utot,
 	(void)printf(_("SUM:,"));
 
 	if (Tflag)
-		(void)printf("%c", cnf.csvsep);
+		(void)printf(",");
 
 	csv_disp_perct(ptot);
 
