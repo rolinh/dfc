@@ -448,6 +448,7 @@ fstypefilter(char *type, char *filter, int nm)
 			}
 			stropt = strtok(NULL, ",");
 		}
+		free(strtmp);
 	}
 
 	/* reverse result if negative matching activated */
@@ -493,6 +494,7 @@ fsnamefilter(char *fsname, char *filter, int nm)
 			}
 			stropt = strtok(NULL, ",");
 		}
+		free(strtmp);
 	}
 
 	/* reverse result if negative matching activated */
