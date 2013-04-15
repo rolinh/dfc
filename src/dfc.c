@@ -650,7 +650,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 
 	/* activate negative matching on fs type? */
 	if (tflag) {
-		if (fstfilter[0] == '-') {
+		if (fstfilter && fstfilter[0] == '-') {
 			nmt = 1;
 			fstfilter++;
 		}
@@ -658,7 +658,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 
 	/* activate negative matching on fs name? */
 	if (pflag) {
-		if (fsnfilter[0] == '-') {
+		if (fsnfilter && fsnfilter[0] == '-') {
 			nmn = 1;
 			fsnfilter++;
 		}
