@@ -626,6 +626,7 @@ fetch_info(struct list *lst)
 	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
 #endif /* __linux__ */
+	free(fmi);
 }
 
 /*
