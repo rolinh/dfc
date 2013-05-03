@@ -1,5 +1,4 @@
 *.swp
-*.o
 build
 po/dfc.pot
 src/extern.h
