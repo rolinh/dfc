@@ -415,7 +415,7 @@ usage(int status)
 		(void)fputs(_("Try dfc -h for more information\n"), stderr);
 	else {
 		/* 2 fputs because string length limit is 509 */
-		(void)fputs(_("Usage:  dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] "
+		(void)fputs(_("Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] "
 					"[-p FSNAME] [-q SORTBY] [-t FSTYPE]\n"
 					"\t[-u UNIT]\n"
 			"Available options:\n"
