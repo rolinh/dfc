@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-05-04 18:29+0200\n"
+"POT-Creation-Date: 2013-05-17 18:28+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -373,34 +373,34 @@ msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:840
+#: src/util.c:843
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:843
+#: src/util.c:846
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:846
+#: src/util.c:849
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:849
+#: src/util.c:852
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:852
+#: src/util.c:855
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:855
+#: src/util.c:858
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:858
+#: src/util.c:861
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:861
+#: src/util.c:864
 msgid "white"
 msgstr "blanc"

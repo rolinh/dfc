@@ -530,7 +530,7 @@ fetch_info(struct list *lst)
 				}
 				if ((fmi->dir = strdup(entbuf->mnt_dir))
 						== NULL) {
-					fmi->dir = g_unknown_str; 
+					fmi->dir = g_unknown_str;
 				}
 			} else {
 				if ((fmi->fsname = strdup(shortenstr(
