@@ -778,21 +778,21 @@ fetchdate(void)
 	time_t t;
 	struct tm *tmp;
 
-	t = time(NULL);
+	if ((t = time(NULL)) == -1) {
+		perror("time");
+		return NULL;
+	}
 	if ((tmp = localtime(&t)) == NULL) {
 		perror("localtime");
 		return NULL;
-		/* NOTREACHED */
 	}
 
 	if (strftime(date, sizeof(date), "%c", tmp) == 0) {
 		(void)fputs("Could not retrieve date\n", stderr);
 		return NULL;
-		/* NOTREACHED */
 	}
 
 	return strdup(date);
-	/* NOTREACHED */
 }
 
 /*
