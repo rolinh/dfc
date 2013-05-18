@@ -302,6 +302,12 @@ main(int argc, char *argv[])
 			while (*subopts) {
 				switch (getsubopt(&subopts, unit_opts, &value)) {
 				case H:
+					/*
+					 * disable uflag since conversion to
+					 * human readable format is computed
+					 * very differently from other formats
+					 */
+					uflag = 0;
 					unitflag = 'h';
 					break;
 				case B:
