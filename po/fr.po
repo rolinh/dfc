@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2012-08-19 22:51+0200\n"
+"POT-Creation-Date: 2013-05-18 15:30+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -87,21 +87,21 @@ msgstr "-e: sous-option illégale %s\n"
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:336
+#: src/dfc.c:342
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:378
+#: src/dfc.c:384
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:413
+#: src/dfc.c:419
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:416
+#: src/dfc.c:422
 msgid ""
 "Usage:  dfc [OPTIONS(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -137,7 +137,7 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
 "\t\tlocalement uniquement\n"
 
-#: src/dfc.c:434
+#: src/dfc.c:440
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-n\tdo not print header\n"
@@ -175,17 +175,17 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:501
+#: src/dfc.c:507
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:945
+#: src/dfc.c:951
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:981
+#: src/dfc.c:987
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
