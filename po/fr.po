@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-05-17 18:28+0200\n"
+"POT-Creation-Date: 2013-05-18 15:31+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -87,21 +87,21 @@ msgstr "-e: sous-option illégale %s\n"
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:338
+#: src/dfc.c:344
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:380
+#: src/dfc.c:386
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:415
+#: src/dfc.c:421
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:418
+#: src/dfc.c:424
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -137,7 +137,7 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
 "\t\tlocalement uniquement\n"
 
-#: src/dfc.c:436
+#: src/dfc.c:442
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-n\tdo not print header\n"
@@ -175,17 +175,17 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:503
+#: src/dfc.c:509
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:949
+#: src/dfc.c:955
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:985
+#: src/dfc.c:991
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
@@ -373,34 +373,34 @@ msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:843
+#: src/util.c:840
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:846
+#: src/util.c:843
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:849
+#: src/util.c:846
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:852
+#: src/util.c:849
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:855
+#: src/util.c:852
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:858
+#: src/util.c:855
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:861
+#: src/util.c:858
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:864
+#: src/util.c:861
 msgid "white"
 msgstr "blanc"
