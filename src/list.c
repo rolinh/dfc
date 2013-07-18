@@ -70,10 +70,8 @@ is_empty(struct list lst)
 {
 	if (lst.head == NULL)
 		return 1;
-		/* NOTREACHED */
 	else
 		return 0;
-		/* NOTREACHED */
 }
 
 /*
@@ -92,7 +90,6 @@ enqueue(struct list *lst, struct fsmntinfo fmi)
 	if (new_fmi == NULL) {
 		(void)fputs("Error while allocating memory to fmi", stderr);
 		return -1;
-		/* NOTREACHED */
 	}
 
 	/* initialize the new element to be inserted in the queue */
@@ -106,7 +103,6 @@ enqueue(struct list *lst, struct fsmntinfo fmi)
 	lst->tail = new_fmi;
 
 	return 0;
-	/* NOTREACHED */
 }
 
 /*
@@ -136,7 +132,6 @@ fmi_init(void)
 	fmi.next   = NULL;
 
 	return fmi;
-	/* NOTREACHED */
 }
 
 struct fsmntinfo

@@ -70,14 +70,11 @@ getconf(void)
 			(void)fputs("strcat failed while guessing "
 					"configuration file\n", stderr);
 			return NULL;
-			/* NOTREACHED */
 		}
 		if (stat(conf, &buf) == 0)
 			return conf;
-			/* NOTREACHED */
 		else /* no configuration file exists or it cannot be accessed */
 			return NULL;
-			/* NOTREACHED */
 	} else { /* maybe XDG_CONFIG_HOME is just not exported */
 		/* lets assume that XDG_CONFIG_HOME is simply $HOME/.config */
 		if ((home = getenv("HOME")) != NULL) {
@@ -86,33 +83,26 @@ getconf(void)
 						"configuration file location\n",
 						stderr);
 				return NULL;
-				/* NOTREACHED */
 			}
 			if (stat(conf, &buf) == 0)
 				return conf;
-				/* NOTREACHED */
 			else { /* support $HOME/.dfcrc */
 				/* home has been modified by strcat */
 				if ((home = getenv("HOME")) == NULL)
 					return NULL;
-					/* NOTREACHED */
 				if ((conf = strcat(home, "/.dfcrc")) == NULL) {
 					(void)fputs("strcat failed while guessing"
 							" configuration file\n",
 							stderr);
 					return NULL;
-					/* NOTREACHED */
 				}
 				if (stat(conf, &buf) == 0)
 					return conf;
-					/* NOTREACHED */
 				else
 					return NULL;
-					/* NOTREACHED */
 			}
 		} else /* sorry, there is nothing I can do... */
 			return NULL;
-			/* NOTREACHED */
 	}
 }
 
@@ -133,7 +123,6 @@ parse_conf(char *conf)
 		(void)fprintf(stderr, "Cannot read file %s", conf);
 		perror(" ");
 		return -1;
-		/* NOTREACHED */
 	}
 
 	while ((fgets(line, (int)sizeof(line), fd)) != NULL) {
@@ -141,7 +130,6 @@ parse_conf(char *conf)
 		/* skip empty lines and lines beginning with # */
 		if (!strlen(strtrim(line)) || line[0] == '#')
 			continue;
-			/* NOTREACHED */
 
 		key = strtok(line, "=");
 		val = strtok(NULL, "");
@@ -153,7 +141,6 @@ parse_conf(char *conf)
 			if (fclose(fd) == EOF)
 				perror("Could not close configuration file ");
 			return -1;
-			/* NOTREACHED */
 		}
 
 		ret += set_conf(key, val);
@@ -164,10 +151,8 @@ parse_conf(char *conf)
 
 	if (ret < 0)
 		return -1;
-		/* NOTREACHED */
 
 	return ret;
-	/* NOTREACHED */
 }
 
 /*
@@ -186,25 +171,21 @@ set_conf(char *key, char *val)
 	if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)
 			goto unknown_color_value;
-			/* NOTREACHED */
 		else
 			cnf.chead = tmp;
 	} else if (strcmp(key, "color_low") == 0) {
 		if ((tmp = colortoint(val)) == -1)
 			goto unknown_color_value;
-			/* NOTREACHED */
 		else
 			cnf.clow = tmp;
 	} else if (strcmp(key, "color_medium") == 0) {
 		if ((tmp = colortoint(val)) == -1)
 			goto unknown_color_value;
-			/* NOTREACHED */
 		else
 			cnf.cmedium = tmp;
 	} else if (strcmp(key, "color_high") == 0) {
 		if ((tmp = colortoint(val)) == -1)
 			goto unknown_color_value;
-			/* NOTREACHED */
 		else
 			cnf.chigh = tmp;
 	} else if (strcmp(key, "graph_medium") == 0) {
@@ -259,93 +240,75 @@ set_conf(char *key, char *val)
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hcheadbg = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_header_fg") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hcheadfg = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_cell_bg") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hccellbg = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_cell_fg") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hccellfg = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_hover_bg") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hchoverbg = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_hover_fg") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hchoverfg = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_low") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hclow = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "html_color_medium") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hcmedium = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 
 	} else if (strcmp(key, "html_color_high") == 0) {
 		if (chk_html_colorcode(val) == 0) {
 			if (!(tmpc = strdup(val)))
 				goto strdup_failed;
-				/* NOTREACHED */
 			else
 				cnf.hchigh = tmpc;
 		} else
 			goto non_valid_html_color;
-			/* NOTREACHED */
 	} else if (strcmp(key, "csv_separator") == 0) {
 		if (strlen(val) == 1)
 			cnf.csvsep = val[0];
@@ -361,23 +324,19 @@ set_conf(char *key, char *val)
 	}
 
 	return ret;
-	/* NOTREACHED */
 
 unknown_color_value:
 	(void)fprintf(stderr, _("Unknown color value: %s\n"), val);
 	return -1;
-	/* NOTREACHED */
 
 non_valid_html_color:
 	(void)fprintf(stderr, _("Not a valid HTML color: %s\n"), val);
 	return -1;
-	/* NOTREACHED */
 
 strdup_failed:
 	(void)fprintf(stderr, "Could not assign value from configuration file: "
 			"%s\n", val);
 	return -1;
-	/* NOTREACHED */
 }
 
 /*

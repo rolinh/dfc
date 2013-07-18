@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-05-18 15:31+0200\n"
+"POT-Creation-Date: 2013-07-18 21:53+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -77,31 +77,31 @@ msgstr "SOM:%c"
 msgid "-c: illegal sub option %s\n"
 msgstr "-c: sous-option illégale %s\n"
 
-#: src/dfc.c:236
+#: src/dfc.c:235
 #, c-format
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:284
+#: src/dfc.c:282
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:344
+#: src/dfc.c:341
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:386
+#: src/dfc.c:379
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:421
+#: src/dfc.c:413
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:424
+#: src/dfc.c:416
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -137,7 +137,7 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
 "\t\tlocalement uniquement\n"
 
-#: src/dfc.c:442
+#: src/dfc.c:434
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-n\tdo not print header\n"
@@ -175,27 +175,27 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:509
+#: src/dfc.c:501
 #, c-format
 msgid "WARNING: %s was skipped because it cannot be stated"
 msgstr "AVERTISSEMENT: %s a été sauté car il ne peut pas être lu"
 
-#: src/dfc.c:955
+#: src/dfc.c:943
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:991
+#: src/dfc.c:972
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: src/dotfile.c:151
+#: src/dotfile.c:139
 #, c-format
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
 
-#: src/dotfile.c:216 src/dotfile.c:236
+#: src/dotfile.c:197 src/dotfile.c:217
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
@@ -204,47 +204,47 @@ msgstr ""
 "La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez-vous "
 "de toute façon?\n"
 
-#: src/dotfile.c:221
+#: src/dotfile.c:202
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr "La valeur medianne ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:224
+#: src/dotfile.c:205
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr "La valeur médianne ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:241
+#: src/dotfile.c:222
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:244
+#: src/dotfile.c:225
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:254
+#: src/dotfile.c:235
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: src/dotfile.c:353
+#: src/dotfile.c:316
 #, c-format
 msgid "Wrong csv separator: %s\n"
 msgstr "Séparateur csv invalide: %s\n"
 
-#: src/dotfile.c:358
+#: src/dotfile.c:321
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:367
+#: src/dotfile.c:329
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: src/dotfile.c:372
+#: src/dotfile.c:333
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr "Couleur HTML invalide: %s\n"
@@ -359,7 +359,7 @@ msgstr " OPT. DE MONT.\n"
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/util.c:644
+#: src/util.c:585
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
@@ -367,40 +367,40 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
 "afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
 
-#: src/util.c:697
+#: src/util.c:632
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:840
+#: src/util.c:774
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:843
+#: src/util.c:776
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:846
+#: src/util.c:778
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:849
+#: src/util.c:780
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:852
+#: src/util.c:782
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:855
+#: src/util.c:784
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:858
+#: src/util.c:786
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:861
+#: src/util.c:788
 msgid "white"
 msgstr "blanc"

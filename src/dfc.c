@@ -203,7 +203,6 @@ main(int argc, char *argv[])
 						_("-c: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
-					/* NOTREACHED */
 				}
 			}
 			break;
@@ -236,7 +235,6 @@ main(int argc, char *argv[])
 						_("-e: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
-					/* NOTREACHED */
 				}
 			}
 			break;
@@ -284,7 +282,6 @@ main(int argc, char *argv[])
 						_("-q: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
-					/* NOTREACHED */
 				}
 			}
 			break;
@@ -344,7 +341,6 @@ main(int argc, char *argv[])
 						_("-u: illegal sub option %s\n"),
 						subopts);
 					return EXIT_FAILURE;
-					/* NOTREACHED */
 				}
 			}
 			break;
@@ -360,18 +356,15 @@ main(int argc, char *argv[])
 		case '?':
 		default:
 			usage(EXIT_FAILURE);
-			/* NOTREACHED */
 		}
 	}
 
 	if (hflag)
 		usage(EXIT_SUCCESS);
-		/* NOTREACHED */
 
 	if (vflag) {
 		(void)printf("%s %s\n", PACKAGE, VERSION);
 		return EXIT_SUCCESS;
-		/* NOTREACHED */
 	}
 
 	width = getttywidth();
@@ -407,7 +400,6 @@ main(int argc, char *argv[])
 	disp(&queue, fstfilter, fsnfilter, &sdisp);
 
 	return ret;
-	/* NOTREACHED */
 }
 
 /*
@@ -690,7 +682,6 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 			if (p->blocks == 0) {
 				p = delete_struct_and_get_next(p);
 				continue;
-				/*NOTREACHED */
 			}
 		}
 
@@ -698,13 +689,11 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 		if (fstypefilter(p->type, fstfilter, nmt) == 0) {
 			p = delete_struct_and_get_next(p);
 			continue;
-			/* NOTREACHED */
 		}
 		/* apply filtering on fs name */
 		if (fsnamefilter(p->fsname, fsnfilter, nmn) == 0) {
 			p = delete_struct_and_get_next(p);
 			continue;
-			/* NOTREACHED */
 		}
 
 		/* skip remote file systems */
@@ -712,7 +701,6 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 			if (is_remote(p->type)) {
 				p = delete_struct_and_get_next(p);
 				continue;
-				/* NOTREACHED */
 			}
 		}
 
@@ -955,7 +943,6 @@ struct statfs *s
 				_("Could not retrieve mount flags for %s\n"),
 				s->f_mntonname);
 		return NULL;
-		/* NOTREACHED */
 	}
 	buffer[0] = '\0';
 
@@ -963,11 +950,9 @@ struct statfs *s
 	if (flags & MNT_RDONLY) {
 		if (strlcat(buffer, "ro", bufsize) >= bufsize)
 			goto truncated;
-			/* NOTREACHED */
 	} else {
 		if (strlcat(buffer, "rw", bufsize) >= bufsize)
 			goto truncated;
-			/* NOTREACHED */
 	}
 
 	/* Comparing flags to all possible flags. */
@@ -975,22 +960,17 @@ struct statfs *s
 	for (i = 0; i < n_flags; i++) {
 		if (!(flags & possible_flags[i].flag))
 			continue;
-			/* NOTREACHED */
 		if (strlcat(buffer, ",", bufsize) >= bufsize)
 			goto truncated;
-			/* NOTREACHED */
 		if (strlcat(buffer, possible_flags[i].str, bufsize) >= bufsize)
 			goto truncated;
-			/* NOTREACHED */
 	}
 
 	return buffer;
-	/* NOTREACHED */
 
 truncated:
        (void)fprintf(stderr, _("Truncating mount options for %s\n"),
 			s->f_mntonname);
 	return buffer;
-	/* NOTREACHED */
 }
 #endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ */

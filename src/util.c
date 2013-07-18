@@ -61,7 +61,6 @@ int
 imax(int a, int b)
 {
 	return (a > b ? a : b);
-	/* NOTREACHED */
 }
 
 /*
@@ -75,14 +74,12 @@ strtrim(char *str)
 
 	if (!str)
 		return NULL;
-		/* NOTREACHED */
 
 	while (isspace(*str))
 		str++;
 
 	if (*str == '\0')
 		return str;
-		/* NOTREACHED */
 
 	end = str + strlen(str) - 1;
 	while (end > str && isspace(*end))
@@ -91,7 +88,6 @@ strtrim(char *str)
 	*(end + 1) = '\0';
 
 	return str;
-	/* NOTREACHED */
 }
 
 /*
@@ -106,14 +102,12 @@ shortenstr(char *str, int len)
 
 	if (slen < len + 1)
 		return str;
-		/* NOTREACHED */
 
 	str += (slen - len);
 
 	str[0] = '+';
 
 	return str;
-	/* NOTREACHED */
 }
 
 /*
@@ -138,12 +132,10 @@ sanitizestr(const char *str)
 
 	if (i == (int)nchars) /* No '_' was found. */
 		return strdup(str);
-		/* NOTREACHED */
 
 	if ((new = malloc(nchars)) == NULL) {
 		(void)fputs("malloc failed\n", stderr);
 		return NULL;
-		/* NOTREACHED */
 	}
 
 	for (i = 0; str[i] != '\0'; i++) {
@@ -160,7 +152,6 @@ sanitizestr(const char *str)
 	new[nchars-1] = '\0';
 
 	return new;
-	/* NOTREACHED */
 }
 
 /*
@@ -179,7 +170,6 @@ getttywidth(void)
 
 	if (!isatty(STDOUT_FILENO))
 		return 0;
-		/* NOTREACHED */
 
 #ifdef TIOCGSIZE
 	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
@@ -197,7 +187,6 @@ getttywidth(void)
 #endif /* __APPLE__ || __NetBSD__ || __OpenBSD__ || __DragonFly__ */
 #endif /* TIOCGSIZE */
 	return width == 0 ? 80 : width;
-	/* NOTREACHED */
 }
 
 /*
@@ -221,7 +210,6 @@ humanize(double *n)
 	}
 
     return i;
-    /* NOTREACHED */
 }
 
 /*
@@ -240,7 +228,6 @@ humanize_i(uint64_t *n)
 	}
 
     return i;
-    /* NOTREACHED */
 }
 
 /*
@@ -262,39 +249,30 @@ print_unit(int i, int mode)
 			else
 				(void)printf(" ");
 			return;
-			/* NOTREACHED */
 		case 1: /* Kio  or Ko */
 			(void)printf("K");
 			return;
-			/* NOTREACHED */
 		case 2: /* Mio or Mo */
 			(void)printf("M");
 			return;
-			/* NOTREACHED */
 		case 3: /* Gio or Go*/
 			(void)printf("G");
 			return;
-			/* NOTREACHED */
 		case 4: /* Tio or To*/
 			(void)printf("T");
 			return;
-			/* NOTREACHED */
 		case 5: /* Pio or Po*/
 			(void)printf("P");
 			return;
-			/* NOTREACHED */
 		case 6: /* Eio or Eo*/
 			   (void)printf("E");
 			return;
-			/* NOTREACHED */
 		case 7: /* Zio or Zo*/
 			(void)printf("Z");
 			return;
-			/* NOTREACHED */
 		case 8: /* Yio or Yo*/
 			(void)printf("Y");
 			return;
-			/* NOTREACHED */
 		default:
 			(void)fputs("Could not print unit type in"
 					" human-readable format\n", stderr);
@@ -305,39 +283,30 @@ print_unit(int i, int mode)
 		else
 			(void)printf(" ");
 		return;
-		/* NOTREACHED */
 	case 'k':
 		(void)printf("K");
 		return;
-		/* NOTREACHED */
 	case 'm':
 		(void)printf("M");
 		return;
-		/* NOTREACHED */
 	case 'g':
 		(void)printf("G");
 		return;
-		/* NOTREACHED */
 	case 't':
 		(void)printf("T");
 		return;
-		/* NOTREACHED */
 	case 'p':
 		(void)printf("P");
 		return;
-		/* NOTREACHED */
 	case 'e':
 		(void)printf("E");
 		return;
-		/* NOTREACHED */
 	case 'z':
 		(void)printf("Z");
 		return;
-		/* NOTREACHED */
 	case 'y':
 		(void)printf("Y");
 		return;
-		/* NOTREACHED */
 	default:
 		(void)fputs("Could not print unit type\n", stderr);
 	}
@@ -356,68 +325,50 @@ cvrt(double n)
 	switch (unitflag) {
 	case 'b':
 		return n;
-		/* NOTREACHED */
 	case 'e':
 		if (mflag) /* 1000^6 */
 			return n / 1000000000000000000.0;
-			/* NOTREACHED */
 		else /* 1024^6 */
 			return n / 1152921504606846976.0;
-			/* NOTREACHED */
 	case 'g':
 		if (mflag) /* 1000^3 */
 			return n / 1000000000.0;
-			/* NOTREACHED */
 		else /* 1024^3 */
 			return n / 1073741824.0;
-			/* NOTREACHED */
 	case 'k':
 		if (mflag)
 			return n / 1000.0;
-			/* NOTREACHED */
 		else
 			return n / 1024.0;
-			/* NOTREACHED */
 	case 'm':
 		if (mflag) /* 1000^2 */
 			return n / 1000000.0;
-			/* NOTREACHED */
 		else /* 1024^2 */
 			return n / 1048576.0;
-			/* NOTREACHED */
 	case 'p':
 		if (mflag) /* 1000^5 */
 			return n / 1000000000000000.0;
-			/* NOTREACHED */
 		else /* 1024^5 */
 			return n / 1125899906842624.0;
-			/* NOTREACHED */
 	case 't':
 		if (mflag) /* 1000^4 */
 			return n / 1000000000000.0;
-			/* NOTREACHED */
 		else /* 1024^4 */
 			return n / 1099511627776.0;
-			/* NOTREACHED */
 	case 'y':
 		if (mflag) /* 1000^8 */
 			return n / 1000000000000000000000000.0;
-			/* NOTREACHED */
 		else /* 1024^8 */
 			return n / 1208925819614629174706176.0;
-			/* NOTREACHED */
 	case 'z':
 		if (mflag)
 			/* 1000^7 */
 			return n / 1000000000000000000000.0;
-			/* NOTREACHED */
 		else /* 1024^7 */
 			return n / 1180591620717411303424.0;
-			/* NOTREACHED */
 	default:
 		(void)fputs("Could not convert unit size\n", stderr);
 		return n;
-		/* NOTREACHED */
 	}
 }
 
@@ -464,7 +415,6 @@ fstypefilter(char *type, char *filter, int nm)
 	}
 
 	return ret;
-	/* NOTREACHED */
 }
 
 /*
@@ -510,7 +460,6 @@ fsnamefilter(char *fsname, char *filter, int nm)
 	}
 
 	return ret;
-	/* NOTREACHED */
 }
 
 /*
@@ -530,7 +479,6 @@ is_remote(char *fstype)
 		ret = 1;
 
 	return ret;
-	/* NOTREACHED */
 }
 
 /*
@@ -544,16 +492,12 @@ cmp(struct fsmntinfo *a, struct fsmntinfo *b)
 	switch(qflag) {
 	case 1:
 		return strcmp(a->fsname, b->fsname);
-		/* NOTREACHED */
 	case 2:
 		return strcmp(a->type, b->type);
-		/* NOTREACHED */
 	case 3:
 		return strcmp(a->dir, b->dir);
-		/* NOTREACHED */
 	default:
 		return -1;
-		/* NOTREACHED */
 	}
 }
 
@@ -575,7 +519,6 @@ msort(struct fsmntinfo *fmi)
 	 */
 	if (fmi == NULL || fmi->next == NULL)
 		return fmi;
-		/* NOTREACHED */
 
 	do {
 		nmerges = 0;
@@ -621,7 +564,6 @@ msort(struct fsmntinfo *fmi)
 	} while (nmerges > 1);
 
 	return fmi;
-	/* NOTREACHED */
 }
 
 /*
@@ -639,7 +581,6 @@ auto_adjust(struct list lst, int width)
 	/* nothing to adjust here */
 	if ((gap = (width - req)) >= 0)
 		return;
-		/* NOTREACHED */
 
 	(void)fputs(_("WARNING: TTY too narrow. Some options have been disabled"
 		" to make dfc output fit (use -f to override).\n"), stderr);
@@ -651,13 +592,11 @@ auto_adjust(struct list lst, int width)
 			gap += 30;
 			if (gap >= 0)
 				return;
-				/* NOTREACHED */
 		}
 		bflag = 1;
 		gap += 23;
 		if (gap >= 0)
 			return;
-			/* NOTREACHED */
 	}
 	if (dflag) {
 		dflag = 0;
@@ -670,28 +609,24 @@ auto_adjust(struct list lst, int width)
 			gap += 6;
 		if (gap >= 0)
 			return;
-			/* NOTREACHED */
 	}
 	if (Tflag) {
 		Tflag = 0;
 		gap += imax(lst.typemaxlen, 5);
 		if (gap >= 0)
 			return;
-			/* NOTREACHED */
 	}
 	if (iflag) {
 		iflag = 0;
 		gap += 20;
 		if (gap >= 0)
 			return;
-			/* NOTREACHED */
 	}
 	if (oflag) {
 		oflag = 0;
 		gap += imax(lst.mntoptmaxlen, 13);
 		if (gap >= 0)
 			return;
-			/* NOTREACHED */
 	}
 	if (gap < 0)
 		(void)fputs(_("WARNING: Output still messed up. Enlarge your "
@@ -770,7 +705,6 @@ req_width(struct list lst)
 		ret += imax(lst.mntoptmaxlen, 13);
 
 	return ret;
-	/* NOTREACHED */
 }
 
 /*
@@ -839,31 +773,22 @@ colortoint(char *col)
 {
 	if (strcoll(col, _("black")) == 0)
 		return BLACK;
-		/* NOTREACHED */
 	else if (strcoll(col, _("red")) == 0)
 		return RED;
-		/* NOTREACHED */
 	else if (strcoll(col, _("green")) == 0)
 		return GREEN;
-		/* NOTREACHED */
 	else if (strcoll(col, _("yellow")) == 0)
 		return YELLOW;
-		/* NOTREACHED */
 	else if (strcoll(col, _("blue")) == 0)
 		return BLUE;
-		/* NOTREACHED */
 	else if (strcoll(col, _("magenta")) == 0)
 		return MAGENTA;
-		/* NOTREACHED */
 	else if (strcoll(col, _("cyan")) == 0)
 		return CYAN;
-		/* NOTREACHED */
 	else if (strcoll(col, _("white")) == 0)
 		return WHITE;
-		/* NOTREACHED */
 	else
 		return -1;
-		/* NOTREACHED */
 }
 
 /*
@@ -880,13 +805,10 @@ chk_html_colorcode(char *color)
 
 	if (strlen(color) != HTMLCOLORCODELENGTH)
 		return -1;
-		/* NOTREACHED */
 
 	for (i = 0; i < HTMLCOLORCODELENGTH; i++)
 		if (isxdigit(color[i]) == 0)
 			return -1;
-			/* NOTREACHED */
 
 	return 0;
-	/* NOTREACHED */
 }
