@@ -1,3 +1,4 @@
+*.directory
 *.swp
 build
 po/dfc.pot
