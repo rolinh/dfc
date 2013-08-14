@@ -496,10 +496,14 @@ fetch_info(struct list *lst)
 	while ((entbuf = getmntent(mtab)) != NULL) {
 		/* get infos from statvfs */
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
-			/* permission denied for this one -> show warning */
-			if (errno == EACCES) {
+			/*
+			 * show warning  when permission denied or when it
+			 * cannot be stated because of connexion problem for a
+			 * remote file system
+			 */
+			if (errno == EACCES || errno == ENOTCONN) {
 				(void)fprintf(stderr, _("WARNING: %s was skipped "
-					"because it cannot be stated"),
+					"because it could not be stated"),
 					entbuf->mnt_dir);
 				perror(" ");
 			} else {
