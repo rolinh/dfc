@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-07-18 22:40+0200\n"
+"POT-Creation-Date: 2013-08-16 19:08+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -58,7 +58,6 @@ msgid "AV.INODES%c"
 msgstr "INODES DISP.%c"
 
 #: src/csv.c:114 src/html.c:171 src/tex.c:160
-#, c-format
 msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
@@ -176,6 +175,7 @@ msgstr ""
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
 #: src/dfc.c:505
+#, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
 msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"
 
@@ -270,17 +270,14 @@ msgid "%USED"
 msgstr "%UTILISÉ"
 
 #: src/html.c:162 src/tex.c:153 src/text.c:135
-#, c-format
 msgid "USED"
 msgstr " UT."
 
 #: src/html.c:163 src/tex.c:154 src/text.c:145
-#, c-format
 msgid "AVAILABLE"
 msgstr "   DISPO."
 
 #: src/html.c:164 src/tex.c:155 src/text.c:155
-#, c-format
 msgid "TOTAL"
 msgstr "TOTAL"
 
@@ -309,22 +306,18 @@ msgid "\\#INODES"
 msgstr "\\#INODES"
 
 #: src/text.c:102
-#, c-format
 msgid "FILESYSTEM "
 msgstr "SYS. FICH. "
 
 #: src/text.c:107
-#, c-format
 msgid " TYPE"
 msgstr " TYPE"
 
 #: src/text.c:120
-#, c-format
 msgid " (=) USED"
 msgstr " (=)  UT."
 
 #: src/text.c:123
-#, c-format
 msgid "FREE (-) "
 msgstr "LIB. (-) "
 
@@ -334,27 +327,22 @@ msgid "%%USED"
 msgstr " %%UT."
 
 #: src/text.c:158
-#, c-format
 msgid "   #INODES"
 msgstr "   #INODES"
 
 #: src/text.c:159
-#, c-format
 msgid " AV.INODES"
 msgstr " INODES D."
 
 #: src/text.c:162
-#, c-format
 msgid " MOUNTED ON "
 msgstr " MONTÉ SUR  "
 
 #: src/text.c:167
-#, c-format
 msgid "MOUNT OPTIONS\n"
 msgstr " OPT. DE MONT.\n"
 
 #: src/text.c:198
-#, c-format
 msgid "SUM:"
 msgstr "SOM:"
 
