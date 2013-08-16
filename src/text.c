@@ -123,7 +123,7 @@ text_disp_header(struct list *lst)
 		(void)printf("%s", _("FREE (-) "));
 	}
 
-	(void)printf("%s", _("%%USED"));
+	(void)printf("%s", _("%USED"));
 
 	if (dflag) {
 		if (unitflag == 'k')
