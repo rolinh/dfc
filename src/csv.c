@@ -111,7 +111,7 @@ csv_disp_header(struct list *lst)
 		(void)printf(_("AV.INODES,"));
 	}
 
-	(void)printf(_("MOUNTED ON"));
+	(void)printf("%s", _("MOUNTED ON"));
 
 	if (oflag)
 		(void)printf(_(",MOUNT OPTIONS"));
