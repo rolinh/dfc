@@ -504,28 +504,18 @@ fetch_info(struct list *lst)
 	while ((entbuf = getmntent(mtab)) != NULL) {
 		/* get infos from statvfs */
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
-			/*
-			 * show warning  when permission denied or when it
-			 * cannot be stated because of connexion problem for a
-			 * remote file system
-			 */
-			if (errno == EACCES || errno == ENOTCONN) {
-				(void)fprintf(stderr, _("WARNING: %s was skipped "
-					"because it could not be stated"),
-					entbuf->mnt_dir);
-				perror(" ");
-			} else {
-				(void)fprintf(stderr, "Error while stating %s",
-					entbuf->mnt_dir);
-				perror(" ");
-				exit(EXIT_FAILURE);
-				/* NOTREACHED */
-			}
+#else /* BSD */
+	if ((nummnt = getmntinfo(&entbuf, MNT_NOWAIT)) <= 0) {
+#endif /* __linux__ */
+			(void)fprintf(stderr, _("WARNING: %s was skipped "
+				      "because it could not be stated"),
+				      entbuf->mnt_dir);
+			perror(" ");
+#ifdef __linux__
 		} else {
 #else /* BSD */
-	if ((nummnt = getmntinfo(&entbuf, MNT_NOWAIT)) <= 0)
-		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
-		/* NOTREACHED */
+	if ((nummnt = getmntinfo(&entbuf, MNT_NOWAIT)) <= 0) {
+
 
 	for (fs = &entbuf; nummnt--; (*fs)++) {
 		vfsbuf = **fs;
