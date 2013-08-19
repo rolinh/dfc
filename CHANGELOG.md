@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## version 3.0.3
+
+BUGS:
+  * fixed warning message wrongly displayed when calling 'dfc -u h'
+  * fixed various typo fixes
+  * fixed some memory management issues
+  * fixed if tests on potentially NULL values
+  * fixed potential security holes (potentially exploitable buffer overflows
+    caused by misuse of printf function)
+  * fixed dfc hang on no more accessible remote file systems
+  * display a warning in any case when file system cannot be stated instead of
+    exiting on error
+  * updated license header and copyright year
+
 ## version 3.0.2
 
 BUGS:
