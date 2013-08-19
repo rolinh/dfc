@@ -12,6 +12,8 @@ BUGS:
   * fixed dfc hang on no more accessible remote file systems
   * display a warning in any case when file system cannot be stated instead of
     exiting on error
+
+MISCELLANEOUS:
   * updated license header and copyright year
 
 ## version 3.0.2
