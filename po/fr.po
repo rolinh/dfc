@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.4\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-10-03 15:07+0200\n"
+"POT-Creation-Date: 2013-10-03 15:25+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -174,17 +174,17 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:513
+#: src/dfc.c:508
 #, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
 msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"
 
-#: src/dfc.c:959
+#: src/dfc.c:947
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:995
+#: src/dfc.c:983
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
