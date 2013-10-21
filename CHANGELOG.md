@@ -1,8 +1,15 @@
 # CHANGELOG
 
+## version 3.0.4
+
+BUGS:
+
+  * fixed compilation error on *BSD systems introduced in dfc version 3.0.3
+
 ## version 3.0.3
 
 BUGS:
+
   * fixed warning message wrongly displayed when calling 'dfc -u h'
   * fixed various typo fixes
   * fixed some memory management issues
@@ -12,11 +19,15 @@ BUGS:
   * fixed dfc hang on no more accessible remote file systems
   * display a warning in any case when file system cannot be stated instead of
     exiting on error
+
+MISCELLANEOUS:
+
   * updated license header and copyright year
 
 ## version 3.0.2
 
 BUGS:
+
   * fixed dfc failing when getting volume size information from volume >= 4 To
     on 32-bit hosts (added LFS option, which can be triggered on or off but is
     on by default)
