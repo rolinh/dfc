@@ -95,7 +95,7 @@ text_disp_header(struct list *lst)
 	int i;
 	int barinc = 5;
 
-	/* use color option is triggered */
+	/* use color option if triggered */
 	if (cflag)
 		(void)printf("\033[;%dm", cnf.chead);
 
@@ -192,7 +192,7 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
 	else
 		ptot = (utot / stot) * 100.0;
 
-	/* use color option is triggered */
+	/* use color option if triggered */
 	if (cflag)
 		(void)printf("\033[;%dm", cnf.chead);
 	(void)printf("%s", _("SUM:"));
