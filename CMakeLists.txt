@@ -173,9 +173,12 @@ add_custom_target(dist
 # installation
 install(TARGETS ${EXECUTABLE_NAME} RUNTIME DESTINATION bin)
 install(FILES ${MAN_DIR}/dfc.1 DESTINATION ${MAN_PATH}/man1)
-foreach(lang ${languages})
-	install(FILES ${MAN_DIR}/${lang}/${PACKAGE}.1 DESTINATION ${MAN_PATH}/${lang}/man1)
-endforeach()
+
+if(NLS_ENABLED)
+    foreach(lang ${languages})
+        install(FILES ${MAN_DIR}/${lang}/${PACKAGE}.1 DESTINATION ${MAN_PATH}/${lang}/man1)
+    endforeach()
+endif()
 install(DIRECTORY ${CONF_DIR}/ DESTINATION ${DFC_SYSCONFDIR})
 install(FILES ${DFC_DOC_FILES} DESTINATION ${DFC_DOC_PATH})
 
