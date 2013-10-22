@@ -173,13 +173,13 @@ add_custom_target(dist
 # installation
 install(TARGETS ${EXECUTABLE_NAME} RUNTIME DESTINATION bin)
 install(FILES ${MAN_DIR}/dfc.1 DESTINATION ${MAN_PATH}/man1)
-
+install(FILES ${CONF_DIR}/dfcrc DESTINATION ${DFC_SYSCONFDIR})
 if(NLS_ENABLED)
     foreach(lang ${languages})
         install(FILES ${MAN_DIR}/${lang}/${PACKAGE}.1 DESTINATION ${MAN_PATH}/${lang}/man1)
+        install(FILES ${CONF_DIR}/${lang}/dfcrc DESTINATION ${DFC_SYSCONFDIR}/${lang})
     endforeach()
 endif()
-install(DIRECTORY ${CONF_DIR}/ DESTINATION ${DFC_SYSCONFDIR})
 install(FILES ${DFC_DOC_FILES} DESTINATION ${DFC_DOC_PATH})
 
 # uninstall target
