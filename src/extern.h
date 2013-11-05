@@ -65,14 +65,6 @@
 /* html color code length (type of #FF0000, etc.) without the # */
 #define HTMLCOLORCODELENGTH 6
 
-/*
- * These two variables are used when we don't need to alloc some mem for the
- * fsmntinfo struct. So we can know that and don't free the pointers
- */
-
-extern char *g_unknown_str;
-extern char *g_none_str;
-
 
 struct conf {
 	int chead;	/* color used for the header */
@@ -98,15 +90,23 @@ struct conf {
 	char csvsep;	/* separator used for csv export */
 };
 
+/*
+ * These two variables are used when we don't need to alloc some mem for the
+ * fsmntinfo struct. So we can know that and don't free the pointers
+ */
+
+extern char *g_unknown_str;
+extern char *g_none_str;
+
 /* struct to store specific configuration from config file */
-struct conf cnf;
+extern struct conf cnf;
 
 /* set flags for options */
-int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
+extern int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
     nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
-int Tflag, Wflag;
+extern int Tflag, Wflag;
 
 /* flag that determines which unit is in use (Ko, Mo, etc.) */
-char unitflag;
+extern char unitflag;
 
 #endif /* ndef EXTERN_H */

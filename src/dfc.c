@@ -73,6 +73,15 @@
 #include <libintl.h>
 #endif /* NLS_ENABLED */
 
+/* global variables definition, see declaration in extern.h */
+char *g_unknown_str = "unknown";
+char *g_none_str    = "none";
+struct conf cnf;
+int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
+    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
+int Tflag, Wflag;
+char unitflag;
+
 int
 main(int argc, char *argv[])
 {
