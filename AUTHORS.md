@@ -4,6 +4,7 @@
 
 ## CONTRIBUTORS:
 
+  * Alexandre Perrin
   * Baptiste Daroussin
   * Cyril Roelandt
   * Frank Villaro-Dixon
