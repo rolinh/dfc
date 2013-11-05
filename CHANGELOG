@@ -1,5 +1,12 @@
 # CHANGELOG
 
+BUGS:
+  * fixed initialization of LFS (see v3.0.2 release notes). LFS option as
+    existing in v3.0.2-v3.0.4 was just wrong: setting LFS option to false
+    would actually enable LFS option...
+  * do not install translated configuration files and man pages when NLS option
+    is disabled
+
 ## version 3.0.4
 
 BUGS:
