@@ -105,11 +105,6 @@ else()
 	set(CMAKE_BUILD_TYPE RELEASE CACHE STRING "Build optimized for release")
 endif()
 
-configure_file(
-	${SOURCE_DIR}/extern.h.in
-	${SOURCE_DIR}/extern.h
-)
-
 set(EXECUTABLE_NAME ${CMAKE_PROJECT_NAME})
 SET(SRCS
 	${SOURCE_DIR}/csv.c
@@ -127,6 +122,7 @@ add_executable(
 )
 
 if(NLS_ENABLED)
+	add_definitions(-DNLS_ENABLED)
 	# load gettext module for translation
 	set(GettextTranslate_ALL true)
 	set(GettextTranslate_GMO_BINARY true)
@@ -136,6 +132,8 @@ if(NLS_ENABLED)
 	include_directories(${LIBINTL_INCLUDE_DIR})
 	target_link_libraries(${EXECUTABLE_NAME} ${LIBINTL_LIBRARIES})
 endif()
+
+add_definitions(-DPACKAGE="${PACKAGE}" -DVERSION="${VERSION}" -DLOCALEDIR="${LOCALEDIR}")
 
 set(DFC_DOC_FILES
 	AUTHORS.md

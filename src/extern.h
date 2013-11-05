@@ -37,17 +37,20 @@
  * Globals and dfc version declaration
  */
 
-#cmakedefine PACKAGE "${PACKAGE}"
-#cmakedefine VERSION "${VERSION}"
-#cmakedefine NLS_ENABLED
+#ifndef PACKAGE
+#define	PACKAGE	"dfc"
+#endif /* ndef PACKAGE */
+
+#ifndef VERSION
+#define	VERSION	"(unknown version)"
+#endif /* ndef VERSION */
 
 /* too ugly to use gettext in each string that needs translation... */
 #ifdef NLS_ENABLED
 #define _(STRING) gettext(STRING)
-#cmakedefine LOCALEDIR "${LOCALEDIR}"
 #else
 #define _(STRING) STRING
-#endif
+#endif /* def NLS_ENABLED */
 
 /* color defines */
 #define BLACK	30
