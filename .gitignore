@@ -2,4 +2,3 @@
 *.swp
 build
 po/dfc.pot
-src/extern.h
