@@ -77,12 +77,6 @@ else()
 endif()
 
 option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit systems but should not cause any problems if defined on non 32-bit systems anyway, thus enabled by default." on)
-# CFLAGS (using c99 only for long long, all the rest should be c89 compliant)
-if(LFS_ENABLED)
-    add_definitions(-O2 -std=c99)
-else()
-    add_definitions(-O2 -std=c99 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64)
-endif()
 
 option(GRIM "Very strict compiler options (use it to debug dfc)" off)
 if(GRIM)
@@ -120,6 +114,13 @@ add_executable(
 	${EXECUTABLE_NAME}
 	${SRCS}
 )
+
+# CFLAGS (using c99 only for long long, all the rest should be c89 compliant)
+add_definitions(-O2 -std=c99)
+
+if(LFS_ENABLED)
+    add_definitions(-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64)
+endif()
 
 if(NLS_ENABLED)
 	add_definitions(-DNLS_ENABLED)
