@@ -40,9 +40,6 @@
 #include "list.h"
 #include "extern.h"
 
-char *g_unknown_str = "unknown";
-char *g_none_str    = "none";
-
 /*
  * Initializes a queue structure
  * @lst: queue pointer
