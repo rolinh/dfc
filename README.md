@@ -1,12 +1,16 @@
 # README
 
-dfc is a simple tool that displays file system space usage using graph and color.
+`dfc` is a simple tool that displays file system space usage using graph and
+color. It has other nice features such as HTML and CSV export.
 
 ## BUILD
 
-cmake is required in order to build dfc.
-I suggest you create a build directory to compile dfc, but this is of course not
-required.
+`cmake` is required in order to build `dfc`.
+I suggest you create a `build` directory in which you compile `dfc`. This is of
+course not required but it will avoid adding files everywhere in the source
+folder.
+
+### BUILD STEPS
 
 Create the build directory:
 
@@ -16,55 +20,78 @@ Navigate into it:
 
 	cd build
 
-Run the cmake command to generate a Makefile that works for your OS:
+Run the `cmake` command to generate a `Makefile` that works for your OS:
 
 	cmake ..
 
-Now you can use the make command to build dfc:
+Now you can use the make command to build `dfc`:
 
 	make
 
-The dfc binary will be placed into a bin directory.
+The `dfc` binary will be placed into a `bin` sub-directory.
 
-Note: if you do not want to build translation, you can use the following at the
-cmake step:
+### BUILD OPTIONS
+
+Several options can be tweaked before you compile `dfc`. To activate /
+deactivate or change them, you need to do it at the `cmake` step. Note that you
+may also use `ccmake` instead which gives you a `curses` interface to tweak the
+options.
+
+By default, translations are enabled. They require `gettext` to be installed on
+the system. You can however easily disable them in which case no translations
+nor language translated configuration files will be installed.
 
 	cmake .. -DNLS_ENABLED=false
 
+`dfc` has also the `LFS` option enabled by default. This option activates
+compile flags in order to support listing of large file systems (over 4G) on
+32-bit hosts. This will not harm 64-bit systems if activated but if you feel the
+need to deactivate it, use the following:
+
+    cmake .. -DLFS_ENABLED=false
+
+There is another option which is disabled by default. It shall be used by
+developers and for debugging purpose only as it activates strict compiler
+options and debug flags. To activate it:
+
+    cmake .. -DGRIM=true
+
+
 ## RUN
 
-Once built, you can run it by typing:
+Once built, you can run `dfc` by typing:
 
 	./dfc
 
-from within the directory where dfc is situated.
+from within the directory where `dfc` is situated.
 
-see ./dfc -h for options and usage.
+See `./dfc -h` for quick options and usage overview or read the manual page.
 
 ## INSTALL
 
-By default, it will be installed in /usr/local/bin. As root, type:
+By default, `dfc` binary will be installed in `/usr/local/bin`. As `root`, type:
 
 	make install
 
 You can also choose some standards parameters like where the files need to be
-installed. This needs to be done when using the cmake command.
+installed. This needs to be done when using the `cmake` command.
 Example (from the previously created build directory):
 
 	cmake .. -DPREFIX=/usr -DSYSSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RELEASE
 
-Then run the 'make install' and it will install dfc according to what you chose
-in the previous step.
+Then run the `make install` and it will install `dfc` according to what you
+chose in the previous step.
 
 ## CONFIGURATION FILE
 
-The configuration file found in conf/dfcrc needs to be placed here:
+The configuration file found in `conf/dfcrc` needs to be placed here if one
+desires to use it:
 
 	$XDG_CONFIG_HOME/dfc/dfcrc
 
-Note that if, for instance, french is the language you use, you should then use
-the configuration file that has been translated into french
-(found in conf/fr/dfcrc) and so on for any language into which dfc has beed
+Note that if, for instance, French is the language you use, you should then use
+the configuration file that has been translated into French
+(found in `conf/fr/dfcrc`) and so on for any language into which `dfc` has been
 translated.
 
 If your operating system does not support XDG Base Directory Specification it
@@ -72,7 +99,7 @@ can then be placed in this directory:
 
 	$HOME/.config/dfc/dfcrc
 
-Or, last choice, directly in $HOME (but the name has to be preceeded by a dot):
+Or, last choice, directly in `$HOME` (but the name has to be preceded by a dot):
 
 	$HOME/.dfcrc
 
@@ -84,10 +111,10 @@ Here is the list of dependencies:
 
 Yep, that should be it. :)
 
-Please, note that gettext is required in order to build translation.
-If you do not want to package dfc with translation support, use the option to
+Please, note that `gettext` is required in order to build translations.
+If you do not want to package `dfc` with translation support, use the option to
 disable translation as explained in the build section.
 
-Of course, cmake is a build dependency.
+Of course, `cmake` is a build dependency.
 
 <!-- vim: set filetype=markdown textwidth=80 -->
