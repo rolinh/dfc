@@ -50,12 +50,19 @@ need to deactivate it, use the following:
 
     cmake .. -DLFS_ENABLED=false
 
-There is another option which is disabled by default. It shall be used by
-developers and for debugging purpose only as it activates strict compiler
-options and debug flags. To activate it:
+Different types of build are available. Most people will only care about
+`RELEASE` which is the build type that shall be used when distributing the
+software as binary or installing it as it adds some optimization flags.
+To enable `RELEASE` build use the following:
 
-    cmake .. -DGRIM=true
+    cmake .. -DCMAKE_BUILD_TYPE=RELEASE
 
+Developers might care about `DEBUG` build when debugging the program as it adds
+debug flags such as `-g3`. Enable it like so:
+
+    cmake .. -DCMAKE_BUILD_TYPE=DEBUG
+
+Note that by default, `dfc` build with very strict compilers flags.
 
 ## RUN
 
@@ -63,7 +70,7 @@ Once built, you can run `dfc` by typing:
 
 	./dfc
 
-from within the directory where `dfc` is situated.
+from within the directory where `dfc` is located.
 
 See `./dfc -h` for quick options and usage overview or read the manual page.
 
@@ -94,7 +101,7 @@ the configuration file that has been translated into French
 (found in `conf/fr/dfcrc`) and so on for any language into which `dfc` has been
 translated.
 
-If your operating system does not support XDG Base Directory Specification it
+If your operating system does not support `XDG Base Directory Specification` it
 can then be placed in this directory:
 
 	$HOME/.config/dfc/dfcrc

@@ -78,26 +78,31 @@ endif()
 
 option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit systems but should not cause any problems if defined on non 32-bit systems anyway, thus enabled by default." on)
 
-option(GRIM "Very strict compiler options (use it to debug dfc)" off)
-if(GRIM)
-	set(CMAKE_BUILD_TYPE GRIM CACHE STRING "Very strict compiler options")
-	include(CheckCCompilerFlag)
-	check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
-	check_c_compiler_flag(-Wdouble-promotion HAS_WDOUBLE_PROMOTION)
-	check_c_compiler_flag(-Wlogical-op HAS_WLOGICAL_OP)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -g -pedantic -Wall -Wextra -Wconversion -Wstrict-prototypes -Wcast-qual -Wcast-align -Wshadow -Wredundant-decls -Wundef -Wfloat-equal -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wpointer-arith -Wbad-function-cast -Wnested-externs -Wold-style-definition")
-	if (HAS_WSIGN_CONVERSION)
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wsign-conversion")
-	endif()
-	if (HAS_WDOUBLE_PROMOTION)
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wdouble-promotion")
-	endif()
-	if (HAS_WLOGICAL_OP)
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wlogical-op")
-	endif()
-else()
-	set(CMAKE_BUILD_TYPE RELEASE CACHE STRING "Build optimized for release")
+# set compiler flags
+# using c99 only for long long, all the rest should be c89 compliant
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+include(CheckCCompilerFlag)
+check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
+check_c_compiler_flag(-Wdouble-promotion HAS_WDOUBLE_PROMOTION)
+check_c_compiler_flag(-Wlogical-op HAS_WLOGICAL_OP)
+check_c_compiler_flag(-Wjump-misses-init HAS_WJUMP_MISSES_INIT)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -Wconversion -Wstrict-prototypes -Wcast-qual -Wcast-align -Wshadow -Wredundant-decls -Wundef -Wfloat-equal -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wpointer-arith -Wbad-function-cast -Wnested-externs -Wold-style-definition -Wformat=2 -Winit-self -Wwrite-strings -Wmissing-prototypes -pipe")
+if (HAS_WSIGN_CONVERSION)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wsign-conversion")
 endif()
+if (HAS_WDOUBLE_PROMOTION)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wdouble-promotion")
+endif()
+if (HAS_WLOGICAL_OP)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wlogical-op")
+endif()
+if (HAS_WJUMP_MISSES_INIT)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wjump-misses-init")
+endif()
+
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -O3 -flto -DNDEBUG")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g3 -ggdb3 -Wpadded -Wpacked")
+
 
 set(EXECUTABLE_NAME ${CMAKE_PROJECT_NAME})
 SET(SRCS
@@ -115,8 +120,6 @@ add_executable(
 	${SRCS}
 )
 
-# CFLAGS (using c99 only for long long, all the rest should be c89 compliant)
-add_definitions(-O2 -std=c99)
 
 if(LFS_ENABLED)
     add_definitions(-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64)
