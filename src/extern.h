@@ -77,15 +77,15 @@ struct conf {
 
 	char gsymbol;	/* symbol used to draw the graph */
 
-	char *hcheadbg;	/* background color for header and footer (html) */
-	char *hcheadfg;	/* font color used in header and footer (html) */
-	char *hccellbg;	/* background color for cells (html) */
-	char *hccellfg;	/* font color for cells (html) */
-	char *hchoverbg;/* background color on hover (html) */
-	char *hchoverfg;/* font color on hover (html) */
-	char *hclow;	/* color when usage is low (html) */
-	char *hcmedium;	/* color when usage is medium (html) */
-	char *hchigh;	/* color when usage is high (html) */
+	const char *hcheadbg;	/* background color for header and footer (html) */
+	const char *hcheadfg;	/* font color used in header and footer (html) */
+	const char *hccellbg;	/* background color for cells (html) */
+	const char *hccellfg;	/* font color for cells (html) */
+	const char *hchoverbg;	/* background color on hover (html) */
+	const char *hchoverfg;	/* font color on hover (html) */
+	const char *hclow;	/* color when usage is low (html) */
+	const char *hcmedium;	/* color when usage is medium (html) */
+	const char *hchigh;	/* color when usage is high (html) */
 
 	char csvsep;	/* separator used for csv export */
 };
@@ -95,8 +95,8 @@ struct conf {
  * fsmntinfo struct. So we can know that and don't free the pointers
  */
 
-extern char *g_unknown_str;
-extern char *g_none_str;
+extern const char *g_unknown_str;
+extern const char *g_none_str;
 
 /* struct to store specific configuration from config file */
 extern struct conf cnf;
