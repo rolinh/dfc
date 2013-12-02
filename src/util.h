@@ -59,8 +59,8 @@ struct fsmntinfo * msort(struct fsmntinfo *fmi);
 void auto_adjust(struct list lst, int width);
 int req_width(struct list lst);
 char * fetchdate(void);
-char * colortostr(int color);
-int colortoint(char *col);
-int chk_html_colorcode(char *color);
+const char * colortostr(int color);
+int colortoint(const char *col);
+int chk_html_colorcode(const char *color);
 
 #endif /* ndef UTIL_H */

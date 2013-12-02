@@ -739,7 +739,7 @@ fetchdate(void)
  * Return the name of the given color or NULL
  * @color: color as defined in extern.h
  */
-char *
+const char *
 colortostr(int color)
 {
 	switch (color) {
@@ -769,7 +769,7 @@ colortostr(int color)
  * @col: color name
  */
 int
-colortoint(char *col)
+colortoint(const char *col)
 {
 	if (strcoll(col, _("black")) == 0)
 		return BLACK;
@@ -799,7 +799,7 @@ colortoint(char *col)
  * NOTE: color should ommit the #: white is FFFFFF and not #FFFFFF
  */
 int
-chk_html_colorcode(char *color)
+chk_html_colorcode(const char *color)
 {
 	int i;
 
