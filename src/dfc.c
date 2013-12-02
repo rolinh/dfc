@@ -96,59 +96,63 @@ main(int argc, char *argv[])
 	char *value;
 	char *cfgfile;
 
-	char *color_opts[] = {
-		#define CALWAYS	0
-			"always",
-		#define	CNEVER	1
-			"never",
-		#define	CAUTO	2
-			"auto",
+	/* enum for suboptions flags; first letter corresponds to option flag */
+	enum {
+		CALWAYS = 0,
+		CNEVER = 1,
+		CAUTO = 2,
+		ETEXT = 0,
+		ECSV = 1,
+		EHTML = 2,
+		ETEX = 3,
+		SFSNAME = 0,
+		SFSTYPE = 1,
+		SFSDIR = 2,
+		UH = 0,
+		UB = 1,
+		UK = 2,
+		UM = 3,
+		UG = 4,
+		UT = 5,
+		UP = 6,
+		UE = 7,
+		UZ = 8,
+		UY = 9
+	};
+
+	char *const color_opts[] = {
+		[CALWAYS] = "always",
+		[CNEVER] = "never",
+		[CAUTO] = "auto",
 		NULL
 	};
 
-	char *export_opts[] = {
-		#define ETEXT	0
-			"text",
-		#define	ECSV	1
-			"csv",
-		#define	EHTML	2
-			"html",
-		#define	ETEX	3
-			"tex",
+	char *const export_opts[] = {
+		[ETEXT] = "text",
+		[ECSV] = "csv",
+		[EHTML] = "html",
+		[ETEX] = "tex",
 		NULL
 	};
 
-	char *sort_opts[] = {
-		#define SFSNAME	0
-			"name",
-		#define SFSTYPE	1
-			"type",
-		#define SFSDIR	2
-			"mount",
+	char *const sort_opts[] = {
+		[SFSNAME] = "name",
+		[SFSTYPE] = "type",
+		[SFSDIR] = "mount",
 		NULL
 	};
 
-	char *unit_opts[] = {
-		#define H	0
-			"h",
-		#define B	1
-			"b",
-		#define K	2
-			"k",
-		#define M	3
-			"m",
-		#define G	4
-			"g",
-		#define T	5
-			"t",
-		#define P	6
-			"p",
-		#define E	7
-			"e",
-		#define Z	8
-			"z",
-		#define Y	9
-			"y",
+	char *const unit_opts[] = {
+		[UH] = "h",
+		[UB] = "b",
+		[UK] = "k",
+		[UM] = "m",
+		[UG] = "g",
+		[UT] = "t",
+		[UP] = "p",
+		[UE] = "e",
+		[UZ] = "z",
+		[UY] = "y",
 		NULL
 	};
 
@@ -309,7 +313,7 @@ main(int argc, char *argv[])
 			subopts = optarg;
 			while (*subopts) {
 				switch (getsubopt(&subopts, unit_opts, &value)) {
-				case H:
+				case UH:
 					/*
 					 * disable uflag since conversion to
 					 * human readable format is computed
@@ -318,31 +322,32 @@ main(int argc, char *argv[])
 					uflag = 0;
 					unitflag = 'h';
 					break;
-				case B:
+				case UB:
 					unitflag = 'b';
 					break;
-				case K:
+				case UK:
 					unitflag = 'k';
 					break;
-				case M:
+				case UM:
 					unitflag = 'm';
 					break;
-				case G:
+				case UG:
 					unitflag = 'g';
 					break;
-				case T:
+				case UT:
 					unitflag = 't';
 					break;
-				case P:
+				case UP:
 					unitflag = 'p';
 					break;
-				case E:
+				case UE:
 					unitflag = 'e';
 					break;
-				case Z:
+				case UZ:
 					unitflag = 'z';
 					break;
-				case Y: unitflag = 'y';
+				case UY:
+					unitflag = 'y';
 					break;
 				case -1: /* FALLTHROUGH */
 				default:
