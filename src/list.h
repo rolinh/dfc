@@ -55,10 +55,10 @@
  */
 struct fsmntinfo {
 	/* infos to get from getmntent(3) */
-	char *fsname;	/* name of mounted file system */
-	char *dir;	/* file system path prefix */
-	char *type;	/* mount type */
-	char *opts;	/* mount options (see mntent.h) */
+	const char *fsname;	/* name of mounted file system */
+	const char *dir;	/* file system path prefix */
+	const char *type;	/* mount type */
+	const char *opts;	/* mount options (see mntent.h) */
 
 	/* infos to get from statvfs(3) */
 #if defined(__linux__) || defined(__NetBSD__)

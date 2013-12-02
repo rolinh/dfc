@@ -57,11 +57,11 @@ static void text_disp_sum(struct list *lst, double stot, double utot, double fto
                    double ifitot, double ifatot);
 static void text_disp_bar(double perct);
 static void text_disp_at(double n, double perct);
-static void text_disp_fs(struct list *lst, char *fsname);
-static void text_disp_type(struct list *lst, char *type);
+static void text_disp_fs(struct list *lst, const char *fsname);
+static void text_disp_type(struct list *lst, const char *type);
 static void text_disp_inodes(uint64_t files, uint64_t favail);
-static void text_disp_mount(char *dir);
-static void text_disp_mopt(struct list *lst, char *dir, char *opts);
+static void text_disp_mount(const char *dir);
+static void text_disp_mopt(struct list *lst, const char *dir, const char *opts);
 static void text_disp_perct(double perct);
 
 static void change_color(double perct);
@@ -315,7 +315,7 @@ text_disp_at(double n, double perct)
  * @fsname: list of the file system to print
  */
 static void
-text_disp_fs(struct list *lst, char *fsname)
+text_disp_fs(struct list *lst, const char *fsname)
 {
 	int i;
 
@@ -330,7 +330,7 @@ text_disp_fs(struct list *lst, char *fsname)
  * @type: the file system type to print
  */
 static void
-text_disp_type(struct list* lst, char *type)
+text_disp_type(struct list* lst, const char *type)
 {
 	int i;
 
@@ -367,7 +367,7 @@ text_disp_inodes(uint64_t files, uint64_t favail)
  * @dir: mount point
  */
 static void
-text_disp_mount(char *dir)
+text_disp_mount(const char *dir)
 {
 	(void)printf(" %s", dir);
 }
@@ -379,7 +379,7 @@ text_disp_mount(char *dir)
  * @opts: mount options
  */
 static void
-text_disp_mopt(struct list* lst, char *dir, char *opts)
+text_disp_mopt(struct list* lst, const char *dir, const char *opts)
 {
 	int i;
 

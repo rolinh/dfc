@@ -58,11 +58,11 @@ static void html_disp_sum(struct list *lst, double stot, double utot, double fto
                    double ifitot, double ifatot);
 static void html_disp_bar(double perct);
 static void html_disp_at(double n, double perct);
-static void html_disp_fs(struct list *lst, char *fsname);
-static void html_disp_type(struct list *lst, char *type);
+static void html_disp_fs(struct list *lst, const char *fsname);
+static void html_disp_type(struct list *lst, const char *type);
 static void html_disp_inodes(uint64_t files, uint64_t favail);
-static void html_disp_mount(char *dir);
-static void html_disp_mopt(struct list *lst, char *dir, char *opts);
+static void html_disp_mount(const char *dir);
+static void html_disp_mopt(struct list *lst, const char *dir, const char *opts);
 static void html_disp_perct(double perct);
 
 /* init pointers from display structure to the functions found here */
@@ -306,7 +306,7 @@ html_disp_at(double n, double perct)
  * @fsname: list of the file system to print
  */
 static void
-html_disp_fs(struct list *lst, char *fsname)
+html_disp_fs(struct list *lst, const char *fsname)
 {
 	static int must_close = 0;
 
@@ -325,7 +325,7 @@ html_disp_fs(struct list *lst, char *fsname)
  * @type: the file system type to print
  */
 static void
-html_disp_type(struct list *lst, char *type)
+html_disp_type(struct list *lst, const char *type)
 {
 	(void)lst;
 	(void)printf("\t  <td>%s</td>\n", type);
@@ -365,7 +365,7 @@ html_disp_inodes(uint64_t files, uint64_t favail)
  * @dir: mount point
  */
 static void
-html_disp_mount(char *dir)
+html_disp_mount(const char *dir)
 {
 	(void)printf("\t  <td>%s</td>", dir);
 }
@@ -377,7 +377,7 @@ html_disp_mount(char *dir)
  * @opts: mount options
  */
 static void
-html_disp_mopt(struct list *lst, char *dir, char *opts)
+html_disp_mopt(struct list *lst, const char *dir, const char *opts)
 {
 	(void)lst;
 	(void)dir;

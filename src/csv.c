@@ -57,11 +57,11 @@ static void csv_disp_sum(struct list *lst, double stot, double utot, double ftot
                   double ifitot, double ifatot);
 static void csv_disp_bar(double perct);
 static void csv_disp_at(double n, double perct);
-static void csv_disp_fs(struct list *lst, char *fsname);
-static void csv_disp_type(struct list *lst, char *type);
+static void csv_disp_fs(struct list *lst, const char *fsname);
+static void csv_disp_type(struct list *lst, const char *type);
 static void csv_disp_inodes(uint64_t files, uint64_t favail);
-static void csv_disp_mount(char *dir);
-static void csv_disp_mopt(struct list *lst, char *dir, char *opts);
+static void csv_disp_mount(const char *dir);
+static void csv_disp_mopt(struct list *lst, const char *dir, const char *opts);
 static void csv_disp_perct(double perct);
 
 /* init pointers from display structure to the functions found here */
@@ -215,7 +215,7 @@ csv_disp_at(double n, double perct)
  * @fsname: list of the file system to print
  */
 static void
-csv_disp_fs(struct list *lst, char *fsname)
+csv_disp_fs(struct list *lst, const char *fsname)
 {
 	/* we do not care about lst here */
 	(void)lst;
@@ -229,7 +229,7 @@ csv_disp_fs(struct list *lst, char *fsname)
  * @type: the file system type to print
  */
 static void
-csv_disp_type(struct list *lst, char *type)
+csv_disp_type(struct list *lst, const char *type)
 {
 	/* we do not care about lst here */
 	(void)lst;
@@ -265,7 +265,7 @@ csv_disp_inodes(uint64_t files, uint64_t favail)
  * @dir: mount point
  */
 static void
-csv_disp_mount(char *dir)
+csv_disp_mount(const char *dir)
 {
 	(void)printf("%c%s", cnf.csvsep, dir);
 }
@@ -277,7 +277,7 @@ csv_disp_mount(char *dir)
  * @opts: mount options
  */
 static void
-csv_disp_mopt(struct list *lst, char *dir, char *opts)
+csv_disp_mopt(struct list *lst, const char *dir, const char *opts)
 {
 	/* we do not care about lst here */
 	(void)lst;

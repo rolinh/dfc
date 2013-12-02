@@ -381,7 +381,7 @@ cvrt(double n)
  * @nm: boolean indicating if the negative matching is activated
  */
 int
-fstypefilter(char *type, char *filter, int nm)
+fstypefilter(const char *type, const char *filter, int nm)
 {
 	int ret = 1;
 	char *stropt;
@@ -426,7 +426,7 @@ fstypefilter(char *type, char *filter, int nm)
  * @nm: boolean indicating if the negative matching is activated
  */
 int
-fsnamefilter(char *fsname, char *filter, int nm)
+fsnamefilter(const char *fsname, const char *filter, int nm)
 {
 	int ret = 1;
 	char *stropt;
@@ -468,7 +468,7 @@ fsnamefilter(char *fsname, char *filter, int nm)
  * @fstype: type of file system
  */
 int
-is_remote(char *fstype)
+is_remote(const char *fstype)
 {
     const char remote_fs[] = "afs cifs coda fuse.sshfs mfs "
                              "ncpfs ftpfs nfs smbfs sshfs";

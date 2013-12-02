@@ -53,11 +53,11 @@ struct display
     void (*print_sum)    (struct list*, double, double, double, double, double);
     void (*print_bar)    (double);
     void (*print_at)     (double, double);
-    void (*print_fs)	 (struct list*, char *);
-    void (*print_type)	 (struct list*, char *);
+    void (*print_fs)	 (struct list*, const char *);
+    void (*print_type)	 (struct list*, const char *);
     void (*print_inodes) (uint64_t, uint64_t);
-    void (*print_mount)	 (char *);
-    void (*print_mopt)	 (struct list*, char *, char *);
+    void (*print_mount)	 (const char *);
+    void (*print_mopt)	 (struct list*, const char *, const char *);
     void (*print_perct)  (double);
 };
 

@@ -141,13 +141,13 @@ struct fsmntinfo
 	next = p->next;
 
 	if(p->fsname != g_unknown_str) /* we malloc'd a string */
-		free(p->fsname);
+		free((char *)p->fsname);
 	if(p->dir != g_unknown_str)
-		free(p->dir);
+		free((char *)p->dir);
 	if(p->type != g_unknown_str)
-		free(p->type);
+		free((char *)p->type);
 	if(p->opts != g_none_str)
-		free(p->opts);
+		free((char *)p->opts);
 
 	free(p);
 

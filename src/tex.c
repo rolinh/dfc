@@ -63,11 +63,11 @@ static void tex_disp_sum(struct list *lst, double stot, double utot, double ftot
                   double ifitot, double ifatot);
 static void tex_disp_bar(double perct);
 static void tex_disp_at(double n, double perct);
-static void tex_disp_fs(struct list *lst, char *fsname);
-static void tex_disp_type(struct list *lst, char *type);
+static void tex_disp_fs(struct list *lst, const char *fsname);
+static void tex_disp_type(struct list *lst, const char *type);
 static void tex_disp_inodes(uint64_t files, uint64_t favail);
-static void tex_disp_mount(char *dir);
-static void tex_disp_mopt(struct list *lst, char *dir, char *opts);
+static void tex_disp_mount(const char *dir);
+static void tex_disp_mopt(struct list *lst, const char *dir, const char *opts);
 static void tex_disp_perct(double perct);
 
 /* init pointers from display structure to the functions found here */
@@ -301,7 +301,7 @@ tex_disp_at(double n, double perct)
  * @fsname: list of the file system to print
  */
 static void
-tex_disp_fs(struct list *lst, char *fsname)
+tex_disp_fs(struct list *lst, const char *fsname)
 {
 	static int must_close = 0;
 	char *cleaned_fsname = sanitizestr(fsname);
@@ -328,7 +328,7 @@ tex_disp_fs(struct list *lst, char *fsname)
  * @type: the file system type to print
  */
 static void
-tex_disp_type(struct list *lst, char *type)
+tex_disp_type(struct list *lst, const char *type)
 {
 	char *cleaned_type = sanitizestr(type);
 
@@ -369,7 +369,7 @@ tex_disp_inodes(uint64_t files, uint64_t favail)
  * @dir: mount point
  */
 static void
-tex_disp_mount(char *dir)
+tex_disp_mount(const char *dir)
 {
 	char *cleaned_dir = sanitizestr(dir);
 
@@ -389,7 +389,7 @@ tex_disp_mount(char *dir)
  * @opts: mount options
  */
 static void
-tex_disp_mopt(struct list *lst, char *dir, char *opts)
+tex_disp_mopt(struct list *lst, const char *dir, const char *opts)
 {
 	char *cleaned_opts = sanitizestr(opts);
 
