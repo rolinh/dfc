@@ -103,6 +103,11 @@ endif()
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -O3 -flto -DNDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g3 -ggdb3 -Wpadded -Wpacked")
 
+if(CMAKE_COMPILER_IS_GNUCC)
+    # gcc warns about strftime format when using std=c89. According to
+    # strftime(3), it is safe to remove this warning
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-format-y2k")
+endif()
 
 set(EXECUTABLE_NAME ${CMAKE_PROJECT_NAME})
 SET(SRCS
