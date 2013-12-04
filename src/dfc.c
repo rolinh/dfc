@@ -120,39 +120,39 @@ main(int argc, char *argv[])
 		UY = 9
 	};
 
-	char *const color_opts[] = {
-		[CALWAYS] = "always",
-		[CNEVER] = "never",
-		[CAUTO] = "auto",
+	const char *const color_opts[] = {
+		"always",
+		"never",
+		"auto",
 		NULL
 	};
 
-	char *const export_opts[] = {
-		[ETEXT] = "text",
-		[ECSV] = "csv",
-		[EHTML] = "html",
-		[ETEX] = "tex",
+	const char *const export_opts[] = {
+		"text",
+		"csv",
+		"html",
+		"tex",
 		NULL
 	};
 
-	char *const sort_opts[] = {
-		[SFSNAME] = "name",
-		[SFSTYPE] = "type",
-		[SFSDIR] = "mount",
+	const char *const sort_opts[] = {
+		"name",
+		"type",
+		"mount",
 		NULL
 	};
 
-	char *const unit_opts[] = {
-		[UH] = "h",
-		[UB] = "b",
-		[UK] = "k",
-		[UM] = "m",
-		[UG] = "g",
-		[UT] = "t",
-		[UP] = "p",
-		[UE] = "e",
-		[UZ] = "z",
-		[UY] = "y",
+	const char *const unit_opts[] = {
+		"h",
+		"b",
+		"k",
+		"m",
+		"g",
+		"t",
+		"p",
+		"e",
+		"z",
+		"y",
 		NULL
 	};
 
