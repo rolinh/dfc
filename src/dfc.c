@@ -120,39 +120,59 @@ main(int argc, char *argv[])
 		UY = 9
 	};
 
-	const char *const color_opts[] = {
-		"always",
-		"never",
-		"auto",
+	static char always_str[] = "always";
+	static char never_str[] = "never";
+	static char auto_str[] = "auto";
+	char *const color_opts[] = {
+		always_str,
+		never_str,
+		auto_str,
 		NULL
 	};
 
-	const char *const export_opts[] = {
-		"text",
-		"csv",
-		"html",
-		"tex",
+	static char text_str[] = "text";
+	static char csv_str[] = "csv";
+	static char html_str[] = "html";
+	static char tex_str[] = "tex";
+	char *const export_opts[] = {
+		text_str,
+		csv_str,
+		html_str,
+		tex_str,
 		NULL
 	};
 
-	const char *const sort_opts[] = {
-		"name",
-		"type",
-		"mount",
+	static char name_str[] = "name";
+	static char type_str[] = "type";
+	static char mount_str[] = "mount";
+	char *const sort_opts[] = {
+		name_str,
+		type_str,
+		mount_str,
 		NULL
 	};
 
-	const char *const unit_opts[] = {
-		"h",
-		"b",
-		"k",
-		"m",
-		"g",
-		"t",
-		"p",
-		"e",
-		"z",
-		"y",
+	static char h_str[] = "h";
+	static char b_str[] = "b";
+	static char k_str[] = "k";
+	static char m_str[] = "m";
+	static char g_str[] = "g";
+	static char t_str[] = "t";
+	static char p_str[] = "p";
+	static char e_str[] = "e";
+	static char z_str[] = "z";
+	static char y_str[] = "y";
+	char *const unit_opts[] = {
+		h_str,
+		b_str,
+		k_str,
+		m_str,
+		g_str,
+		t_str,
+		p_str,
+		e_str,
+		z_str,
+		y_str,
 		NULL
 	};
 
