@@ -95,8 +95,8 @@ struct conf {
  * fsmntinfo struct. So we can know that and don't free the pointers
  */
 
-extern const char *g_unknown_str;
-extern const char *g_none_str;
+extern char g_unknown_str[];
+extern char g_none_str[];
 
 /* struct to store specific configuration from config file */
 extern struct conf cnf;
