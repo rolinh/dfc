@@ -35,11 +35,6 @@
 #include <sys/types.h>
 #include <inttypes.h>
 
-#if defined(__APPLE__)
-#include <sys/mount.h>
-#include <sys/param.h>
-#endif /* __APPLE__ */
-
 #include "list.h"
 
 /* Structure to handle the display interface. */
