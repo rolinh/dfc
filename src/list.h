@@ -46,12 +46,7 @@
 
 
 /*
- * structure needed to store informations about mounted fs
- * It should contain brut datas.
- * Later on, we would need to compute those infos:
- * unsigned long bused;	used blocks
- * double prct_used;	usage of fs in percent
- * double prct_free;	free space of fs in percent
+ * Structure to store informations about mounted fs
  */
 struct fsmntinfo {
 	/* infos to get from getmntent(3) */
@@ -114,7 +109,7 @@ struct fsmntinfo {
 	long		bavail;	/* # of available blocks */
 	long		files;	/* # of inodes */
 	long		ffree;	/* # of free inodes */
-	unsigned long favail;	/* XXX: does not exist on DragonFly */
+	unsigned long	favail;	/* XXX: does not exist on DragonFly */
 #endif /* __DragonFly__ */
 #if defined(__APPLE__)
 	uint32_t	flags;	/* mount exported flags */
