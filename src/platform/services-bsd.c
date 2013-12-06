@@ -45,7 +45,7 @@ int
 is_mnt_ignore(const struct fsmntinfo *fs)
 {
 	/* TODO: check MNT_IGNORE flags exists on all supported platforms */
-	if ((fs->flags & MNT_IGNORE) == 0)
+	if (fs->flags & MNT_IGNORE)
 	    return 1;
 
 	return 0;
