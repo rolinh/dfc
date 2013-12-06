@@ -61,7 +61,8 @@ struct fsmntinfo {
 	char *opts;	/* mount options (see mntent.h) */
 
 	/* infos to get from statvfs(3) */
-#if defined(__linux__) || defined(__NetBSD__)
+#if defined(__linux__)
+	int		flags; /* XXX: does not exist on Linux */
 	unsigned long	bsize;	/* file system block size */
 	unsigned long	frsize;	/* fragment size */
 	fsblkcnt_t	blocks;	/* size of fs in frsize unit */
@@ -70,8 +71,20 @@ struct fsmntinfo {
 	fsfilcnt_t	files;	/* # of inodes */
 	fsfilcnt_t	ffree;	/* # of free inodes */
 	fsfilcnt_t	favail;	/* # of available inodes */
-#endif /* __linux__ || __NetBSD__ */
+#endif /* __linux__ */
+#if defined(__NetBSD__)
+	unsigned long	flags;	/* mount exported flags */
+	unsigned long	bsize;	/* file system block size */
+	unsigned long	frsize;	/* fragment size */
+	fsblkcnt_t	blocks;	/* size of fs in frsize unit */
+	fsblkcnt_t	bfree;	/* # of free blocks */
+	fsblkcnt_t	bavail;	/* # of available blocks */
+	fsfilcnt_t	files;	/* # of inodes */
+	fsfilcnt_t	ffree;	/* # of free inodes */
+	fsfilcnt_t	favail;	/* # of available inodes */
+#endif /* __NetBSD__ */
 #if defined(__FreeBSD__)
+	uint64_t	flags;	/* mount exported flags */
 	uint64_t	bsize;	/* file system block size */
 	unsigned long   frsize;	/* XXX: does not exist on FreeBSD */
 	uint64_t	blocks;	/* size of fs in frsize unit */
@@ -82,6 +95,7 @@ struct fsmntinfo {
 	unsigned long	favail;	/* XXX: does not exist on FreeBSD */
 #endif /* __FreeBSD__ */
 #if defined(__OpenBSD__)
+	u_int32_t	flags;	/* mount exported flags */
 	u_int32_t	bsize;	/* file system block size */
 	unsigned long	frsize;	/* XXX: does not exist on OpenBSD */
 	u_int64_t	blocks;	/* size of fs in frsize unit */
@@ -92,16 +106,18 @@ struct fsmntinfo {
 	int64_t		favail;	/* # of available inodes */
 #endif /* __OpenBSD__ */
 #if defined(__DragonFly__)
-	long bsize;		/* file system block size */
-	unsigned long frsize;	/* XXX: does not exist on DragonFly */
-	long blocks;		/* size of fs in frsize unit */
-	long bfree;		/* # of free blocks */
-	long bavail;		/* # of available blocks */
-	long files;		/* # of inodes */
-	long ffree;		/* # of free inodes */
+	int		flags;	/* mount exported flags */
+	long		bsize;	/* file system block size */
+	unsigned long	frsize;	/* XXX: does not exist on DragonFly */
+	long		blocks;	/* size of fs in frsize unit */
+	long		bfree;	/* # of free blocks */
+	long		bavail;	/* # of available blocks */
+	long		files;	/* # of inodes */
+	long		ffree;	/* # of free inodes */
 	unsigned long favail;	/* XXX: does not exist on DragonFly */
 #endif /* __DragonFly__ */
 #if defined(__APPLE__)
+	uint32_t	flags;	/* mount exported flags */
 	uint32_t	bsize;	/* file system block size */
 	unsigned long	frsize;	/* XXX: does not exist on OSX */
 	uint64_t	blocks;	/* size of fs in frsize unit */
