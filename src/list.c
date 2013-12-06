@@ -117,6 +117,7 @@ fmi_init(void)
 	fmi.type   = g_unknown_str;
 	fmi.opts   = g_none_str;
 
+	fmi.flags  = 0;
 	fmi.bsize  = 0;
 	fmi.frsize = 0;
 	fmi.blocks = 0;
