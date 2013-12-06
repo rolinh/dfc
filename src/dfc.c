@@ -608,9 +608,9 @@ fetch_info(struct list *lst)
 #if defined(__APPLE__) || defined(__DragonFly__) || defined(__FreeBSD__) \
 			|| defined(__OpenBSD__)
 			/* linux does not have such flags */
-			fmi>flags     = vfsbuf.f_flags;
+			fmi->flags     = vfsbuf.f_flags;
 #elif defined(__NetBSD__)
-			fmi>flags     = vfsbuf.f_flag;
+			fmi->flags     = vfsbuf.f_flag;
 #endif /* BSD */
 			/* infos from statvfs */
 			fmi->bsize    = vfsbuf.f_bsize;
