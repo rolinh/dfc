@@ -34,6 +34,9 @@
  *
  * BSDs implemention of services.
  */
+#include <sys/param.h>
+#include <sys/mount.h>
+
 #include "services.h"
 
 #if defined(__APPLE__)   || defined(__DragonFly__) || defined(__FreeBSD__) || \
@@ -43,7 +46,7 @@ int
 is_mnt_ignore(const struct fsmntinfo* fs)
 {
 	/* TODO: check MNT_IGNORE flags exists on all supported platforms */
-	if (fs->flags & MNT_IGNORE)
+	if ((fs->flags & MNT_IGNORE) == 0)
 	    return 1;
 
 	return 0;
