@@ -704,8 +704,8 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 
 	while (p != NULL) {
 		if (!aflag) {
-			/* skip (pseudo)devices (which have a size of 0 usually) */
-			if (p->blocks == 0) {
+			/* skip fs to ignore */
+			if (is_mnt_ignore(p) == 1) {
 				p = delete_struct_and_get_next(p);
 				continue;
 			}

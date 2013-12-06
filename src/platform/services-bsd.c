@@ -39,7 +39,8 @@
 #if defined(__APPLE__)   || defined(__DragonFly__) || defined(__FreeBSD__) || \
     defined(__OpenBSD__) || defined(__NetBSD__)
 
-int is_pseudofs(const struct fsmntinfo* fs)
+int
+is_mnt_ignore(const struct fsmntinfo* fs)
 {
     /* TODO */
     return 0;

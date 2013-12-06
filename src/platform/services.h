@@ -38,6 +38,25 @@
  */
 #include "list.h"
 
-int is_pseudofs(const struct fsmntinfo*);
+/*
+ * Return 1 if the current fs should usually be ignored, 0 otherwise.
+ * On error, -1 is returned.
+ */
+int is_mnt_ignore(const struct fsmntinfo *fs);
+
+#ifdef __linux__
+/*
+ * Determine if fsname is a pseudo filesystem or not.
+ * This function is useless under *BSD and OSX systems.
+ * Return 1 if it is, 0 otherwise.
+ * On error, -1 is returned.
+ */
+int is_pseudofs(const char *fsname);
+
+/*
+ * Comparison function needed in is_pseudofs for bsearch call.
+ */
+int typecmp(const void *el1, const void *el2);
+#endif
 
 #endif /* ndef H_SERVICES */

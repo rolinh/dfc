@@ -43,6 +43,7 @@
 #include "extern.h"
 #include "list.h"
 #include "util.h"
+#include "platform/services.h"
 
 /* function declaration */
 void usage(int status);

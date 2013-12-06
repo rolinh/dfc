@@ -34,14 +34,81 @@
  *
  * Linux implemention of services.
  */
+
+#include <stdlib.h>
+#include <string.h>
+
 #include "services.h"
 
 #ifdef __linux__
 
-int is_pseudofs(const struct fsmntinfo* fs)
+int
+is_mnt_ignore(const struct fsmntinfo *fs)
 {
-    /* TODO */
-    return 0;
+	/* if the size is zero, it is most likely a fs that we want to ignore */
+	if (fs->blocks == 0)
+		return 1;
+
+	/* treat tmpfs/devtmpfs/... as a special case */
+	if (fs->type && strstr(fs->type, "tmpfs"))
+		return 0;
+
+	return is_pseudofs(fs->type);
+}
+
+int
+is_pseudofs(const char *type)
+{
+	/* keep sorted for binary search */
+	static const char *pseudofs[] = {
+		"anon_inodefs",
+		"autofs",
+		"bdev",
+		"binfmt_misc",
+		"cgroup",
+		"configfs",
+		"cpuset",
+		"debugfs",
+		"devfs",
+		"devpts",
+		"devtmpfs",
+		"dlmfs",
+		"fuse.gvfs-fuse-daemon",
+		"fusectl",
+		"hugetlbfs",
+		"mqueue",
+		"nfsd",
+		"none",
+		"pipefs",
+		"proc",
+		"pstore",
+		"ramfs",
+		"rootfs",
+		"rpc_pipefs",
+		"securityfs",
+		"sockfs",
+		"spufs",
+		"sysfs",
+		"tmpfs"
+	};
+
+	if (!type)
+		return -1;
+
+	if (bsearch(&type, pseudofs, sizeof(pseudofs) / sizeof(pseudofs[0]),
+		sizeof(char*), typecmp) == NULL) {
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+typecmp(const void *e1, const void *e2)
+{
+	const char *s1 = *(const char **)e1;
+	const char *s2 = *(const char **)e2;
+	return strcmp(s1, s2);
 }
 
 #endif
