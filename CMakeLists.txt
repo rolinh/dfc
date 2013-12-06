@@ -17,6 +17,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin/${CMAKE_BUILD_TYPE})
 set(MAN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
 set(CONF_DIR ${CMAKE_CURRENT_SOURCE_DIR}/conf)
 set(PO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/po)
+include_directories("src")
 
 # defines for installation
 if(DEFINED PREFIX)
@@ -119,6 +120,8 @@ SET(SRCS
 	${SOURCE_DIR}/tex.c
 	${SOURCE_DIR}/text.c
 	${SOURCE_DIR}/util.c
+	${SOURCE_DIR}/platform/services-linux.c
+	${SOURCE_DIR}/platform/services-bsd.c
 )
 add_executable(
 	${EXECUTABLE_NAME}
