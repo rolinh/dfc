@@ -724,7 +724,7 @@ disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
 
 		/* skip remote file systems */
 		if (lflag) {
-			if (is_remote(p->type)) {
+			if (is_remote(p)) {
 				p = delete_struct_and_get_next(p);
 				continue;
 			}

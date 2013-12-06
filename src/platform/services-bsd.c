@@ -43,7 +43,7 @@
     defined(__OpenBSD__) || defined(__NetBSD__)
 
 int
-is_mnt_ignore(const struct fsmntinfo* fs)
+is_mnt_ignore(const struct fsmntinfo *fs)
 {
 	/* TODO: check MNT_IGNORE flags exists on all supported platforms */
 	if ((fs->flags & MNT_IGNORE) == 0)
@@ -52,4 +52,12 @@ is_mnt_ignore(const struct fsmntinfo* fs)
 	return 0;
 }
 
+int
+is_remote(const struct fsmntinfo *fs)
+{
+	if ((fs->flags & MNT_LOCAL) == 0)
+		return 1;
+
+	return 0;
+}
 #endif

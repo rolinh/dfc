@@ -57,6 +57,18 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 }
 
 int
+is_remote(const struct fsmntinfo *fs)
+{
+	const char remote_fs[] = "afs cifs coda fuse.sshfs mfs "
+            "ncpfs ftpfs nfs smbfs sshfs";
+
+	if (strstr(remote_fs, fs->type))
+		return 1;
+
+	return 0;
+}
+
+int
 is_pseudofs(const char *type)
 {
 	/* keep sorted for binary search */
@@ -112,3 +124,4 @@ typecmp(const void *e1, const void *e2)
 }
 
 #endif
+

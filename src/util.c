@@ -463,25 +463,6 @@ fsnamefilter(const char *fsname, const char *filter, int nm)
 }
 
 /*
- * Determine if the fstype is remote or only local.
- * Return 1 if remote, otherwise return 0.
- * @fstype: type of file system
- */
-int
-is_remote(const char *fstype)
-{
-    const char remote_fs[] = "afs cifs coda fuse.sshfs mfs "
-                             "ncpfs ftpfs nfs smbfs sshfs";
-	/* assume it is local by default */
-	int ret = 0;
-
-	if (strstr(remote_fs, fstype))
-		ret = 1;
-
-	return ret;
-}
-
-/*
  * Compares regarding qflag
  * @a: first element of comparison
  * @b: second element of comparison
