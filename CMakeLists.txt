@@ -21,60 +21,60 @@ include_directories("src")
 
 # defines for installation
 if(DEFINED PREFIX)
-	set(PREFIX ${PREFIX} CACHE PATH "install prefix")
-	set(CMAKE_INSTALL_PREFIX ${PREFIX})
+    set(PREFIX ${PREFIX} CACHE PATH "install prefix")
+    set(CMAKE_INSTALL_PREFIX ${PREFIX})
 else()
-	set(PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "install prefix")
+    set(PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "install prefix")
 endif()
 
 # use a sysconfdir if specified
 if(DEFINED SYSCONFDIR)
-	set(SYSCONFDIR ${SYSCONFDIR} CACHE PATH "config directory")
+    set(SYSCONFDIR ${SYSCONFDIR} CACHE PATH "config directory")
 else()
-	set(SYSCONFDIR ${PREFIX}/etc CACHE PATH "config directory")
+    set(SYSCONFDIR ${PREFIX}/etc CACHE PATH "config directory")
 endif()
 
 # share directory
 if(DEFINED SHAREDIR)
-	set(SHAREDIR ${SHAREDIR} CACHE PATH "share directory")
+    set(SHAREDIR ${SHAREDIR} CACHE PATH "share directory")
 else()
-	set(SHAREDIR ${PREFIX}/share CACHE PATH "share directory")
+    set(SHAREDIR ${PREFIX}/share CACHE PATH "share directory")
 endif()
 
 # locale
 if(DEFINED LOCALEDIR)
-	set(LOCALEDIR ${LOCALEDIR} CACHE PATH "locale directory")
+    set(LOCALEDIR ${LOCALEDIR} CACHE PATH "locale directory")
 else()
-	set(LOCALEDIR ${SHAREDIR}/locale CACHE PATH "locale directory")
+    set(LOCALEDIR ${SHAREDIR}/locale CACHE PATH "locale directory")
 endif()
 
 # if XDG Config Dir is specified, use it
 if(DEFINED XDG_CONFIG_DIR)
-	set(XDG_CONFIG_DIR ${XDG_CONFIG_DIR} CACHE PATH "xdg config directory")
+    set(XDG_CONFIG_DIR ${XDG_CONFIG_DIR} CACHE PATH "xdg config directory")
 else()
-	set(XDG_CONFIG_DIR ${SYSCONFDIR}/xdg CACHE PATH "xdf config directory")
+    set(XDG_CONFIG_DIR ${SYSCONFDIR}/xdg CACHE PATH "xdf config directory")
 endif()
 
 # man path
 if(DEFINED MAN_PATH)
-	set(MAN_PATH ${MAN_PATH} CACHE PATH "manpage directory")
+    set(MAN_PATH ${MAN_PATH} CACHE PATH "manpage directory")
 else()
-	set(MAN_PATH ${SHAREDIR}/man CACHE PATH "manpage directory")
+    set(MAN_PATH ${SHAREDIR}/man CACHE PATH "manpage directory")
 endif()
 
 # doc path
 if(DEFINED DOC_PATH)
-	set(DFC_DOC_PATH ${DFC_DOC_PATH} CACHE PATH "doc directory")
+    set(DFC_DOC_PATH ${DFC_DOC_PATH} CACHE PATH "doc directory")
 else()
-	set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
+    set(DFC_DOC_PATH ${SHAREDIR}/doc/${PACKAGE} CACHE PATH "doc directory")
 endif()
 
 # Check for libintl
 find_package(Libintl)
 if (LIBINTL_FOUND)
-	option(NLS_ENABLED "Translation support with gettext" on)
+    option(NLS_ENABLED "Translation support with gettext" on)
 else()
-	option(NLS_ENABLED "Translation support with gettext" off)
+    option(NLS_ENABLED "Translation support with gettext" off)
 endif()
 
 option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit systems but should not cause any problems if defined on non 32-bit systems anyway, thus enabled by default." on)
@@ -112,20 +112,20 @@ endif()
 
 set(EXECUTABLE_NAME ${CMAKE_PROJECT_NAME})
 SET(SRCS
-	${SOURCE_DIR}/csv.c
-	${SOURCE_DIR}/dotfile.c
-	${SOURCE_DIR}/dfc.c
-	${SOURCE_DIR}/html.c
-	${SOURCE_DIR}/list.c
-	${SOURCE_DIR}/tex.c
-	${SOURCE_DIR}/text.c
-	${SOURCE_DIR}/util.c
-	${SOURCE_DIR}/platform/services-linux.c
-	${SOURCE_DIR}/platform/services-bsd.c
+    ${SOURCE_DIR}/csv.c
+    ${SOURCE_DIR}/dotfile.c
+    ${SOURCE_DIR}/dfc.c
+    ${SOURCE_DIR}/html.c
+    ${SOURCE_DIR}/list.c
+    ${SOURCE_DIR}/tex.c
+    ${SOURCE_DIR}/text.c
+    ${SOURCE_DIR}/util.c
+    ${SOURCE_DIR}/platform/services-linux.c
+    ${SOURCE_DIR}/platform/services-bsd.c
 )
 add_executable(
-	${EXECUTABLE_NAME}
-	${SRCS}
+    ${EXECUTABLE_NAME}
+    ${SRCS}
 )
 
 
@@ -134,31 +134,31 @@ if(LFS_ENABLED)
 endif()
 
 if(NLS_ENABLED)
-	add_definitions(-DNLS_ENABLED)
-	# load gettext module for translation
-	set(GettextTranslate_ALL true)
-	set(GettextTranslate_GMO_BINARY true)
-	include(GettextTranslate)
-	add_subdirectory(po)
+    add_definitions(-DNLS_ENABLED)
+    # load gettext module for translation
+    set(GettextTranslate_ALL true)
+    set(GettextTranslate_GMO_BINARY true)
+    include(GettextTranslate)
+    add_subdirectory(po)
 
-	include_directories(${LIBINTL_INCLUDE_DIR})
-	target_link_libraries(${EXECUTABLE_NAME} ${LIBINTL_LIBRARIES})
+    include_directories(${LIBINTL_INCLUDE_DIR})
+    target_link_libraries(${EXECUTABLE_NAME} ${LIBINTL_LIBRARIES})
 endif()
 
 add_definitions(-DPACKAGE="${PACKAGE}" -DVERSION="${VERSION}" -DLOCALEDIR="${LOCALEDIR}")
 
 set(DFC_DOC_FILES
-	AUTHORS.md
+    AUTHORS.md
     CHANGELOG.md
-	HACKING.md
-	LICENSE
-	README.md
-	TRANSLATORS.md
+    HACKING.md
+    LICENSE
+    README.md
+    TRANSLATORS.md
 )
 
 mark_as_advanced(CMAKE_INSTALL_PREFIX)
 
-set(DFC_SYSCONFDIR	${XDG_CONFIG_DIR}/${PACKAGE})
+set(DFC_SYSCONFDIR ${XDG_CONFIG_DIR}/${PACKAGE})
 
 file(STRINGS ${PO_DIR}/LINGUAS LINGUAS REGEX "^[^#].*")
 string(REGEX MATCHALL "[^ ]+" languages ${LINGUAS})
@@ -167,17 +167,17 @@ string(REGEX MATCHALL "[^ ]+" languages ${LINGUAS})
 set(CPACK_SOURCE_GENERATOR "TGZ")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${VERSION}")
 set(CPACK_SOURCE_IGNORE_FILES
-	"~$"
+    "~$"
     ".directory"
-	".swp$"
-	"^${PROJECT_SOURCE_DIR}/.git/"
-	"^${PROJECT_SOURCE_DIR}/build/"
-	"${PROJECT_SOURCE_DIR}/.gitignore$"
-	"${PROJECT_SOURCE_DIR}/po/dfc.pot$"
-	"${CPACK_SOURCE_IGNORE_FILES}")
+    ".swp$"
+    "^${PROJECT_SOURCE_DIR}/.git/"
+    "^${PROJECT_SOURCE_DIR}/build/"
+    "${PROJECT_SOURCE_DIR}/.gitignore$"
+    "${PROJECT_SOURCE_DIR}/po/dfc.pot$"
+    "${CPACK_SOURCE_IGNORE_FILES}")
 include(CPack)
 add_custom_target(dist
-	COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+    COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 # installation
 install(TARGETS ${EXECUTABLE_NAME} RUNTIME DESTINATION bin)
@@ -199,4 +199,4 @@ configure_file(
 
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P
-	${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+    ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
