@@ -34,7 +34,6 @@
  *
  * BSDs implemention of services.
  */
-#include <sys/param.h>
 #include <sys/mount.h>
 
 #include "services.h"
