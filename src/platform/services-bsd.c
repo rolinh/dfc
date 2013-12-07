@@ -54,9 +54,9 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 int
 is_remote(const struct fsmntinfo *fs)
 {
-	if ((fs->flags & MNT_LOCAL) == 0)
-		return 1;
+	if (fs->flags & MNT_LOCAL)
+		return 0;
 
-	return 0;
+	return 1;
 }
 #endif
