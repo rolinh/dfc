@@ -34,12 +34,12 @@
  *
  * BSDs implemention of services.
  */
+#if defined(__APPLE__)   || defined(__DragonFly__) || defined(__FreeBSD__) || \
+    defined(__OpenBSD__) || defined(__NetBSD__)
+
 #include <sys/mount.h>
 
 #include "services.h"
-
-#if defined(__APPLE__)   || defined(__DragonFly__) || defined(__FreeBSD__) || \
-    defined(__OpenBSD__) || defined(__NetBSD__)
 
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
@@ -59,4 +59,39 @@ is_remote(const struct fsmntinfo *fs)
 
 	return 1;
 }
-#endif
+
+int
+getttywidth(void)
+{
+	int width = 0;
+#ifdef TIOCGSIZE
+	struct ttysize win;
+#elif defined(TIOCGWINSZ)
+	struct winsize win;
+#endif /* TIOCGSIZE */
+
+	if (!isatty(STDOUT_FILENO))
+		return 0;
+
+#ifdef TIOCGSIZE
+	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
+#if defined(__FreeBSD__)
+		width = win.ws_col;
+#else
+		width = win.ts_cols;
+#endif /* __FreeBSD__ */
+
+#elif defined(TIOCGWINSZ)
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
+#if defined(__FreeBSD__)
+		width = win.ws_col;
+#else
+		width = win.ts_cols;
+#endif /* __FreeBSD__ */
+
+#endif /* TIOCGSIZE */
+
+	return width == 0 ? 80 : width;
+}
+
+#endif /* BSD */

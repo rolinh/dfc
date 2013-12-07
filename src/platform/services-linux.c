@@ -35,12 +35,14 @@
  * Linux implemention of services.
  */
 
+#ifdef __linux__
+
+#include <sys/ioctl.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "services.h"
-
-#ifdef __linux__
 
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
@@ -66,6 +68,30 @@ is_remote(const struct fsmntinfo *fs)
 		return 1;
 
 	return 0;
+}
+
+int
+getttywidth(void)
+{
+	int width = 0;
+#ifdef TIOCGSIZE
+	struct ttysize win;
+#elif defined(TIOCGWINSZ)
+	struct winsize win;
+#endif /* TIOCGSIZE */
+
+	if (!isatty(STDOUT_FILENO))
+		return 0;
+
+#ifdef TIOCGSIZE
+	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
+		width = win.ws_col;
+#elif defined(TIOCGWINSZ)
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
+		width = win.ws_col;
+#endif /* TIOCGSIZE */
+
+	return width == 0 ? 80 : width;
 }
 
 int
@@ -123,5 +149,5 @@ typecmp(const void *e1, const void *e2)
 	return strcmp(s1, s2);
 }
 
-#endif
+#endif /* __linux__ */
 

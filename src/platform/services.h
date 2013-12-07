@@ -43,13 +43,21 @@
  * On error, -1 is returned.
  */
 int is_mnt_ignore(const struct fsmntinfo *fs);
+
 /*
  * Determine if the fs in remote or local.
  * Return 1 if remote, 0 otherwise.
  */
 int is_remote(const struct fsmntinfo *fs);
 
+/*
+ * Get the with of TTY and retun it.
+ * 0 is returned if stdout is not a tty.
+ */
+int getttywidth(void);
+
 #ifdef __linux__
+
 /*
  * Determine if fsname is a pseudo filesystem or not.
  * This function is useless under *BSD and OSX systems.

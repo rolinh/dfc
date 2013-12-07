@@ -46,7 +46,6 @@ int imax(int a, int b);
 char * strtrim(char *str);
 char * shortenstr(char *str, int len);
 char * sanitizestr(const char *str);
-int getttywidth(void);
 int humanize(double *n);
 int humanize_i(uint64_t *n);
 void print_unit(int i, int mode);
