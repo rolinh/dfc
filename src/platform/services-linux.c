@@ -34,13 +34,28 @@
  *
  * Linux implemention of services.
  */
+#ifdef __linux__
 
+#define _POSIX_C_SOURCE 2
+#define _XOPEN_SOURCE 500
+
+#define STRMAXLEN 24
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "services.h"
+#ifdef NLS_ENABLED
+#include <locale.h>
+#include <libintl.h>
+#endif /* NLS_ENABLED */
 
-#ifdef __linux__
+#include <mntent.h>
+#include <sys/statvfs.h>
+
+#include "extern.h"
+#include "services.h"
+#include "util.h"
 
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
@@ -124,6 +139,100 @@ is_pseudofs(const char *type)
 	}
 
 	return 1;
+}
+void
+fetch_info(struct list *lst)
+{
+	struct fsmntinfo *fmi;
+	FILE *mtab;
+	struct mntent *entbuf;
+	struct statvfs vfsbuf;
+	/* init fsmntinfo */
+	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
+		(void)fputs("Error while allocating memory to fmi", stderr);
+		exit(EXIT_FAILURE);
+		/* NOTREACHED */
+	}
+	*fmi = fmi_init();
+	/* open mtab file */
+	if ((mtab = fopen("/etc/mtab", "r")) == NULL) {
+		perror("Error while opening mtab file ");
+		exit(EXIT_FAILURE);
+		/* NOTREACHED */
+	}
+
+	/* loop to get infos from all the mounted fs */
+	while ((entbuf = getmntent(mtab)) != NULL) {
+		/* get infos from statvfs */
+		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
+			/* display a warning when a FS cannot be stated */
+			(void)fprintf(stderr, _("WARNING: %s was skipped "
+				"because it could not be stated"),
+				entbuf->mnt_dir);
+			perror(" ");
+		} else {
+			/* infos from getmntent */
+			if (Wflag) { /* Wflag to avoid name truncation */
+				if ((fmi->fsname = strdup(entbuf->mnt_fsname))
+						== NULL) {
+					/* g_unknown_str is def. in extern.h(.in) */
+					fmi->fsname = g_unknown_str;
+				}
+				if ((fmi->dir = strdup(entbuf->mnt_dir))
+						== NULL) {
+					fmi->dir = g_unknown_str;
+				}
+			} else {
+				if ((fmi->fsname = strdup(shortenstr(
+					entbuf->mnt_fsname,
+					STRMAXLEN))) == NULL) {
+					fmi->fsname = g_unknown_str;
+				}
+				if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
+							STRMAXLEN))) == NULL) {
+					fmi->dir = g_unknown_str;
+				}
+			}
+			if ((fmi->type = strdup(shortenstr(entbuf->mnt_type,
+							12))) == NULL) {
+				fmi->type = g_unknown_str;
+			}
+			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
+				fmi->opts = g_none_str;
+			}
+
+			/* infos from statvfs */
+			fmi->bsize    = vfsbuf.f_bsize;
+			fmi->frsize   = vfsbuf.f_frsize;
+			fmi->blocks   = vfsbuf.f_blocks;
+			fmi->bfree    = vfsbuf.f_bfree;
+			fmi->bavail   = vfsbuf.f_bavail;
+			fmi->files    = vfsbuf.f_files;
+			fmi->ffree    = vfsbuf.f_ffree;
+			fmi->favail   = vfsbuf.f_favail;
+			/* pointer to the next element */
+			fmi->next = NULL;
+
+			/* enqueue the element into the queue */
+			enqueue(lst, *fmi);
+
+			/* adjust longest for the queue */
+			if ((!aflag && fmi->blocks > 0) || aflag) {
+				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
+					lst->fsmaxlen);
+				lst->dirmaxlen = imax((int)strlen(fmi->dir),
+						lst->dirmaxlen);
+				lst->typemaxlen = imax((int)strlen(fmi->type),
+						lst->typemaxlen);
+				lst->mntoptmaxlen = imax((int)strlen(fmi->opts),
+						lst->mntoptmaxlen);
+			}
+		}
+	}
+	/* we need to close the mtab file now */
+	if (fclose(mtab) == EOF)
+		perror("Could not close mtab file ");
+	free(fmi);
 }
 
 #endif

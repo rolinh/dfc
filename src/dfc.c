@@ -42,17 +42,12 @@
 #define _XOPEN_SOURCE 500
 #endif /* __linux__ */
 
-#define STRMAXLEN 24
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <err.h>
 
-#ifdef __linux__
-#include <mntent.h>
-#endif /* __linux__ */
 #include <string.h>
 
 #include <sys/types.h>
@@ -487,173 +482,6 @@ usage(int status)
 
 	exit(status);
 	/* NOTREACHED */
-}
-
-/*
- * fetch information from getmntent and statvfs and store it into the queue
- * @lst: queue in which to store information
- */
-void
-fetch_info(struct list *lst)
-{
-	struct fsmntinfo *fmi;
-#ifdef __linux__
-	FILE *mtab;
-	struct mntent *entbuf;
-	struct statvfs vfsbuf;
-#else /* *BSD */
-	int nummnt;
-#if defined(__NetBSD__)
-	struct statvfs *entbuf;
-	struct statvfs vfsbuf, **fs;
-#else
-	struct statfs *entbuf;
-	struct statfs vfsbuf, **fs;
-#endif
-#endif /* __linux__ */
-	/* init fsmntinfo */
-	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
-		(void)fputs("Error while allocating memory to fmi", stderr);
-		exit(EXIT_FAILURE);
-		/* NOTREACHED */
-	}
-	*fmi = fmi_init();
-#ifdef __linux__
-	/* open mtab file */
-	if ((mtab = fopen("/etc/mtab", "r")) == NULL) {
-		perror("Error while opening mtab file ");
-		exit(EXIT_FAILURE);
-		/* NOTREACHED */
-	}
-
-	/* loop to get infos from all the mounted fs */
-	while ((entbuf = getmntent(mtab)) != NULL) {
-		/* get infos from statvfs */
-		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
-			/* display a warning when a FS cannot be stated */
-			(void)fprintf(stderr, _("WARNING: %s was skipped "
-				"because it could not be stated"),
-				entbuf->mnt_dir);
-			perror(" ");
-		} else {
-#else /* BSD */
-	if ((nummnt = getmntinfo(&entbuf, MNT_NOWAIT)) <= 0)
-		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
-		/* NOTREACHED */
-
-	for (fs = &entbuf; nummnt--; (*fs)++) {
-		vfsbuf = **fs;
-#endif /* __linux__ */
-#ifdef __linux__
-			/* infos from getmntent */
-			if (Wflag) { /* Wflag to avoid name truncation */
-				if ((fmi->fsname = strdup(entbuf->mnt_fsname))
-						== NULL) {
-					/* g_unknown_str is def. in extern.h(.in) */
-					fmi->fsname = g_unknown_str;
-				}
-				if ((fmi->dir = strdup(entbuf->mnt_dir))
-						== NULL) {
-					fmi->dir = g_unknown_str;
-				}
-			} else {
-				if ((fmi->fsname = strdup(shortenstr(
-					entbuf->mnt_fsname,
-					STRMAXLEN))) == NULL) {
-					fmi->fsname = g_unknown_str;
-				}
-				if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
-							STRMAXLEN))) == NULL) {
-					fmi->dir = g_unknown_str;
-				}
-			}
-			if ((fmi->type = strdup(shortenstr(entbuf->mnt_type,
-							12))) == NULL) {
-				fmi->type = g_unknown_str;
-			}
-			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
-				fmi->opts = g_none_str;
-			}
-#else /* BSD */
-			if (Wflag) { /* Wflag to avoid name truncation */
-				if ((fmi->fsname = strdup(
-						entbuf->f_mntfromname))	== NULL) {
-					fmi->fsname = g_unknown_str;
-				}
-				if ((fmi->dir = strdup((
-						entbuf->f_mntonname ))) == NULL) {
-					fmi->dir = g_unknown_str;
-				}
-			} else {
-				if ((fmi->fsname = strdup(shortenstr(
-							entbuf->f_mntfromname,
-							STRMAXLEN))) == NULL) {
-					fmi->fsname = g_unknown_str;
-				}
-				if ((fmi->dir = strdup(shortenstr(
-							entbuf->f_mntonname,
-							STRMAXLEN))) == NULL) {
-					fmi->dir = g_unknown_str;
-				}
-			}
-			if ((fmi->type = strdup(shortenstr(
-						entbuf->f_fstypename,
-						12))) == NULL) {
-				fmi->type = g_unknown_str;
-			}
-			if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
-				fmi->opts = g_none_str;
-			}
-#endif /* __linux__ */
-#if defined(__APPLE__) || defined(__DragonFly__) || defined(__FreeBSD__) \
-			|| defined(__OpenBSD__)
-			/* linux does not have such flags */
-			fmi->flags     = vfsbuf.f_flags;
-#elif defined(__NetBSD__)
-			fmi->flags     = vfsbuf.f_flag;
-#endif /* BSD */
-			/* infos from statvfs */
-			fmi->bsize    = vfsbuf.f_bsize;
-#if defined(__linux__) || defined(__NetBSD__)
-			fmi->frsize   = vfsbuf.f_frsize;
-#else			/* *BSD do not have frsize */
-			fmi->frsize   = 0;
-#endif /* __linux__ */
-			fmi->blocks   = vfsbuf.f_blocks;
-			fmi->bfree    = vfsbuf.f_bfree;
-			fmi->bavail   = vfsbuf.f_bavail;
-			fmi->files    = vfsbuf.f_files;
-			fmi->ffree    = vfsbuf.f_ffree;
-#if defined(__linux__) || defined(__NetBSD__)
-			fmi->favail   = vfsbuf.f_favail;
-#else			/* *BSD do not have favail */
-			fmi->favail   = 0;
-#endif /* __linux__ */
-			/* pointer to the next element */
-			fmi->next = NULL;
-
-			/* enqueue the element into the queue */
-			enqueue(lst, *fmi);
-
-			/* adjust longest for the queue */
-			if ((!aflag && fmi->blocks > 0) || aflag) {
-				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
-					lst->fsmaxlen);
-				lst->dirmaxlen = imax((int)strlen(fmi->dir),
-						lst->dirmaxlen);
-				lst->typemaxlen = imax((int)strlen(fmi->type),
-						lst->typemaxlen);
-				lst->mntoptmaxlen = imax((int)strlen(fmi->opts),
-						lst->mntoptmaxlen);
-			}
-		}
-#ifdef __linux__
-	}
-	/* we need to close the mtab file now */
-	if (fclose(mtab) == EOF)
-		perror("Could not close mtab file ");
-#endif /* __linux__ */
-	free(fmi);
 }
 
 /*

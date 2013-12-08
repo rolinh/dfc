@@ -49,6 +49,12 @@ int is_mnt_ignore(const struct fsmntinfo *fs);
  */
 int is_remote(const struct fsmntinfo *fs);
 
+/*
+ * fetch information from getmntent and statvfs and store it into the queue
+ * @lst: queue in which to store information
+ */
+void fetch_info(struct list *lst);
+
 #ifdef __linux__
 /*
  * Determine if fsname is a pseudo filesystem or not.

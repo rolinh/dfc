@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-12-08 09:40+0800\n"
+"POT-Creation-Date: 2013-12-08 10:13+0800\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -71,36 +71,36 @@ msgstr "%cOPTIONS DE MONTAGE"
 msgid "SUM:%c"
 msgstr "SOM:%c"
 
-#: src/dfc.c:236
+#: src/dfc.c:231
 #, c-format
 msgid "-c: illegal sub option %s\n"
 msgstr "-c: sous-option illégale %s\n"
 
-#: src/dfc.c:268
+#: src/dfc.c:263
 #, c-format
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:315
+#: src/dfc.c:310
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:375
+#: src/dfc.c:370
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:413
+#: src/dfc.c:408
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:447
+#: src/dfc.c:442
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:450
+#: src/dfc.c:445
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -136,7 +136,7 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
 "\t\tlocalement uniquement\n"
 
-#: src/dfc.c:468
+#: src/dfc.c:463
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-n\tdo not print header\n"
@@ -174,17 +174,12 @@ msgstr ""
 "\t-w\tutilise une barre plus large\n"
 "\t-W\tlong nom de fichiers (dé-tronque)\n"
 
-#: src/dfc.c:534
-#, c-format
-msgid "WARNING: %s was skipped because it could not be stated"
-msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"
-
-#: src/dfc.c:976
+#: src/dfc.c:804
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/dfc.c:1005
+#: src/dfc.c:833
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
@@ -386,3 +381,6 @@ msgstr "cyan"
 #: src/util.c:769
 msgid "white"
 msgstr "blanc"
+
+#~ msgid "WARNING: %s was skipped because it could not be stated"
+#~ msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"
