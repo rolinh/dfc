@@ -219,6 +219,8 @@ struct flag_str {
 #endif
 #if defined(__FreeBSD__) || defined(__DragonFly__)
 	{ MNT_FORCE,           "force"            },
+#endif
+#if defined(__FreeBSD__)
 	{ MNT_GJOURNAL,           "gjournal"            },
 #endif
 #if defined(__NetBSD__)
