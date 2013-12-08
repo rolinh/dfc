@@ -41,8 +41,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
-#include <sys/ucred.h>
 #include <sys/mount.h>
+#include <sys/ucred.h>
+#include <sys/ioctl.h>
 #include <string.h>
 
 #ifdef NLS_ENABLED
@@ -92,32 +93,13 @@ int
 getttywidth(void)
 {
 	int width = 0;
-#ifdef TIOCGSIZE
-	struct ttysize win;
-#elif defined(TIOCGWINSZ)
 	struct winsize win;
-#endif /* TIOCGSIZE */
 
 	if (!isatty(STDOUT_FILENO))
 		return 0;
 
-#ifdef TIOCGSIZE
-	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
-#if defined(__FreeBSD__)
-		width = win.ws_col;
-#else
-		width = win.ts_cols;
-#endif /* __FreeBSD__ */
-
-#elif defined(TIOCGWINSZ)
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
-#if defined(__FreeBSD__)
 		width = win.ws_col;
-#else
-		width = win.ts_cols;
-#endif /* __FreeBSD__ */
-
-#endif /* TIOCGSIZE */
 
 	return width == 0 ? 80 : width;
 }
