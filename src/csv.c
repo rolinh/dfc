@@ -38,9 +38,6 @@
  */
 #include <stdio.h>
 
-#include <sys/types.h>
-#include <inttypes.h>
-
 #include "extern.h"
 #include "export.h"
 #include "display.h"

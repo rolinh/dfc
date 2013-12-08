@@ -44,7 +44,6 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/ioctl.h>
-#include <inttypes.h>
 
 #include "util.h"
 

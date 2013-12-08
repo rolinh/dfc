@@ -37,9 +37,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <sys/types.h>
-#include <inttypes.h>
-
 #include "display.h"
 #include "dotfile.h"
 #include "export.h"

@@ -45,14 +45,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
-
 #include <string.h>
-
-#include <sys/types.h>
-#include <inttypes.h>
-#include <sys/param.h>
-#include <sys/statvfs.h>
 
 #include "dfc.h"
 
