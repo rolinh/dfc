@@ -51,8 +51,6 @@
 #include <libintl.h>
 #endif /* NLS_ENABLED */
 
-
-
 #include "extern.h"
 #include "services.h"
 #include "util.h"
@@ -216,8 +214,14 @@ struct flag_str {
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
 	{ MNT_EXRDONLY,           "exrdonly"           },
 #endif
+#if defined(__NetBSD__)
+	{ MNT_EXTATTR,           "extattr"           },
+#endif
 #if defined(__FreeBSD__)
 	{ MNT_GJOURNAL,           "gjournal"            },
+#endif
+#if defined(__NetBSD__)
+	{ MNT_HIDDEN,           "hidden"            },
 #endif
 #if defined(__APPLE__)
 	{ MNT_JOURNALED,          "journaled"          },
@@ -225,6 +229,9 @@ struct flag_str {
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
 	|| defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_LOCAL,              "local"              },
+#endif
+#if defined(__NetBSD__)
+	{ MNT_LOG,              "log"              },
 #endif
 #if defined(__FreeBSD__) || defined(__APPLE__)
 	{ MNT_MULTILABEL,         "multilabel"         },
@@ -261,6 +268,9 @@ struct flag_str {
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
 	|| defined(__APPLE__)
 	{ MNT_QUOTA,              "quota"              },
+#endif
+#if defined(__NetSBSD__)
+	{ MNT_RELATIME,             "relatime"             },
 #endif
 	/* MNT_RDONLY is treated separately in statfs_flags_to_str(). */
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
