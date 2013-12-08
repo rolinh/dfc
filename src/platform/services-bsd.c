@@ -218,6 +218,7 @@ struct flag_str {
 	{ MNT_EXTATTR,           "extattr"           },
 #endif
 #if defined(__FreeBSD__)
+	{ MNT_FORCE,           "force"            },
 	{ MNT_GJOURNAL,           "gjournal"            },
 #endif
 #if defined(__NetBSD__)
@@ -276,6 +277,9 @@ struct flag_str {
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
 	|| defined(__APPLE__)
 	{ MNT_ROOTFS,             "rootfs"             },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_SNAPSHOT,             "snapshot"             },
 #endif
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
 	{ MNT_SOFTDEP,            "softdep"            },
