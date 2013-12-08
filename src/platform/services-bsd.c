@@ -274,6 +274,9 @@ struct flag_str {
 	{ MNT_RELATIME,             "relatime"             },
 #endif
 	/* MNT_RDONLY is treated separately in statfs_flags_to_str(). */
+#if defined(__APPLE__)
+	{ MNT_RELOAD,             "reload"             },
+#endif
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
 	|| defined(__APPLE__)
 	{ MNT_ROOTFS,             "rootfs"             },
@@ -296,6 +299,9 @@ struct flag_str {
 #endif
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
 	{ MNT_UNION,              "union"              },
+#endif
+#if defined(__APPLE__)
+	{ MNT_UPDATE, "update" },
 #endif
 #if defined(__FreeBSD__)
 	{ MNT_USER, "user" },
