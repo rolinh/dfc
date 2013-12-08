@@ -58,10 +58,6 @@ int is_remote(const struct fsmntinfo *fs);
  */
 int is_pseudofs(const char *fsname);
 
-/*
- * Comparison function needed in is_pseudofs for bsearch call.
- */
-int typecmp(const void *el1, const void *el2);
 #endif
 
 #endif /* ndef H_SERVICES */

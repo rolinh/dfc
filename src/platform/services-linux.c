@@ -68,6 +68,17 @@ is_remote(const struct fsmntinfo *fs)
 	return 0;
 }
 
+/*
+ * Comparison function needed in is_pseudofs for bsearch call.
+ */
+static int
+typecmp(const void *e1, const void *e2)
+{
+	const char *s1 = *(const char **)e1;
+	const char *s2 = *(const char **)e2;
+	return strcmp(s1, s2);
+}
+
 int
 is_pseudofs(const char *type)
 {
@@ -115,13 +126,4 @@ is_pseudofs(const char *type)
 	return 1;
 }
 
-int
-typecmp(const void *e1, const void *e2)
-{
-	const char *s1 = *(const char **)e1;
-	const char *s2 = *(const char **)e2;
-	return strcmp(s1, s2);
-}
-
 #endif
-
