@@ -34,12 +34,37 @@
  *
  * BSDs implemention of services.
  */
-#include <sys/mount.h>
-
-#include "services.h"
-
 #if defined(__APPLE__)   || defined(__DragonFly__) || defined(__FreeBSD__) || \
     defined(__OpenBSD__) || defined(__NetBSD__)
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifdef NLS_ENABLED
+#include <locale.h>
+#include <libintl.h>
+#endif /* NLS_ENABLED */
+
+#include <sys/mount.h>
+
+#include "extern.h"
+#include "services.h"
+#include "util.h"
+
+
+/* Hide differences between NetBSD and the other BSD. */
+#if defined(__NetBSD__)
+typedef struct statvfs statfs;
+#define GET_FLAGS(vfsbuf)  ((vfsbuf).f_flag)
+#define GET_FRSIZE(vfsbuf) ((vfsbuf).f_frsize)
+#define GET_FAVAIL(vfsbuf) ((vfsbuf).f_favail)
+#else /* Other BSDs. */
+typedef struct statfs statfs;
+#define GET_FLAGS(vfsbuf)  ((vfsbuf).f_flags)
+#define GET_FRSIZE(vfsbuf) (0)
+#define GET_FAVAIL(vfsbuf) (0)
+#endif
 
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
@@ -59,4 +84,85 @@ is_remote(const struct fsmntinfo *fs)
 
 	return 1;
 }
+
+void
+fetch_info(struct list *lst)
+{
+	struct fsmntinfo *fmi;
+	int nummnt;
+	statfs *entbuf;
+	statfs vfsbuf, **fs;
+	/* init fsmntinfo */
+	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
+		(void)fputs("Error while allocating memory to fmi", stderr);
+		exit(EXIT_FAILURE);
+		/* NOTREACHED */
+	}
+	*fmi = fmi_init();
+	if ((nummnt = getmntinfo(&entbuf, MNT_NOWAIT)) <= 0)
+		err(EXIT_FAILURE, "Error while getting the list of mountpoints");
+		/* NOTREACHED */
+
+	for (fs = &entbuf; nummnt--; (*fs)++) {
+		vfsbuf = **fs;
+		if (Wflag) { /* Wflag to avoid name truncation */
+			if ((fmi->fsname = strdup(
+					entbuf->f_mntfromname))	== NULL) {
+				fmi->fsname = g_unknown_str;
+			}
+			if ((fmi->dir = strdup((
+					entbuf->f_mntonname ))) == NULL) {
+				fmi->dir = g_unknown_str;
+			}
+		} else {
+			if ((fmi->fsname = strdup(shortenstr(
+						entbuf->f_mntfromname,
+						STRMAXLEN))) == NULL) {
+				fmi->fsname = g_unknown_str;
+			}
+			if ((fmi->dir = strdup(shortenstr(
+						entbuf->f_mntonname,
+						STRMAXLEN))) == NULL) {
+				fmi->dir = g_unknown_str;
+			}
+		}
+		if ((fmi->type = strdup(shortenstr(
+					entbuf->f_fstypename,
+					12))) == NULL) {
+			fmi->type = g_unknown_str;
+		}
+		if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
+			fmi->opts = g_none_str;
+		}
+		fmi->flags    = GET_FLAGS(vfsbuf);
+		/* infos from statvfs */
+		fmi->bsize    = vfsbuf.f_bsize;
+		fmi->frsize   = GET_FRSIZE(vfsbuf);
+		fmi->blocks   = vfsbuf.f_blocks;
+		fmi->bfree    = vfsbuf.f_bfree;
+		fmi->bavail   = vfsbuf.f_bavail;
+		fmi->files    = vfsbuf.f_files;
+		fmi->ffree    = vfsbuf.f_ffree;
+		fmi->favail   = GET_FAVAIL(vfsbuf);
+		/* pointer to the next element */
+		fmi->next = NULL;
+
+		/* enqueue the element into the queue */
+		enqueue(lst, *fmi);
+
+		/* adjust longest for the queue */
+		if ((!aflag && fmi->blocks > 0) || aflag) {
+			lst->fsmaxlen = imax((int)strlen(fmi->fsname),
+				lst->fsmaxlen);
+			lst->dirmaxlen = imax((int)strlen(fmi->dir),
+					lst->dirmaxlen);
+			lst->typemaxlen = imax((int)strlen(fmi->type),
+						lst->typemaxlen);
+				lst->mntoptmaxlen = imax((int)strlen(fmi->opts),
+						lst->mntoptmaxlen);
+			}
+		}
+	free(fmi);
+}
+
 #endif

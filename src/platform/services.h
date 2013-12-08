@@ -38,6 +38,8 @@
  */
 #include "list.h"
 
+#define STRMAXLEN 24
+
 /*
  * Return 1 if the current fs should usually be ignored, 0 otherwise.
  * On error, -1 is returned.
