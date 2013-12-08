@@ -49,14 +49,4 @@
 void usage(int status);
 void disp(struct list *lst, char *fsfilter, char *fsnfilter, struct display *sdisp);
 
-#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__APPLE__) \
-	|| defined(__DragonFly__)
-/* avoid struct statfs declared inside parameter list warning */
-struct statfs;
-char * statfs_flags_to_str(struct statfs *s);
-#elif defined(__NetBSD__)
-struct statvfs;
-char *statfs_flags_to_str(struct statvfs *s);
-#endif /* __FreeBSD__ || __OpenBSD__ || __APPLE__ || __DragonFly__ || __NetBSD__ */
-
 #endif /* ndef DFC_H */

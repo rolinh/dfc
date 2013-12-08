@@ -39,6 +39,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <err.h>
+#include <sys/ucred.h>
+#include <sys/mount.h>
 #include <string.h>
 
 #ifdef NLS_ENABLED
@@ -46,7 +50,7 @@
 #include <libintl.h>
 #endif /* NLS_ENABLED */
 
-#include <sys/mount.h>
+
 
 #include "extern.h"
 #include "services.h"
@@ -54,12 +58,12 @@
 
 /* Hide differences between NetBSD and the other BSD. */
 #if defined(__NetBSD__)
-typedef struct statvfs statfs;
+typedef struct statvfs statst;
 #define GET_FLAGS(vfsbuf)  ((vfsbuf).f_flag)
 #define GET_FRSIZE(vfsbuf) ((vfsbuf).f_frsize)
 #define GET_FAVAIL(vfsbuf) ((vfsbuf).f_favail)
 #else /* Other BSDs. */
-typedef struct statfs statfs;
+typedef struct statfs statst;
 #define GET_FLAGS(vfsbuf)  ((vfsbuf).f_flags)
 #define GET_FRSIZE(vfsbuf) (0)
 #define GET_FAVAIL(vfsbuf) (0)
@@ -123,8 +127,8 @@ fetch_info(struct list *lst)
 {
 	struct fsmntinfo *fmi;
 	int nummnt;
-	statfs *entbuf;
-	statfs vfsbuf, **fs;
+	statst *entbuf;
+	statst vfsbuf, **fs;
 	/* init fsmntinfo */
 	if ((fmi = malloc(sizeof(struct fsmntinfo))) == NULL) {
 		(void)fputs("Error while allocating memory to fmi", stderr);
@@ -164,11 +168,9 @@ fetch_info(struct list *lst)
 					12))) == NULL) {
 			fmi->type = g_unknown_str;
 		}
-		if ((fmi->opts = statfs_flags_to_str(entbuf)) == NULL) {
-			fmi->opts = g_none_str;
-		}
-		fmi->flags    = GET_FLAGS(vfsbuf);
+
 		/* infos from statvfs */
+		fmi->flags    = GET_FLAGS(vfsbuf);
 		fmi->bsize    = vfsbuf.f_bsize;
 		fmi->frsize   = GET_FRSIZE(vfsbuf);
 		fmi->blocks   = vfsbuf.f_blocks;
@@ -177,6 +179,11 @@ fetch_info(struct list *lst)
 		fmi->files    = vfsbuf.f_files;
 		fmi->ffree    = vfsbuf.f_ffree;
 		fmi->favail   = GET_FAVAIL(vfsbuf);
+
+		if ((fmi->opts = statfs_flags_to_str(fmi)) == NULL) {
+			fmi->opts = g_none_str;
+		}
+
 		/* pointer to the next element */
 		fmi->next = NULL;
 
@@ -196,6 +203,173 @@ fetch_info(struct list *lst)
 			}
 		}
 	free(fmi);
+}
+
+/*
+ * All the flags found in *BSD and Mac OS X, alphabetically sorted.
+ */
+struct flag_str {
+	long long flag;
+	const char *str;
+} possible_flags[] = {
+#if defined(__FreeBSD__)
+	{ MNT_ACLS,               "acls"               },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined (__APPLE__)
+	{ MNT_ASYNC,              "async"              },
+#endif
+#if defined(__APPLE__)
+	{ MNT_AUTOMOUNTED,        "automounted"        },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
+	{ MNT_DEFEXPORTED,        "defexported"        },
+#endif
+#if defined(__APPLE__)
+	{ MNT_DEFWRITE,           "defwrite"           },
+	{ MNT_DONTBROWSE,         "dontbrowse"         },
+	{ MNT_DOVOLFS,            "dovolfs"            },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
+	{ MNT_EXKERB,              "exkerb"             },
+#endif
+#if defined(__NetBSD__)
+	{ MNT_EXNORESPORT,          "noresport"          },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
+	{ MNT_EXPORTANON,         "exportanon"         },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) ||  defined(__DragonFly__) \
+	|| defined(__APPLE__)
+	{ MNT_EXPORTED,           "exported"           },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	{ MNT_EXPUBLIC,           "expublic"            },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
+	{ MNT_EXRDONLY,           "exrdonly"           },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_GJOURNAL,           "gjournal"            },
+#endif
+#if defined(__APPLE__)
+	{ MNT_JOURNALED,          "journaled"          },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
+	{ MNT_LOCAL,              "local"              },
+#endif
+#if defined(__FreeBSD__) || defined(__APPLE__)
+	{ MNT_MULTILABEL,         "multilabel"         },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_NFS4ACLS,           "nfs4acls"           },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
+	{ MNT_NOATIME,            "noatime"            },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_NOCLUSTERR,         "noclusterr"         },
+	{ MNT_NOCLUSTERW,         "noclusterw"         },
+#endif
+#if defined(__NetBSD__)
+	{ MNT_NOCOREDUMP,         "nocoredump"         },
+#endif
+#if defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) \
+	|| defined(__APPLE__)
+	{ MNT_NODEV,              "nodev"              },
+#endif
+#if defined(__NetBSD__)
+	{ MNT_NODEVMTIME,         "nodevmtime"         },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
+	{ MNT_NOEXEC,             "noexec"             },
+	{ MNT_NOSUID,             "nosuid"             },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_NOSYMFOLLOW,        "nosymfollow"        },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
+	|| defined(__APPLE__)
+	{ MNT_QUOTA,              "quota"              },
+#endif
+	/* MNT_RDONLY is treated separately in statfs_flags_to_str(). */
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__DragonFly__) \
+	|| defined(__APPLE__)
+	{ MNT_ROOTFS,             "rootfs"             },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+	{ MNT_SOFTDEP,            "softdep"            },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_SUIDDIR,            "suiddir"            },
+#endif
+#if defined(__NetBSD__)
+	{ MNT_SYMPERM,            "symperm"            },
+#endif
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) \
+	|| defined(__OpenBSD__) || defined(__APPLE__)
+	{ MNT_SYNCHRONOUS,        "sync"               },
+#endif
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
+	{ MNT_UNION,              "union"              },
+#endif
+#if defined(__FreeBSD__)
+	{ MNT_USER, "user" },
+#endif
+#if defined(__APPLE__)
+	{ MNT_UNKNOWNPERMISSIONS, "unknownpermissions" },
+#endif
+};
+
+/*
+ * Turn the f_flags member of the given struct statfs to a human-readable string
+ * of the form "opt1,opt2..."
+ * Returns NULL if an error occurred.
+ * @s: struct statfs * to parse.
+ */
+char *
+statfs_flags_to_str(const struct fsmntinfo *fs)
+{
+	int i, n_flags;
+	size_t bufsize = 128;
+	char *buffer = malloc(bufsize);
+	if (!buffer) {
+		(void)fprintf(stderr,
+				_("Could not retrieve mount flags for %s\n"),
+				fs->fsname);
+		return NULL;
+	}
+	buffer[0] = '\0';
+
+	/* There is no MNT_RDWRITE flag, so we have to do this. */
+	if (fs->flags & MNT_RDONLY) {
+		if (strlcat(buffer, "ro", bufsize) >= bufsize)
+			goto truncated;
+	} else {
+		if (strlcat(buffer, "rw", bufsize) >= bufsize)
+			goto truncated;
+	}
+
+	/* Comparing flags to all possible flags. */
+	n_flags = sizeof(possible_flags) / sizeof(possible_flags[0]);
+	for (i = 0; i < n_flags; i++) {
+		if (!(fs->flags & possible_flags[i].flag))
+			continue;
+		if (strlcat(buffer, ",", bufsize) >= bufsize)
+			goto truncated;
+		if (strlcat(buffer, possible_flags[i].str, bufsize) >= bufsize)
+			goto truncated;
+	}
+
+	return buffer;
+
+truncated:
+       (void)fprintf(stderr, _("Truncating mount options for %s\n"),
+			fs->fsname);
+	return buffer;
 }
 
 #endif /* BSD */

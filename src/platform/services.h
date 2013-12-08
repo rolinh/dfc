@@ -74,6 +74,10 @@ void fetch_info(struct list *lst);
  */
 int is_pseudofs(const char *fsname);
 
-#endif
+#else /* BSD */
+
+char *statfs_flags_to_str(const struct fsmntinfo *fs);
+
+#endif /* __linux__ */
 
 #endif /* ndef H_SERVICES */
