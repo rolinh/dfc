@@ -39,12 +39,6 @@
 
 #include <sys/types.h>
 
-#if defined(__APPLE__)
-#include <sys/mount.h>
-#include <sys/param.h>
-#endif /* __APPLE__ */
-
-
 /*
  * Structure to store informations about mounted fs
  */
