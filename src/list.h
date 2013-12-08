@@ -84,7 +84,7 @@ struct fsmntinfo {
 	unsigned long   frsize;	/* XXX: does not exist on FreeBSD */
 	uint64_t	blocks;	/* size of fs in frsize unit */
 	uint64_t	bfree;	/* # of free blocks */
-	uint64_t	bavail;	/* # of available blocks */
+	int64_t		bavail;	/* # of available blocks */
 	uint64_t	files;	/* # of inodes */
 	int64_t		ffree;	/* # of free nodes to non super-user */
 	unsigned long	favail;	/* XXX: does not exist on FreeBSD */
