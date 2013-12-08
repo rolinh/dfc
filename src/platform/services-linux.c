@@ -42,6 +42,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #ifdef NLS_ENABLED
 #include <locale.h>
@@ -50,6 +51,7 @@
 
 #include <mntent.h>
 #include <sys/statvfs.h>
+#include <sys/ioctl.h>
 
 #include "extern.h"
 #include "services.h"
@@ -138,6 +140,31 @@ is_pseudofs(const char *type)
 
 	return 1;
 }
+
+int
+getttywidth(void)
+{
+	int width = 0;
+#ifdef TIOCGSIZE
+	struct ttysize win;
+#elif defined(TIOCGWINSZ)
+	struct winsize win;
+#endif /* TIOCGSIZE */
+
+	if (!isatty(STDOUT_FILENO))
+		return 0;
+
+#ifdef TIOCGSIZE
+	if (ioctl(STDOUT_FILENO, TIOCGSIZE, &win) == 0)
+		width = win.ws_col;
+#elif defined(TIOCGWINSZ)
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
+		width = win.ws_col;
+#endif /* TIOCGSIZE */
+
+	return width == 0 ? 80 : width;
+}
+
 void
 fetch_info(struct list *lst)
 {
@@ -233,4 +260,4 @@ fetch_info(struct list *lst)
 	free(fmi);
 }
 
-#endif
+#endif /* __linux__ */
