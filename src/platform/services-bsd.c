@@ -89,21 +89,6 @@ is_remote(const struct fsmntinfo *fs)
 	return 1;
 }
 
-int
-getttywidth(void)
-{
-	int width = 0;
-	struct winsize win;
-
-	if (!isatty(STDOUT_FILENO))
-		return 0;
-
-	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) == 0)
-		width = win.ws_col;
-
-	return width == 0 ? 80 : width;
-}
-
 void
 fetch_info(struct list *lst)
 {

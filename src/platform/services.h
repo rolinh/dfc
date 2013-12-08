@@ -53,12 +53,6 @@ int is_mnt_ignore(const struct fsmntinfo *fs);
 int is_remote(const struct fsmntinfo *fs);
 
 /*
- * Get the with of TTY and retun it.
- * 0 is returned if stdout is not a tty.
- */
-int getttywidth(void);
-
-/*
  * fetch information from getmntent and statvfs and store it into the queue
  * @lst: queue in which to store information
  */
