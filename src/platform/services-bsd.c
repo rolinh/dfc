@@ -217,7 +217,7 @@ struct flag_str {
 #if defined(__NetBSD__)
 	{ MNT_EXTATTR,           "extattr"           },
 #endif
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__DragonFly__)
 	{ MNT_FORCE,           "force"            },
 	{ MNT_GJOURNAL,           "gjournal"            },
 #endif
@@ -244,7 +244,7 @@ struct flag_str {
 	|| defined(__OpenBSD__) || defined(__APPLE__)
 	{ MNT_NOATIME,            "noatime"            },
 #endif
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__DragonFly__)
 	{ MNT_NOCLUSTERR,         "noclusterr"         },
 	{ MNT_NOCLUSTERW,         "noclusterw"         },
 #endif
@@ -284,7 +284,7 @@ struct flag_str {
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
 	{ MNT_SOFTDEP,            "softdep"            },
 #endif
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(__DragonFly__)
 	{ MNT_SUIDDIR,            "suiddir"            },
 #endif
 #if defined(__NetBSD__)
