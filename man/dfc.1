@@ -130,6 +130,13 @@ Sum the total usage.
 \-t [FSTYPE]
 Allows you to perform filtering on file system type. FSTYPE could take any
 known file system value. For instance, "ext4", "ufs", "tmpfs", "reiserfs", etc.
+You can also use wildcard filtering, just as with the \-p option. For instance,
+if you use the following:
+
+    dfc \-t ext
+
+This will allow any file system type with name starting with "ext" to pass
+through the filter, for instance, "ext2", "ext3" and "ext4".
 
 Multiple selection on file system is also possible. In this case, FSTYPE
 needs to be a comma separated list (without spaces). For instance, if you want to
