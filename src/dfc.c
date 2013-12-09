@@ -533,15 +533,19 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 			}
 		}
 
-		/* apply filtering on fs type */
-		if (fstypefilter(p->type, fstfilter, nmt) == 0) {
-			p = delete_struct_and_get_next(p);
-			continue;
+		if (tflag) {
+			/* apply filtering on fs type */
+			if (fsfilter(p->type, fstfilter, nmt) == 0) {
+				p = delete_struct_and_get_next(p);
+				continue;
+			}
 		}
-		/* apply filtering on fs name */
-		if (fsnamefilter(p->fsname, fsnfilter, nmn) == 0) {
-			p = delete_struct_and_get_next(p);
-			continue;
+		if (pflag) {
+			/* apply filtering on fs name */
+			if (fsfilter(p->fsname, fsnfilter, nmn) == 0) {
+				p = delete_struct_and_get_next(p);
+				continue;
+			}
 		}
 
 		/* skip remote file systems */

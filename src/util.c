@@ -340,80 +340,33 @@ cvrt(double n)
  * Return:
  *	1 if the given fs should be showed
  *	0 if the given fs should be skipped
- * @type: fs type to check
+ * @fs: fs type or name to check
  * @filter: filter string
  * @nm: boolean indicating if the negative matching is activated
  */
 int
-fstypefilter(const char *type, const char *filter, int nm)
+fsfilter(const char *fs, const char *filter, int nm)
 {
 	int ret = 1;
 	char *stropt;
 	char *strtmp;
 
-	if (tflag) {
-		if ((strtmp = strdup(filter)) == NULL) {
-			(void)fputs("Cannot duplicate filter\n", stderr);
-			exit(EXIT_FAILURE);
-			/* NOTREACHED */
-		}
-		/* assume it should not be shown */
-		ret = 0;
-		stropt = strtok(strtmp, ",");
-		while (stropt != NULL) {
-			if (strcmp(type, stropt) == 0) {
-				ret = 1;
-				break;
-			}
-			stropt = strtok(NULL, ",");
-		}
-		free(strtmp);
+	if ((strtmp = strdup(filter)) == NULL) {
+		(void)fputs("Cannot duplicate filter\n", stderr);
+		exit(EXIT_FAILURE);
+		/* NOTREACHED */
 	}
-
-	/* reverse result if negative matching activated */
-	if (nm) {
-		if (ret)
-			ret = 0;
-		else
+	/* assume it should not be shown */
+	ret = 0;
+	stropt = strtok(strtmp, ",");
+	while (stropt != NULL) {
+		if (strncmp(fs, stropt, strlen(stropt)) == 0) {
 			ret = 1;
-	}
-
-	return ret;
-}
-
-/*
- * Return:
- *	1 if the given fs should be showed
- *	0 if the given fs should be skipped
- * @type: fs type to check
- * @filter: filter string
- * @nm: boolean indicating if the negative matching is activated
- */
-int
-fsnamefilter(const char *fsname, const char *filter, int nm)
-{
-	int ret = 1;
-	char *stropt;
-	char *strtmp;
-
-	if (pflag) {
-		if ((strtmp = strdup(filter)) == NULL) {
-			(void)fputs("Cannot duplicate filter\n", stderr);
-			exit(EXIT_FAILURE);
-			/* NOTREACHED */
+			break;
 		}
-		/* assume it should not be shown */
-		ret = 0;
-		stropt = strtok(strtmp, ",");
-		while (stropt != NULL) {
-			if (strncmp(fsname, stropt, strlen(stropt)) == 0) {
-				ret = 1;
-				break;
-			}
-			stropt = strtok(NULL, ",");
-		}
-		free(strtmp);
+		stropt = strtok(NULL, ",");
 	}
+	free(strtmp);
 
 	/* reverse result if negative matching activated */
 	if (nm) {
