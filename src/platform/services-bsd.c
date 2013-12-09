@@ -68,6 +68,17 @@ typedef struct statfs statst;
 #define GET_FAVAIL(vfsbuf) (0)
 #endif
 
+/*
+ * XXX: OSX does not seem to define MNT_IGNORE even though it mentions it in
+ * df(1) manual page. However, df and df -a have the same output on 2 machines
+ * on which I could test. Use this workaround for now.
+ */
+#if defined(__APPLE__)
+#ifndef MNT_IGNORE
+#define MNT_IGNORE 0
+#endif
+#endif /* __APPLE__ */
+
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
 {
