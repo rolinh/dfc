@@ -110,7 +110,7 @@ getconf(void)
  * @conf: path to the configuration file
  */
 int
-parse_conf(char *conf)
+parse_conf(const char *conf)
 {
 	FILE *fd;
 	char line[255];
@@ -160,7 +160,7 @@ parse_conf(char *conf)
  * @val: value corresponding to the key
  */
 int
-set_conf(char *key, char *val)
+set_conf(const char *key, const char *val)
 {
 	int tmp;
 	int ret = 0;

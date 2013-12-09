@@ -42,8 +42,8 @@
 
 /* function declaration */
 char * getconf(void);
-int parse_conf(char *dfcrc);
-int set_conf(char *key, char *val);
+int parse_conf(const char *dfcrc);
+int set_conf(const char *key, const char *val);
 void init_conf(struct conf *config);
 
 #endif /* ndef H_DOTFILE */

@@ -47,6 +47,7 @@
 
 /* function declaration */
 void usage(int status);
-void disp(struct list *lst, char *fsfilter, char *fsnfilter, struct display *sdisp);
+void disp(struct list *lst, const char *fsfilter, const char *fsnfilter,
+    struct display *sdisp);
 
 #endif /* ndef DFC_H */

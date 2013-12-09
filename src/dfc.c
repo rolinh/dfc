@@ -479,7 +479,8 @@ usage(int status)
  *	  the selected output type
  */
 void
-disp(struct list *lst, char *fstfilter, char *fsnfilter, struct display *sdisp)
+disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
+    struct display *sdisp)
 {
 	struct fsmntinfo *p = NULL;
 	int n;
