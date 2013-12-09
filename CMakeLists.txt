@@ -112,14 +112,14 @@ endif()
 
 set(EXECUTABLE_NAME ${CMAKE_PROJECT_NAME})
 SET(SRCS
-    ${SOURCE_DIR}/csv.c
     ${SOURCE_DIR}/dotfile.c
     ${SOURCE_DIR}/dfc.c
-    ${SOURCE_DIR}/html.c
     ${SOURCE_DIR}/list.c
-    ${SOURCE_DIR}/tex.c
-    ${SOURCE_DIR}/text.c
     ${SOURCE_DIR}/util.c
+    ${SOURCE_DIR}/export/csv.c
+    ${SOURCE_DIR}/export/html.c
+    ${SOURCE_DIR}/export/tex.c
+    ${SOURCE_DIR}/export/text.c
     ${SOURCE_DIR}/platform/services-linux.c
     ${SOURCE_DIR}/platform/services-bsd.c
 )

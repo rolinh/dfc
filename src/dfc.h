@@ -37,12 +37,12 @@
  * header file for dfc.c
  */
 
-#include "display.h"
 #include "dotfile.h"
-#include "export.h"
 #include "extern.h"
 #include "list.h"
 #include "util.h"
+#include "export/display.h"
+#include "export/export.h"
 #include "platform/services.h"
 
 /* function declaration */
