@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 2.8.4)
 # project informations
 project(dfc C)
 set(PACKAGE ${CMAKE_PROJECT_NAME})
-set(VERSION_MAJOR 3)
-set(VERSION_MINOR 1)
+set(VERSION_MAJOR 4)
+set(VERSION_MINOR 0)
 set(VERSION_PATCH 0)
-set(VERSION_BRANCH "devel")
-set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}-${VERSION_BRANCH})
+set(VERSION_BRANCH "-devel")
+set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${VERSION_BRANCH})
 
 # useful defines
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
