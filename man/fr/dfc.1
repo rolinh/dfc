@@ -138,7 +138,14 @@ Somme l'utilisation totale.
 \-t [FSTYPE]
 Permet de filtrer en fonction du type de système de fichier. FSTYPE peut prendre
 n'importe quelle valeur connue d'un système de fichiers. Par exemple, "ext4",
-"ufs", "tmpfs", "reiserfs", etc.
+"ufs", "tmpfs", "reiserfs", etc. Il est également possible de filtrer avec en
+fournissant un nom parteil, de la même manière qu'avec l'option \-p. Par
+exemple, si vous utilisez la commande suivante:
+
+    dfc \-t ext
+
+Cela filtrera tout type de système de fichier dont le nom commence par "ext",
+comme, par exemple, "ext2", "ext3" et "ext4".
 
 Une sélection multiple est également possible. Dans ce cas, FSTYPE doit être
 une liste séparée par des virgules (sans espaces). Par exemple, si vous
