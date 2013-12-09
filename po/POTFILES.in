@@ -1,7 +1,9 @@
-src/csv.c
 src/dfc.c
 src/dotfile.c
-src/html.c
-src/tex.c
-src/text.c
 src/util.c
+src/export/csv.c
+src/export/html.c
+src/export/tex.c
+src/export/text.c
+src/platform/services-bsd.c
+src/platform/services-linux.c
