@@ -216,7 +216,6 @@ fetch_info(struct list *lst)
 			/* enqueue the element into the queue */
 			enqueue(lst, *fmi);
 
-			/* adjust longest for the queue */
 			update_maxwidth(fmi);
 
 		}
