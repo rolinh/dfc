@@ -347,7 +347,7 @@ cvrt(double n)
 int
 fsfilter(const char *fs, const char *filter, int nm)
 {
-	int ret = 1;
+	int ret = 0; /* assume it should not be shown */
 	char *stropt;
 	char *strtmp;
 
@@ -356,8 +356,7 @@ fsfilter(const char *fs, const char *filter, int nm)
 		exit(EXIT_FAILURE);
 		/* NOTREACHED */
 	}
-	/* assume it should not be shown */
-	ret = 0;
+
 	stropt = strtok(strtmp, ",");
 	while (stropt != NULL) {
 		if (strncmp(fs, stropt, strlen(stropt)) == 0) {
@@ -369,14 +368,7 @@ fsfilter(const char *fs, const char *filter, int nm)
 	free(strtmp);
 
 	/* reverse result if negative matching activated */
-	if (nm) {
-		if (ret)
-			ret = 0;
-		else
-			ret = 1;
-	}
-
-	return ret;
+	return nm ? !ret : ret;
 }
 
 /*
