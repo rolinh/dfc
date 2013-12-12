@@ -43,7 +43,7 @@
 #include "platform/services.h"
 
 /* function declaration */
-size_t imax(size_t a, size_t b);
+int imax(int a, int b);
 char * strtrim(char *str);
 char * shortenstr(char *str, int len);
 char * sanitizestr(const char *str);

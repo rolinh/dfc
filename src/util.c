@@ -56,8 +56,8 @@
  * @a: first element to compare
  * @b: second element to compare
  */
-size_t
-imax(size_t a, size_t b)
+int
+imax(int a, int b)
 {
 	return (a > b ? a : b);
 }
@@ -481,18 +481,21 @@ getttywidth(void)
 void
 init_maxwidths(void)
 {
-	/* init min width to header names and width of the graph bar */
-	max.fsname	= strlen(_("FILESYSTEM"));
-	max.fstype	= Tflag ? strlen(_("TYPE")) : 0;
-	max.bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
-	max.perctused	= strlen(_("%USED"));
-	max.used	= dflag ? strlen(_("USED")) : 0;
-	max.avail	= strlen(_("AVAILABLE"));
-	max.total	= strlen(_("TOTAL"));
-	max.nbinodes	= iflag ? strlen(_("#INODES")) : 0;
-	max.avinodes	= iflag ? strlen(_("AV.INODES")) : 0;
-	max.mountdir	= strlen(_("MOUNTED ON"));
-	max.mountopt	= oflag ? strlen(_("MOUNT OPTIONS")) : 0;
+	/*
+	 * init min width to header names and width of the graph bar + 1 to have
+	 * a space between each column.
+	 */
+	max.fsname	= (int)strlen(_("FILESYSTEM")) + 1;
+	max.fstype	= Tflag ? (int)strlen(_("TYPE")) + 1 : 0;
+	max.bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE + 1: GRAPHBAR_SHORT + 1;
+	max.perctused	= (int)strlen(_("%USED")) + 1;
+	max.used	= dflag ? (int)strlen(_("USED")) + 1 : 0;
+	max.avail	= (int)strlen(_("AVAILABLE")) + 1;
+	max.total	= (int)strlen(_("TOTAL")) + 1;
+	max.nbinodes	= iflag ? (int)strlen(_("#INODES")) + 1 : 0;
+	max.avinodes	= iflag ? (int)strlen(_("AV.INODES")) + 1 : 0;
+	max.mountdir	= (int)strlen(_("MOUNTED ON")) + 1;
+	max.mountopt	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
 }
 
 void
@@ -501,10 +504,11 @@ update_maxwidth(struct fsmntinfo *fmi)
 	if (!aflag && (is_mnt_ignore(fmi) == 1))
 		return;
 
-	max.fsname = imax(strlen(fmi->fsname), max.fsname);
-	max.fstype = imax(strlen(fmi->type), max.fstype);
-	max.mountdir = imax(strlen(fmi->dir), max.mountdir);
-	max.mountopt = imax(strlen(fmi->opts), max.mountopt);
+	/* + 1 for a space between each column */
+	max.fsname = imax((int)strlen(fmi->fsname) + 1, max.fsname);
+	max.fstype = imax((int)strlen(fmi->type) + 1, max.fstype);
+	max.mountdir = imax((int)strlen(fmi->dir) + 1, max.mountdir);
+	max.mountopt = imax((int)strlen(fmi->opts) + 1, max.mountopt);
 }
 
 /*

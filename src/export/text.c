@@ -89,39 +89,44 @@ init_disp_text(struct display *disp)
 static void
 text_disp_header(struct list *lst)
 {
+	int gap;
+
 	/* use color option if triggered */
 	if (cflag)
 		(void)printf("\033[;%dm", cnf.chead);
 
-	(void)printf("%s", _("FILESYSTEM"));
+	(void)printf("%-*s", max.fsname, _("FILESYSTEM"));
 
 	if (Tflag) {
-		(void)printf("%s", _("TYPE"));
+		(void)printf("%-*s", max.fstype, _("TYPE"));
 	}
 
 	if (!bflag) {
 		(void)printf("%s", _("(=) USED"));
+		gap = wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
+		gap -= (int)strlen(_("(=) USED")) + (int)strlen(_("FREE (-)"));
+		(void)printf("%*s", gap, "");
 		(void)printf("%s", _("FREE (-)"));
 	}
 
-	(void)printf("%s", _("%USED"));
+	(void)printf("%-*s", max.perctused, _("%USED"));
 
 	if (dflag) {
-		(void)printf("%s", _("USED"));
+		(void)printf("%-*s", max.used, _("USED"));
 	}
 
-	(void)printf("%s", _("AVAILABLE"));
-	(void)printf("%s", _("TOTAL"));
+	(void)printf("%-*s", max.avail,_("AVAILABLE"));
+	(void)printf("%-*s", max.total, _("TOTAL"));
 
 	if (iflag) {
-		(void)printf("%s", _("#INODES"));
-		(void)printf("%s", _("AV.INODES"));
+		(void)printf("%-*s", max.nbinodes,_("#INODES"));
+		(void)printf("%-*s", max.avinodes, _("AV.INODES"));
 	}
 
-	(void)printf("%s", _("MOUNTED ON"));
+	(void)printf("%-*s", max.mountdir, _("MOUNTED ON"));
 
 	if (oflag)
-		(void)printf("%s", _("MOUNT OPTIONS"));
+		(void)printf("%-*s", max.mountopt, _("MOUNT OPTIONS"));
 	(void)printf("\n");
 
 	reset_color();
@@ -141,6 +146,9 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
 	double ptot = 0;
+	int width;
+
+	width = Tflag ? max.fsname + max.fstype : max.fsname;
 
 	if ((int)stot == 0)
 		ptot = 100.0;
@@ -150,7 +158,7 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
 	/* use color option if triggered */
 	if (cflag)
 		(void)printf("\033[;%dm", cnf.chead);
-	(void)printf("%s", _("SUM:"));
+	(void)printf("%-*s", width, _("SUM:"));
 	reset_color();
 
 	if (!bflag)
@@ -241,12 +249,12 @@ text_disp_at(double n, double perct)
 	if (unitflag == 'h') {
 		i = humanize(&n);
 		change_color(perct);
-		(void)printf("%f", n);
+		(void)printf("%*.1f", max.avail, n);
 		reset_color();
 		print_unit(i, 1);
 	} else {
 		change_color(perct);
-		(void)printf("%f", n);
+		(void)printf("%*.1f", max.avail, n);
 		reset_color();
 		print_unit(0, 1);
 	}
@@ -258,9 +266,9 @@ text_disp_at(double n, double perct)
  * @fsname: list of the file system to print
  */
 static void
-text_disp_fs(struct list *lst, const char *fsname)
+text_disp_fs(struct list* lst, const char *fsname)
 {
-	(void)printf("%s", fsname);
+	(void)printf("%-*s", max.fsname, fsname);
 }
 
 /*
@@ -271,7 +279,7 @@ text_disp_fs(struct list *lst, const char *fsname)
 static void
 text_disp_type(struct list* lst, const char *type)
 {
-	(void)printf("%s", type);
+	(void)printf("%-*s", max.fstype, type);
 }
 
 /*
@@ -286,14 +294,14 @@ text_disp_inodes(uint64_t files, uint64_t favail)
 
 	if (unitflag == 'h') {
 		i = humanize_i(&files);
-		(void)printf("%" PRIu64, files);
+		(void)printf("%*" PRIu64, max.nbinodes, files);
 		print_unit(i, 0);
 		i = humanize_i(&favail);
-		(void)printf("%" PRIu64, favail);
+		(void)printf("%*" PRIu64, max.avinodes, favail);
 		print_unit(i, 0);
 	} else {
-		(void)printf("%" PRIu64, files);
-		(void)printf("%" PRIu64, favail);
+		(void)printf("%*" PRIu64, max.nbinodes, files);
+		(void)printf("%*" PRIu64, max.avinodes, favail);
 	}
 }
 
@@ -304,19 +312,18 @@ text_disp_inodes(uint64_t files, uint64_t favail)
 static void
 text_disp_mount(const char *dir)
 {
-	(void)printf(" %s", dir);
+	(void)printf("%-*s", max.mountdir, dir);
 }
 
 /*
  * Display mount options
  * @lst: structure containing information
- * @dir: mount point
  * @opts: mount options
  */
 static void
 text_disp_mopt(struct list* lst, const char *dir, const char *opts)
 {
-	(void)printf("%s", opts);
+	(void)printf("%-*s", max.mountopt, opts);
 }
 
 /*
@@ -327,7 +334,7 @@ static void
 text_disp_perct(double perct)
 {
 	change_color(perct);
-	(void)printf("%f", perct);
+	(void)printf("%*.1f", max.perctused, perct);
 	reset_color();
 	(void)printf("%%");
 }
