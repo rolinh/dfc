@@ -35,6 +35,7 @@
  * HTML display functions
  */
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "extern.h"
 #include "export.h"
