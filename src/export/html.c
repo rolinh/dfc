@@ -170,6 +170,7 @@ html_disp_header(struct list *lst)
 		(void)printf("\t  <th>%s</th>\n", _("MOUNT OPTIONS"));
 
 	(void)puts("\t</tr>\n\t</thead>");
+	free(date);
 }
 
 /*
