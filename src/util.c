@@ -56,8 +56,8 @@
  * @a: first element to compare
  * @b: second element to compare
  */
-int
-imax(int a, int b)
+size_t
+imax(size_t a, size_t b)
 {
 	return (a > b ? a : b);
 }
@@ -479,20 +479,32 @@ getttywidth(void)
  * init a maxwidths structure
  */
 void
-init_maxwidths(struct maxwidths *m)
+init_maxwidths(void)
 {
 	/* init min width to header names and width of the graph bar */
-	m->fsname	= strlen(_("FILESYSTEM"));
-	m->fstype	= Tflag ? strlen(_("TYPE")) : 0;
-	m->bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
-	m->perctused	= strlen(_("%USED"));
-	m->used		= dflag ? strlen(_("USED")) : 0;
-	m->avail	= strlen(_("AVAILABLE"));
-	m->total	= strlen(_("TOTAL"));
-	m->nbinodes	= iflag ? strlen(_("#INODES")) : 0;
-	m->avinodes	= iflag ? strlen(_("AV.INODES")) : 0;
-	m->mountpt	= strlen(_("MOUNTED ON"));
-	m->mountopt	= oflag ? strlen(_("MOUNT OPTIONS")) : 0;
+	max.fsname	= strlen(_("FILESYSTEM"));
+	max.fstype	= Tflag ? strlen(_("TYPE")) : 0;
+	max.bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
+	max.perctused	= strlen(_("%USED"));
+	max.used	= dflag ? strlen(_("USED")) : 0;
+	max.avail	= strlen(_("AVAILABLE"));
+	max.total	= strlen(_("TOTAL"));
+	max.nbinodes	= iflag ? strlen(_("#INODES")) : 0;
+	max.avinodes	= iflag ? strlen(_("AV.INODES")) : 0;
+	max.mountdir	= strlen(_("MOUNTED ON"));
+	max.mountopt	= oflag ? strlen(_("MOUNT OPTIONS")) : 0;
+}
+
+void
+update_maxwidth(struct fsmntinfo *fmi)
+{
+	if (!aflag && (is_mnt_ignore(fmi) == 1))
+		return;
+
+	max.fsname = imax(strlen(fmi->fsname), max.fsname);
+	max.fstype = imax(strlen(fmi->type), max.fstype);
+	max.mountdir = imax(strlen(fmi->dir), max.mountdir);
+	max.mountopt = imax(strlen(fmi->opts), max.mountopt);
 }
 
 /*
@@ -501,139 +513,13 @@ init_maxwidths(struct maxwidths *m)
  * @width: width of the output
  */
 void
-auto_adjust(struct list lst, int width)
+auto_adjust(int width)
 {
-	int req, gap;
-
-	req = req_width(lst);
-
-	/* nothing to adjust here */
-	if ((gap = (width - req)) >= 0)
-		return;
-
 	(void)fputs(_("WARNING: TTY too narrow. Some options have been disabled"
 		" to make dfc output fit (use -f to override).\n"), stderr);
 
-	if (!bflag) {
-		/* large graph should be the first option to disable */
-		if (wflag) {
-			wflag = 0;
-			gap += 30;
-			if (gap >= 0)
-				return;
-		}
-		bflag = 1;
-		gap += 23;
-		if (gap >= 0)
-			return;
-	}
-	if (dflag) {
-		dflag = 0;
-		gap += 4;
-		if (unitflag == 'k')
-			gap += 7;
-		else if (unitflag == 'b')
-			gap += 12;
-		else
-			gap += 6;
-		if (gap >= 0)
-			return;
-	}
-	if (Tflag) {
-		Tflag = 0;
-		gap += imax(lst.typemaxlen, 5);
-		if (gap >= 0)
-			return;
-	}
-	if (iflag) {
-		iflag = 0;
-		gap += 20;
-		if (gap >= 0)
-			return;
-	}
-	if (oflag) {
-		oflag = 0;
-		gap += imax(lst.mntoptmaxlen, 13);
-		if (gap >= 0)
-			return;
-	}
-	if (gap < 0)
-		(void)fputs(_("WARNING: Output still messed up. Enlarge your "
-				"terminal if you can...\n"), stderr);
-}
-
-/*
- * compute the required width needed for the output and return it
- * (computation based on text_disp_header function)
- * @lst: list containing the info
- */
-int
-req_width(struct list lst)
-{
-	int ret;
-
-	/* dir and fs are always displayed */
-	ret = imax(lst.fsmaxlen, 11);
-
-	if (Tflag)
-		ret += imax(lst.typemaxlen, 5);
-	if (!bflag) {
-		ret += 23;
-		if (wflag)
-			ret += 30;
-	}
-	/* % */
-	ret += 5;
-
-	if (dflag) {
-		if (unitflag == 'k')
-			ret += 7;
-		else if (unitflag == 'b')
-			ret += 12;
-		else
-			ret += 6;
-		ret += 4;
-	}
-
-	/* available */
-	ret += 9;
-
-	switch (unitflag) {
-	case 'b':
-		ret += 7 + 11;
-		break;
-	case 'k':
-		ret += 2 + 6;
-		break;
-	case 'm':
-		ret += 5;
-		break;
-	case 'h': /* FALLTHROUGH */
-	case 'g': /* FALLTHROUGH */
-	case 't': /* FALLTHROUGH */
-	case 'p': /* FALLTHROUGH */
-	case 'e': /* FALLTHROUGH */
-	case 'z': /* FALLTHROUGH */
-	case 'y': /* FALLTHROUGH */
-		ret += 1 + 5;
-		break;
-	default:
-		(void)fputs("Unknown unit type\n", stderr);
-	}
-
-	/* total */
-	ret += 5;
-
-	if (iflag)
-		ret += 20;
-
-	/* mounted on */
-	ret += imax(lst.dirmaxlen, 12);
-
-	if (oflag)
-		ret += imax(lst.mntoptmaxlen, 13);
-
-	return ret;
+	(void)fputs(_("WARNING: Output still messed up. Enlarge your "
+			"terminal if you can...\n"), stderr);
 }
 
 /*

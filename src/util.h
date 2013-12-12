@@ -40,9 +40,10 @@
 
 #include "extern.h"
 #include "list.h"
+#include "platform/services.h"
 
 /* function declaration */
-int imax(int a, int b);
+size_t imax(size_t a, size_t b);
 char * strtrim(char *str);
 char * shortenstr(char *str, int len);
 char * sanitizestr(const char *str);
@@ -54,9 +55,9 @@ int fsfilter(const char *fs, const char *filter, int nm);
 int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
 int getttywidth(void);
-void init_maxwidths(struct maxwidths *m);
-void auto_adjust(struct list lst, int width);
-int req_width(struct list lst);
+void init_maxwidths(void);
+void update_maxwidth(struct fsmntinfo *fmi);
+void auto_adjust(int width);
 char * fetchdate(void);
 const char * colortostr(int color);
 int colortoint(const char *col);

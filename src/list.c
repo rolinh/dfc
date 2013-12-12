@@ -49,10 +49,6 @@ init_queue(struct list *lst)
 {
 	lst->head  = NULL;
 	lst->tail   = NULL;
-	lst->fsmaxlen = -1;
-	lst->dirmaxlen = -1;
-	lst->typemaxlen = -1;
-	lst->mntoptmaxlen = -1; /* stairway to heaven ! */
 }
 
 /*

@@ -95,17 +95,17 @@ struct conf {
 };
 
 struct maxwidths {
-	int fsname;
-	int fstype;
-	int bar;
-	int perctused;
-	int used;
-	int avail;
-	int total;
-	int nbinodes;
-	int avinodes;
-	int mountpt;
-	int mountopt;
+	size_t fsname;
+	size_t fstype;
+	size_t bar;
+	size_t perctused;
+	size_t used;
+	size_t avail;
+	size_t total;
+	size_t nbinodes;
+	size_t avinodes;
+	size_t mountdir;
+	size_t mountopt;
 };
 
 /*

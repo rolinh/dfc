@@ -384,7 +384,7 @@ main(int argc, char *argv[])
 	}
 
 	/* init default max required width */
-	init_maxwidths(&max);
+	init_maxwidths();
 
 	width = getttywidth();
 
@@ -413,7 +413,7 @@ main(int argc, char *argv[])
 
 	/* cannot display all information if tty is too narrow */
 	if (!fflag && width > 0 && !eflag)
-		auto_adjust(queue, width);
+		auto_adjust(width);
 
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &sdisp);
@@ -519,9 +519,6 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	if (!nflag)
 		sdisp->print_header(lst);
 
-	if (lst->fsmaxlen < 11)
-		lst->fsmaxlen = 11;
-
 	 /* sort the list */
 	if (qflag)
 		lst->head = msort(lst->head);
@@ -529,35 +526,27 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	p = lst->head;
 
 	while (p != NULL) {
-		if (!aflag) {
-			/* skip fs to ignore */
-			if (is_mnt_ignore(p) == 1) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		/* ignore when needed */
+		if (!aflag && (is_mnt_ignore(p) == 1)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
 
-		if (tflag) {
-			/* apply filtering on fs type */
-			if (fsfilter(p->type, fstfilter, nmt) == 0) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		/* filtering on fs type */
+		if (tflag && (fsfilter(p->type, fstfilter, nmt) == 0)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
-		if (pflag) {
-			/* apply filtering on fs name */
-			if (fsfilter(p->fsname, fsnfilter, nmn) == 0) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		/* filtering on fs name */
+		if (pflag && (fsfilter(p->fsname, fsnfilter, nmn) == 0)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
 
 		/* skip remote file systems */
-		if (lflag) {
-			if (is_remote(p)) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		if (lflag && is_remote(p)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
 
 		/* filesystem */

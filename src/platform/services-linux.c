@@ -217,16 +217,8 @@ fetch_info(struct list *lst)
 			enqueue(lst, *fmi);
 
 			/* adjust longest for the queue */
-			if ((!aflag && fmi->blocks > 0) || aflag) {
-				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
-					lst->fsmaxlen);
-				lst->dirmaxlen = imax((int)strlen(fmi->dir),
-						lst->dirmaxlen);
-				lst->typemaxlen = imax((int)strlen(fmi->type),
-						lst->typemaxlen);
-				lst->mntoptmaxlen = imax((int)strlen(fmi->opts),
-						lst->mntoptmaxlen);
-			}
+			update_maxwidth(fmi);
+
 		}
 	}
 	/* we need to close the mtab file now */
