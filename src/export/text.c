@@ -89,80 +89,39 @@ init_disp_text(struct display *disp)
 static void
 text_disp_header(struct list *lst)
 {
-	int i;
-	int barinc = 5;
-
 	/* use color option if triggered */
 	if (cflag)
 		(void)printf("\033[;%dm", cnf.chead);
 
-	(void)printf("%s", _("FILESYSTEM "));
-	for (i = 11; i < lst->fsmaxlen; i++)
-		(void)printf(" ");
+	(void)printf("%s", _("FILESYSTEM"));
 
 	if (Tflag) {
-		(void)printf("%s", _(" TYPE"));
-		if (lst->typemaxlen > 5)
-			for (i = 5; i < lst->typemaxlen + 1; i++)
-				(void)printf(" ");
-		else
-			lst->typemaxlen = 5;
+		(void)printf("%s", _("TYPE"));
 	}
 
-	/* option to display a wider bar */
-	if (wflag) {
-		barinc = 35;
-	}
 	if (!bflag) {
-		(void)printf("%s", _(" (=) USED"));
-		for (i = 0; i < (barinc + 1); i++)
-			(void)printf(" ");
-		(void)printf("%s", _("FREE (-) "));
+		(void)printf("%s", _("(=) USED"));
+		(void)printf("%s", _("FREE (-)"));
 	}
 
 	(void)printf("%s", _("%USED"));
 
 	if (dflag) {
-		if (unitflag == 'k')
-			(void)printf("       ");
-		else if (unitflag == 'b')
-			(void)printf("            ");
-		else
-			(void)printf("      ");
 		(void)printf("%s", _("USED"));
 	}
 
-	if (unitflag == 'k')
-		(void)printf("  ");
-	else if (unitflag == 'b')
-		(void)printf("       ");
-	else
-		(void)printf(" ");
-
 	(void)printf("%s", _("AVAILABLE"));
-	if (unitflag == 'k')
-		(void)printf("      ");
-	else if (unitflag == 'm')
-		(void)printf("     ");
-	else if (unitflag == 'b')
-		(void)printf("           ");
-	else
-		(void)printf("     ");
-
 	(void)printf("%s", _("TOTAL"));
 
 	if (iflag) {
-		(void)printf("%s", _("   #INODES"));
-		(void)printf("%s", _(" AV.INODES"));
+		(void)printf("%s", _("#INODES"));
+		(void)printf("%s", _("AV.INODES"));
 	}
 
-	(void)printf("%s", _(" MOUNTED ON "));
+	(void)printf("%s", _("MOUNTED ON"));
 
-	if (oflag) {
-		for (i = 10; i < lst->dirmaxlen; i++)
-			(void)printf(" ");
+	if (oflag)
 		(void)printf("%s", _("MOUNT OPTIONS"));
-	}
 	(void)printf("\n");
 
 	reset_color();
@@ -181,7 +140,6 @@ static void
 text_disp_sum(struct list *lst, double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
-	int i,j;
 	double ptot = 0;
 
 	if ((int)stot == 0)
@@ -194,12 +152,6 @@ text_disp_sum(struct list *lst, double stot, double atot, double utot,
 		(void)printf("\033[;%dm", cnf.chead);
 	(void)printf("%s", _("SUM:"));
 	reset_color();
-
-	j = lst->fsmaxlen + 1;
-	if (Tflag)
-		j += lst->typemaxlen + 1;
-	for (i = 4; i < j; i++)
-		(void)printf(" ");
 
 	if (!bflag)
 		text_disp_bar(ptot);
@@ -271,7 +223,7 @@ text_disp_bar(double perct)
 			(void)printf("-");
 	}
 
-	(void)printf("]  ");
+	(void)printf("]");
 }
 
 /*
@@ -289,18 +241,12 @@ text_disp_at(double n, double perct)
 	if (unitflag == 'h') {
 		i = humanize(&n);
 		change_color(perct);
-		(void)printf(i == 0 ? "%9.f" : "%9.1f", n);
+		(void)printf("%f", n);
 		reset_color();
 		print_unit(i, 1);
 	} else {
 		change_color(perct);
-		if (unitflag == 'b')
-			(void)printf("%15.f", n);
-		else if (unitflag == 'k')
-			(void)printf("%10.f", n);
-		else
-			(void)printf("%9.1f", n);
-
+		(void)printf("%f", n);
 		reset_color();
 		print_unit(0, 1);
 	}
@@ -314,11 +260,7 @@ text_disp_at(double n, double perct)
 static void
 text_disp_fs(struct list *lst, const char *fsname)
 {
-	int i;
-
 	(void)printf("%s", fsname);
-	for (i = (int)strlen(fsname); i < lst->fsmaxlen + 1; i++)
-			(void)printf(" ");
 }
 
 /*
@@ -329,11 +271,7 @@ text_disp_fs(struct list *lst, const char *fsname)
 static void
 text_disp_type(struct list* lst, const char *type)
 {
-	int i;
-
 	(void)printf("%s", type);
-	for (i = (int)strlen(type); i < lst->typemaxlen + 1; i++)
-		(void)printf(" ");
 }
 
 /*
@@ -348,14 +286,14 @@ text_disp_inodes(uint64_t files, uint64_t favail)
 
 	if (unitflag == 'h') {
 		i = humanize_i(&files);
-		(void)printf("%9" PRIu64, files);
+		(void)printf("%" PRIu64, files);
 		print_unit(i, 0);
 		i = humanize_i(&favail);
-		(void)printf("%9" PRIu64, favail);
+		(void)printf("%" PRIu64, favail);
 		print_unit(i, 0);
 	} else {
-		(void)printf(" %9" PRIu64, files);
-		(void)printf(" %9" PRIu64, favail);
+		(void)printf("%" PRIu64, files);
+		(void)printf("%" PRIu64, favail);
 	}
 }
 
@@ -378,11 +316,6 @@ text_disp_mount(const char *dir)
 static void
 text_disp_mopt(struct list* lst, const char *dir, const char *opts)
 {
-	int i;
-
-	for (i = (int)strlen(dir);
-		i < imax(lst->dirmaxlen + 1, 11); i++)
-		(void)printf(" ");
 	(void)printf("%s", opts);
 }
 
@@ -394,7 +327,7 @@ static void
 text_disp_perct(double perct)
 {
 	change_color(perct);
-	(void)printf("%3.f", perct);
+	(void)printf("%f", perct);
 	reset_color();
 	(void)printf("%%");
 }
