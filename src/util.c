@@ -476,6 +476,26 @@ getttywidth(void)
 }
 
 /*
+ * init a maxwidths structure
+ */
+void
+init_maxwidths(struct maxwidths *m)
+{
+	/* init min width to header names and width of the graph bar */
+	m->fsname	= strlen(_("FILESYSTEM"));
+	m->fstype	= Tflag ? strlen(_("TYPE")) : 0;
+	m->bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
+	m->perctused	= strlen(_("%USED"));
+	m->used		= dflag ? strlen(_("USED")) : 0;
+	m->avail	= strlen(_("AVAILABLE"));
+	m->total	= strlen(_("TOTAL"));
+	m->nbinodes	= iflag ? strlen(_("#INODES")) : 0;
+	m->avinodes	= iflag ? strlen(_("AV.INODES")) : 0;
+	m->mountpt	= strlen(_("MOUNTED ON"));
+	m->mountopt	= oflag ? strlen(_("MOUNT OPTIONS")) : 0;
+}
+
+/*
  * auto-adjust options based on the size needed to display the informations
  * @lst: list containing info
  * @width: width of the output

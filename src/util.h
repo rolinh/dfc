@@ -54,6 +54,7 @@ int fsfilter(const char *fs, const char *filter, int nm);
 int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
 int getttywidth(void);
+void init_maxwidths(struct maxwidths *m);
 void auto_adjust(struct list lst, int width);
 int req_width(struct list lst);
 char * fetchdate(void);

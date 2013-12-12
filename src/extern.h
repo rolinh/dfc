@@ -62,6 +62,10 @@
 #define CYAN	36
 #define WHITE	37
 
+/* possible lengths of the graph bar */
+#define GRAPHBAR_SHORT 22
+#define GRAPHBAR_WIDE 52
+
 /* html color code length (type of #FF0000, etc.) without the # */
 #define HTMLCOLORCODELENGTH 6
 
@@ -90,16 +94,32 @@ struct conf {
 	char csvsep;	/* separator used for csv export */
 };
 
+struct maxwidths {
+	int fsname;
+	int fstype;
+	int bar;
+	int perctused;
+	int used;
+	int avail;
+	int total;
+	int nbinodes;
+	int avinodes;
+	int mountpt;
+	int mountopt;
+};
+
 /*
  * These two variables are used when we don't need to alloc some mem for the
  * fsmntinfo struct. So we can know that and don't free the pointers
  */
-
 extern char g_unknown_str[];
 extern char g_none_str[];
 
 /* struct to store specific configuration from config file */
 extern struct conf cnf;
+
+/* struct to store maximum required widths (useful only in text export mode) */
+extern struct maxwidths max;
 
 /* set flags for options */
 extern int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,

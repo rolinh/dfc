@@ -58,6 +58,7 @@
 char g_unknown_str[] = "unknown";
 char g_none_str[]    = "none";
 struct conf cnf;
+struct maxwidths max;
 int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
     nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
 int Tflag, Wflag;
@@ -381,6 +382,9 @@ main(int argc, char *argv[])
 		(void)printf("%s %s\n", PACKAGE, VERSION);
 		return EXIT_SUCCESS;
 	}
+
+	/* init default max required width */
+	init_maxwidths(&max);
 
 	width = getttywidth();
 

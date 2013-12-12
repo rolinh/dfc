@@ -161,9 +161,9 @@ text_disp_header(struct list *lst)
 	if (oflag) {
 		for (i = 10; i < lst->dirmaxlen; i++)
 			(void)printf(" ");
-		(void)printf("%s", _("MOUNT OPTIONS\n"));
-	} else
-		(void)printf("\n");
+		(void)printf("%s", _("MOUNT OPTIONS"));
+	}
+	(void)printf("\n");
 
 	reset_color();
 }
