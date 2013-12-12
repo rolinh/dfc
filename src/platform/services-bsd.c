@@ -84,7 +84,7 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 {
 	/* TODO: check MNT_IGNORE flags exists on all supported platforms */
 	if (fs->flags & MNT_IGNORE)
-	    return 1;
+		return 1;
 
 	return 0;
 }
@@ -119,31 +119,21 @@ fetch_info(struct list *lst)
 	for (fs = &entbuf; nummnt--; (*fs)++) {
 		vfsbuf = **fs;
 		if (Wflag) { /* Wflag to avoid name truncation */
-			if ((fmi->fsname = strdup(
-					entbuf->f_mntfromname))	== NULL) {
+			if ((fmi->fsname = strdup(entbuf->f_mntfromname)) == NULL)
 				fmi->fsname = g_unknown_str;
-			}
-			if ((fmi->dir = strdup((
-					entbuf->f_mntonname ))) == NULL) {
+			if ((fmi->dir = strdup(entbuf->f_mntonname)) == NULL)
 				fmi->dir = g_unknown_str;
-			}
 		} else {
-			if ((fmi->fsname = strdup(shortenstr(
-						entbuf->f_mntfromname,
-						STRMAXLEN))) == NULL) {
+			if ((fmi->fsname = strdup(shortenstr(entbuf->f_mntfromname,
+					       STRMAXLEN))) == NULL)
 				fmi->fsname = g_unknown_str;
-			}
-			if ((fmi->dir = strdup(shortenstr(
-						entbuf->f_mntonname,
-						STRMAXLEN))) == NULL) {
+			if ((fmi->dir = strdup(shortenstr(entbuf->f_mntonname,
+					    STRMAXLEN))) == NULL)
 				fmi->dir = g_unknown_str;
-			}
 		}
-		if ((fmi->type = strdup(shortenstr(
-					entbuf->f_fstypename,
-					12))) == NULL) {
+		if ((fmi->type = strdup(shortenstr(entbuf->f_fstypename,
+				     STRMAXLEN))) == NULL)
 			fmi->type = g_unknown_str;
-		}
 
 		/* infos from statvfs */
 		fmi->flags    = GET_FLAGS(vfsbuf);
@@ -156,9 +146,8 @@ fetch_info(struct list *lst)
 		fmi->ffree    = vfsbuf.f_ffree;
 		fmi->favail   = GET_FAVAIL(vfsbuf);
 
-		if ((fmi->opts = statfs_flags_to_str(fmi)) == NULL) {
+		if ((fmi->opts = statfs_flags_to_str(fmi)) == NULL)
 			fmi->opts = g_none_str;
-		}
 
 		/* pointer to the next element */
 		fmi->next = NULL;
@@ -167,7 +156,7 @@ fetch_info(struct list *lst)
 		enqueue(lst, *fmi);
 
 		update_maxwidth(fmi);
-		}
+	}
 	free(fmi);
 }
 
@@ -320,7 +309,7 @@ struct flag_str {
  * Returns NULL if an error occurred.
  * @s: struct statfs * to parse.
  */
-char *
+	char *
 statfs_flags_to_str(const struct fsmntinfo *fs)
 {
 	int i, n_flags;
@@ -357,7 +346,7 @@ statfs_flags_to_str(const struct fsmntinfo *fs)
 	return buffer;
 
 truncated:
-       (void)fprintf(stderr, _("Truncating mount options for %s\n"),
+	(void)fprintf(stderr, _("Truncating mount options for %s\n"),
 			fs->fsname);
 	return buffer;
 }
