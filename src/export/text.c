@@ -102,8 +102,8 @@ text_disp_header(struct list *lst)
 
 	if (!bflag) {
 		(void)printf("%s", _("(=) USED"));
-		gap = wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
-		gap -= (int)strlen(_("(=) USED")) + (int)strlen(_("FREE (-)"));
+		gap = max.bar -
+		         (int)strlen(_("(=) USED")) - (int)strlen(_("FREE (-)"));
 		(void)printf("%*s", gap, "");
 		(void)printf("%s", _("FREE (-)"));
 	}
@@ -242,18 +242,16 @@ text_disp_at(double n, double perct)
 {
 	int i;
 
+	if (unitflag == 'h')
+		i = humanize(&n);
+
 	change_color(perct);
+	(void)printf("%*.1f", max.avail, n);
+	reset_color();
 
 	if (unitflag == 'h') {
-		i = humanize(&n);
-		change_color(perct);
-		(void)printf("%*.1f", max.avail, n);
-		reset_color();
 		print_unit(i, 1);
 	} else {
-		change_color(perct);
-		(void)printf("%*.1f", max.avail, n);
-		reset_color();
 		print_unit(0, 1);
 	}
 }
