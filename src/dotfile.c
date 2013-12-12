@@ -321,19 +321,23 @@ set_conf(const char *key, const char *val)
 		ret = -1;
 	}
 
+	free(tmpc);
 	return ret;
 
 unknown_color_value:
 	(void)fprintf(stderr, _("Unknown color value: %s\n"), val);
+	free(tmpc);
 	return -1;
 
 non_valid_html_color:
 	(void)fprintf(stderr, _("Not a valid HTML color: %s\n"), val);
+	free(tmpc);
 	return -1;
 
 strdup_failed:
 	(void)fprintf(stderr, "Could not assign value from configuration file: "
 			"%s\n", val);
+	free(tmpc);
 	return -1;
 }
 
