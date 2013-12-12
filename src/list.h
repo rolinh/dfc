@@ -51,7 +51,7 @@ struct fsmntinfo {
 
 	/* infos to get from statvfs(3) */
 #if defined(__linux__)
-	int		flags; /* XXX: does not exist on Linux */
+	int		flags;	/* XXX: does not exist on Linux */
 	unsigned long	bsize;	/* file system block size */
 	unsigned long	frsize;	/* fragment size */
 	fsblkcnt_t	blocks;	/* size of fs in frsize unit */

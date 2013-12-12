@@ -50,8 +50,8 @@
 
 /* static function declaration */
 static void text_disp_header(struct list *lst);
-static void text_disp_sum(struct list *lst, double stot, double utot, double ftot,
-                   double ifitot, double ifatot);
+static void text_disp_sum(struct list *lst, double stot, double utot,
+		double ftot, double ifitot, double ifatot);
 static void text_disp_bar(double perct);
 static void text_disp_at(double n, double perct);
 static void text_disp_fs(struct list *lst, const char *fsname);
@@ -111,17 +111,18 @@ text_disp_header(struct list *lst)
 	(void)printf("%*s", max.perctused + 1, _("%USED"));
 
 	if (dflag)
-		(void)printf("%*s", max.used, _("USED"));
+		(void)printf("%*s", max.avail, _("USED"));
 
 	(void)printf("%*s", max.avail,_("AVAILABLE"));
-	(void)printf("%*s", max.total, _("TOTAL"));
+	(void)printf("%*s", max.avail, _("TOTAL"));
 
 	if (iflag) {
 		(void)printf("%*s", max.nbinodes,_("#INODES"));
 		(void)printf("%*s", max.avinodes, _("AV.INODES"));
 	}
 
-	(void)printf("%-*s", max.mountdir, _("MOUNTED ON"));
+	/* preceed by a space because previous colum is right aligned */
+	(void)printf(" %-*s", max.mountdir, _("MOUNTED ON"));
 
 	if (oflag)
 		(void)printf("%-*s", max.mountopt, _("MOUNT OPTIONS"));
@@ -246,7 +247,7 @@ text_disp_at(double n, double perct)
 		i = humanize(&n);
 
 	change_color(perct);
-	(void)printf("%*.1f", max.avail, n);
+	(void)printf("%*.1f", max.avail - 1, n); /* -1 for the unit symbol */
 	reset_color();
 
 	if (unitflag == 'h') {
@@ -290,14 +291,14 @@ text_disp_inodes(uint64_t files, uint64_t favail)
 
 	if (unitflag == 'h') {
 		i = humanize_i(&files);
-		(void)printf("%*" PRIu64, max.nbinodes, files);
+		(void)printf("%*" PRIu64, max.nbinodes - 1, files);
 		print_unit(i, 0);
 		i = humanize_i(&favail);
-		(void)printf("%*" PRIu64, max.avinodes, favail);
+		(void)printf("%*" PRIu64, max.avinodes - 1, favail);
 		print_unit(i, 0);
 	} else {
-		(void)printf("%*" PRIu64, max.nbinodes, files);
-		(void)printf("%*" PRIu64, max.avinodes, favail);
+		(void)printf("%*" PRIu64, max.nbinodes - 1, files);
+		(void)printf("%*" PRIu64, max.avinodes - 1, favail);
 	}
 }
 
@@ -308,7 +309,8 @@ text_disp_inodes(uint64_t files, uint64_t favail)
 static void
 text_disp_mount(const char *dir)
 {
-	(void)printf("%-*s", max.mountdir, dir);
+	/* preceed by a space because previous colum is right aligned */
+	(void)printf(" %-*s", max.mountdir, dir);
 }
 
 /*

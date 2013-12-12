@@ -487,7 +487,7 @@ init_maxwidths(void)
 	 */
 	max.fsname	= (int)strlen(_("FILESYSTEM")) + 1;
 	max.fstype	= Tflag ? (int)strlen(_("TYPE")) + 1 : 0;
-	max.bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE + 1: GRAPHBAR_SHORT + 1;
+	max.bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
 	max.perctused	= (int)strlen(_("%USED")) + 1;
 	max.used	= dflag ? (int)strlen(_("USED")) + 1 : 0;
 	max.avail	= (int)strlen(_("AVAILABLE")) + 1;
@@ -519,11 +519,13 @@ update_maxwidth(struct fsmntinfo *fmi)
 void
 auto_adjust(int width)
 {
+#if 0
 	(void)fputs(_("WARNING: TTY too narrow. Some options have been disabled"
 		" to make dfc output fit (use -f to override).\n"), stderr);
 
 	(void)fputs(_("WARNING: Output still messed up. Enlarge your "
 			"terminal if you can...\n"), stderr);
+#endif
 }
 
 /*
