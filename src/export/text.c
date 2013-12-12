@@ -97,9 +97,8 @@ text_disp_header(struct list *lst)
 
 	(void)printf("%-*s", max.fsname, _("FILESYSTEM"));
 
-	if (Tflag) {
+	if (Tflag)
 		(void)printf("%-*s", max.fstype, _("TYPE"));
-	}
 
 	if (!bflag) {
 		(void)printf("%s", _("(=) USED"));
@@ -109,18 +108,17 @@ text_disp_header(struct list *lst)
 		(void)printf("%s", _("FREE (-)"));
 	}
 
-	(void)printf("%-*s", max.perctused, _("%USED"));
+	(void)printf("%*s", max.perctused + 1, _("%USED"));
 
-	if (dflag) {
-		(void)printf("%-*s", max.used, _("USED"));
-	}
+	if (dflag)
+		(void)printf("%*s", max.used, _("USED"));
 
-	(void)printf("%-*s", max.avail,_("AVAILABLE"));
-	(void)printf("%-*s", max.total, _("TOTAL"));
+	(void)printf("%*s", max.avail,_("AVAILABLE"));
+	(void)printf("%*s", max.total, _("TOTAL"));
 
 	if (iflag) {
-		(void)printf("%-*s", max.nbinodes,_("#INODES"));
-		(void)printf("%-*s", max.avinodes, _("AV.INODES"));
+		(void)printf("%*s", max.nbinodes,_("#INODES"));
+		(void)printf("%*s", max.avinodes, _("AV.INODES"));
 	}
 
 	(void)printf("%-*s", max.mountdir, _("MOUNTED ON"));
