@@ -193,15 +193,15 @@ csv_disp_at(double n, double perct)
 
 	if (unitflag == 'h') {
 		i = humanize(&n);
-		(void)printf(i == 0 ? "%.f%c" : "%.1f%c", n, cnf.csvsep);
+		(void)printf(i == 0 ? "%.f" : "%.1f", n);
 		print_unit(i, 1);
 	} else {
 		if (unitflag == 'b')
-			(void)printf("%f%c", n, cnf.csvsep);
+			(void)printf("%f", n);
 		else if (unitflag == 'k')
-			(void)printf("%f%c", n, cnf.csvsep);
+			(void)printf("%f", n);
 		else
-			(void)printf("%.1f%c", n, cnf.csvsep);
+			(void)printf("%.1f", n);
 		print_unit(0, 1);
 	}
 }
@@ -246,14 +246,14 @@ csv_disp_inodes(uint64_t files, uint64_t favail)
 
 	if (unitflag == 'h') {
 		i = humanize_i(&files);
-		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, files, cnf.csvsep);
+		(void)printf("%c%" PRIu64, cnf.csvsep, files);
 		print_unit(i, 0);
 		i = humanize_i(&favail);
-		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, favail, cnf.csvsep);
+		(void)printf("%c%" PRIu64, cnf.csvsep, favail);
 		print_unit(i, 0);
 	} else {
-		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, files, cnf.csvsep);
-		(void)printf("%c%" PRIu64 "%c", cnf.csvsep, favail, cnf.csvsep);
+		(void)printf("%c%" PRIu64, cnf.csvsep, files);
+		(void)printf("%c%" PRIu64, cnf.csvsep, favail);
 	}
 }
 
@@ -291,5 +291,5 @@ csv_disp_mopt(struct list *lst, const char *dir, const char *opts)
 static void
 csv_disp_perct(double perct)
 {
-	(void)printf("%.f%c%%", perct, cnf.csvsep);
+	(void)printf("%.f%%", perct);
 }
