@@ -91,7 +91,7 @@ option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit syst
 
 # set compiler flags
 # long long is required, all the rest should be c89 compliant
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c89 -Wno-long-long")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c89 -lm -Wno-long-long")
 include(CheckCCompilerFlag)
 check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
 check_c_compiler_flag(-Wdouble-promotion HAS_WDOUBLE_PROMOTION)

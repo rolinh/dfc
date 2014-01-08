@@ -54,16 +54,16 @@
 /* static function declaration */
 static void tex_disp_init(void);
 static void tex_disp_deinit(void);
-static void tex_disp_header(struct list *lst);
-static void tex_disp_sum(struct list *lst, double stot, double utot, double ftot,
+static void tex_disp_header(void);
+static void tex_disp_sum(double stot, double utot, double ftot,
                   double ifitot, double ifatot);
 static void tex_disp_bar(double perct);
 static void tex_disp_at(double n, double perct);
-static void tex_disp_fs(struct list *lst, const char *fsname);
-static void tex_disp_type(struct list *lst, const char *type);
+static void tex_disp_fs(const char *fsname);
+static void tex_disp_type(const char *type);
 static void tex_disp_inodes(uint64_t files, uint64_t favail);
 static void tex_disp_mount(const char *dir);
-static void tex_disp_mopt(struct list *lst, const char *dir, const char *opts);
+static void tex_disp_mopt(const char *opts);
 static void tex_disp_perct(double perct);
 
 /* init pointers from display structure to the functions found here */
@@ -131,13 +131,10 @@ tex_disp_deinit(void)
 
 /*
  * Display header
- * @lst: is ignored here
  */
 static void
-tex_disp_header(struct list *lst)
+tex_disp_header(void)
 {
-	(void)lst;
-
 	(void)puts("\\hline");
 	(void)printf("%s", _("FILESYSTEM"));
 	if (Tflag)
@@ -163,7 +160,6 @@ tex_disp_header(struct list *lst)
 
 /*
  * Display the sum (useful when -s option is used
- * @lst: is ignored here
  * @stot: total size of "total"
  * @atot: total size of "available"
  * @utot: total size of "used"
@@ -171,7 +167,7 @@ tex_disp_header(struct list *lst)
  * @ifatot: total number of available inodes
  */
 static void
-tex_disp_sum(struct list *lst, double stot, double atot, double utot,
+tex_disp_sum(double stot, double atot, double utot,
              double ifitot, double ifatot)
 {
 	double ptot = 0;
@@ -180,8 +176,6 @@ tex_disp_sum(struct list *lst, double stot, double atot, double utot,
 		ptot = 100.0;
 	else
 		ptot = (utot / stot) * 100.0;
-
-	(void)lst;
 
 	(void)printf("\\\\ SUM");
 
@@ -293,11 +287,10 @@ tex_disp_at(double n, double perct)
 
 /*
  * Display file system
- * @lst: is ignored here
  * @fsname: list of the file system to print
  */
 static void
-tex_disp_fs(struct list *lst, const char *fsname)
+tex_disp_fs(const char *fsname)
 {
 	static int must_close = 0;
 	char *cleaned_fsname = sanitizestr(fsname);
@@ -306,8 +299,6 @@ tex_disp_fs(struct list *lst, const char *fsname)
 		(void)fputs("Cannot print file system name\n", stderr);
 		return;
 	}
-
-	(void)lst;
 
 	if (must_close == 1)
 		(void)puts("\\\\");
@@ -320,11 +311,10 @@ tex_disp_fs(struct list *lst, const char *fsname)
 
 /*
  * Display file system type
- * @lst: is ignored here
  * @type: the file system type to print
  */
 static void
-tex_disp_type(struct list *lst, const char *type)
+tex_disp_type(const char *type)
 {
 	char *cleaned_type = sanitizestr(type);
 
@@ -332,8 +322,6 @@ tex_disp_type(struct list *lst, const char *type)
 		(void)fputs("Cannot print type\n", stderr);
 		return;
 	}
-
-	(void) lst;
 
 	(void) printf(" & %s", cleaned_type);
 	free(cleaned_type);
@@ -380,12 +368,10 @@ tex_disp_mount(const char *dir)
 
 /*
  * Display mount options
- * @lst: is ignored here
- * @dir: is ignored here
  * @opts: mount options
  */
 static void
-tex_disp_mopt(struct list *lst, const char *dir, const char *opts)
+tex_disp_mopt(const char *opts)
 {
 	char *cleaned_opts = sanitizestr(opts);
 
@@ -393,9 +379,6 @@ tex_disp_mopt(struct list *lst, const char *dir, const char *opts)
 		(void)fputs("Cannot print mount options\n", stderr);
 		return;
 	}
-
-	(void)lst;
-	(void)dir;
 
 	(void)printf(" & %s", cleaned_opts);
 	free(cleaned_opts);

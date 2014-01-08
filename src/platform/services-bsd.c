@@ -121,19 +121,19 @@ fetch_info(struct list *lst)
 		if (Wflag) { /* Wflag to avoid name truncation */
 			if ((fmi->fsname = strdup(entbuf->f_mntfromname)) == NULL)
 				fmi->fsname = g_unknown_str;
-			if ((fmi->dir = strdup(entbuf->f_mntonname)) == NULL)
-				fmi->dir = g_unknown_str;
+			if ((fmi->mntdir = strdup(entbuf->f_mntonname)) == NULL)
+				fmi->mntdir = g_unknown_str;
 		} else {
 			if ((fmi->fsname = strdup(shortenstr(entbuf->f_mntfromname,
 					       STRMAXLEN))) == NULL)
 				fmi->fsname = g_unknown_str;
-			if ((fmi->dir = strdup(shortenstr(entbuf->f_mntonname,
+			if ((fmi->mntdir = strdup(shortenstr(entbuf->f_mntonname,
 					    STRMAXLEN))) == NULL)
-				fmi->dir = g_unknown_str;
+				fmi->mntdir = g_unknown_str;
 		}
-		if ((fmi->type = strdup(shortenstr(entbuf->f_fstypename,
+		if ((fmi->fstype = strdup(shortenstr(entbuf->f_fstypename,
 				     STRMAXLEN))) == NULL)
-			fmi->type = g_unknown_str;
+			fmi->fstype = g_unknown_str;
 
 		/* infos from statvfs */
 		fmi->flags    = GET_FLAGS(vfsbuf);
@@ -146,8 +146,11 @@ fetch_info(struct list *lst)
 		fmi->ffree    = vfsbuf.f_ffree;
 		fmi->favail   = GET_FAVAIL(vfsbuf);
 
-		if ((fmi->opts = statfs_flags_to_str(fmi)) == NULL)
-			fmi->opts = g_none_str;
+		if ((fmi->mntopts = statfs_flags_to_str(fmi)) == NULL)
+			fmi->mntopts = g_none_str;
+
+		/* compute, available, % used, etc. */
+		compute_fs_stats(fmi);
 
 		/* pointer to the next element */
 		fmi->next = NULL;

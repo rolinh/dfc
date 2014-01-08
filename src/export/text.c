@@ -49,16 +49,16 @@
 #endif
 
 /* static function declaration */
-static void text_disp_header(struct list *lst);
-static void text_disp_sum(struct list *lst, double stot, double utot,
+static void text_disp_header(void);
+static void text_disp_sum(double stot, double utot,
 		double ftot, double ifitot, double ifatot);
 static void text_disp_bar(double perct);
 static void text_disp_at(double n, double perct);
-static void text_disp_fs(struct list *lst, const char *fsname);
-static void text_disp_type(struct list *lst, const char *type);
+static void text_disp_fs(const char *fsname);
+static void text_disp_type(const char *type);
 static void text_disp_inodes(uint64_t files, uint64_t favail);
 static void text_disp_mount(const char *dir);
-static void text_disp_mopt(struct list *lst, const char *dir, const char *opts);
+static void text_disp_mopt(const char *opts);
 static void text_disp_perct(double perct);
 
 static void change_color(double perct);
@@ -84,10 +84,9 @@ init_disp_text(struct display *disp)
 
 /*
  * Display header
- * @lst: queue containing the informations
  */
 static void
-text_disp_header(struct list *lst)
+text_disp_header(void)
 {
 	int gap;
 
@@ -122,10 +121,10 @@ text_disp_header(struct list *lst)
 	}
 
 	/* preceed by a space because previous colum is right aligned */
-	(void)printf(" %-*s", max.mountdir, _("MOUNTED ON"));
+	(void)printf(" %-*s", max.mntdir, _("MOUNTED ON"));
 
 	if (oflag)
-		(void)printf("%-*s", max.mountopt, _("MOUNT OPTIONS"));
+		(void)printf("%-*s", max.mntopts, _("MOUNT OPTIONS"));
 	(void)printf("\n");
 
 	reset_color();
@@ -133,7 +132,6 @@ text_disp_header(struct list *lst)
 
 /*
  * Display the sum (useful when -s option is used
- * @lst: queue containing the informations
  * @stot: total size of "total"
  * @atot: total size of "available"
  * @utot: total size of "used"
@@ -141,7 +139,7 @@ text_disp_header(struct list *lst)
  * @ifatot: total number of available inodes
  */
 static void
-text_disp_sum(struct list *lst, double stot, double atot, double utot,
+text_disp_sum(double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
 	double ptot = 0;
@@ -259,22 +257,20 @@ text_disp_at(double n, double perct)
 
 /*
  * Display file system
- * @lst: list containing the information
  * @fsname: list of the file system to print
  */
 static void
-text_disp_fs(struct list* lst, const char *fsname)
+text_disp_fs(const char *fsname)
 {
 	(void)printf("%-*s", max.fsname, fsname);
 }
 
 /*
  * Display file system type
- * @lst: list containing the information
  * @type: the file system type to print
  */
 static void
-text_disp_type(struct list* lst, const char *type)
+text_disp_type(const char *type)
 {
 	(void)printf("%-*s", max.fstype, type);
 }
@@ -310,18 +306,17 @@ static void
 text_disp_mount(const char *dir)
 {
 	/* preceed by a space because previous colum is right aligned */
-	(void)printf(" %-*s", max.mountdir, dir);
+	(void)printf(" %-*s", max.mntdir, dir);
 }
 
 /*
  * Display mount options
- * @lst: structure containing information
  * @opts: mount options
  */
 static void
-text_disp_mopt(struct list* lst, const char *dir, const char *opts)
+text_disp_mopt(const char *opts)
 {
-	(void)printf("%-*s", max.mountopt, opts);
+	(void)printf("%-*s", max.mntopts, opts);
 }
 
 /*

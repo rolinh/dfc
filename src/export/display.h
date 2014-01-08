@@ -35,8 +35,6 @@
 #include <sys/types.h>
 #include <inttypes.h>
 
-#include "list.h"
-
 /* Structure to handle the display interface. */
 struct display
 {
@@ -44,15 +42,15 @@ struct display
     void (*init)         (void);
     void (*deinit)       (void);
 
-    void (*print_header) (struct list*);
-    void (*print_sum)    (struct list*, double, double, double, double, double);
+    void (*print_header) (void);
+    void (*print_sum)    (double, double, double, double, double);
     void (*print_bar)    (double);
     void (*print_at)     (double, double);
-    void (*print_fs)	 (struct list*, const char *);
-    void (*print_type)	 (struct list*, const char *);
+    void (*print_fs)	 (const char *);
+    void (*print_type)	 (const char *);
     void (*print_inodes) (uint64_t, uint64_t);
     void (*print_mount)	 (const char *);
-    void (*print_mopt)	 (struct list*, const char *, const char *);
+    void (*print_mopt)	 (const char *);
     void (*print_perct)  (double);
 };
 

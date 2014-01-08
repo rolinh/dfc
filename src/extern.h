@@ -104,8 +104,8 @@ struct maxwidths {
 	int total;
 	int nbinodes;
 	int avinodes;
-	int mountdir;
-	int mountopt;
+	int mntdir;
+	int mntopts;
 };
 
 /*

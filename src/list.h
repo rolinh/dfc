@@ -45,9 +45,14 @@
 struct fsmntinfo {
 	/* infos to get from getmntent(3) */
 	char *fsname;	/* name of mounted file system */
-	char *dir;	/* file system path prefix */
-	char *type;	/* mount type */
-	char *opts;	/* mount options (see mntent.h) */
+	char *fstype;	/* mount type */
+	char *mntdir;	/* file system path prefix */
+	char *mntopts;	/* mount options (see mntent.h) */
+
+	double perctused;   /* fs usage in % */
+	double total;	    /* fs total size */
+	double avail;	    /* fs available size */
+	double used;	    /* fs used size */
 
 	/* infos to get from statvfs(3) */
 #if defined(__linux__)

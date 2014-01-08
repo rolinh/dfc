@@ -517,7 +517,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 
 	/* legend on top */
 	if (!nflag)
-		sdisp->print_header(lst);
+		sdisp->print_header();
 
 	 /* sort the list */
 	if (qflag)
@@ -533,7 +533,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		/* filtering on fs type */
-		if (tflag && (fsfilter(p->type, fstfilter, nmt) == 0)) {
+		if (tflag && (fsfilter(p->fstype, fstfilter, nmt) == 0)) {
 			p = delete_struct_and_get_next(p);
 			continue;
 		}
@@ -550,11 +550,11 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		/* filesystem */
-		sdisp->print_fs(lst, p->fsname);
+		sdisp->print_fs(p->fsname);
 
 		/* type */
 		if (Tflag) {
-			sdisp->print_type(lst, p->type);
+			sdisp->print_type(p->fstype);
 		}
 
 #if defined(__linux__) || defined(__NetBSD__)
@@ -618,11 +618,11 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		/* mounted on */
-		sdisp->print_mount(p->dir);
+		sdisp->print_mount(p->mntdir);
 
 		/* info about mount option */
 		if (oflag)
-			sdisp->print_mopt(lst, p->dir, p->opts);
+			sdisp->print_mopt(p->mntopts);
 
 		(void)printf("\n");
 
@@ -630,7 +630,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	}
 
 	if (sflag)
-		sdisp->print_sum(lst, stot, atot, utot, ifitot, ifatot);
+		sdisp->print_sum(stot, atot, utot, ifitot, ifatot);
 
 	/* only required for html and tex export (csv and text point to NULL) */
 	if (sdisp->deinit)

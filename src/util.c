@@ -44,6 +44,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/ioctl.h>
+#include <math.h>
 
 #include "util.h"
 
@@ -383,9 +384,9 @@ cmp(struct fsmntinfo *a, struct fsmntinfo *b)
 	case 1:
 		return strcmp(a->fsname, b->fsname);
 	case 2:
-		return strcmp(a->type, b->type);
+		return strcmp(a->fstype, b->fstype);
 	case 3:
-		return strcmp(a->dir, b->dir);
+		return strcmp(a->mntdir, b->mntdir);
 	default:
 		return -1;
 	}
@@ -393,7 +394,7 @@ cmp(struct fsmntinfo *a, struct fsmntinfo *b)
 
 /*
  * Perform a mergesort algorithm to sort the list by ascending
- * Results depends on what was chosen for comparison (fsname, type or dir)
+ * Results depends on what was chosen for comparison (fsname, fstype or mntdir)
  * @fmi: pointer to the first element of the linked list structure to be sorted
  */
 struct fsmntinfo *
@@ -494,21 +495,44 @@ init_maxwidths(void)
 	max.total	= (int)strlen(_("TOTAL")) + 1;
 	max.nbinodes	= iflag ? (int)strlen(_("#INODES")) + 1 : 0;
 	max.avinodes	= iflag ? (int)strlen(_("AV.INODES")) + 1 : 0;
-	max.mountdir	= (int)strlen(_("MOUNTED ON")) + 1;
-	max.mountopt	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
+	max.mntdir	= (int)strlen(_("MOUNTED ON")) + 1;
+	max.mntopts	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
 }
 
 void
 update_maxwidth(struct fsmntinfo *fmi)
 {
+	int i, tmp, index;
+	const char *unitstring = "bkmgtpezy";
+	char *match;
+
 	if (!aflag && (is_mnt_ignore(fmi) == 1))
 		return;
 
 	/* + 1 for a space between each column */
 	max.fsname = imax((int)strlen(fmi->fsname) + 1, max.fsname);
-	max.fstype = imax((int)strlen(fmi->type) + 1, max.fstype);
-	max.mountdir = imax((int)strlen(fmi->dir) + 1, max.mountdir);
-	max.mountopt = imax((int)strlen(fmi->opts) + 1, max.mountopt);
+	max.fstype = imax((int)strlen(fmi->fstype) + 1, max.fstype);
+	max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
+	max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
+
+	/*
+	 * FIXME: h unit is not yet considered and the computation is not yet
+	 * correct
+	 */
+	/*
+	 * consider that used, avail and total can have the same width
+	 * and use bsize as all OS have it defined and it is the larger value
+	 * that it can be between used, avail and total
+	 */
+	tmp = 1 + floor(log10(fmi->bsize)) + 2; /* add space for the unit symbol */
+	if ((match = strchr(unitstring, unitflag)) == NULL) {
+		(void)fprintf(stderr, _("Cannot update maxwidth for max.avail\n"));
+		return;
+	}
+	index = match - unitstring + 1;
+	for (i = 1; i < index; i++)
+		tmp /= 3;
+	max.avail = imax(tmp, max.avail);
 }
 
 /*
@@ -519,6 +543,7 @@ update_maxwidth(struct fsmntinfo *fmi)
 void
 auto_adjust(int width)
 {
+	/* TODO */
 #if 0
 	(void)fputs(_("WARNING: TTY too narrow. Some options have been disabled"
 		" to make dfc output fit (use -f to override).\n"), stderr);
@@ -526,6 +551,14 @@ auto_adjust(int width)
 	(void)fputs(_("WARNING: Output still messed up. Enlarge your "
 			"terminal if you can...\n"), stderr);
 #endif
+}
+
+
+
+void
+compute_fs_stats(struct fsmntinfo *fmi)
+{
+	/* TODO */
 }
 
 /*
