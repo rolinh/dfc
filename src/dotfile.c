@@ -164,7 +164,7 @@ set_conf(const char *key, const char *val)
 {
 	int tmp;
 	int ret = 0;
-	char *tmpc;
+	char *tmpc = NULL;
 
 	if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)
