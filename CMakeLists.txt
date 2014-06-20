@@ -1,5 +1,24 @@
 cmake_minimum_required(VERSION 2.8.4)
 
+# project informations
+project(dfc C)
+set(PACKAGE ${CMAKE_PROJECT_NAME})
+set(VERSION_MAJOR 4)
+set(VERSION_MINOR 0)
+set(VERSION_PATCH 0)
+execute_process(
+    COMMAND git rev-parse --short master
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE VERSION_REVISION
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# prepend "-" to version_revision
+if(VERSION_REVISION)
+    set(VERSION_REVISION "-${VERSION_REVISION}")
+endif()
+set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${VERSION_REVISION})
+
 # supported platforms
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(DARWIN true)
@@ -22,25 +41,6 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
 else()
     message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}")
 endif()
-
-# project informations
-project(dfc C)
-set(PACKAGE ${CMAKE_PROJECT_NAME})
-set(VERSION_MAJOR 4)
-set(VERSION_MINOR 0)
-set(VERSION_PATCH 0)
-execute_process(
-    COMMAND git rev-parse --short master
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE VERSION_REVISION
-    ERROR_QUIET
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-# prepend "-" to version_revision
-if(VERSION_REVISION)
-    set(VERSION_REVISION "-${VERSION_REVISION}")
-endif()
-set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${VERSION_REVISION})
 
 # useful defines
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
