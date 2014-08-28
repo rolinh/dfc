@@ -70,7 +70,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	struct display sdisp;
 	int ch;
-	int width;
+	int tty_width;
 	int ret = EXIT_SUCCESS;
 	char *fsnfilter = NULL;
 	char *fstfilter = NULL;
@@ -386,10 +386,10 @@ main(int argc, char *argv[])
 	/* init default max required width */
 	init_maxwidths();
 
-	width = getttywidth();
+	tty_width = getttywidth();
 
 	/* if fd is not a terminal and color mode is not "always", disable color */
-	if (width == 0 && cflag != 2)
+	if (tty_width == 0 && cflag != 2)
 		cflag = 0;
 
 	/* change cnf value according to config file, it it exists */
@@ -412,8 +412,8 @@ main(int argc, char *argv[])
 	fetch_info(&queue);
 
 	/* cannot display all information if tty is too narrow */
-	if (!fflag && width > 0 && !eflag)
-		auto_adjust(width);
+	if (!fflag && tty_width > 0 && !eflag)
+		auto_adjust(tty_width);
 
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &sdisp);

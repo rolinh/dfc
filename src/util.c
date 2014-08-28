@@ -499,8 +499,14 @@ init_maxwidths(void)
 	max.mntopts	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
 }
 
+/*
+ * Return the required width necessary for the number to be displayed.
+ * This functions takes into account the unit used (b, k, m, g, ...).
+ * @fs_size: file system size from which the required width for displaying
+ * should be computed.
+ * */
 int
-get_req_width(double size)
+get_req_width(double fs_size)
 {
 	long i, index;
 	double req_width, req_min;
@@ -520,8 +526,8 @@ get_req_width(double size)
 			return -1;
 		}
 
-		if (size > 0.0)
-			req_width += 1.0 + floor(log10(size));
+		if (fs_size > 0.0)
+			req_width += 1.0 + floor(log10(fs_size));
 
 		index = match - unitstring + 1;
 		printf("index: %ld\n", index);
@@ -557,19 +563,61 @@ update_maxwidth(struct fsmntinfo *fmi)
 /*
  * auto-adjust options based on the size needed to display the informations
  * @lst: list containing info
- * @width: width of the output
+ * @tty_width: width of the output terminal
  */
 void
-auto_adjust(int width)
+auto_adjust(int tty_width)
 {
-	/* TODO */
-#if 0
+	int req_width;
+
+	req_width = max.fsname + max.fstype + max.bar + max.perctused + max.used
+		    + max.avail + max.total + max.nbinodes + max.avinodes
+		    + max.mntdir + max.mntopts;
+
+	if (tty_width > req_width)
+		return; /* nothing to adjust */
+
 	(void)fputs(_("WARNING: TTY too narrow. Some options have been disabled"
 		" to make dfc output fit (use -f to override).\n"), stderr);
+	if (!bflag) {
+		if (wflag) {
+			wflag = 0;
+			req_width -= GRAPHBAR_WIDE - GRAPHBAR_SHORT;
+			if (tty_width >= req_width)
+				return;
+		}
+		bflag = 1;
+		req_width -= GRAPHBAR_SHORT;
+		if (tty_width >= req_width)
+			return;
+	}
+	if (dflag) {
+		dflag = 0;
+		req_width -= max.used;
+		if (tty_width >= req_width)
+			return;
+	}
+	if (Tflag) {
+		Tflag = 0;
+		req_width -= max.fstype;
+		if (tty_width >= req_width)
+			return;
+	}
+	if (iflag) {
+		iflag = 0;
+		req_width -= max.nbinodes;
+		if (tty_width >= req_width)
+			return;
+	}
+	if (oflag) {
+		oflag = 0;
+		req_width -= max.mntopts;
+		if (tty_width >= req_width)
+			return;
+	}
 
 	(void)fputs(_("WARNING: Output still messed up. Enlarge your "
 			"terminal if you can...\n"), stderr);
-#endif
 }
 
 /*
