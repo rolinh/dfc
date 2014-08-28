@@ -518,7 +518,7 @@ get_req_width(double fs_size)
 	req_width = req_min;
 
 	if (unitflag == 'h') {
-		req_width += 5; /* max 111.1 => 5 */
+		req_width += 3;
 	} else {
 		if ((match = strchr(unitstring, unitflag)) == NULL) {
 			(void)fprintf(stderr,
