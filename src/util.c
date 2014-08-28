@@ -530,7 +530,6 @@ get_req_width(double fs_size)
 			req_width += 1.0 + floor(log10(fs_size));
 
 		index = match - unitstring + 1;
-		printf("index: %ld\n", index);
 		for (i = 1; i < index; i++)
 			req_width -= 3.0;
 
@@ -553,11 +552,9 @@ update_maxwidth(struct fsmntinfo *fmi)
 	max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
 	max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
 
-	printf("mntdir: %s\n", fmi->mntdir);
 	max.used = imax(get_req_width(fmi->used), max.used);
 	max.avail = imax(get_req_width(fmi->avail), max.avail);
 	max.total = imax(get_req_width(fmi->total), max.total);
-	printf("max.total: %d\n", max.total);
 }
 
 /*
