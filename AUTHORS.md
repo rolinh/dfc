@@ -12,6 +12,7 @@
   * Landry Breuil
   * Matthieu Le Jeune
   * Sylvain Laperche
+  * Tobias Patzl
 
 ## TRANSLATORS:
 
