@@ -116,7 +116,7 @@ text_disp_header(void)
 	(void)printf("%*s", max.total, _("TOTAL"));
 
 	if (iflag) {
-		(void)printf("%*s", max.nbinodes,_("#INODES"));
+		(void)printf("%*s", max.nbinodes, _("#INODES"));
 		(void)printf("%*s", max.avinodes, _("AV.INODES"));
 	}
 
@@ -294,8 +294,8 @@ text_disp_inodes(uint64_t files, uint64_t favail)
 		(void)printf("%*" PRIu64, max.avinodes - 1, favail);
 		print_unit(i, 0);
 	} else {
-		(void)printf("%*" PRIu64, max.nbinodes - 1, files);
-		(void)printf("%*" PRIu64, max.avinodes - 1, favail);
+		(void)printf(" %*" PRIu64, max.nbinodes - 1, files);
+		(void)printf(" %*" PRIu64, max.avinodes - 1, favail);
 	}
 }
 

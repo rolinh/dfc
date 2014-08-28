@@ -550,11 +550,21 @@ update_maxwidth(struct fsmntinfo *fmi)
 	max.fsname = imax((int)strlen(fmi->fsname) + 1, max.fsname);
 	max.fstype = imax((int)strlen(fmi->fstype) + 1, max.fstype);
 	max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
-	max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
+	if (oflag)
+		max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
 
-	max.used = imax(get_req_width(fmi->used), max.used);
+	if (dflag)
+		max.used = imax(get_req_width(fmi->used), max.used);
 	max.avail = imax(get_req_width(fmi->avail), max.avail);
 	max.total = imax(get_req_width(fmi->total), max.total);
+
+	if (iflag) {
+		/* XXX: fix cast to int */
+		max.nbinodes = imax((int)(ceil(2 + floor(log10(fmi->files)))),
+			            max.nbinodes);
+		max.avinodes = imax((int)(ceil(3 + floor(log10(fmi->ffree)))),
+			            max.avinodes);
+	}
 }
 
 /*
