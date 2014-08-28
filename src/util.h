@@ -56,6 +56,7 @@ int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
 int getttywidth(void);
 void init_maxwidths(void);
+int get_req_width(double size);
 void update_maxwidth(struct fsmntinfo *fmi);
 void auto_adjust(int width);
 void compute_fs_stats(struct fsmntinfo *fmi);

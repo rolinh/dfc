@@ -51,9 +51,9 @@
 /* static function declaration */
 static void csv_disp_header(void);
 static void csv_disp_sum(double stot, double utot, double ftot,
-                  double ifitot, double ifatot);
+		double ifitot, double ifatot);
 static void csv_disp_bar(double perct);
-static void csv_disp_at(double n, double perct);
+static void csv_disp_uat(double n, double perct, int req_width);
 static void csv_disp_fs(const char *fsname);
 static void csv_disp_type(const char *type);
 static void csv_disp_inodes(uint64_t files, uint64_t favail);
@@ -70,7 +70,7 @@ init_disp_csv(struct display *disp)
     disp->print_header = csv_disp_header;
     disp->print_sum    = csv_disp_sum;
     disp->print_bar    = csv_disp_bar;
-    disp->print_at     = csv_disp_at;
+    disp->print_uat    = csv_disp_uat;
     disp->print_fs     = csv_disp_fs;
     disp->print_type   = csv_disp_type;
     disp->print_inodes = csv_disp_inodes;
@@ -144,9 +144,9 @@ csv_disp_sum(double stot, double atot, double utot, double ifitot, double ifatot
 	}
 
 	if (dflag)
-		csv_disp_at(utot, ptot);
-	csv_disp_at(atot, ptot);
-	csv_disp_at(stot, ptot);
+		csv_disp_uat(utot, ptot, 0);
+	csv_disp_uat(atot, ptot, 0);
+	csv_disp_uat(stot, ptot, 0);
 
 	if (iflag)
 		csv_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
@@ -170,15 +170,16 @@ csv_disp_bar(double perct)
 /*
  * Display available and total correctly formated
  * @n: number to print
- * @perct: percentage (useful for finding which color to use)
+ * @perct: ignored here
+ * @req_width: ignored here
  */
 static void
-csv_disp_at(double n, double perct)
+csv_disp_uat(double n, double perct, int req_width)
 {
 	int i;
 
-	/* do not care about perct here */
 	(void)perct;
+	(void)req_width;
 
 	(void)printf("%c", cnf.csvsep);
 

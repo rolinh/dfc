@@ -53,7 +53,7 @@ static void text_disp_header(void);
 static void text_disp_sum(double stot, double utot,
 		double ftot, double ifitot, double ifatot);
 static void text_disp_bar(double perct);
-static void text_disp_at(double n, double perct);
+static void text_disp_uat(double n, double perct, int req_width);
 static void text_disp_fs(const char *fsname);
 static void text_disp_type(const char *type);
 static void text_disp_inodes(uint64_t files, uint64_t favail);
@@ -73,7 +73,7 @@ init_disp_text(struct display *disp)
     disp->print_header = text_disp_header;
     disp->print_sum    = text_disp_sum;
     disp->print_bar    = text_disp_bar;
-    disp->print_at     = text_disp_at;
+    disp->print_uat    = text_disp_uat;
     disp->print_fs     = text_disp_fs;
     disp->print_type   = text_disp_type;
     disp->print_inodes = text_disp_inodes;
@@ -110,10 +110,10 @@ text_disp_header(void)
 	(void)printf("%*s", max.perctused + 1, _("%USED"));
 
 	if (dflag)
-		(void)printf("%*s", max.avail, _("USED"));
+		(void)printf("%*s", max.used, _("USED"));
 
-	(void)printf("%*s", max.avail,_("AVAILABLE"));
-	(void)printf("%*s", max.avail, _("TOTAL"));
+	(void)printf("%*s", max.avail, _("AVAILABLE"));
+	(void)printf("%*s", max.total, _("TOTAL"));
 
 	if (iflag) {
 		(void)printf("%*s", max.nbinodes,_("#INODES"));
@@ -171,9 +171,9 @@ text_disp_sum(double stot, double atot, double utot,
 	}
 
 	if (dflag)
-		text_disp_at(utot, ptot);
-	text_disp_at(atot, ptot);
-	text_disp_at(stot, ptot);
+		text_disp_uat(utot, ptot, max.used);
+	text_disp_uat(atot, ptot, max.avail);
+	text_disp_uat(stot, ptot, max.total);
 
 	if (iflag)
 		text_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
@@ -232,12 +232,13 @@ text_disp_bar(double perct)
 }
 
 /*
- * Display available and total correctly formated
+ * Display used, available and total correctly formated
  * @n: number to print
  * @perct: percentage (useful for finding which color to use)
+ * @req_width: required width (used for terminal display, otherwise can be 0)
  */
 static void
-text_disp_at(double n, double perct)
+text_disp_uat(double n, double perct, int req_width)
 {
 	int i;
 
@@ -245,7 +246,7 @@ text_disp_at(double n, double perct)
 		i = humanize(&n);
 
 	change_color(perct);
-	(void)printf("%*.1f", max.avail - 1, n); /* -1 for the unit symbol */
+	(void)printf("%*.1f", req_width - 1, n); /* -1 for the unit symbol */
 	reset_color();
 
 	if (unitflag == 'h') {

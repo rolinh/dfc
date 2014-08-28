@@ -230,4 +230,17 @@ fetch_info(struct list *lst)
 	free(fmi);
 }
 
+void
+compute_fs_stats(struct fsmntinfo *fmi)
+{
+	fmi->total = (double)fmi->frsize * (double)fmi->blocks;
+	fmi->avail = (double)fmi->frsize * (double)fmi->bavail;
+	fmi->used  = (double)fmi->frsize * ((double)fmi->blocks - (double)fmi->bfree);
+	if ((int)fmi->total == 0)
+		fmi->perctused = 100.0;
+	else
+		fmi->perctused = 100.0 -
+			((double)fmi->bavail / (double)fmi->blocks) * 100.0;
+}
+
 #endif /* __linux__ */

@@ -490,7 +490,6 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	int n;
 	int nmt = 0;
 	int nmn = 0;
-	double perctused, size, avail, used;
 	double stot, atot, utot, ifitot, ifatot;
 
 	stot = atot = utot = ifitot = ifatot = n = 0;
@@ -557,52 +556,31 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 			sdisp->print_type(p->fstype);
 		}
 
-#if defined(__linux__) || defined(__NetBSD__)
-		size  = (double)p->frsize * (double)p->blocks;
-		avail = (double)p->frsize * (double)p->bavail;
-		used  = (double)p->frsize * ((double)p->blocks - (double)p->bfree);
-#else /* *BSD */
-		size  = (double)p->bsize * (double)p->blocks;
-		avail = (double)p->bsize * (double)p->bavail;
-		used  = (double)p->bsize * ((double)p->blocks - (double)p->bfree);
-#endif /* __linux__ */
-		/* calculate the % used */
-		if ((int)size == 0)
-			perctused = 100.0;
-		else
-			/*
-			 * compute percent based on bfree as it is a given
-			 * value and not a computed one like used size
-			 */
-			perctused = 100.0 -
-				((double)p->bavail / (double)p->blocks) * 100.0;
-
 		if (sflag) {
-			stot += size;
-			atot += avail;
-			utot += used;
+			stot += p->total;
+			atot += p->avail;
+			utot += p->used;
 		}
 
 		if (!bflag)
-			sdisp->print_bar(perctused);
+			sdisp->print_bar(p->perctused);
 
 		/* %used */
-		sdisp->print_perct(perctused);
+		sdisp->print_perct(p->perctused);
 
 
 		/* format to requested format */
 		if (uflag) {
-			size = cvrt(size);
-			avail = cvrt(avail);
+			p->total = cvrt(p->total);
+			p->avail = cvrt(p->avail);
 			if (dflag)
-				used = cvrt(used);
+				p->used = cvrt(p->used);
 		}
 
 		if (dflag)
-			sdisp->print_at(used, perctused);
-		/* avail  and total */
-		sdisp->print_at(avail, perctused);
-		sdisp->print_at(size, perctused);
+			sdisp->print_uat(p->used, p->perctused, max.used);
+		sdisp->print_uat(p->avail, p->perctused, max.avail);
+		sdisp->print_uat(p->total, p->perctused, max.total);
 
 		/* info about inodes */
 		if (iflag) {

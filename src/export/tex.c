@@ -58,7 +58,7 @@ static void tex_disp_header(void);
 static void tex_disp_sum(double stot, double utot, double ftot,
                   double ifitot, double ifatot);
 static void tex_disp_bar(double perct);
-static void tex_disp_at(double n, double perct);
+static void tex_disp_uat(double n, double perct, int req_width);
 static void tex_disp_fs(const char *fsname);
 static void tex_disp_type(const char *type);
 static void tex_disp_inodes(uint64_t files, uint64_t favail);
@@ -75,7 +75,7 @@ init_disp_tex(struct display *disp)
 	disp->print_header = tex_disp_header;
 	disp->print_sum    = tex_disp_sum;
 	disp->print_bar    = tex_disp_bar;
-	disp->print_at     = tex_disp_at;
+	disp->print_uat    = tex_disp_uat;
 	disp->print_fs     = tex_disp_fs;
 	disp->print_type   = tex_disp_type;
 	disp->print_inodes = tex_disp_inodes;
@@ -195,10 +195,10 @@ tex_disp_sum(double stot, double atot, double utot,
 	}
 
 	if (dflag)
-		tex_disp_at(utot, ptot);
+		tex_disp_uat(utot, ptot, 0);
 
-	tex_disp_at(atot, ptot);
-	tex_disp_at(stot, ptot);
+	tex_disp_uat(atot, ptot, 0);
+	tex_disp_uat(stot, ptot, 0);
 
 	if (iflag)
 		tex_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
@@ -264,13 +264,15 @@ tex_disp_bar(double perct)
  * Display available and total correctly formated
  * @n: number to print
  * @perct: percentage (useful for finding which color to use)
+ * @req_width: ignored here
  */
 static void
-tex_disp_at(double n, double perct)
+tex_disp_uat(double n, double perct, int req_width)
 {
 	int i;
 
 	(void)perct;
+	(void)req_width;
 
 	if (unitflag == 'h') {
 		i = humanize(&n);

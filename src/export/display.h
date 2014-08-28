@@ -45,7 +45,7 @@ struct display
     void (*print_header) (void);
     void (*print_sum)    (double, double, double, double, double);
     void (*print_bar)    (double);
-    void (*print_at)     (double, double);
+    void (*print_uat)    (double, double, int);
     void (*print_fs)	 (const char *);
     void (*print_type)	 (const char *);
     void (*print_inodes) (uint64_t, uint64_t);

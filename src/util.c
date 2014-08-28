@@ -499,13 +499,45 @@ init_maxwidths(void)
 	max.mntopts	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
 }
 
-void
-update_maxwidth(struct fsmntinfo *fmi)
+int
+get_req_width(double size)
 {
-	int i, tmp, index;
+	long i, index;
+	double req_width, req_min;
 	const char *unitstring = "bkmgtpezy";
 	char *match;
 
+	/* spaces for the unit symbol and floating point */
+	req_min = 4.0;
+	req_width = req_min;
+
+	if (unitflag == 'h') {
+		req_width += 5; /* max 111.1 => 5 */
+	} else {
+		if ((match = strchr(unitstring, unitflag)) == NULL) {
+			(void)fprintf(stderr,
+			    _("Cannot compute required width"));
+			return -1;
+		}
+
+		if (size > 0.0)
+			req_width += 1.0 + floor(log10(size));
+
+		index = match - unitstring + 1;
+		printf("index: %ld\n", index);
+		for (i = 1; i < index; i++)
+			req_width -= 3.0;
+
+		req_width = ceil(req_width);
+	}
+
+	/* XXX: cannot cast double to int */
+	return (req_width < req_min) ? (int)req_min : (int)req_width;
+}
+
+void
+update_maxwidth(struct fsmntinfo *fmi)
+{
 	if (!aflag && (is_mnt_ignore(fmi) == 1))
 		return;
 
@@ -515,24 +547,11 @@ update_maxwidth(struct fsmntinfo *fmi)
 	max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
 	max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
 
-	/*
-	 * FIXME: h unit is not yet considered and the computation is not yet
-	 * correct
-	 */
-	/*
-	 * consider that used, avail and total can have the same width
-	 * and use bsize as all OS have it defined and it is the larger value
-	 * that it can be between used, avail and total
-	 */
-	tmp = 1 + floor(log10(fmi->bsize)) + 2; /* add space for the unit symbol */
-	if ((match = strchr(unitstring, unitflag)) == NULL) {
-		(void)fprintf(stderr, _("Cannot update maxwidth for max.avail\n"));
-		return;
-	}
-	index = match - unitstring + 1;
-	for (i = 1; i < index; i++)
-		tmp /= 3;
-	max.avail = imax(tmp, max.avail);
+	printf("mntdir: %s\n", fmi->mntdir);
+	max.used = imax(get_req_width(fmi->used), max.used);
+	max.avail = imax(get_req_width(fmi->avail), max.avail);
+	max.total = imax(get_req_width(fmi->total), max.total);
+	printf("max.total: %d\n", max.total);
 }
 
 /*
@@ -551,14 +570,6 @@ auto_adjust(int width)
 	(void)fputs(_("WARNING: Output still messed up. Enlarge your "
 			"terminal if you can...\n"), stderr);
 #endif
-}
-
-
-
-void
-compute_fs_stats(struct fsmntinfo *fmi)
-{
-	/* TODO */
 }
 
 /*

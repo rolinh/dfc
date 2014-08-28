@@ -54,7 +54,7 @@ static void html_disp_header(void);
 static void html_disp_sum(double stot, double utot, double ftot,
                    double ifitot, double ifatot);
 static void html_disp_bar(double perct);
-static void html_disp_at(double n, double perct);
+static void html_disp_uat(double n, double perct, int req_width);
 static void html_disp_fs(const char *fsname);
 static void html_disp_type(const char *type);
 static void html_disp_inodes(uint64_t files, uint64_t favail);
@@ -71,7 +71,7 @@ init_disp_html(struct display *disp)
 	disp->print_header = html_disp_header;
 	disp->print_sum    = html_disp_sum;
 	disp->print_bar    = html_disp_bar;
-	disp->print_at     = html_disp_at;
+	disp->print_uat    = html_disp_uat;
 	disp->print_fs     = html_disp_fs;
 	disp->print_type   = html_disp_type;
 	disp->print_inodes = html_disp_inodes;
@@ -208,10 +208,10 @@ html_disp_sum(double stot, double atot, double utot,
 	}
 
 	if (dflag)
-		html_disp_at(utot, ptot);
+		html_disp_uat(utot, ptot, 0);
 
-	html_disp_at(atot, ptot);
-	html_disp_at(stot, ptot);
+	html_disp_uat(atot, ptot, 0);
+	html_disp_uat(stot, ptot, 0);
 
 	if (iflag)
 		html_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
@@ -269,14 +269,17 @@ html_disp_bar(double perct)
 /*
  * Display available and total correctly formated
  * @n: number to print
- * @perct: percentage (useful for finding which color to use)
+ * @perct: ignored here
+ * @req_width: ignored here
  */
 static void
-html_disp_at(double n, double perct)
+html_disp_uat(double n, double perct, int req_width)
 {
 	int i;
 
 	(void)perct;
+	(void)req_width;
+
 	(void)printf("\t  <td style = \"text-align: right;\">");
 
 	if (unitflag == 'h') {

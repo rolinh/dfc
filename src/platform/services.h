@@ -58,6 +58,11 @@ int is_remote(const struct fsmntinfo *fs);
  */
 void fetch_info(struct list *lst);
 
+/*
+ * compute file systems statistics
+ */
+void compute_fs_stats(struct fsmntinfo *fmi);
+
 #ifdef __linux__
 
 /*

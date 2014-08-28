@@ -163,6 +163,25 @@ fetch_info(struct list *lst)
 	free(fmi);
 }
 
+void
+compute_fs_stats(struct fsmntinfo *fmi)
+{
+#if defined(__NetBSD__)
+	fmi->total = (double)fmi->frsize * (double)fmi->blocks;
+	fmi->avail = (double)fmi->frsize * (double)fmi->bavail;
+	fmi->used  = (double)fmi->frsize * ((double)fmi->blocks - (double)fmi->bfree);
+#else
+	fmi->total  = (double)fmi->bsize * (double)fmi->blocks;
+	fmi->avail = (double)fmi->bsize * (double)fmi->bavail;
+	fmi->used  = (double)fmi->bsize * ((double)fmi->blocks - (double)fmi->bfree);
+#endif /* __NetBSD__ */
+	if ((int)fmi->total == 0)
+		fmi->perctused = 100.0;
+	else
+		fmi->perctused = 100.0 -
+			((double)fmi->bavail / (double)fmi->blocks) * 100.0;
+}
+
 /*
  * All the flags found in *BSD and Mac OS X, alphabetically sorted.
  */
