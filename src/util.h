@@ -59,7 +59,6 @@ void init_maxwidths(void);
 int get_req_width(double fs_size);
 void update_maxwidth(struct fsmntinfo *fmi);
 void auto_adjust(int tty_width);
-void compute_fs_stats(struct fsmntinfo *fmi);
 char * fetchdate(void);
 const char * colortostr(int color);
 int colortoint(const char *col);
