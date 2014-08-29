@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -84,7 +84,7 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 {
 	/* TODO: check MNT_IGNORE flags exists on all supported platforms */
 	if (fs->flags & MNT_IGNORE)
-	    return 1;
+		return 1;
 
 	return 0;
 }
@@ -119,31 +119,21 @@ fetch_info(struct list *lst)
 	for (fs = &entbuf; nummnt--; (*fs)++) {
 		vfsbuf = **fs;
 		if (Wflag) { /* Wflag to avoid name truncation */
-			if ((fmi->fsname = strdup(
-					entbuf->f_mntfromname))	== NULL) {
+			if ((fmi->fsname = strdup(entbuf->f_mntfromname)) == NULL)
 				fmi->fsname = g_unknown_str;
-			}
-			if ((fmi->dir = strdup((
-					entbuf->f_mntonname ))) == NULL) {
-				fmi->dir = g_unknown_str;
-			}
+			if ((fmi->mntdir = strdup(entbuf->f_mntonname)) == NULL)
+				fmi->mntdir = g_unknown_str;
 		} else {
-			if ((fmi->fsname = strdup(shortenstr(
-						entbuf->f_mntfromname,
-						STRMAXLEN))) == NULL) {
+			if ((fmi->fsname = strdup(shortenstr(entbuf->f_mntfromname,
+					       STRMAXLEN))) == NULL)
 				fmi->fsname = g_unknown_str;
-			}
-			if ((fmi->dir = strdup(shortenstr(
-						entbuf->f_mntonname,
-						STRMAXLEN))) == NULL) {
-				fmi->dir = g_unknown_str;
-			}
+			if ((fmi->mntdir = strdup(shortenstr(entbuf->f_mntonname,
+					    STRMAXLEN))) == NULL)
+				fmi->mntdir = g_unknown_str;
 		}
-		if ((fmi->type = strdup(shortenstr(
-					entbuf->f_fstypename,
-					12))) == NULL) {
-			fmi->type = g_unknown_str;
-		}
+		if ((fmi->fstype = strdup(shortenstr(entbuf->f_fstypename,
+				     STRMAXLEN))) == NULL)
+			fmi->fstype = g_unknown_str;
 
 		/* infos from statvfs */
 		fmi->flags    = GET_FLAGS(vfsbuf);
@@ -156,9 +146,11 @@ fetch_info(struct list *lst)
 		fmi->ffree    = vfsbuf.f_ffree;
 		fmi->favail   = GET_FAVAIL(vfsbuf);
 
-		if ((fmi->opts = statfs_flags_to_str(fmi)) == NULL) {
-			fmi->opts = g_none_str;
-		}
+		if ((fmi->mntopts = statfs_flags_to_str(fmi)) == NULL)
+			fmi->mntopts = g_none_str;
+
+		/* compute, available, % used, etc. */
+		compute_fs_stats(fmi);
 
 		/* pointer to the next element */
 		fmi->next = NULL;
@@ -166,19 +158,28 @@ fetch_info(struct list *lst)
 		/* enqueue the element into the queue */
 		enqueue(lst, *fmi);
 
-		/* adjust longest for the queue */
-		if ((!aflag && fmi->blocks > 0) || aflag) {
-			lst->fsmaxlen = imax((int)strlen(fmi->fsname),
-				lst->fsmaxlen);
-			lst->dirmaxlen = imax((int)strlen(fmi->dir),
-					lst->dirmaxlen);
-			lst->typemaxlen = imax((int)strlen(fmi->type),
-						lst->typemaxlen);
-				lst->mntoptmaxlen = imax((int)strlen(fmi->opts),
-						lst->mntoptmaxlen);
-			}
-		}
+		update_maxwidth(fmi);
+	}
 	free(fmi);
+}
+
+void
+compute_fs_stats(struct fsmntinfo *fmi)
+{
+#if defined(__NetBSD__)
+	fmi->total = (double)fmi->frsize * (double)fmi->blocks;
+	fmi->avail = (double)fmi->frsize * (double)fmi->bavail;
+	fmi->used  = (double)fmi->frsize * ((double)fmi->blocks - (double)fmi->bfree);
+#else
+	fmi->total  = (double)fmi->bsize * (double)fmi->blocks;
+	fmi->avail = (double)fmi->bsize * (double)fmi->bavail;
+	fmi->used  = (double)fmi->bsize * ((double)fmi->blocks - (double)fmi->bfree);
+#endif /* __NetBSD__ */
+	if ((int)fmi->total == 0)
+		fmi->perctused = 100.0;
+	else
+		fmi->perctused = 100.0 -
+			((double)fmi->bavail / (double)fmi->blocks) * 100.0;
 }
 
 /*
@@ -330,7 +331,7 @@ struct flag_str {
  * Returns NULL if an error occurred.
  * @s: struct statfs * to parse.
  */
-char *
+	char *
 statfs_flags_to_str(const struct fsmntinfo *fs)
 {
 	int i, n_flags;
@@ -367,7 +368,7 @@ statfs_flags_to_str(const struct fsmntinfo *fs)
 	return buffer;
 
 truncated:
-       (void)fprintf(stderr, _("Truncating mount options for %s\n"),
+	(void)fprintf(stderr, _("Truncating mount options for %s\n"),
 			fs->fsname);
 	return buffer;
 }

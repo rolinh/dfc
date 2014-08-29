@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -164,7 +164,7 @@ set_conf(const char *key, const char *val)
 {
 	int tmp;
 	int ret = 0;
-	char *tmpc;
+	char *tmpc = NULL;
 
 	if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,13 +45,18 @@
 struct fsmntinfo {
 	/* infos to get from getmntent(3) */
 	char *fsname;	/* name of mounted file system */
-	char *dir;	/* file system path prefix */
-	char *type;	/* mount type */
-	char *opts;	/* mount options (see mntent.h) */
+	char *fstype;	/* mount type */
+	char *mntdir;	/* file system path prefix */
+	char *mntopts;	/* mount options (see mntent.h) */
+
+	double perctused;   /* fs usage in % */
+	double total;	    /* fs total size */
+	double avail;	    /* fs available size */
+	double used;	    /* fs used size */
 
 	/* infos to get from statvfs(3) */
 #if defined(__linux__)
-	int		flags; /* XXX: does not exist on Linux */
+	int		flags;	/* XXX: does not exist on Linux */
 	unsigned long	bsize;	/* file system block size */
 	unsigned long	frsize;	/* fragment size */
 	fsblkcnt_t	blocks;	/* size of fs in frsize unit */
@@ -125,11 +130,6 @@ struct fsmntinfo {
 struct list {
 	struct fsmntinfo *head;
 	struct fsmntinfo *tail;
-
-	int fsmaxlen; /* should be the size of the longest fsname */
-	int dirmaxlen; /* same for dir */
-	int typemaxlen; /* same for type */
-	int mntoptmaxlen; /* same for mount option */
 };
 
 /* function declaration */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/ioctl.h>
+#include <math.h>
 
 #include "util.h"
 
@@ -383,9 +384,9 @@ cmp(struct fsmntinfo *a, struct fsmntinfo *b)
 	case 1:
 		return strcmp(a->fsname, b->fsname);
 	case 2:
-		return strcmp(a->type, b->type);
+		return strcmp(a->fstype, b->fstype);
 	case 3:
-		return strcmp(a->dir, b->dir);
+		return strcmp(a->mntdir, b->mntdir);
 	default:
 		return -1;
 	}
@@ -393,7 +394,7 @@ cmp(struct fsmntinfo *a, struct fsmntinfo *b)
 
 /*
  * Perform a mergesort algorithm to sort the list by ascending
- * Results depends on what was chosen for comparison (fsname, type or dir)
+ * Results depends on what was chosen for comparison (fsname, fstype or mntdir)
  * @fmi: pointer to the first element of the linked list structure to be sorted
  */
 struct fsmntinfo *
@@ -476,144 +477,154 @@ getttywidth(void)
 }
 
 /*
- * auto-adjust options based on the size needed to display the informations
- * @lst: list containing info
- * @width: width of the output
+ * init a maxwidths structure
  */
 void
-auto_adjust(struct list lst, int width)
+init_maxwidths(void)
 {
-	int req, gap;
+	/*
+	 * init min width to header names and width of the graph bar + 1 to have
+	 * a space between each column.
+	 */
+	max.fsname	= (int)strlen(_("FILESYSTEM")) + 1;
+	max.fstype	= Tflag ? (int)strlen(_("TYPE")) + 1 : 0;
+	max.bar		= bflag ? 0 : wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT;
+	max.perctused	= (int)strlen(_("%USED")) + 1;
+	max.used	= dflag ? (int)strlen(_("USED")) + 1 : 0;
+	max.avail	= (int)strlen(_("AVAILABLE")) + 1;
+	max.total	= (int)strlen(_("TOTAL")) + 1;
+	max.nbinodes	= iflag ? (int)strlen(_("#INODES")) + 1 : 0;
+	max.avinodes	= iflag ? (int)strlen(_("AV.INODES")) + 1 : 0;
+	max.mntdir	= (int)strlen(_("MOUNTED ON")) + 1;
+	max.mntopts	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
+}
 
-	req = req_width(lst);
+/*
+ * Return the required width necessary for the number to be displayed.
+ * This functions takes into account the unit used (b, k, m, g, ...).
+ * @fs_size: file system size from which the required width for displaying
+ * should be computed.
+ * */
+int
+get_req_width(double fs_size)
+{
+	long i, index;
+	double req_width, req_min;
+	const char *unitstring = "bkmgtpezy";
+	char *match;
 
-	/* nothing to adjust here */
-	if ((gap = (width - req)) >= 0)
+	/* spaces for the unit symbol and floating point */
+	req_min = 4.0;
+	req_width = req_min;
+
+	if (unitflag == 'h') {
+		req_width += 3;
+	} else {
+		if ((match = strchr(unitstring, unitflag)) == NULL) {
+			(void)fprintf(stderr,
+			    _("Cannot compute required width"));
+			return -1;
+		}
+
+		if (fs_size > 0.0)
+			req_width += 1.0 + floor(log10(fs_size));
+
+		index = match - unitstring + 1;
+		for (i = 1; i < index; i++)
+			req_width -= 3.0;
+
+		req_width = ceil(req_width);
+	}
+
+	/* XXX: cannot cast double to int */
+	return (req_width < req_min) ? (int)req_min : (int)req_width;
+}
+
+void
+update_maxwidth(struct fsmntinfo *fmi)
+{
+	if (!aflag && (is_mnt_ignore(fmi) == 1))
 		return;
+
+	/* + 1 for a space between each column */
+	max.fsname = imax((int)strlen(fmi->fsname) + 1, max.fsname);
+	max.fstype = imax((int)strlen(fmi->fstype) + 1, max.fstype);
+	max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
+	if (oflag)
+		max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
+
+	if (dflag)
+		max.used = imax(get_req_width(fmi->used), max.used);
+	max.avail = imax(get_req_width(fmi->avail), max.avail);
+	max.total = imax(get_req_width(fmi->total), max.total);
+
+	if (iflag) {
+		/* XXX: fix cast to int */
+		max.nbinodes = imax((int)(ceil(2 + floor(log10(fmi->files)))),
+			            max.nbinodes);
+		max.avinodes = imax((int)(ceil(3 + floor(log10(fmi->ffree)))),
+			            max.avinodes);
+	}
+}
+
+/*
+ * auto-adjust options based on the size needed to display the informations
+ * @lst: list containing info
+ * @tty_width: width of the output terminal
+ */
+void
+auto_adjust(int tty_width)
+{
+	int req_width;
+
+	req_width = max.fsname + max.fstype + max.bar + max.perctused + max.used
+		    + max.avail + max.total + max.nbinodes + max.avinodes
+		    + max.mntdir + max.mntopts;
+
+	if (tty_width > req_width)
+		return; /* nothing to adjust */
 
 	(void)fputs(_("WARNING: TTY too narrow. Some options have been disabled"
 		" to make dfc output fit (use -f to override).\n"), stderr);
-
 	if (!bflag) {
-		/* large graph should be the first option to disable */
 		if (wflag) {
 			wflag = 0;
-			gap += 30;
-			if (gap >= 0)
+			req_width -= GRAPHBAR_WIDE - GRAPHBAR_SHORT;
+			if (tty_width >= req_width)
 				return;
 		}
 		bflag = 1;
-		gap += 23;
-		if (gap >= 0)
+		req_width -= GRAPHBAR_SHORT;
+		if (tty_width >= req_width)
 			return;
 	}
 	if (dflag) {
 		dflag = 0;
-		gap += 4;
-		if (unitflag == 'k')
-			gap += 7;
-		else if (unitflag == 'b')
-			gap += 12;
-		else
-			gap += 6;
-		if (gap >= 0)
+		req_width -= max.used;
+		if (tty_width >= req_width)
 			return;
 	}
 	if (Tflag) {
 		Tflag = 0;
-		gap += imax(lst.typemaxlen, 5);
-		if (gap >= 0)
+		req_width -= max.fstype;
+		if (tty_width >= req_width)
 			return;
 	}
 	if (iflag) {
 		iflag = 0;
-		gap += 20;
-		if (gap >= 0)
+		req_width -= max.nbinodes;
+		if (tty_width >= req_width)
 			return;
 	}
 	if (oflag) {
 		oflag = 0;
-		gap += imax(lst.mntoptmaxlen, 13);
-		if (gap >= 0)
+		req_width -= max.mntopts;
+		if (tty_width >= req_width)
 			return;
 	}
-	if (gap < 0)
-		(void)fputs(_("WARNING: Output still messed up. Enlarge your "
-				"terminal if you can...\n"), stderr);
-}
 
-/*
- * compute the required width needed for the output and return it
- * (computation based on text_disp_header function)
- * @lst: list containing the info
- */
-int
-req_width(struct list lst)
-{
-	int ret;
-
-	/* dir and fs are always displayed */
-	ret = imax(lst.fsmaxlen, 11);
-
-	if (Tflag)
-		ret += imax(lst.typemaxlen, 5);
-	if (!bflag) {
-		ret += 23;
-		if (wflag)
-			ret += 30;
-	}
-	/* % */
-	ret += 5;
-
-	if (dflag) {
-		if (unitflag == 'k')
-			ret += 7;
-		else if (unitflag == 'b')
-			ret += 12;
-		else
-			ret += 6;
-		ret += 4;
-	}
-
-	/* available */
-	ret += 9;
-
-	switch (unitflag) {
-	case 'b':
-		ret += 7 + 11;
-		break;
-	case 'k':
-		ret += 2 + 6;
-		break;
-	case 'm':
-		ret += 5;
-		break;
-	case 'h': /* FALLTHROUGH */
-	case 'g': /* FALLTHROUGH */
-	case 't': /* FALLTHROUGH */
-	case 'p': /* FALLTHROUGH */
-	case 'e': /* FALLTHROUGH */
-	case 'z': /* FALLTHROUGH */
-	case 'y': /* FALLTHROUGH */
-		ret += 1 + 5;
-		break;
-	default:
-		(void)fputs("Unknown unit type\n", stderr);
-	}
-
-	/* total */
-	ret += 5;
-
-	if (iflag)
-		ret += 20;
-
-	/* mounted on */
-	ret += imax(lst.dirmaxlen, 12);
-
-	if (oflag)
-		ret += imax(lst.mntoptmaxlen, 13);
-
-	return ret;
+	(void)fputs(_("WARNING: Output still messed up. Enlarge your "
+			"terminal if you can...\n"), stderr);
 }
 
 /*

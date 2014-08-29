@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,16 +50,16 @@
 /* static functions declaration */
 static void html_disp_init(void);
 static void html_disp_deinit(void);
-static void html_disp_header(struct list *lst);
-static void html_disp_sum(struct list *lst, double stot, double utot, double ftot,
+static void html_disp_header(void);
+static void html_disp_sum(double stot, double utot, double ftot,
                    double ifitot, double ifatot);
 static void html_disp_bar(double perct);
-static void html_disp_at(double n, double perct);
-static void html_disp_fs(struct list *lst, const char *fsname);
-static void html_disp_type(struct list *lst, const char *type);
+static void html_disp_uat(double n, double perct, int req_width);
+static void html_disp_fs(const char *fsname);
+static void html_disp_type(const char *type);
 static void html_disp_inodes(uint64_t files, uint64_t favail);
 static void html_disp_mount(const char *dir);
-static void html_disp_mopt(struct list *lst, const char *dir, const char *opts);
+static void html_disp_mopt(const char *opts);
 static void html_disp_perct(double perct);
 
 /* init pointers from display structure to the functions found here */
@@ -71,7 +71,7 @@ init_disp_html(struct display *disp)
 	disp->print_header = html_disp_header;
 	disp->print_sum    = html_disp_sum;
 	disp->print_bar    = html_disp_bar;
-	disp->print_at     = html_disp_at;
+	disp->print_uat    = html_disp_uat;
 	disp->print_fs     = html_disp_fs;
 	disp->print_type   = html_disp_type;
 	disp->print_inodes = html_disp_inodes;
@@ -131,14 +131,11 @@ html_disp_deinit(void)
 
 /*
  * Display header
- * @lst: is ignored here
  */
 static void
-html_disp_header(struct list *lst)
+html_disp_header(void)
 {
 	char *date;
-
-	(void) lst;
 
 	if ((date = fetchdate()) == NULL)
 		date = _("Unknown date");
@@ -176,7 +173,6 @@ html_disp_header(struct list *lst)
 
 /*
  * Display the sum (useful when -s option is used
- * @lst: is ignored here
  * @stot: total size of "total"
  * @atot: total size of "available"
  * @utot: total size of "used"
@@ -184,7 +180,7 @@ html_disp_header(struct list *lst)
  * @ifatot: total number of available inodes
  */
 static void
-html_disp_sum(struct list *lst, double stot, double atot, double utot,
+html_disp_sum(double stot, double atot, double utot,
               double ifitot, double ifatot)
 {
 	double ptot = 0;
@@ -193,8 +189,6 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 		ptot = 100.0;
 	else
 		ptot = (utot / stot) * 100.0;
-
-	(void)lst;
 
 	(void)puts("\t</tr>\n\t<tfoot>\n\t<tr>\n\t  <td><strong>SUM</strong></td>");
 
@@ -214,10 +208,10 @@ html_disp_sum(struct list *lst, double stot, double atot, double utot,
 	}
 
 	if (dflag)
-		html_disp_at(utot, ptot);
+		html_disp_uat(utot, ptot, 0);
 
-	html_disp_at(atot, ptot);
-	html_disp_at(stot, ptot);
+	html_disp_uat(atot, ptot, 0);
+	html_disp_uat(stot, ptot, 0);
 
 	if (iflag)
 		html_disp_inodes((uint64_t)ifitot, (uint64_t)ifatot);
@@ -275,14 +269,17 @@ html_disp_bar(double perct)
 /*
  * Display available and total correctly formated
  * @n: number to print
- * @perct: percentage (useful for finding which color to use)
+ * @perct: ignored here
+ * @req_width: ignored here
  */
 static void
-html_disp_at(double n, double perct)
+html_disp_uat(double n, double perct, int req_width)
 {
 	int i;
 
 	(void)perct;
+	(void)req_width;
+
 	(void)printf("\t  <td style = \"text-align: right;\">");
 
 	if (unitflag == 'h') {
@@ -300,15 +297,12 @@ html_disp_at(double n, double perct)
 
 /*
  * Display file system
- * @lst: is ignored here
  * @fsname: list of the file system to print
  */
 static void
-html_disp_fs(struct list *lst, const char *fsname)
+html_disp_fs(const char *fsname)
 {
 	static int must_close = 0;
-
-	(void)lst;
 
 	if (must_close == 1)
 		(void)puts("\t</tr>");
@@ -319,13 +313,11 @@ html_disp_fs(struct list *lst, const char *fsname)
 
 /*
  * Display file system type
- * @lst: is ignored here
  * @type: the file system type to print
  */
 static void
-html_disp_type(struct list *lst, const char *type)
+html_disp_type(const char *type)
 {
-	(void)lst;
 	(void)printf("\t  <td>%s</td>\n", type);
 }
 
@@ -370,16 +362,11 @@ html_disp_mount(const char *dir)
 
 /*
  * Display mount options
- * @lst: is ignored here
- * @dir: is ignored here
  * @opts: mount options
  */
 static void
-html_disp_mopt(struct list *lst, const char *dir, const char *opts)
+html_disp_mopt(const char *opts)
 {
-	(void)lst;
-	(void)dir;
-
 	(void)printf("\n\t  <td>%s</td>", opts);
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,10 +64,10 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 		return 1;
 
 	/* treat tmpfs/devtmpfs/... as a special case */
-	if (fs->type && strstr(fs->type, "tmpfs"))
+	if (fs->fstype && strstr(fs->fstype, "tmpfs"))
 		return 0;
 
-	return is_pseudofs(fs->type);
+	return is_pseudofs(fs->fstype);
 }
 
 int
@@ -76,7 +76,7 @@ is_remote(const struct fsmntinfo *fs)
 	const char remote_fs[] = "afs cifs coda fuse.sshfs mfs "
             "ncpfs ftpfs nfs smbfs sshfs";
 
-	if (strstr(remote_fs, fs->type))
+	if (strstr(remote_fs, fs->fstype))
 		return 1;
 
 	return 0;
@@ -178,9 +178,9 @@ fetch_info(struct list *lst)
 					/* g_unknown_str is def. in extern.h(.in) */
 					fmi->fsname = g_unknown_str;
 				}
-				if ((fmi->dir = strdup(entbuf->mnt_dir))
+				if ((fmi->mntdir = strdup(entbuf->mnt_dir))
 						== NULL) {
-					fmi->dir = g_unknown_str;
+					fmi->mntdir = g_unknown_str;
 				}
 			} else {
 				if ((fmi->fsname = strdup(shortenstr(
@@ -188,17 +188,17 @@ fetch_info(struct list *lst)
 					STRMAXLEN))) == NULL) {
 					fmi->fsname = g_unknown_str;
 				}
-				if ((fmi->dir = strdup(shortenstr(entbuf->mnt_dir,
+				if ((fmi->mntdir = strdup(shortenstr(entbuf->mnt_dir,
 							STRMAXLEN))) == NULL) {
-					fmi->dir = g_unknown_str;
+					fmi->mntdir = g_unknown_str;
 				}
 			}
-			if ((fmi->type = strdup(shortenstr(entbuf->mnt_type,
+			if ((fmi->fstype = strdup(shortenstr(entbuf->mnt_type,
 							12))) == NULL) {
-				fmi->type = g_unknown_str;
+				fmi->fstype = g_unknown_str;
 			}
-			if ((fmi->opts = strdup(entbuf->mnt_opts)) == NULL) {
-				fmi->opts = g_none_str;
+			if ((fmi->mntopts = strdup(entbuf->mnt_opts)) == NULL) {
+				fmi->mntopts = g_none_str;
 			}
 
 			/* infos from statvfs */
@@ -210,29 +210,37 @@ fetch_info(struct list *lst)
 			fmi->files    = vfsbuf.f_files;
 			fmi->ffree    = vfsbuf.f_ffree;
 			fmi->favail   = vfsbuf.f_favail;
+
+			/* compute, available, % used, etc. */
+			compute_fs_stats(fmi);
+
 			/* pointer to the next element */
 			fmi->next = NULL;
 
 			/* enqueue the element into the queue */
 			enqueue(lst, *fmi);
 
-			/* adjust longest for the queue */
-			if ((!aflag && fmi->blocks > 0) || aflag) {
-				lst->fsmaxlen = imax((int)strlen(fmi->fsname),
-					lst->fsmaxlen);
-				lst->dirmaxlen = imax((int)strlen(fmi->dir),
-						lst->dirmaxlen);
-				lst->typemaxlen = imax((int)strlen(fmi->type),
-						lst->typemaxlen);
-				lst->mntoptmaxlen = imax((int)strlen(fmi->opts),
-						lst->mntoptmaxlen);
-			}
+			update_maxwidth(fmi);
+
 		}
 	}
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
 		perror("Could not close mtab file ");
 	free(fmi);
+}
+
+void
+compute_fs_stats(struct fsmntinfo *fmi)
+{
+	fmi->total = (double)fmi->frsize * (double)fmi->blocks;
+	fmi->avail = (double)fmi->frsize * (double)fmi->bavail;
+	fmi->used  = (double)fmi->frsize * ((double)fmi->blocks - (double)fmi->bfree);
+	if ((int)fmi->total == 0)
+		fmi->perctused = 100.0;
+	else
+		fmi->perctused = 100.0 -
+			((double)fmi->bavail / (double)fmi->blocks) * 100.0;
 }
 
 #endif /* __linux__ */

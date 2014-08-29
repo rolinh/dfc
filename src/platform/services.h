@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,6 +57,11 @@ int is_remote(const struct fsmntinfo *fs);
  * @lst: queue in which to store information
  */
 void fetch_info(struct list *lst);
+
+/*
+ * compute file systems statistics
+ */
+void compute_fs_stats(struct fsmntinfo *fmi);
 
 #ifdef __linux__
 

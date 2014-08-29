@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,6 +58,7 @@
 char g_unknown_str[] = "unknown";
 char g_none_str[]    = "none";
 struct conf cnf;
+struct maxwidths max;
 int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
     nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
 int Tflag, Wflag;
@@ -69,7 +70,7 @@ main(int argc, char *argv[])
 	struct list queue;
 	struct display sdisp;
 	int ch;
-	int width;
+	int tty_width;
 	int ret = EXIT_SUCCESS;
 	char *fsnfilter = NULL;
 	char *fstfilter = NULL;
@@ -382,10 +383,13 @@ main(int argc, char *argv[])
 		return EXIT_SUCCESS;
 	}
 
-	width = getttywidth();
+	/* init default max required width */
+	init_maxwidths();
+
+	tty_width = getttywidth();
 
 	/* if fd is not a terminal and color mode is not "always", disable color */
-	if (width == 0 && cflag != 2)
+	if (tty_width == 0 && cflag != 2)
 		cflag = 0;
 
 	/* change cnf value according to config file, it it exists */
@@ -408,8 +412,8 @@ main(int argc, char *argv[])
 	fetch_info(&queue);
 
 	/* cannot display all information if tty is too narrow */
-	if (!fflag && width > 0 && !eflag)
-		auto_adjust(queue, width);
+	if (!fflag && tty_width > 0 && !eflag)
+		auto_adjust(tty_width);
 
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &sdisp);
@@ -486,7 +490,6 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	int n;
 	int nmt = 0;
 	int nmn = 0;
-	double perctused, size, avail, used;
 	double stot, atot, utot, ifitot, ifatot;
 
 	stot = atot = utot = ifitot = ifatot = n = 0;
@@ -513,10 +516,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 
 	/* legend on top */
 	if (!nflag)
-		sdisp->print_header(lst);
-
-	if (lst->fsmaxlen < 11)
-		lst->fsmaxlen = 11;
+		sdisp->print_header();
 
 	 /* sort the list */
 	if (qflag)
@@ -525,91 +525,62 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	p = lst->head;
 
 	while (p != NULL) {
-		if (!aflag) {
-			/* skip fs to ignore */
-			if (is_mnt_ignore(p) == 1) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		/* ignore when needed */
+		if (!aflag && (is_mnt_ignore(p) == 1)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
 
-		if (tflag) {
-			/* apply filtering on fs type */
-			if (fsfilter(p->type, fstfilter, nmt) == 0) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		/* filtering on fs type */
+		if (tflag && (fsfilter(p->fstype, fstfilter, nmt) == 0)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
-		if (pflag) {
-			/* apply filtering on fs name */
-			if (fsfilter(p->fsname, fsnfilter, nmn) == 0) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		/* filtering on fs name */
+		if (pflag && (fsfilter(p->fsname, fsnfilter, nmn) == 0)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
 
 		/* skip remote file systems */
-		if (lflag) {
-			if (is_remote(p)) {
-				p = delete_struct_and_get_next(p);
-				continue;
-			}
+		if (lflag && is_remote(p)) {
+			p = delete_struct_and_get_next(p);
+			continue;
 		}
 
 		/* filesystem */
-		sdisp->print_fs(lst, p->fsname);
+		sdisp->print_fs(p->fsname);
 
 		/* type */
 		if (Tflag) {
-			sdisp->print_type(lst, p->type);
+			sdisp->print_type(p->fstype);
 		}
 
-#if defined(__linux__) || defined(__NetBSD__)
-		size  = (double)p->frsize * (double)p->blocks;
-		avail = (double)p->frsize * (double)p->bavail;
-		used  = (double)p->frsize * ((double)p->blocks - (double)p->bfree);
-#else /* *BSD */
-		size  = (double)p->bsize * (double)p->blocks;
-		avail = (double)p->bsize * (double)p->bavail;
-		used  = (double)p->bsize * ((double)p->blocks - (double)p->bfree);
-#endif /* __linux__ */
-		/* calculate the % used */
-		if ((int)size == 0)
-			perctused = 100.0;
-		else
-			/*
-			 * compute percent based on bfree as it is a given
-			 * value and not a computed one like used size
-			 */
-			perctused = 100.0 -
-				((double)p->bavail / (double)p->blocks) * 100.0;
-
 		if (sflag) {
-			stot += size;
-			atot += avail;
-			utot += used;
+			stot += p->total;
+			atot += p->avail;
+			utot += p->used;
 		}
 
 		if (!bflag)
-			sdisp->print_bar(perctused);
+			sdisp->print_bar(p->perctused);
 
 		/* %used */
-		sdisp->print_perct(perctused);
+		sdisp->print_perct(p->perctused);
 
 
 		/* format to requested format */
 		if (uflag) {
-			size = cvrt(size);
-			avail = cvrt(avail);
+			p->total = cvrt(p->total);
+			p->avail = cvrt(p->avail);
 			if (dflag)
-				used = cvrt(used);
+				p->used = cvrt(p->used);
 		}
 
 		if (dflag)
-			sdisp->print_at(used, perctused);
-		/* avail  and total */
-		sdisp->print_at(avail, perctused);
-		sdisp->print_at(size, perctused);
+			sdisp->print_uat(p->used, p->perctused, max.used);
+		sdisp->print_uat(p->avail, p->perctused, max.avail);
+		sdisp->print_uat(p->total, p->perctused, max.total);
 
 		/* info about inodes */
 		if (iflag) {
@@ -625,11 +596,11 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		/* mounted on */
-		sdisp->print_mount(p->dir);
+		sdisp->print_mount(p->mntdir);
 
 		/* info about mount option */
 		if (oflag)
-			sdisp->print_mopt(lst, p->dir, p->opts);
+			sdisp->print_mopt(p->mntopts);
 
 		(void)printf("\n");
 
@@ -637,7 +608,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	}
 
 	if (sflag)
-		sdisp->print_sum(lst, stot, atot, utot, ifitot, ifatot);
+		sdisp->print_sum(stot, atot, utot, ifitot, ifatot);
 
 	/* only required for html and tex export (csv and text point to NULL) */
 	if (sdisp->deinit)

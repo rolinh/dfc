@@ -19,6 +19,29 @@ if(VERSION_REVISION)
 endif()
 set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${VERSION_REVISION})
 
+# supported platforms
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(DARWIN true)
+    set(BSD true)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "DragonFly")
+    set(DRAGONFLY true)
+    set(BSD true)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
+    set(FREEBSD true)
+    set(BSD true)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(LINUX true)
+    set(BSD false)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "NetBSD")
+    set(NETBSD true)
+    set(BSD true)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
+    set(OPENBSD true)
+    set(BSD true)
+else()
+    message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}")
+endif()
+
 # useful defines
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -91,7 +114,7 @@ option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit syst
 
 # set compiler flags
 # long long is required, all the rest should be c89 compliant
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c89 -Wno-long-long")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c89 -lm -Wno-long-long")
 include(CheckCCompilerFlag)
 check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
 check_c_compiler_flag(-Wdouble-promotion HAS_WDOUBLE_PROMOTION)
@@ -120,6 +143,16 @@ if(CMAKE_COMPILER_IS_GNUCC)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-format-y2k")
 endif()
 
+
+# platform specific source files
+if(BSD)
+    set(SERVICE_SRC_FILE "${SOURCE_DIR}/platform/services-bsd.c")
+elseif(LINUX)
+    set(SERVICE_SRC_FILE "${SOURCE_DIR}/platform/services-linux.c")
+else()
+    message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}")
+endif()
+
 set(EXECUTABLE_NAME ${CMAKE_PROJECT_NAME})
 SET(SRCS
     ${SOURCE_DIR}/dotfile.c
@@ -130,8 +163,7 @@ SET(SRCS
     ${SOURCE_DIR}/export/html.c
     ${SOURCE_DIR}/export/tex.c
     ${SOURCE_DIR}/export/text.c
-    ${SOURCE_DIR}/platform/services-linux.c
-    ${SOURCE_DIR}/platform/services-bsd.c
+    ${SERVICE_SRC_FILE}
 )
 add_executable(
     ${EXECUTABLE_NAME}

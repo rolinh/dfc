@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,10 +49,6 @@ init_queue(struct list *lst)
 {
 	lst->head  = NULL;
 	lst->tail   = NULL;
-	lst->fsmaxlen = -1;
-	lst->dirmaxlen = -1;
-	lst->typemaxlen = -1;
-	lst->mntoptmaxlen = -1; /* stairway to heaven ! */
 }
 
 /*
@@ -112,10 +108,15 @@ fmi_init(void)
 {
 	struct fsmntinfo fmi;
 
-	fmi.fsname = g_unknown_str;
-	fmi.dir    = g_unknown_str;
-	fmi.type   = g_unknown_str;
-	fmi.opts   = g_none_str;
+	fmi.fsname  = g_unknown_str;
+	fmi.fstype  = g_unknown_str;
+	fmi.mntdir  = g_unknown_str;
+	fmi.mntopts = g_none_str;
+
+	fmi.perctused = 0.0;
+	fmi.total     = 0.0;
+	fmi.avail     = 0.0;
+	fmi.used      = 0.0;
 
 	fmi.flags  = 0;
 	fmi.bsize  = 0;
@@ -143,12 +144,12 @@ struct fsmntinfo
 
 	if(p->fsname != g_unknown_str) /* we malloc'd a string */
 		free(p->fsname);
-	if(p->dir != g_unknown_str)
-		free(p->dir);
-	if(p->type != g_unknown_str)
-		free(p->type);
-	if(p->opts != g_none_str)
-		free(p->opts);
+	if(p->fstype != g_unknown_str)
+		free(p->fstype);
+	if(p->mntdir != g_unknown_str)
+		free(p->mntdir);
+	if(p->mntopts != g_none_str)
+		free(p->mntopts);
 
 	free(p);
 

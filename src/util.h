@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2012-2014, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,7 @@
 
 #include "extern.h"
 #include "list.h"
+#include "platform/services.h"
 
 /* function declaration */
 int imax(int a, int b);
@@ -54,8 +55,10 @@ int fsfilter(const char *fs, const char *filter, int nm);
 int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
 int getttywidth(void);
-void auto_adjust(struct list lst, int width);
-int req_width(struct list lst);
+void init_maxwidths(void);
+int get_req_width(double fs_size);
+void update_maxwidth(struct fsmntinfo *fmi);
+void auto_adjust(int tty_width);
 char * fetchdate(void);
 const char * colortostr(int color);
 int colortoint(const char *col);
