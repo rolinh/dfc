@@ -242,18 +242,15 @@ text_disp_uat(double n, double perct, int req_width)
 {
 	int i;
 
+	i = 0;
+
 	if (unitflag == 'h')
 		i = humanize(&n);
 
 	change_color(perct);
 	(void)printf("%*.1f", req_width - 1, n); /* -1 for the unit symbol */
 	reset_color();
-
-	if (unitflag == 'h') {
-		print_unit(i, 1);
-	} else {
-		print_unit(0, 1);
-	}
+	print_unit(i, 1);
 }
 
 /*
