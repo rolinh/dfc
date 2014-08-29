@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2013-12-09 07:20+0100\n"
+"POT-Creation-Date: 2014-08-29 15:19+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -17,36 +17,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/dfc.c:217
+#: src/dfc.c:218
 #, c-format
 msgid "-c: illegal sub option %s\n"
 msgstr "-c: sous-option illégale %s\n"
 
-#: src/dfc.c:249
+#: src/dfc.c:250
 #, c-format
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:296
+#: src/dfc.c:297
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:356
+#: src/dfc.c:357
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:394
+#: src/dfc.c:398
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:428
+#: src/dfc.c:432
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:431
+#: src/dfc.c:435
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -82,7 +82,7 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
 "\t\tlocalement uniquement\n"
 
-#: src/dfc.c:449
+#: src/dfc.c:453
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-n\tdo not print header\n"
@@ -169,17 +169,69 @@ msgstr "Séparateur csv invalide: %s\n"
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:327
+#: src/dotfile.c:328
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Couleur inconnue: %s\n"
 
-#: src/dotfile.c:331
+#: src/dotfile.c:333
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr "Couleur HTML invalide: %s\n"
 
-#: src/util.c:549
+#: src/util.c:489 src/export/html.c:147 src/export/tex.c:139
+#: src/export/text.c:97
+msgid "FILESYSTEM"
+msgstr "SYSTÈME DE FICHIERS"
+
+#: src/util.c:490 src/export/html.c:150 src/export/tex.c:141
+#: src/export/text.c:100
+msgid "TYPE"
+msgstr "TYPE"
+
+#: src/util.c:492 src/export/html.c:154 src/export/text.c:110
+msgid "%USED"
+msgstr "%UTILISÉ"
+
+#: src/util.c:493 src/export/html.c:156 src/export/tex.c:146
+#: src/export/text.c:113
+msgid "USED"
+msgstr " UT."
+
+#: src/util.c:494 src/export/html.c:157 src/export/tex.c:147
+#: src/export/text.c:115
+msgid "AVAILABLE"
+msgstr "   DISPO."
+
+#: src/util.c:495 src/export/html.c:158 src/export/tex.c:148
+#: src/export/text.c:116
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#: src/util.c:496 src/export/html.c:161 src/export/text.c:119
+msgid "#INODES"
+msgstr "#INODES"
+
+#: src/util.c:497 src/export/text.c:120
+msgid "AV.INODES"
+msgstr "INODES DISP."
+
+#: src/util.c:498 src/export/csv.c:107 src/export/html.c:165
+#: src/export/tex.c:153 src/export/text.c:124
+msgid "MOUNTED ON"
+msgstr "MONTÉ SUR"
+
+#: src/util.c:499 src/export/html.c:168 src/export/tex.c:155
+#: src/export/text.c:127
+msgid "MOUNT OPTIONS"
+msgstr "OPTIONS DE MONTAGE"
+
+#: src/util.c:525
+#, c-format
+msgid "Cannot compute required width"
+msgstr ""
+
+#: src/util.c:587
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
@@ -187,197 +239,137 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
 "afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
 
-#: src/util.c:596
+#: src/util.c:626
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:738
+#: src/util.c:694
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:740
+#: src/util.c:696
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:742
+#: src/util.c:698
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:744
+#: src/util.c:700
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:746
+#: src/util.c:702
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:748
+#: src/util.c:704
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:750
+#: src/util.c:706
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:752
+#: src/util.c:708
 msgid "white"
 msgstr "blanc"
 
-#: src/export/csv.c:92
+#: src/export/csv.c:88
 #, c-format
 msgid "FILESYSTEM%c"
 msgstr "SYSTÈME DE FICHIERS%c"
 
-#: src/export/csv.c:95
+#: src/export/csv.c:91
 #, c-format
 msgid "TYPE%c"
 msgstr "TYPE%c"
 
-#: src/export/csv.c:97
+#: src/export/csv.c:93
 #, c-format
 msgid "%%USED%c"
 msgstr " %%UT.%c"
 
-#: src/export/csv.c:100
+#: src/export/csv.c:96
 #, c-format
 msgid "USED%c"
 msgstr " UT.%c"
 
-#: src/export/csv.c:102
+#: src/export/csv.c:98
 #, c-format
 msgid "AVAILABLE%c"
 msgstr "DISPO.%c"
 
-#: src/export/csv.c:104
+#: src/export/csv.c:100
 #, c-format
 msgid "TOTAL%c"
 msgstr "TOTAL%c"
 
-#: src/export/csv.c:107
+#: src/export/csv.c:103
 #, c-format
 msgid "#INODES%c"
 msgstr "#INODES%c"
 
-#: src/export/csv.c:108
+#: src/export/csv.c:104
 #, c-format
 msgid "AV.INODES%c"
 msgstr "INODES DISP.%c"
 
-#: src/export/csv.c:111 src/export/html.c:167 src/export/tex.c:156
-msgid "MOUNTED ON"
-msgstr "MONTÉ SUR"
-
-#: src/export/csv.c:114
+#: src/export/csv.c:110
 #, c-format
 msgid "%cMOUNT OPTIONS"
 msgstr "%cOPTIONS DE MONTAGE"
 
-#: src/export/csv.c:141
+#: src/export/csv.c:132
 #, c-format
 msgid "SUM:%c"
 msgstr "SOM:%c"
 
-#: src/export/html.c:143
+#: src/export/html.c:141
 msgid "Unknown date"
 msgstr "Date inconnue"
 
-#: src/export/html.c:146
+#: src/export/html.c:144
 #, c-format
 msgid "Generated by %s-%s on %s"
 msgstr "Généré par %s-%s le %s"
 
-#: src/export/html.c:149 src/export/tex.c:142
-msgid "FILESYSTEM"
-msgstr "SYSTÈME DE FICHIERS"
-
-#: src/export/html.c:152 src/export/tex.c:144
-msgid "TYPE"
-msgstr "TYPE"
-
-#: src/export/html.c:156 src/export/text.c:123
-msgid "%USED"
-msgstr "%UTILISÉ"
-
-#: src/export/html.c:158 src/export/tex.c:149 src/export/text.c:132
-msgid "USED"
-msgstr " UT."
-
-#: src/export/html.c:159 src/export/tex.c:150 src/export/text.c:142
-msgid "AVAILABLE"
-msgstr "   DISPO."
-
-#: src/export/html.c:160 src/export/tex.c:151 src/export/text.c:152
-msgid "TOTAL"
-msgstr "TOTAL"
-
-#: src/export/html.c:163
-msgid "#INODES"
-msgstr "#INODES"
-
-#: src/export/html.c:164 src/export/tex.c:154
+#: src/export/html.c:162 src/export/tex.c:151
 msgid "AV.INODES,"
 msgstr "INODES DISP.,"
 
-#: src/export/html.c:170 src/export/tex.c:158
-msgid "MOUNT OPTIONS"
-msgstr "OPTIONS DE MONTAGE"
-
-#: src/export/tex.c:146
+#: src/export/tex.c:143
 msgid "USAGE"
 msgstr "UTILISATION"
 
-#: src/export/tex.c:147
+#: src/export/tex.c:144
 msgid "\\%USED"
 msgstr "\\%UTILISÉ"
 
-#: src/export/tex.c:153
+#: src/export/tex.c:150
 msgid "\\#INODES"
 msgstr "\\#INODES"
 
-#: src/export/text.c:99
-msgid "FILESYSTEM "
-msgstr "SYS. FICH. "
+#: src/export/text.c:103 src/export/text.c:105
+msgid "(=) USED"
+msgstr "(=)  UT."
 
-#: src/export/text.c:104
-msgid " TYPE"
-msgstr " TYPE"
+#: src/export/text.c:105 src/export/text.c:107
+msgid "FREE (-)"
+msgstr "LIB. (-)"
 
-#: src/export/text.c:117
-msgid " (=) USED"
-msgstr " (=)  UT."
-
-#: src/export/text.c:120
-msgid "FREE (-) "
-msgstr "LIB. (-) "
-
-#: src/export/text.c:155
-msgid "   #INODES"
-msgstr "   #INODES"
-
-#: src/export/text.c:156
-msgid " AV.INODES"
-msgstr " INODES D."
-
-#: src/export/text.c:159
-msgid " MOUNTED ON "
-msgstr " MONTÉ SUR  "
-
-#: src/export/text.c:164
-msgid "MOUNT OPTIONS\n"
-msgstr " OPT. DE MONT.\n"
-
-#: src/export/text.c:195
+#: src/export/text.c:158
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/platform/services-bsd.c:330
+#: src/platform/services-bsd.c:342
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/platform/services-bsd.c:359
+#: src/platform/services-bsd.c:371
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
@@ -386,3 +378,21 @@ msgstr "Troncation des options de montage pour %s\n"
 #, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
 msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"
+
+#~ msgid "FILESYSTEM "
+#~ msgstr "SYS. FICH. "
+
+#~ msgid " TYPE"
+#~ msgstr " TYPE"
+
+#~ msgid "   #INODES"
+#~ msgstr "   #INODES"
+
+#~ msgid " AV.INODES"
+#~ msgstr " INODES D."
+
+#~ msgid " MOUNTED ON "
+#~ msgstr " MONTÉ SUR  "
+
+#~ msgid "MOUNT OPTIONS\n"
+#~ msgstr " OPT. DE MONT.\n"
