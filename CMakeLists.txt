@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.8.4)
 # project informations
 project(dfc C)
 set(PACKAGE ${CMAKE_PROJECT_NAME})
-set(VERSION_MAJOR 4)
-set(VERSION_MINOR 0)
+set(VERSION_MAJOR 3)
+set(VERSION_MINOR 1)
 set(VERSION_PATCH 0)
 execute_process(
     COMMAND git rev-parse --short master
