@@ -88,8 +88,8 @@ is_remote(const struct fsmntinfo *fs)
 static int
 typecmp(const void *e1, const void *e2)
 {
-	const char *s1 = *(const char **)e1;
-	const char *s2 = *(const char **)e2;
+	const char *s1 = *(const char * const *)e1;
+	const char *s2 = *(const char * const *)e2;
 	return strcmp(s1, s2);
 }
 
