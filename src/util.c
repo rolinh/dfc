@@ -521,8 +521,8 @@ get_req_width(double fs_size)
 		req_width += 3;
 	} else {
 		if ((match = strchr(unitstring, unitflag)) == NULL) {
-			(void)fprintf(stderr,
-			    _("Cannot compute required width"));
+			(void)fputs(_("Cannot compute required width"),
+			stderr);
 			return -1;
 		}
 
