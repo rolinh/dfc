@@ -79,8 +79,6 @@ struct conf {
 	int gmedium;	/* starting value from which usage is considered medium */
 	int ghigh;	/* starting value from which usage is considered high */
 
-	char gsymbol;	/* symbol used to draw the graph */
-
 	const char *hcheadbg;	/* background color for header and footer (html) */
 	const char *hcheadfg;	/* font color used in header and footer (html) */
 	const char *hccellbg;	/* background color for cells (html) */
@@ -91,6 +89,7 @@ struct conf {
 	const char *hcmedium;	/* color when usage is medium (html) */
 	const char *hchigh;	/* color when usage is high (html) */
 
+	char gsymbol;	/* symbol used to draw the graph */
 	char csvsep;	/* separator used for csv export */
 };
 
