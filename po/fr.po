@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2014-08-29 15:19+0200\n"
+"POT-Creation-Date: 2014-10-31 18:18+0100\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -179,6 +179,11 @@ msgstr "Couleur inconnue: %s\n"
 msgid "Not a valid HTML color: %s\n"
 msgstr "Couleur HTML invalide: %s\n"
 
+#: src/dotfile.c:338
+#, c-format
+msgid "Could not assign value from configuration file: %s\n"
+msgstr "Impossible d'assigner une valeur depuis le fichier de configuration: %s\n"
+
 #: src/util.c:489 src/export/html.c:147 src/export/tex.c:139
 #: src/export/text.c:97
 msgid "FILESYSTEM"
@@ -226,8 +231,7 @@ msgstr "MONTÉ SUR"
 msgid "MOUNT OPTIONS"
 msgstr "OPTIONS DE MONTAGE"
 
-#: src/util.c:525
-#, c-format
+#: src/util.c:524
 msgid "Cannot compute required width"
 msgstr ""
 

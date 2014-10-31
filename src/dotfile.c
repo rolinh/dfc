@@ -335,8 +335,8 @@ non_valid_html_color:
 	return -1;
 
 strdup_failed:
-	(void)fprintf(stderr, "Could not assign value from configuration file: "
-			"%s\n", val);
+	(void)fprintf(stderr, _("Could not assign value from configuration "
+			"file: %s\n"), val);
 	free(tmpc);
 	return -1;
 }
