@@ -53,6 +53,22 @@
 #endif
 
 /*
+ * Return the number of digits in `n`
+ * @n: a positive integer.
+ */
+static int
+count_digit(unsigned long long n)
+{
+	int i = 0;
+
+	do {
+		++i;
+		n /= 10;
+	} while (n != 0);
+	return i;
+}
+
+/*
  * Return the longest of the two parameters
  * @a: first element to compare
  * @b: second element to compare
@@ -559,11 +575,8 @@ update_maxwidth(struct fsmntinfo *fmi)
 	max.total = imax(get_req_width(fmi->total), max.total);
 
 	if (iflag) {
-		/* XXX: fix cast to int */
-		max.nbinodes = imax((int)(ceil(2 + floor(log10(fmi->files)))),
-			            max.nbinodes);
-		max.avinodes = imax((int)(ceil(3 + floor(log10(fmi->ffree)))),
-			            max.avinodes);
+		max.nbinodes = imax(2 + count_digit(fmi->files), max.nbinodes);
+		max.avinodes = imax(3 + count_digit(fmi->ffree), max.avinodes);
 	}
 }
 
