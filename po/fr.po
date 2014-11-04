@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2014-10-31 18:18+0100\n"
+"POT-Creation-Date: 2014-11-04 20:21+0100\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -182,60 +182,61 @@ msgstr "Couleur HTML invalide: %s\n"
 #: src/dotfile.c:338
 #, c-format
 msgid "Could not assign value from configuration file: %s\n"
-msgstr "Impossible d'assigner une valeur depuis le fichier de configuration: %s\n"
+msgstr ""
+"Impossible d'assigner une valeur depuis le fichier de configuration: %s\n"
 
-#: src/util.c:489 src/export/html.c:147 src/export/tex.c:139
+#: src/util.c:505 src/export/html.c:147 src/export/tex.c:139
 #: src/export/text.c:97
 msgid "FILESYSTEM"
 msgstr "SYSTÈME DE FICHIERS"
 
-#: src/util.c:490 src/export/html.c:150 src/export/tex.c:141
+#: src/util.c:506 src/export/html.c:150 src/export/tex.c:141
 #: src/export/text.c:100
 msgid "TYPE"
 msgstr "TYPE"
 
-#: src/util.c:492 src/export/html.c:154 src/export/text.c:110
+#: src/util.c:508 src/export/html.c:154 src/export/text.c:110
 msgid "%USED"
 msgstr "%UTILISÉ"
 
-#: src/util.c:493 src/export/html.c:156 src/export/tex.c:146
+#: src/util.c:509 src/export/html.c:156 src/export/tex.c:146
 #: src/export/text.c:113
 msgid "USED"
 msgstr " UT."
 
-#: src/util.c:494 src/export/html.c:157 src/export/tex.c:147
+#: src/util.c:510 src/export/html.c:157 src/export/tex.c:147
 #: src/export/text.c:115
 msgid "AVAILABLE"
-msgstr "   DISPO."
+msgstr "DISPO."
 
-#: src/util.c:495 src/export/html.c:158 src/export/tex.c:148
+#: src/util.c:511 src/export/html.c:158 src/export/tex.c:148
 #: src/export/text.c:116
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: src/util.c:496 src/export/html.c:161 src/export/text.c:119
+#: src/util.c:512 src/export/html.c:161 src/export/text.c:119
 msgid "#INODES"
 msgstr "#INODES"
 
-#: src/util.c:497 src/export/text.c:120
+#: src/util.c:513 src/export/text.c:120
 msgid "AV.INODES"
 msgstr "INODES DISP."
 
-#: src/util.c:498 src/export/csv.c:107 src/export/html.c:165
+#: src/util.c:514 src/export/csv.c:107 src/export/html.c:165
 #: src/export/tex.c:153 src/export/text.c:124
 msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
-#: src/util.c:499 src/export/html.c:168 src/export/tex.c:155
+#: src/util.c:515 src/export/html.c:168 src/export/tex.c:155
 #: src/export/text.c:127
 msgid "MOUNT OPTIONS"
 msgstr "OPTIONS DE MONTAGE"
 
-#: src/util.c:524
+#: src/util.c:540
 msgid "Cannot compute required width"
-msgstr ""
+msgstr "Impossible de calculer la largeur requise"
 
-#: src/util.c:587
+#: src/util.c:600
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
@@ -243,41 +244,41 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
 "afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
 
-#: src/util.c:626
+#: src/util.c:639
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:694
+#: src/util.c:707
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:696
+#: src/util.c:709
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:698
+#: src/util.c:711
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:700
+#: src/util.c:713
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:702
+#: src/util.c:715
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:704
+#: src/util.c:717
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:706
+#: src/util.c:719
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:708
+#: src/util.c:721
 msgid "white"
 msgstr "blanc"
 
@@ -382,21 +383,3 @@ msgstr "Troncation des options de montage pour %s\n"
 #, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
 msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"
-
-#~ msgid "FILESYSTEM "
-#~ msgstr "SYS. FICH. "
-
-#~ msgid " TYPE"
-#~ msgstr " TYPE"
-
-#~ msgid "   #INODES"
-#~ msgstr "   #INODES"
-
-#~ msgid " AV.INODES"
-#~ msgstr " INODES D."
-
-#~ msgid " MOUNTED ON "
-#~ msgstr " MONTÉ SUR  "
-
-#~ msgid "MOUNT OPTIONS\n"
-#~ msgstr " OPT. DE MONT.\n"
