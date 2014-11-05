@@ -7,7 +7,7 @@ set(VERSION_MAJOR 3)
 set(VERSION_MINOR 1)
 set(VERSION_PATCH 0)
 execute_process(
-    COMMAND git rev-parse --short master
+    COMMAND git rev-parse --short HEAD
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     OUTPUT_VARIABLE VERSION_REVISION
     ERROR_QUIET
