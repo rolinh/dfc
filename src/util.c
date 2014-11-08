@@ -520,7 +520,7 @@ init_maxwidths(void)
  * This functions takes into account the unit used (b, k, m, g, ...).
  * @fs_size: file system size from which the required width for displaying
  * should be computed.
- * */
+ */
 int
 get_req_width(double fs_size)
 {
@@ -556,6 +556,10 @@ get_req_width(double fs_size)
 	return (req_width < req_min) ? (int)req_min : (int)req_width;
 }
 
+/*
+ * Update values of the maxwidth structure.
+ * @fmi: structure containing filesystem information
+ */
 void
 update_maxwidth(struct fsmntinfo *fmi)
 {
