@@ -525,35 +525,44 @@ int
 get_req_width(double fs_size)
 {
 	long i, index;
-	double req_width, req_min;
+	int req_width, req_min;
 	const char *unitstring = "bkmgtpezy";
 	char *match;
 
 	/* spaces for the unit symbol and floating point */
-	req_min = 4.0;
+	req_min = 4;
 	req_width = req_min;
 
 	if (unitflag == 'h') {
 		req_width += 3;
 	} else {
 		if ((match = strchr(unitstring, unitflag)) == NULL) {
-			(void)fputs(_("Cannot compute required width"),
+			(void)fputs(_("Cannot compute required width\n"),
 			stderr);
 			return -1;
 		}
 
-		if (fs_size > 0.0)
-			req_width += 1.0 + floor(log10(fs_size));
+		if ((fs_size > 0.0) && isnormal(fs_size)) {
+			/*
+			 * casting from double to int shall be safe here since
+			 * log10 of even the largest possible double value (ie:
+			 * around 309 in most cases) shall fit into an integer
+			 */
+			req_width += (int)(1.0 + trunc(log10(fs_size)));
+		}
 
 		index = match - unitstring + 1;
-		for (i = 1; i < index; i++)
-			req_width -= 3.0;
-
-		req_width = ceil(req_width);
+		for (i = 1; i < index; i++) {
+			/*
+			 * displaying the same number in a "greater" unit (cf
+			 * unitstring) requires 3 digits less than what was
+			 * previously required
+			 */
+			req_width -= 3;
+		}
 	}
 
-	/* XXX: cannot cast double to int */
-	return (req_width < req_min) ? (int)req_min : (int)req_width;
+	return (req_width < req_min) ? req_min : req_width;
 }
 
 /*
