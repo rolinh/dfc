@@ -114,23 +114,23 @@ option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit syst
 
 # set compiler flags
 # long long is required, all the rest should be c89 compliant
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c89 -lm -Wno-long-long")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c89 -Wno-long-long")
 include(CheckCCompilerFlag)
 check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
 check_c_compiler_flag(-Wdouble-promotion HAS_WDOUBLE_PROMOTION)
 check_c_compiler_flag(-Wlogical-op HAS_WLOGICAL_OP)
 check_c_compiler_flag(-Wjump-misses-init HAS_WJUMP_MISSES_INIT)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -Wconversion -Wstrict-prototypes -Wcast-qual -Wcast-align -Wshadow -Wredundant-decls -Wundef -Wfloat-equal -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wpointer-arith -Wbad-function-cast -Wnested-externs -Wold-style-definition -Wformat=2 -Winit-self -Wwrite-strings -Wmissing-prototypes -pipe")
-if (HAS_WSIGN_CONVERSION)
+if(HAS_WSIGN_CONVERSION)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wsign-conversion")
 endif()
-if (HAS_WDOUBLE_PROMOTION)
+if(HAS_WDOUBLE_PROMOTION)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wdouble-promotion")
 endif()
-if (HAS_WLOGICAL_OP)
+if(HAS_WLOGICAL_OP)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wlogical-op")
 endif()
-if (HAS_WJUMP_MISSES_INIT)
+if(HAS_WJUMP_MISSES_INIT)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wjump-misses-init")
 endif()
 
@@ -186,6 +186,9 @@ if(NLS_ENABLED)
     include_directories(${LIBINTL_INCLUDE_DIR})
     target_link_libraries(${EXECUTABLE_NAME} ${LIBINTL_LIBRARIES})
 endif()
+
+# link libraries
+target_link_libraries(${EXECUTABLE_NAME} m)
 
 add_definitions(-DPACKAGE="${PACKAGE}" -DVERSION="${VERSION}" -DLOCALEDIR="${LOCALEDIR}")
 
