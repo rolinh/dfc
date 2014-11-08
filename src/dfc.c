@@ -604,7 +604,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 
 		(void)printf("\n");
 
-		p = delete_struct_and_get_next(p); /* XXX returns p->next! */
+		p = delete_struct_and_get_next(p);
 	}
 
 	if (sflag)
