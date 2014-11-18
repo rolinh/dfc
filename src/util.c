@@ -595,7 +595,7 @@ update_maxwidth(struct fsmntinfo *fmi)
 }
 
 /*
- * auto-adjust options based on the size needed to display the informations
+ * auto-adjust options based on the size needed to display the information
  * @lst: list containing info
  * @tty_width: width of the output terminal
  */
@@ -743,7 +743,7 @@ colortoint(const char *col)
  * ie: it should be an hexadecimal value
  * Returns 0 if all went well, otherwise it returns -1
  * @color: input color
- * NOTE: color should ommit the #: white is FFFFFF and not #FFFFFF
+ * NOTE: color should omit the #: white is FFFFFF and not #FFFFFF
  */
 int
 chk_html_colorcode(const char *color)

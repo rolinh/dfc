@@ -40,7 +40,7 @@
 #include <sys/types.h>
 
 /*
- * Structure to store informations about mounted fs
+ * Structure to store information about mounted fs
  */
 struct fsmntinfo {
 	/* infos to get from getmntent(3) */

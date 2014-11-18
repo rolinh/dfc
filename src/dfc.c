@@ -392,7 +392,7 @@ main(int argc, char *argv[])
 	if (tty_width == 0 && cflag != 2)
 		cflag = 0;
 
-	/* change cnf value according to config file, it it exists */
+	/* change cnf value according to config file, it exists */
 	if ((cfgfile = getconf()) != NULL) {
 		if (parse_conf(cfgfile) == -1) {
 			(void)fprintf(stderr, _("Error reading the configuration"

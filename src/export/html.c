@@ -267,7 +267,7 @@ html_disp_bar(double perct)
 }
 
 /*
- * Display available and total correctly formated
+ * Display available and total correctly formatted
  * @n: number to print
  * @perct: ignored here
  * @req_width: ignored here

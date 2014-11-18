@@ -108,8 +108,8 @@ struct maxwidths {
 };
 
 /*
- * These two variables are used when we don't need to alloc some mem for the
- * fsmntinfo struct. So we can know that and don't free the pointers
+ * These two variables are used when we do not need to alloc some mem for the
+ * fsmntinfo struct. So we can know that and do not free the pointers
  */
 extern char g_unknown_str[];
 extern char g_none_str[];

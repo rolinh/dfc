@@ -73,7 +73,7 @@ is_empty(struct list lst)
  * @elt: element
  * Returns:
  *	--> -1 on error
- *	-->  0 on sucess
+ *	-->  0 on success
  */
 int
 enqueue(struct list *lst, struct fsmntinfo fmi)

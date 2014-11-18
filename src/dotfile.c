@@ -155,7 +155,7 @@ parse_conf(const char *conf)
 
 /*
  * Set configuration values taken from the configuration file
- * Return 0 if no error occured, -1 otherwise.
+ * Return 0 if no error occurred, -1 otherwise.
  * @key: key in configuration file
  * @val: value corresponding to the key
  */

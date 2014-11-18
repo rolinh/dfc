@@ -120,7 +120,7 @@ text_disp_header(void)
 		(void)printf("%*s", max.avinodes, _("AV.INODES"));
 	}
 
-	/* preceed by a space because previous colum is right aligned */
+	/* precedded by a space because previous colum is right aligned */
 	(void)printf(" %-*s", max.mntdir, _("MOUNTED ON"));
 
 	if (oflag)
@@ -232,7 +232,7 @@ text_disp_bar(double perct)
 }
 
 /*
- * Display used, available and total correctly formated
+ * Display used, available and total correctly formatted
  * @n: number to print
  * @perct: percentage (useful for finding which color to use)
  * @req_width: required width (used for terminal display, otherwise can be 0)
@@ -303,7 +303,7 @@ text_disp_inodes(uint64_t files, uint64_t favail)
 static void
 text_disp_mount(const char *dir)
 {
-	/* preceed by a space because previous colum is right aligned */
+	/* preceded by a space because previous colum is right aligned */
 	(void)printf(" %-*s", max.mntdir, dir);
 }
 

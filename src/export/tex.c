@@ -261,7 +261,7 @@ tex_disp_bar(double perct)
 }
 
 /*
- * Display available and total correctly formated
+ * Display available and total correctly formatted
  * @n: number to print
  * @perct: percentage (useful for finding which color to use)
  * @req_width: ignored here
