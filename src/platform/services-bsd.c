@@ -79,6 +79,9 @@ typedef struct statfs statst;
 #endif
 #endif /* __APPLE__ */
 
+/* static functions declaration */
+static char *statfs_flags_to_str(const struct fsmntinfo *fs);
+
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
 {
@@ -331,7 +334,7 @@ struct flag_str {
  * Returns NULL if an error occurred.
  * @s: struct statfs * to parse.
  */
-	char *
+static char *
 statfs_flags_to_str(const struct fsmntinfo *fs)
 {
 	int i, n_flags;

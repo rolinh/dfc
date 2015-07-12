@@ -56,6 +56,10 @@
 #include "services.h"
 #include "util.h"
 
+/* static functions declaration */
+static int typecmp(const void *e1, const void *e2);
+static int is_pseudofs(const char *fsname);
+
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
 {
@@ -80,64 +84,6 @@ is_remote(const struct fsmntinfo *fs)
 		return 1;
 
 	return 0;
-}
-
-/*
- * Comparison function needed in is_pseudofs for bsearch call.
- */
-static int
-typecmp(const void *e1, const void *e2)
-{
-	const char *s1 = *(const char * const *)e1;
-	const char *s2 = *(const char * const *)e2;
-	return strcmp(s1, s2);
-}
-
-int
-is_pseudofs(const char *type)
-{
-	/* keep sorted for binary search */
-	static const char *pseudofs[] = {
-		"anon_inodefs",
-		"autofs",
-		"bdev",
-		"binfmt_misc",
-		"cgroup",
-		"configfs",
-		"cpuset",
-		"debugfs",
-		"devfs",
-		"devpts",
-		"devtmpfs",
-		"dlmfs",
-		"fuse.gvfs-fuse-daemon",
-		"fusectl",
-		"hugetlbfs",
-		"mqueue",
-		"nfsd",
-		"none",
-		"pipefs",
-		"proc",
-		"pstore",
-		"ramfs",
-		"rootfs",
-		"rpc_pipefs",
-		"securityfs",
-		"sockfs",
-		"spufs",
-		"sysfs",
-		"tmpfs"
-	};
-
-	if (!type)
-		return -1;
-
-	if (bsearch(&type, pseudofs, sizeof(pseudofs) / sizeof(pseudofs[0]),
-		sizeof(char*), typecmp) == NULL) {
-		return 0;
-	}
-
-	return 1;
 }
 
 void
@@ -241,6 +187,70 @@ compute_fs_stats(struct fsmntinfo *fmi)
 	else
 		fmi->perctused = 100.0 -
 			((double)fmi->bavail / (double)fmi->blocks) * 100.0;
+}
+
+/*
+ * Comparison function needed in is_pseudofs for bsearch call.
+ */
+static int
+typecmp(const void *e1, const void *e2)
+{
+	const char *s1 = *(const char * const *)e1;
+	const char *s2 = *(const char * const *)e2;
+	return strcmp(s1, s2);
+}
+
+/*
+ * Determine if fsname is a pseudo filesystem or not.
+ * This function is useless under *BSD and OSX systems.
+ * Return 1 if it is, 0 otherwise.
+ * On error, -1 is returned.
+ */
+static int
+is_pseudofs(const char *type)
+{
+	/* keep sorted for binary search */
+	static const char *pseudofs[] = {
+		"anon_inodefs",
+		"autofs",
+		"bdev",
+		"binfmt_misc",
+		"cgroup",
+		"configfs",
+		"cpuset",
+		"debugfs",
+		"devfs",
+		"devpts",
+		"devtmpfs",
+		"dlmfs",
+		"fuse.gvfs-fuse-daemon",
+		"fusectl",
+		"hugetlbfs",
+		"mqueue",
+		"nfsd",
+		"none",
+		"pipefs",
+		"proc",
+		"pstore",
+		"ramfs",
+		"rootfs",
+		"rpc_pipefs",
+		"securityfs",
+		"sockfs",
+		"spufs",
+		"sysfs",
+		"tmpfs"
+	};
+
+	if (!type)
+		return -1;
+
+	if (bsearch(&type, pseudofs, sizeof(pseudofs) / sizeof(pseudofs[0]),
+		sizeof(char*), typecmp) == NULL) {
+		return 0;
+	}
+
+	return 1;
 }
 
 #endif /* __linux__ */

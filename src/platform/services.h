@@ -63,20 +63,4 @@ void fetch_info(struct list *lst);
  */
 void compute_fs_stats(struct fsmntinfo *fmi);
 
-#ifdef __linux__
-
-/*
- * Determine if fsname is a pseudo filesystem or not.
- * This function is useless under *BSD and OSX systems.
- * Return 1 if it is, 0 otherwise.
- * On error, -1 is returned.
- */
-int is_pseudofs(const char *fsname);
-
-#else /* BSD */
-
-char *statfs_flags_to_str(const struct fsmntinfo *fs);
-
-#endif /* __linux__ */
-
 #endif /* ndef H_SERVICES */
