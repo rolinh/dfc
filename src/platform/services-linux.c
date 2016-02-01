@@ -116,59 +116,58 @@ fetch_info(struct list *lst)
 				"because it could not be stated"),
 				entbuf->mnt_dir);
 			perror(" ");
-		} else {
-			/* infos from getmntent */
-			if (Wflag) { /* Wflag to avoid name truncation */
-				if ((fmi->fsname = strdup(entbuf->mnt_fsname))
-						== NULL) {
-					/* g_unknown_str is def. in extern.h(.in) */
-					fmi->fsname = g_unknown_str;
-				}
-				if ((fmi->mntdir = strdup(entbuf->mnt_dir))
-						== NULL) {
-					fmi->mntdir = g_unknown_str;
-				}
-			} else {
-				if ((fmi->fsname = strdup(shortenstr(
-					entbuf->mnt_fsname,
-					STRMAXLEN))) == NULL) {
-					fmi->fsname = g_unknown_str;
-				}
-				if ((fmi->mntdir = strdup(shortenstr(entbuf->mnt_dir,
-							STRMAXLEN))) == NULL) {
-					fmi->mntdir = g_unknown_str;
-				}
-			}
-			if ((fmi->fstype = strdup(shortenstr(entbuf->mnt_type,
-							12))) == NULL) {
-				fmi->fstype = g_unknown_str;
-			}
-			if ((fmi->mntopts = strdup(entbuf->mnt_opts)) == NULL) {
-				fmi->mntopts = g_none_str;
-			}
-
-			/* infos from statvfs */
-			fmi->bsize    = vfsbuf.f_bsize;
-			fmi->frsize   = vfsbuf.f_frsize;
-			fmi->blocks   = vfsbuf.f_blocks;
-			fmi->bfree    = vfsbuf.f_bfree;
-			fmi->bavail   = vfsbuf.f_bavail;
-			fmi->files    = vfsbuf.f_files;
-			fmi->ffree    = vfsbuf.f_ffree;
-			fmi->favail   = vfsbuf.f_favail;
-
-			/* compute, available, % used, etc. */
-			compute_fs_stats(fmi);
-
-			/* pointer to the next element */
-			fmi->next = NULL;
-
-			/* enqueue the element into the queue */
-			enqueue(lst, *fmi);
-
-			update_maxwidth(fmi);
-
+			continue;
 		}
+		/* infos from getmntent */
+		if (Wflag) { /* Wflag to avoid name truncation */
+			if ((fmi->fsname = strdup(entbuf->mnt_fsname))
+					== NULL) {
+				/* g_unknown_str is def. in extern.h(.in) */
+				fmi->fsname = g_unknown_str;
+			}
+			if ((fmi->mntdir = strdup(entbuf->mnt_dir))
+					== NULL) {
+				fmi->mntdir = g_unknown_str;
+			}
+		} else {
+			if ((fmi->fsname = strdup(shortenstr(
+				entbuf->mnt_fsname,
+				STRMAXLEN))) == NULL) {
+				fmi->fsname = g_unknown_str;
+			}
+			if ((fmi->mntdir = strdup(shortenstr(entbuf->mnt_dir,
+						STRMAXLEN))) == NULL) {
+				fmi->mntdir = g_unknown_str;
+			}
+		}
+		if ((fmi->fstype = strdup(shortenstr(entbuf->mnt_type,
+						12))) == NULL) {
+			fmi->fstype = g_unknown_str;
+		}
+		if ((fmi->mntopts = strdup(entbuf->mnt_opts)) == NULL) {
+			fmi->mntopts = g_none_str;
+		}
+
+		/* infos from statvfs */
+		fmi->bsize    = vfsbuf.f_bsize;
+		fmi->frsize   = vfsbuf.f_frsize;
+		fmi->blocks   = vfsbuf.f_blocks;
+		fmi->bfree    = vfsbuf.f_bfree;
+		fmi->bavail   = vfsbuf.f_bavail;
+		fmi->files    = vfsbuf.f_files;
+		fmi->ffree    = vfsbuf.f_ffree;
+		fmi->favail   = vfsbuf.f_favail;
+
+		/* compute, available, % used, etc. */
+		compute_fs_stats(fmi);
+
+		/* pointer to the next element */
+		fmi->next = NULL;
+
+		/* enqueue the element into the queue */
+		enqueue(lst, *fmi);
+
+		update_maxwidth(fmi);
 	}
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
