@@ -123,7 +123,7 @@ extern struct maxwidths max;
 /* set flags for options */
 extern int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
     nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
-extern int Tflag, Wflag;
+extern int Mflag, Tflag, Wflag;
 
 /* flag that determines which unit is in use (Ko, Mo, etc.) */
 extern char unitflag;

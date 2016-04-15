@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.1.0\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2016-04-15 02:00+0200\n"
+"POT-Creation-Date: 2016-04-15 14:04+0200\n"
 "PO-Revision-Date: 2016-04-15 02:02+0200\n"
 "Last-Translator: Michiel Pater <mpater@tradosoft.com>\n"
 "Language-Team: Dutch\n"
@@ -27,26 +27,26 @@ msgstr "-c: ongeldige suboptie %s\n"
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: ongeldige suboptie %s\n"
 
-#: src/dfc.c:297
+#: src/dfc.c:300
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: ongeldige suboptie %s\n"
 
-#: src/dfc.c:357
+#: src/dfc.c:360
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: ongeldige suboptie %s\n"
 
-#: src/dfc.c:398
+#: src/dfc.c:401
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Fout bij het lezen van het configuratiebestand: %s\n"
 
-#: src/dfc.c:432
+#: src/dfc.c:435
 msgid "Try dfc -h for more information\n"
 msgstr "Probeer dfc -h voor meer informatie\n"
 
-#: src/dfc.c:435
+#: src/dfc.c:438
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -65,8 +65,8 @@ msgid ""
 "\t-l\tonly show information about locally mounted\n"
 "\t\tfile systems\n"
 msgstr ""
-"Gebruik: dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] " 
-"[[-q SORTBY] -t FSTYPE]\n"
+"Gebruik: dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [[-q SORTBY] -t "
+"FSTYPE]\n"
 "\t[-u UNIT]\n"
 "Beschikbare opties:\n"
 "\t-a\tlaat alles zien (verberg geen enkel bestandssysteem)\n"
@@ -82,9 +82,11 @@ msgstr ""
 "\t-l\tgeef alleen informatie weer over lokaal-gemountte\n"
 "\t\tbestandssystemen\n"
 
-#: src/dfc.c:453
+#: src/dfc.c:456
+#, fuzzy
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
+"\t-M\tdo not print \"mounted on\"\n"
 "\t-n\tdo not print header\n"
 "\t-o\tshow mount flags\n"
 "\t-p\tfilter by file system name. Read the manpage\n"
@@ -103,6 +105,7 @@ msgid ""
 "\t-W\twide filename (un truncate)\n"
 msgstr ""
 "\t-m\tgebruik SI eenheden (metric)\n"
+"\t-M\tLaat \"mounted on\" niet zien.\n"
 "\t-n\tlaat de koptekst niet zien\n"
 "\t-o\tgeef mountopties weer\n"
 "\t-p\tstaat u toe om te filteren op naam van bestandssysteem\n"
@@ -130,8 +133,8 @@ msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
 "such a thing anyway?\n"
 msgstr ""
-"Waarde conversie mislukt voor graph_medium: %s. Wat had u verwacht met"
-"zoiets hoe dan ook?\n"
+"Waarde conversie mislukt voor graph_medium: %s. Wat had u verwacht metzoiets "
+"hoe dan ook?\n"
 
 #: src/dotfile.c:200
 #, c-format
@@ -220,13 +223,13 @@ msgstr "#INODES"
 msgid "AV.INODES"
 msgstr "BB.INODES"
 
-#: src/util.c:515 src/export/csv.c:107 src/export/html.c:165
-#: src/export/tex.c:153 src/export/text.c:124
+#: src/util.c:515 src/export/csv.c:108 src/export/html.c:166
+#: src/export/tex.c:154 src/export/text.c:125
 msgid "MOUNTED ON"
 msgstr "MOUNT"
 
-#: src/util.c:516 src/export/html.c:168 src/export/tex.c:155
-#: src/export/text.c:127
+#: src/util.c:516 src/export/html.c:169 src/export/tex.c:156
+#: src/export/text.c:128
 msgid "MOUNT OPTIONS"
 msgstr "MOUNT OPTIES"
 
@@ -244,7 +247,8 @@ msgstr ""
 
 #: src/util.c:653
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
-msgstr "WAARSCHUWING: Output nog steeds te breed. Probeer uw terminal te\n"
+msgstr ""
+"WAARSCHUWING: Output nog steeds te breed. Probeer uw terminal te\n"
 "vergroten\n"
 
 #: src/util.c:721
@@ -319,12 +323,12 @@ msgstr "#INODES%c"
 msgid "AV.INODES%c"
 msgstr "BB.INODES%c"
 
-#: src/export/csv.c:110
+#: src/export/csv.c:111
 #, c-format
 msgid "%cMOUNT OPTIONS"
 msgstr "%cMOUNT OPTIES"
 
-#: src/export/csv.c:132
+#: src/export/csv.c:133
 #, c-format
 msgid "SUM:%c"
 msgstr "SOM:%c"
@@ -362,7 +366,7 @@ msgstr "(=) GEBR"
 msgid "FREE (-)"
 msgstr "GEBR (-)"
 
-#: src/export/text.c:158
+#: src/export/text.c:159
 msgid "SUM:"
 msgstr "SOM:"
 
@@ -379,5 +383,4 @@ msgstr "Mount opties inkorten voor %s\n"
 #: src/platform/services-linux.c:115
 #, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
-msgstr "WAARSCHUWING: %s werd overgeslagen, omdat het niet kon worden"
-"vermeldt"
+msgstr "WAARSCHUWING: %s werd overgeslagen, omdat het niet kon wordenvermeldt"

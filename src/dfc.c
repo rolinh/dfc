@@ -61,7 +61,7 @@ struct conf cnf;
 struct maxwidths max;
 int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
     nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
-int Tflag, Wflag;
+int Mflag, Tflag, Wflag;
 char unitflag;
 
 int
@@ -191,7 +191,7 @@ main(int argc, char *argv[])
 	 /* Init default colors and symbol sign */
 	init_conf(&cnf);
 
-	while ((ch = getopt(argc, argv, "abc:de:fhilmnop:q:st:Tu:vwW")) != -1) {
+	while ((ch = getopt(argc, argv, "abc:de:fhilmMnop:q:st:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
@@ -267,6 +267,9 @@ main(int argc, char *argv[])
 			break;
 		case 'm':
 			mflag = 1;
+			break;
+		case 'M':
+			Mflag = 1;
 			break;
 		case 'n':
 			nflag = 1;
@@ -451,6 +454,7 @@ usage(int status)
 			stdout);
 		(void)fputs(_(
 			"\t-m\tuse metric (SI unit)\n"
+			"\t-M\tdo not print \"mounted on\"\n"
 			"\t-n\tdo not print header\n"
 			"\t-o\tshow mount flags\n"
 			"\t-p\tfilter by file system name. Read the manpage\n"
@@ -596,13 +600,15 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		/* mounted on */
-		sdisp->print_mount(p->mntdir);
+		if (!Mflag)
+			sdisp->print_mount(p->mntdir);
 
 		/* info about mount option */
 		if (oflag)
 			sdisp->print_mopt(p->mntopts);
 
-		(void)printf("\n");
+		/* new line character depending on export type */
+		sdisp->print_ln_end();
 
 		p = delete_struct_and_get_next(p);
 	}

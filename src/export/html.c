@@ -61,6 +61,7 @@ static void html_disp_inodes(uint64_t files, uint64_t favail);
 static void html_disp_mount(const char *dir);
 static void html_disp_mopt(const char *opts);
 static void html_disp_perct(double perct);
+static void html_disp_ln_end();
 
 /* init pointers from display structure to the functions found here */
 void
@@ -78,6 +79,7 @@ init_disp_html(struct display *disp)
 	disp->print_mount  = html_disp_mount;
 	disp->print_mopt   = html_disp_mopt;
 	disp->print_perct  = html_disp_perct;
+	disp->print_ln_end = html_disp_ln_end;
 }
 
 /*
@@ -159,10 +161,11 @@ html_disp_header(void)
 
 	if (iflag) {
 		(void)printf("\t  <th>%s</th>\n", _("#INODES"));
-		(void)printf("\t  <th>%s</th>\n", _("AV.INODES,"));
+		(void)printf("\t  <th>%s</th>\n", _("AV.INODES"));
 	}
 
-	(void)printf("\t  <th>%s</th>\n", _("MOUNTED ON"));
+	if (!Mflag)
+		(void)printf("\t  <th>%s</th>\n", _("MOUNTED ON"));
 
 	if (oflag)
 		(void)printf("\t  <th>%s</th>\n", _("MOUNT OPTIONS"));
@@ -358,6 +361,7 @@ static void
 html_disp_mount(const char *dir)
 {
 	(void)printf("\t  <td>%s</td>", dir);
+	(void)puts("");
 }
 
 /*
@@ -367,7 +371,8 @@ html_disp_mount(const char *dir)
 static void
 html_disp_mopt(const char *opts)
 {
-	(void)printf("\n\t  <td>%s</td>", opts);
+	(void)printf("\t  <td>%s</td>", opts);
+	(void)puts("");
 }
 
 /*
@@ -378,4 +383,12 @@ static void
 html_disp_perct(double perct)
 {
 	(void)printf("\t  <td style = \"text-align: right;\">%.f%%</td>\n", perct);
+}
+
+/*
+ * Display line ending
+ */
+static void
+html_disp_ln_end()
+{
 }
