@@ -1,63 +1,66 @@
-# Fichier de configuration optionnel pour dfc
+# Optioneel configuratiebestand voor dfc
 
-# Couleurs utilisées pour l'affichage par défaut en mode texte
-# Les valeurs possibles sont les suivantes:
-# - noir
-# - rouge
-# - vert
-# - jaune
-# - bleu
+# Kleuren die gebruikt worden voor de standaard tekst output
+# Mogelijke waarden zijn:
+# - zwart
+# - rood
+# - groen
+# - geel
+# - blauw
 # - magenta
-# - cyan
-# - blanc
-# Note: cela concerne uniquement les couleurs en premier-plan
+# - cyaan
+# - wit
+# Note: Dit geldt alleen voor voorgrondkleuren
 
-# Couleur de l'entête
-color_header = bleu
-# Couleur lorsque le taux d'utilisation est faible
-color_low = vert
-# Couleur lorsque le taux d'utilisation est moyen
-color_medium = jaune
-# Couleur lorsque le taux d'utilisation est élevé
-color_high = rouge
+# Kleur van koptekst
+color_header = blauw
+# Kleur wanneer het gebruik laag is
+color_low = groen
+# Kleur wanneer het gebruik gemiddeld is
+color_medium = geel
+# Kleur wanneer het gebruik hoog is
+color_high = rood
 
-# Valeur en pourcent déterminant le changement de couleur dans le graphe
-# valeur de départ pour laquelle le taux d'utilisation est considéré moyen
+# Waarden in procent wanneer kleuren veranderen in de grafiek
+# Startwaarde vanaf wanneer het gebruikt wordt gezien als gemiddeld
 graph_medium = 50
-# valeur de départ pour laquelle le taux d'utilisation est considéré élevé
+# Startwaarde vanaf wanneer het gebruikt wordt gezien als hoog
 graph_high = 75
 
-# Symbole utilisé pour le graphe (cela peut être n'importe quel symbole ASCII)
+# Symbool dat gebruikt wordt voor de grafiek (kan elk ASCII symbool zijn)
 graph_symbol = =
 
-# Vous pouvez également choisir les couleurs pour l'export HTML
-# Les couleurs peuvent prendre n'importe quelle valeur html reconnue
-# Par exemple, ceci est blanc: #FFFFFF
-# Ceci est rouge: #FF0000
+# U kunt ook de kleuren kiezen voor de HTML export
+# Waarden van kleuren kunnen elke bekende html waarde zijn
+# Dit is bijvoorbeeld wit: #FFFFFF
+# En dit is rood: #FF0000
 # Etc.
-# NOTE: vous DEVEZ omettre le symbole # ici
-# (blanc devient FFFFF etc.)
+# NOTE: U MOET het # teken weglaten wanneer u het hier instelt
+# (wit wordt FFFFFF enzovoort)
 
-# Couleur de fond de l'entête (valable également pour le pied de page)
+#
+# HTML waarden:
+#
+# Koptekst achtergrondkleur (wordt ook gebruikt als voettekst)
 html_color_header_bg = 970000
-# Couleur de la police de l'entête (valable également pour le pied de page)
+# Koptekst voorgrondkleur (also used in footer)
 html_color_header_fg = FFFFFF
-# Couleur de fond des cellules
+# Cel achtergrondkleur
 html_color_cell_bg = E9E9E9
-# Couleur de police des cellules
+# Cel voorgrondkleur
 html_color_cell_fg = 000000
-# Couleur de fond au survol de la souris
+# Achtergrondkleur bij mouse hover
 html_color_hover_bg = FFFFFF
-# Couleur de la police au survol de la souris
+# Voorgrondkleur bij mouse hover
 html_color_hover_fg = 000000
-# Couleur lorsque le taux d'utilisation est faible
+# Kleur wanneer het gebruik laag is
 html_color_low = 348017
-# Couleur lorsque le taux d'utilisation est moyen
+# Kleur wanneer het gebruik gemiddeld is
 html_color_medium = FDD017
-# Couleur lorsque le taux d'utilisation est élevé
+# Kleur wanneer het gebruik hoog is
 html_color_high = F62217
 
-# Séparateur pour l'export en CSV
+# scheidingsteken voor CSV export
 csv_separator = ,
 
 # vim: set noet syn=conf
