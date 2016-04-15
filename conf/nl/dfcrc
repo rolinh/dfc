@@ -61,6 +61,6 @@ html_color_medium = FDD017
 html_color_high = F62217
 
 # scheidingsteken voor CSV export
-csv_separator = ,
+csv_separator = :
 
 # vim: set noet syn=conf
