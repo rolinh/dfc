@@ -1,0 +1,249 @@
+.TH dfc 1  "29 September, 2012" "version 3.0.1" "USER COMMANDS"
+.SH NAME
+dfc \- geef het gebruik van het bestandssysteem weer met behulp van grafieken en kleuren
+.SH SYNOPSIS
+.B dfc [OPTION(S)] [\-c WHEN] [\-e FORMAT] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
+.SH DESCRIPTION
+dfc(1) is een tool vergelijkbaar met df(1) behalve dat het grafieken kan laten zien samen
+met data en het kan kleuren gebruiken (kleur-modus is standaard "color\-auto" maar u kunt
+dit veranderen met de "\-c" optie).
+
+De beschikbare grootte komt overeen met de beschikbare ruimte vanuit het
+oogpunt van een gebruiker en niet vanuit het perspectief van root
+(bijvoorbeeld: gebruik f_bavail in plaats van f_bfree).
+
+Zonder argument, is de grootte weergegeven in een voor mensen
+leesbaar formaat. Let erop, dat wanneer het voor mensen leesbare formaat
+wordt gebruikt, er wat getallen afgerond worden wanneer de grootte berekend
+wordt. Als u maximale precisie wilt, gebruik dan de "\-u" optie en kies de
+eenheid.
+
+dfc(1) heeft ook een ingebouwde feature die de output automatisch aanpast op
+basis van de breedte van de terminal. Als u dit gedrag wilt overschrijven,
+gebruik dan de "\-f" optie.
+
+.SH OPTIONS
+.TP
+\-a
+Laat alles zien (verberg geen enkel bestandssysteem).
+.TP
+\-b
+Laat de grafische balk niet zien.
+.TP
+\-c [WHEN]
+Kies de kleur\-modus waar WHEN één van de volgende sub\-opties is:
+
+"always":
+De kleuren worden altijd gebruikt. Het maakt niet uit wat "stdout" is.
+
+"auto":
+Dit is standaard wanneer "\-c" niet is geactiveerd. Kleuren worden alleen
+gebruikt als "stdout" een terminal is. Bijvoorbeeld: kleur wordt
+uitgeschakeld met deze optie als u de output van dfc(1) met een ander
+commando tegelijkertijd uitvoerd (piped).
+
+"never":
+Kleur wordt nooit gebruikt.
+
+.TP
+\-d
+Laat de gebruikte grootte zien.
+.TP
+\-e [FORMAT]
+Maakt het mogelijk om de output van dfc(1) te exporteren
+naar een gespecificeerd FORMAT.
+FORMAT is één van de onderstaande:
+
+"csv":
+Output als "comma separated value" bestandstype.
+Voorbeeld van gebruik:
+
+	dfc \-e csv > foo.csv
+
+"html":
+Output als HTML formaat. Voorbeeld van gebruik:
+
+	dfc \-e html \-Tadiso \-c always > index.html
+
+"tex":
+Output als TeX formaat. Voorbeeld van gebruik:
+
+	dfc \-e tex \-c always > report.tex
+
+"text":
+Output als tekst (standaard).
+
+.TP
+\-f
+Overschrijf het automatisch\-aanpassingsgedrag door het forceren van
+het weergeven van informatie. Deze optie kan handig zijn wanneer
+output van dfc(1) wordt doorgestuurd.
+.TP
+\-h
+Geef een korte hulptekst weer.
+.TP
+\-i
+Laat informatie zien over inodes.
+.TP
+\-l
+Geef alleen informatie weer over lokaal-gemountte bestandssystemen.
+.TP
+\-m
+Gebruik SI eenheden (metric) (dwz: grootte is berekend met behulp
+van machten van 10 in plaats van machten van 2).
+.TP
+\-n
+Laat de koptekst niet zien.
+.TP
+\-o
+Geef mountopties weer.
+.TP
+\-p [FSNAME]
+Staat u toe om te filteren op naam van bestandssysteem. FSNAME kan alles
+zijn. Als u bijvoorbeeld alleen bestandssystemen wilt zien waarvan de naam
+begint met "/dev", dan gebruikt u het volgende commando:
+
+	dfc \-p /dev
+
+Dit output alleen bestandssystemen waarvan de namen als bijvoorbeeld zijn:
+"/dev/sda1", "/dev/root", "/dev", etc.
+
+het selecteren van meerdere namen wordt ook ondersteund. In dit geval moet
+FSNAME een met comma gescheiden lijst zijn (zonder spaties). Als u
+bijvoorbeeld wilt filteren op "/dev" en "tmpfs", gebruikt u het volgende
+commando:
+
+	dfc \-p /dev,tmpfs
+
+U kunt ook negatieve matching gebruiken om de output te filteren. Om dit
+te doen, kunt u simpelweg een "\-" voor FSNAME plaatsen. In het volgende
+voorbeeld geeft dfc(1) alle namen van bestandssystemen weer, behalve
+degene die worden genoemd:
+
+	dfc \-p \-proc,/dev/sdc,run
+
+.TP
+\-q [SORTBY]
+Geeft u de mogelijkheid om de output te sorteren op SORTBY.
+
+SORTBY kan één van de volgende drie waarden hebben:
+"name", "type", "mount".
+
+De output wordt gestorteert op naam van het bestandssysteem wanneer "name"
+wordt gebruikt.
+
+De output wordt gestorteert op type van het bestandssysteem wanneer "type"
+wordt gebruikt.
+
+De output wordt gestorteert op mount points wanneer "mount" wordt gebruikt.
+
+.TP
+\-s
+Laat de som van het totale gebruik zien.
+.TP
+\-t [FSTYPE]
+Staat u toe om te filteren op type bestandssysteem. FSTYPE kan elk bekend
+bestandssysteemtype zijn. Bijvoorbeeld "ext4", "ufs", "tmpfs", "reiserfs", etc.
+U kunt ook jokerfilters gebruiken, zoals bij de \-p optie. Bijvoorbeeld
+als u het volgende commando gebruikt:
+
+    dfc \-t ext
+
+Dit staat elk bestandssysteemtype toe met een naam die start met "ext" om door
+de filter te komen. Bijvoorbeeld: "ext2", "ext3" and "ext4".
+
+Meerdere selecties op bestandssysteem is ook mogelijk. In dit geval moet FSTYPE
+een comma gescheiden lijst (zonder spaties) zijn. Als u bijvoorbeeld wilt
+filteren op "ext4" en "tmpfs", gebruikt u het volgende commando:
+
+	dfc \-t ext4,tmpfs
+
+U kunt ook negatieve matching gebruiken om de output te filteren. Om dit
+te doen, kunt u simpelweg een "\-" voor FSTYPE plaatsen. In het volgende
+voorbeeld geeft dfc(1) alle typen van bestandssystemen weer, behalve
+degene die worden genoemd:
+
+	dfc \-t \-rootfs,tmpfs
+
+.TP
+\-T
+Geef bestandssysteemtypen weer.
+.TP
+\-u [UNIT]
+Geef grootte weer in de gespecificeerde eenheid. UNIT kan één van de volgende
+waarden zijn:
+
+"h":
+	mensen leesbaar formaat (Human readable)
+	(standaard wanneer de "\-u" optie niet wordt gebruikt).
+
+"b":
+	Geef grootte in aantal bytes weer.
+
+"k":
+	Geef grootte in aantal Kio weer.
+
+"m":
+	Geef grootte in aantal Mio weer.
+
+"g":
+	Geef grootte in aantal Gio weer.
+
+"t":
+	Geef grootte in aantal Tio weer.
+
+"p":
+	Geef grootte in aantal Pio weer.
+
+"e":
+	Geef grootte in aantal Eio weer.
+
+"z":
+	Geef grootte in aantal Zio weer.
+
+"y":
+	Geef grootte in aantal Yio weer.
+
+NOTE: Wanneer u de "\-u" optie gebruikt samen met de "\-m" optie, worden de
+subopties vervangen door hun SI tegenhangers.
+.TP
+\-v
+Laat de versie van dfc(1) zien en beëindig het programma.
+.TP
+\-w
+Gebruik een bredere balk voor de grafiek.
+.TP
+\-W
+Laat brede bestandsnamen zien (voorkom dat de bestandsnamen afgekort worden).
+Dit kan een groter scherm vereisen.
+.SH CONFIGURATION FILE
+Het configuratiebestand is optioneel. Het staat u toe om instellingen van
+dfc(1) te veranderen. De standaardkleuren, waarden wanneer kleuren
+veranderen en de grafische symbolen in tekst\-modus en het aanpassen van
+kleuren die gebruikt worden in html export.
+
+Als u het wilt gebruiken, plaats het dan hier:
+
+	$XDG_CONFIG_HOME/dfc/dfcrc
+
+Als uw besturingssysteem geen XDG Base Directory Specification ondersteund,
+zou het hier geplaatst moeten worden:
+
+	$HOME/.config/dfc/dfcrc
+
+Als dat niet werkt, kunt u deze locatie nog proberen:
+
+	$HOME/.dfcrc
+
+NOTE: De laatste twee keuzes kunnen alleen gekozen worden als uw besturingssysteem
+geen XDG Base Directory Specification ondersteund.
+.SH BUGS
+Als u een fout vindt, neem dan alstublieft contact op met de auteur en omschrijf wat u tegenkomt.
+.SH AUTHORS
+Robin Hahling <robin.hahling\(atgw\-computing.net>
+.SH COPYRIGHT
+Copyright \(co 2012 Robin Hahling
+.SH LICENSE
+BSD 3-clause
+.SH SEE ALSO
+df(1), du(1)

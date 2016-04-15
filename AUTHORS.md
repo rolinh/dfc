@@ -13,6 +13,7 @@
   * Matthieu Le Jeune
   * Sylvain Laperche
   * Tobias Patzl
+  * Michiel Pater
 
 ## TRANSLATORS:
 
@@ -23,5 +24,9 @@ French:
 Swedish:
 
   * Andreas Rönnquist <gusnan@gusnan.se>
+  
+Dutch:
+
+  * Michiel Pater <mpater@tradosoft.com>
 
 <!-- vim: set filetype=markdown textwidth=80 -->

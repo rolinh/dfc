@@ -1,0 +1,63 @@
+# Fichier de configuration optionnel pour dfc
+
+# Couleurs utilisées pour l'affichage par défaut en mode texte
+# Les valeurs possibles sont les suivantes:
+# - noir
+# - rouge
+# - vert
+# - jaune
+# - bleu
+# - magenta
+# - cyan
+# - blanc
+# Note: cela concerne uniquement les couleurs en premier-plan
+
+# Couleur de l'entête
+color_header = bleu
+# Couleur lorsque le taux d'utilisation est faible
+color_low = vert
+# Couleur lorsque le taux d'utilisation est moyen
+color_medium = jaune
+# Couleur lorsque le taux d'utilisation est élevé
+color_high = rouge
+
+# Valeur en pourcent déterminant le changement de couleur dans le graphe
+# valeur de départ pour laquelle le taux d'utilisation est considéré moyen
+graph_medium = 50
+# valeur de départ pour laquelle le taux d'utilisation est considéré élevé
+graph_high = 75
+
+# Symbole utilisé pour le graphe (cela peut être n'importe quel symbole ASCII)
+graph_symbol = =
+
+# Vous pouvez également choisir les couleurs pour l'export HTML
+# Les couleurs peuvent prendre n'importe quelle valeur html reconnue
+# Par exemple, ceci est blanc: #FFFFFF
+# Ceci est rouge: #FF0000
+# Etc.
+# NOTE: vous DEVEZ omettre le symbole # ici
+# (blanc devient FFFFF etc.)
+
+# Couleur de fond de l'entête (valable également pour le pied de page)
+html_color_header_bg = 970000
+# Couleur de la police de l'entête (valable également pour le pied de page)
+html_color_header_fg = FFFFFF
+# Couleur de fond des cellules
+html_color_cell_bg = E9E9E9
+# Couleur de police des cellules
+html_color_cell_fg = 000000
+# Couleur de fond au survol de la souris
+html_color_hover_bg = FFFFFF
+# Couleur de la police au survol de la souris
+html_color_hover_fg = 000000
+# Couleur lorsque le taux d'utilisation est faible
+html_color_low = 348017
+# Couleur lorsque le taux d'utilisation est moyen
+html_color_medium = FDD017
+# Couleur lorsque le taux d'utilisation est élevé
+html_color_high = F62217
+
+# Séparateur pour l'export en CSV
+csv_separator = ,
+
+# vim: set noet syn=conf
