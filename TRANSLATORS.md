@@ -31,7 +31,7 @@ translation.
    way and truncate the name if required. For instance, in French, I would
    translate it this way:
 		"SYS. FICH. "
-   Completely capitalized string from other files than text.c can be translated
+   Completely capitalized strings from other files than text.c can be translated
    as usual.
 
 ### CREATE A NEW TRANSLATION
@@ -82,8 +82,15 @@ file:
 
 		msgmerge --update fr.po dfc.pot
 
-  * Open the *.po file and update translation. Once done, as usual, ckeck your
+  * Open the *.po file and update translation. Once done, as usual, check your
     translation.
+	
+### ADDING THE TRANSLATION
+
+Add a space and the language code to po/LINGUAS.
+For example: if you add Dutch (nl):
+
+fr nl
 
 ## TRANSLATE THE MANPAGE
 
