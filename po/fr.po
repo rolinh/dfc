@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2014-11-04 20:21+0100\n"
+"POT-Creation-Date: 2016-04-15 14:04+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -27,26 +27,26 @@ msgstr "-c: sous-option illégale %s\n"
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:297
+#: src/dfc.c:300
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:357
+#: src/dfc.c:360
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:398
+#: src/dfc.c:401
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:432
+#: src/dfc.c:435
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:435
+#: src/dfc.c:438
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE]\n"
@@ -82,9 +82,11 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés\n"
 "\t\tlocalement uniquement\n"
 
-#: src/dfc.c:453
+#: src/dfc.c:456
+#, fuzzy
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
+"\t-M\tdo not print \"mounted on\"\n"
 "\t-n\tdo not print header\n"
 "\t-o\tshow mount flags\n"
 "\t-p\tfilter by file system name. Read the manpage\n"
@@ -103,6 +105,7 @@ msgid ""
 "\t-W\twide filename (un truncate)\n"
 msgstr ""
 "\t-m\tutilise les unités métriques (unités SI)\n"
+"\t-M\tdésactive l'affichage de \"monté sur\"\n"
 "\t-n\tdésactive l'affichage du titre\n"
 "\t-o\taffiche les options de montage\n"
 "\t-p\tfiltre par nom de système de fichiers. Lisez le manuel\n"
@@ -185,58 +188,59 @@ msgid "Could not assign value from configuration file: %s\n"
 msgstr ""
 "Impossible d'assigner une valeur depuis le fichier de configuration: %s\n"
 
-#: src/util.c:505 src/export/html.c:147 src/export/tex.c:139
+#: src/util.c:506 src/export/html.c:147 src/export/tex.c:139
 #: src/export/text.c:97
 msgid "FILESYSTEM"
 msgstr "SYSTÈME DE FICHIERS"
 
-#: src/util.c:506 src/export/html.c:150 src/export/tex.c:141
+#: src/util.c:507 src/export/html.c:150 src/export/tex.c:141
 #: src/export/text.c:100
 msgid "TYPE"
 msgstr "TYPE"
 
-#: src/util.c:508 src/export/html.c:154 src/export/text.c:110
+#: src/util.c:509 src/export/html.c:154 src/export/text.c:110
 msgid "%USED"
 msgstr "%UTILISÉ"
 
-#: src/util.c:509 src/export/html.c:156 src/export/tex.c:146
+#: src/util.c:510 src/export/html.c:156 src/export/tex.c:146
 #: src/export/text.c:113
 msgid "USED"
 msgstr " UT."
 
-#: src/util.c:510 src/export/html.c:157 src/export/tex.c:147
+#: src/util.c:511 src/export/html.c:157 src/export/tex.c:147
 #: src/export/text.c:115
 msgid "AVAILABLE"
 msgstr "DISPO."
 
-#: src/util.c:511 src/export/html.c:158 src/export/tex.c:148
+#: src/util.c:512 src/export/html.c:158 src/export/tex.c:148
 #: src/export/text.c:116
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: src/util.c:512 src/export/html.c:161 src/export/text.c:119
+#: src/util.c:513 src/export/html.c:161 src/export/text.c:119
 msgid "#INODES"
 msgstr "#INODES"
 
-#: src/util.c:513 src/export/text.c:120
+#: src/util.c:514 src/export/text.c:120
 msgid "AV.INODES"
 msgstr "INODES DISP."
 
-#: src/util.c:514 src/export/csv.c:107 src/export/html.c:165
-#: src/export/tex.c:153 src/export/text.c:124
+#: src/util.c:515 src/export/csv.c:108 src/export/html.c:166
+#: src/export/tex.c:154 src/export/text.c:125
 msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
-#: src/util.c:515 src/export/html.c:168 src/export/tex.c:155
-#: src/export/text.c:127
+#: src/util.c:516 src/export/html.c:169 src/export/tex.c:156
+#: src/export/text.c:128
 msgid "MOUNT OPTIONS"
 msgstr "OPTIONS DE MONTAGE"
 
-#: src/util.c:540
-msgid "Cannot compute required width"
+#: src/util.c:541
+#, fuzzy
+msgid "Cannot compute required width\n"
 msgstr "Impossible de calculer la largeur requise"
 
-#: src/util.c:600
+#: src/util.c:614
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
@@ -244,41 +248,41 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
 "afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
 
-#: src/util.c:639
+#: src/util.c:653
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
 "si cela est possible...\n"
 
-#: src/util.c:707
+#: src/util.c:721
 msgid "black"
 msgstr "noir"
 
-#: src/util.c:709
+#: src/util.c:723
 msgid "red"
 msgstr "rouge"
 
-#: src/util.c:711
+#: src/util.c:725
 msgid "green"
 msgstr "vert"
 
-#: src/util.c:713
+#: src/util.c:727
 msgid "yellow"
 msgstr "jaune"
 
-#: src/util.c:715
+#: src/util.c:729
 msgid "blue"
 msgstr "bleu"
 
-#: src/util.c:717
+#: src/util.c:731
 msgid "magenta"
 msgstr "magenta"
 
-#: src/util.c:719
+#: src/util.c:733
 msgid "cyan"
 msgstr "cyan"
 
-#: src/util.c:721
+#: src/util.c:735
 msgid "white"
 msgstr "blanc"
 
@@ -322,12 +326,12 @@ msgstr "#INODES%c"
 msgid "AV.INODES%c"
 msgstr "INODES DISP.%c"
 
-#: src/export/csv.c:110
+#: src/export/csv.c:111
 #, c-format
 msgid "%cMOUNT OPTIONS"
 msgstr "%cOPTIONS DE MONTAGE"
 
-#: src/export/csv.c:132
+#: src/export/csv.c:133
 #, c-format
 msgid "SUM:%c"
 msgstr "SOM:%c"
@@ -365,21 +369,21 @@ msgstr "(=)  UT."
 msgid "FREE (-)"
 msgstr "LIB. (-)"
 
-#: src/export/text.c:158
+#: src/export/text.c:159
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/platform/services-bsd.c:342
+#: src/platform/services-bsd.c:345
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/platform/services-bsd.c:371
+#: src/platform/services-bsd.c:374
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"
 
-#: src/platform/services-linux.c:169
+#: src/platform/services-linux.c:115
 #, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
 msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"

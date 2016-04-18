@@ -52,6 +52,7 @@ struct display
     void (*print_mount)	 (const char *);
     void (*print_mopt)	 (const char *);
     void (*print_perct)  (double);
+	void (*print_ln_end) (void);
 };
 
 #endif /* ndef H_DISPLAY */
