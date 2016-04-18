@@ -60,7 +60,7 @@ static void text_disp_inodes(uint64_t files, uint64_t favail);
 static void text_disp_mount(const char *dir);
 static void text_disp_mopt(const char *opts);
 static void text_disp_perct(double perct);
-static void text_disp_ln_end();
+static void text_disp_ln_end(void);
 
 static void change_color(double perct);
 static void reset_color(void);
@@ -337,7 +337,7 @@ text_disp_perct(double perct)
  * Display line ending
  */
 static void
-text_disp_ln_end()
+text_disp_ln_end(void)
 {
 	(void)printf("\n");
 }

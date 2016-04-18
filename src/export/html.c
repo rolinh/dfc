@@ -61,7 +61,7 @@ static void html_disp_inodes(uint64_t files, uint64_t favail);
 static void html_disp_mount(const char *dir);
 static void html_disp_mopt(const char *opts);
 static void html_disp_perct(double perct);
-static void html_disp_ln_end();
+static void html_disp_ln_end(void);
 
 /* init pointers from display structure to the functions found here */
 void
@@ -389,6 +389,6 @@ html_disp_perct(double perct)
  * Display line ending
  */
 static void
-html_disp_ln_end()
+html_disp_ln_end(void)
 {
 }
