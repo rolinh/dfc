@@ -360,8 +360,7 @@ html_disp_inodes(uint64_t files, uint64_t favail)
 static void
 html_disp_mount(const char *dir)
 {
-	(void)printf("\t  <td>%s</td>", dir);
-	(void)puts("");
+	(void)printf("\t  <td>%s</td>\n", dir);
 }
 
 /*
@@ -371,8 +370,7 @@ html_disp_mount(const char *dir)
 static void
 html_disp_mopt(const char *opts)
 {
-	(void)printf("\t  <td>%s</td>", opts);
-	(void)puts("");
+	(void)printf("\t  <td>%s</td>\n", opts);
 }
 
 /*
