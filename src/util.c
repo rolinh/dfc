@@ -604,9 +604,9 @@ auto_adjust(int tty_width)
 {
 	int req_width;
 
-	req_width = max.fsname + max.fstype + max.bar + max.perctused + max.used
-		    + max.avail + max.total + max.nbinodes + max.avinodes
-		    + max.mntdir + max.mntopts;
+	req_width = max.fsname + ( Tflag  ?  max.fstype  :  0 ) + max.bar + max.perctused + ( dflag  ?  max.used  :  0 )
+		    + max.avail + max.total + ( iflag  ?  max.nbinodes + max.avinodes  :  0 )
+		    + ( !Mflag  ?  max.mntdir  :  0 ) + ( oflag  ?  max.mntopts  :  0 );
 
 	if (tty_width > req_width)
 		return; /* nothing to adjust */
@@ -637,9 +637,16 @@ auto_adjust(int tty_width)
 		if (tty_width >= req_width)
 			return;
 	}
+	if (!Mflag) {
+		Mflag = 1;
+		req_width -= max.mntdir;
+		if (tty_width >= req_width)
+			return;
+	}
 	if (iflag) {
 		iflag = 0;
 		req_width -= max.nbinodes;
+		req_width -= max.avinodes;
 		if (tty_width >= req_width)
 			return;
 	}
