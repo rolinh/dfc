@@ -60,6 +60,7 @@ static void csv_disp_inodes(uint64_t files, uint64_t favail);
 static void csv_disp_mount(const char *dir);
 static void csv_disp_mopt(const char *opts);
 static void csv_disp_perct(double perct);
+static void csv_disp_ln_end(void);
 
 /* init pointers from display structure to the functions found here */
 void
@@ -77,6 +78,7 @@ init_disp_csv(struct display *disp)
     disp->print_mount  = csv_disp_mount;
     disp->print_mopt   = csv_disp_mopt;
     disp->print_perct  = csv_disp_perct;
+    disp->print_ln_end = csv_disp_ln_end;
 }
 
 /*
@@ -97,14 +99,15 @@ csv_disp_header(void)
 
 	(void)printf(_("AVAILABLE%c"), cnf.csvsep);
 
-	(void)printf(_("TOTAL%c"), cnf.csvsep);
+	(void)printf(_("TOTAL"));
 
 	if (iflag) {
-		(void)printf(_("#INODES%c"), cnf.csvsep);
-		(void)printf(_("AV.INODES%c"), cnf.csvsep);
+		(void)printf(_("%c#INODES%c"), cnf.csvsep, cnf.csvsep);
+		(void)printf(_("AV.INODES"));
 	}
 
-	(void)printf("%s", _("MOUNTED ON"));
+	if (!Mflag)
+		(void)printf("%c%s", cnf.csvsep, _("MOUNTED ON"));
 
 	if (oflag)
 		(void)printf(_("%cMOUNT OPTIONS"), cnf.csvsep);
@@ -269,4 +272,13 @@ static void
 csv_disp_perct(double perct)
 {
 	(void)printf("%.f%%", perct);
+}
+
+/*
+ * Display line ending
+ */
+static void
+csv_disp_ln_end(void)
+{
+	(void)printf("\n");
 }

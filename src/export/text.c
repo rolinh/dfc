@@ -60,6 +60,7 @@ static void text_disp_inodes(uint64_t files, uint64_t favail);
 static void text_disp_mount(const char *dir);
 static void text_disp_mopt(const char *opts);
 static void text_disp_perct(double perct);
+static void text_disp_ln_end(void);
 
 static void change_color(double perct);
 static void reset_color(void);
@@ -80,6 +81,7 @@ init_disp_text(struct display *disp)
     disp->print_mount  = text_disp_mount;
     disp->print_mopt   = text_disp_mopt;
     disp->print_perct  = text_disp_perct;
+    disp->print_ln_end = text_disp_ln_end;
 }
 
 /*
@@ -121,7 +123,8 @@ text_disp_header(void)
 	}
 
 	/* precedded by a space because previous colum is right aligned */
-	(void)printf(" %-*s", max.mntdir, _("MOUNTED ON"));
+	if (!Mflag)
+		(void)printf(" %-*s", max.mntdir, _("MOUNTED ON"));
 
 	if (oflag)
 		(void)printf("%-*s", max.mntopts, _("MOUNT OPTIONS"));
@@ -328,6 +331,15 @@ text_disp_perct(double perct)
 	(void)printf("%*.1f", max.perctused, perct);
 	reset_color();
 	(void)printf("%%");
+}
+
+/*
+ * Display line ending
+ */
+static void
+text_disp_ln_end(void)
+{
+	(void)printf("\n");
 }
 
 /*

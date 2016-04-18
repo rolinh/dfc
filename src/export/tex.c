@@ -65,6 +65,7 @@ static void tex_disp_inodes(uint64_t files, uint64_t favail);
 static void tex_disp_mount(const char *dir);
 static void tex_disp_mopt(const char *opts);
 static void tex_disp_perct(double perct);
+static void tex_disp_ln_end(void);
 
 /* init pointers from display structure to the functions found here */
 void
@@ -82,6 +83,7 @@ init_disp_tex(struct display *disp)
 	disp->print_mount  = tex_disp_mount;
 	disp->print_mopt   = tex_disp_mopt;
 	disp->print_perct  = tex_disp_perct;
+	disp->print_ln_end = tex_disp_ln_end;
 }
 
 /*
@@ -150,7 +152,8 @@ tex_disp_header(void)
 		(void)printf(" & %s ", _("\\#INODES"));
 		(void)printf(" & %s ", _("AV.INODES,"));
 	}
-	(void)printf(" & %s ", _("MOUNTED ON"));
+	if (!Mflag)
+		(void)printf(" & %s ", _("MOUNTED ON"));
 	if (oflag)
 		(void)printf(" & %s ", _("MOUNT OPTIONS"));
 
@@ -394,4 +397,13 @@ static void
 tex_disp_perct(double perct)
 {
 	(void)printf(" & %.f\\%%", perct);
+}
+
+/*
+ * Display line ending
+ */
+static void
+tex_disp_ln_end(void)
+{
+	(void)printf("\n");
 }
