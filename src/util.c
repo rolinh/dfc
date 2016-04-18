@@ -512,7 +512,7 @@ init_maxwidths(void)
 	max.total	= (int)strlen(_("TOTAL")) + 1;
 	max.nbinodes	= iflag ? (int)strlen(_("#INODES")) + 1 : 0;
 	max.avinodes	= iflag ? (int)strlen(_("AV.INODES")) + 1 : 0;
-	max.mntdir	= (int)strlen(_("MOUNTED ON")) + 1;
+	max.mntdir	= !Mflag ? (int)strlen(_("MOUNTED ON")) + 1 : 0;
 	max.mntopts	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
 }
 
@@ -579,7 +579,10 @@ update_maxwidth(struct fsmntinfo *fmi)
 	/* + 1 for a space between each column */
 	max.fsname = imax((int)strlen(fmi->fsname) + 1, max.fsname);
 	max.fstype = imax((int)strlen(fmi->fstype) + 1, max.fstype);
-	max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
+	
+	if (!Mflag)
+		max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
+	
 	if (oflag)
 		max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
 
@@ -604,9 +607,9 @@ auto_adjust(int tty_width)
 {
 	int req_width;
 
-	req_width = max.fsname + ( Tflag  ?  max.fstype  :  0 ) + max.bar + max.perctused + ( dflag  ?  max.used  :  0 )
-		    + max.avail + max.total + ( iflag  ?  max.nbinodes + max.avinodes  :  0 )
-		    + ( !Mflag  ?  max.mntdir  :  0 ) + ( oflag  ?  max.mntopts  :  0 );
+	req_width = max.fsname + max.fstype + max.bar + max.perctused + max.used
+		    + max.avail + max.total + max.nbinodes + max.avinodes
+		    + max.mntdir + max.mntopts;
 
 	if (tty_width > req_width)
 		return; /* nothing to adjust */
