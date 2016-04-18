@@ -512,7 +512,7 @@ init_maxwidths(void)
 	max.total	= (int)strlen(_("TOTAL")) + 1;
 	max.nbinodes	= iflag ? (int)strlen(_("#INODES")) + 1 : 0;
 	max.avinodes	= iflag ? (int)strlen(_("AV.INODES")) + 1 : 0;
-	max.mntdir	= !Mflag ? (int)strlen(_("MOUNTED ON")) + 1 : 0;
+	max.mntdir	= Mflag ? 0 : (int)strlen(_("MOUNTED ON")) + 1;
 	max.mntopts	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
 }
 
