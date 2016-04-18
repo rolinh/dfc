@@ -364,7 +364,7 @@ msgstr "(=) GEBR"
 
 #: src/export/text.c:105 src/export/text.c:107
 msgid "FREE (-)"
-msgstr "GEBR (-)"
+msgstr "VRIJ (-)"
 
 #: src/export/text.c:159
 msgid "SUM:"
