@@ -12,6 +12,11 @@
 # - white
 # Note: it only concerns foreground colors
 
+# Display extra light colors
+# Note: This might not work on some terminals
+# Use either "yes" or "no"
+light_colors = no
+
 # Header color
 color_header = blue
 # Color when usage is low

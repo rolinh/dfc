@@ -2,24 +2,29 @@
 
 # Couleurs utilisées pour l'affichage par défaut en mode texte
 # Les valeurs possibles sont les suivantes:
-# - noir
-# - rouge
-# - vert
-# - jaune
-# - bleu
-# - magenta
-# - cyan
-# - blanc
+# - black (noir)
+# - red (rouge)
+# - green (vert)
+# - yellow (jaune)
+# - blue (bleu)
+# - magenta (magenta)
+# - cyan (cyan)
+# - white (blanc)
 # Note: cela concerne uniquement les couleurs en premier-plan
 
+# Afficher des couleurs claires
+# Note: Cela peut ne pas fonctionner avec certains terminaux
+# "yes"="oui"; "no"="non"
+light_colors = no
+
 # Couleur de l'entête
-color_header = bleu
+color_header = blue
 # Couleur lorsque le taux d'utilisation est faible
-color_low = vert
+color_low = green
 # Couleur lorsque le taux d'utilisation est moyen
-color_medium = jaune
+color_medium = yellow
 # Couleur lorsque le taux d'utilisation est élevé
-color_high = rouge
+color_high = red
 
 # Valeur en pourcent déterminant le changement de couleur dans le graphe
 # valeur de départ pour laquelle le taux d'utilisation est considéré moyen

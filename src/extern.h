@@ -71,6 +71,8 @@
 
 
 struct conf {
+	int lightcol;	/* use light colors (true/false) */
+	
 	int chead;	/* color used for the header */
 	int clow;	/* color when usage low */
 	int cmedium;	/* color when usage medium */

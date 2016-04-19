@@ -50,6 +50,22 @@
 #endif
 
 /*
+ * Checks whether a value is a boolean ("yes" or "no")
+ * Return 1 if "yes", 0 if "no", or -1 if not a boolean
+ * @val: value to check
+*/
+int
+is_boolean_value(const char* val)
+{
+	if( strcmp(val, "yes") == 0 )
+		return 1;
+	else if( strcmp(val, "no") == 0 )
+		return 0;
+	else
+		return -1;
+}
+
+/*
  * Finds the configuration file and returns it.
  * NULL is returned when no configuration file is found.
  * Configuration file follows XDG Base Directory Specification
@@ -166,7 +182,13 @@ set_conf(const char *key, const char *val)
 	int ret = 0;
 	char *tmpc = NULL;
 
-	if (strcmp(key, "color_header") == 0) {
+	if (strcmp(key, "light_colors") == 0) {
+		if ((tmp = is_boolean_value(val)) == -1)
+			goto unknown_boolean_value;
+		else
+			cnf.lightcol = tmp;
+	}
+	else if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)
 			goto unknown_color_value;
 		else
@@ -323,6 +345,11 @@ set_conf(const char *key, const char *val)
 
 	free(tmpc);
 	return ret;
+
+unknown_boolean_value:
+	(void)fprintf(stderr, _("Unknown boolean value: %s\n"), val);
+	free(tmpc);
+	return -1;
 
 unknown_color_value:
 	(void)fprintf(stderr, _("Unknown color value: %s\n"), val);
