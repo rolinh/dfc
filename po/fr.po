@@ -238,7 +238,7 @@ msgstr "OPTIONS DE MONTAGE"
 #: src/util.c:541
 #, fuzzy
 msgid "Cannot compute required width\n"
-msgstr "Impossible de calculer la largeur requise"
+msgstr "Impossible de calculer la largeur requise\n"
 
 #: src/util.c:614
 msgid ""

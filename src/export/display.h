@@ -38,20 +38,20 @@
 /* Structure to handle the display interface. */
 struct display
 {
-    /* Some interfaces may need to initialize/deinitialize stuff */
-    void (*init)         (void);
-    void (*deinit)       (void);
+	/* Some interfaces may need to initialize/deinitialize stuff */
+	void (*init)         (void);
+	void (*deinit)       (void);
 
-    void (*print_header) (void);
-    void (*print_sum)    (double, double, double, double, double);
-    void (*print_bar)    (double);
-    void (*print_uat)    (double, double, int);
-    void (*print_fs)	 (const char *);
-    void (*print_type)	 (const char *);
-    void (*print_inodes) (uint64_t, uint64_t);
-    void (*print_mount)	 (const char *);
-    void (*print_mopt)	 (const char *);
-    void (*print_perct)  (double);
+	void (*print_header) (void);
+	void (*print_sum)    (double, double, double, double, double);
+	void (*print_bar)    (double);
+	void (*print_uat)    (double, double, int);
+	void (*print_fs)	 (const char *);
+	void (*print_type)	 (const char *);
+	void (*print_inodes) (uint64_t, uint64_t);
+	void (*print_mount)	 (const char *);
+	void (*print_mopt)	 (const char *);
+	void (*print_perct)  (double);
 	void (*print_ln_end) (void);
 };
 

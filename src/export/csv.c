@@ -60,7 +60,7 @@ static void csv_disp_inodes(uint64_t files, uint64_t favail);
 static void csv_disp_mount(const char *dir);
 static void csv_disp_mopt(const char *opts);
 static void csv_disp_perct(double perct);
-static void csv_disp_ln_end();
+static void csv_disp_ln_end(void);
 
 /* init pointers from display structure to the functions found here */
 void
@@ -278,7 +278,7 @@ csv_disp_perct(double perct)
  * Display line ending
  */
 static void
-csv_disp_ln_end()
+csv_disp_ln_end(void)
 {
 	(void)printf("\n");
 }
