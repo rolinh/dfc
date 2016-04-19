@@ -12,10 +12,10 @@
 # - white (wit)
 # Opmerking: Dit geldt alleen voor voorgrondkleuren
 
-# Gebruik extra lichte kleurweergave
-# Opmerking: Dit werkt mogelijk niet op sommige terminals
+# Gebruik dikgedrukte lettertype of extra lichte kleurweergave
+# Opmerking: Dit werkt mogelijk anders op sommige terminals
 # Gebruik "yes" voor ja, of "no" voor nee
-light_colors = no
+bold_font = no
 
 # Kleur van koptekst
 color_header = blue

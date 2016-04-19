@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.1.0\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2016-04-19 16:13+0200\n"
+"POT-Creation-Date: 2016-04-19 22:30+0200\n"
 "PO-Revision-Date: 2016-04-15 02:02+0200\n"
 "Last-Translator: Michiel Pater <mpater@tradosoft.com>\n"
 "Language-Team: Dutch\n"
@@ -127,7 +127,7 @@ msgstr ""
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Fout: geen waarde voor %s in configuratiebestand\n"
 
-#: src/dotfile.c:217 src/dotfile.c:237
+#: src/dotfile.c:219 src/dotfile.c:239
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
@@ -136,57 +136,57 @@ msgstr ""
 "Waarde conversie mislukt voor graph_medium: %s. Wat had u verwacht metzoiets "
 "hoe dan ook?\n"
 
-#: src/dotfile.c:222
+#: src/dotfile.c:224
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr "Gemiddelde waarde kan niet worden ingesteld beneden 0: %s\n"
 
-#: src/dotfile.c:225
+#: src/dotfile.c:227
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr "Gemiddelde waarde kan niet worden ingesteld boven 100: %s\n"
 
-#: src/dotfile.c:242
+#: src/dotfile.c:244
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr "Hoge waarde kan niet worden ingesteld beneden 0: %s\n"
 
-#: src/dotfile.c:245
+#: src/dotfile.c:247
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr "Hoge waarde kan niet worden ingesteld boven 100: %s\n"
 
-#: src/dotfile.c:255
+#: src/dotfile.c:257
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Onjuiste waarde voor symbool %s\n"
 
-#: src/dotfile.c:336
+#: src/dotfile.c:338
 #, c-format
 msgid "Wrong csv separator: %s\n"
 msgstr "Onjuist csv scheidingsteken: %s\n"
 
-#: src/dotfile.c:341
+#: src/dotfile.c:343
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Fout: onbekende optie in configuratiebestand: %s\n"
 
-#: src/dotfile.c:350
+#: src/dotfile.c:352
 #, c-format
 msgid "Unknown boolean value: %s\n"
 msgstr "Onbekende booleanwaarde: %s\n"
 
-#: src/dotfile.c:355
+#: src/dotfile.c:357
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Onbekende kleurwaarde: %s\n"
 
-#: src/dotfile.c:360
+#: src/dotfile.c:362
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr "Ongeldige HTML kleurcode: %s\n"
 
-#: src/dotfile.c:365
+#: src/dotfile.c:367
 #, c-format
 msgid "Could not assign value from configuration file: %s\n"
 msgstr "Kan geen waarde lezen uit configuratiebestand: %s\n"
@@ -258,38 +258,6 @@ msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "WAARSCHUWING: Output nog steeds te breed. Probeer uw terminal te\n"
 "vergroten\n"
-
-#: src/util.c:731
-msgid "black"
-msgstr "black"
-
-#: src/util.c:733
-msgid "red"
-msgstr "red"
-
-#: src/util.c:735
-msgid "green"
-msgstr "green"
-
-#: src/util.c:737
-msgid "yellow"
-msgstr "yellow"
-
-#: src/util.c:739
-msgid "blue"
-msgstr "blue"
-
-#: src/util.c:741
-msgid "magenta"
-msgstr "magenta"
-
-#: src/util.c:743
-msgid "cyan"
-msgstr "cyan"
-
-#: src/util.c:745
-msgid "white"
-msgstr "white"
 
 #: src/export/csv.c:90
 #, c-format

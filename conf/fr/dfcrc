@@ -15,7 +15,7 @@
 # Afficher des couleurs claires
 # Note: Cela peut ne pas fonctionner avec certains terminaux
 # "yes"="oui"; "no"="non"
-light_colors = no
+bold_font = no
 
 # Couleur de l'entête
 color_header = blue

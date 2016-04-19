@@ -182,11 +182,13 @@ set_conf(const char *key, const char *val)
 	int ret = 0;
 	char *tmpc = NULL;
 
-	if (strcmp(key, "light_colors") == 0) {
+	if (strcmp(key, "bold_font") == 0) {
 		if ((tmp = is_boolean_value(val)) == -1)
 			goto unknown_boolean_value;
-		else
-			cnf.lightcol = tmp;
+		else if (tmp == 1)
+			cnf.lightcol = 1;
+		else if (tmp == 0)
+			cnf.lightcol = 0;
 	}
 	else if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)
