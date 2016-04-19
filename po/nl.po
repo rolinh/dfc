@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: Dutch\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -329,7 +329,7 @@ msgstr "%cMOUNT OPTIES"
 #: src/export/csv.c:135
 #, c-format
 msgid "SUM:%c"
-msgstr "SOM:%c"
+msgstr "TOTAAL:%c"
 
 #: src/export/html.c:143
 msgid "Unknown date"
@@ -366,7 +366,7 @@ msgstr "VRIJ (-)"
 
 #: src/export/text.c:161
 msgid "SUM:"
-msgstr "SOM:"
+msgstr "TOTAAL:"
 
 #: src/platform/services-bsd.c:345
 #, c-format
