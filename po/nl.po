@@ -194,7 +194,7 @@ msgstr "Kan geen waarde lezen uit configuratiebestand: %s\n"
 #: src/util.c:506 src/export/html.c:149 src/export/tex.c:141
 #: src/export/text.c:99
 msgid "FILESYSTEM"
-msgstr "BEST.SYSTEEM"
+msgstr "BEST.SYS."
 
 #: src/util.c:507 src/export/html.c:152 src/export/tex.c:143
 #: src/export/text.c:102
@@ -213,7 +213,7 @@ msgstr "GEBR"
 #: src/util.c:511 src/export/html.c:159 src/export/tex.c:149
 #: src/export/text.c:117
 msgid "AVAILABLE"
-msgstr "BESCHIKB."
+msgstr "BESCH."
 
 #: src/util.c:512 src/export/csv.c:102 src/export/html.c:160
 #: src/export/tex.c:150 src/export/text.c:118
