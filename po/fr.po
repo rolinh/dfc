@@ -175,7 +175,7 @@ msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 #: src/dotfile.c:350
 #, c-format
 msgid "Unknown boolean value: %s\n"
-msgstr "Boolean inconnue: %s\n"
+msgstr "Valeur booléenne inconnue: %s\n"
 
 #: src/dotfile.c:355
 #, c-format
