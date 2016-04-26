@@ -186,9 +186,9 @@ set_conf(const char *key, const char *val)
 		if ((tmp = is_boolean_value(val)) == -1)
 			goto unknown_boolean_value;
 		else if (tmp == 1)
-			cnf.lightcol = 1;
+			cnf.lightcol = BOLD_FONT;
 		else if (tmp == 0)
-			cnf.lightcol = 0;
+			cnf.lightcol = REGULAR_FONT;
 	}
 	else if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)

@@ -52,9 +52,13 @@
 #define _(STRING) STRING
 #endif /* def NLS_ENABLED */
 
+/* font defines */
+#define REGULAR_FONT	0
+#define BOLD_FONT		1
+
 /* color defines */
 #define BLACK	30
-#define RED	31
+#define RED		31
 #define GREEN	32
 #define YELLOW	33
 #define BLUE	34
