@@ -12,7 +12,7 @@
 # - white (blanc)
 # Note: cela concerne uniquement les couleurs en premier-plan
 
-# Afficher des couleurs claires
+# Afficher en gras ou couleurs claires
 # Note: Cela peut ne pas fonctionner avec certains terminaux
 # "yes"="oui"; "no"="non"
 bold_font = no
