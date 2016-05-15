@@ -78,7 +78,7 @@ int
 is_remote(const struct fsmntinfo *fs)
 {
 	const char remote_fs[] = "afs cifs coda fuse.sshfs mfs "
-            "ncpfs ftpfs nfs smbfs sshfs";
+            "ncpfs ftpfs nfs nfs4 smbfs sshfs";
 
 	if (strstr(remote_fs, fs->fstype))
 		return 1;
