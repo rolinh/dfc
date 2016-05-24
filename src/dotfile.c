@@ -49,13 +49,17 @@
 #include <libintl.h>
 #endif
 
+/* static functions declaration */
+static int is_boolean_value(const char *val);
+static int set_conf(const char *key, const char *val);
+
 /*
  * Checks whether a value is a boolean ("yes" or "no")
  * Return 1 if "yes", 0 if "no", or -1 if not a boolean
  * @val: value to check
 */
-int
-is_boolean_value(const char* val)
+static int
+is_boolean_value(const char *val)
 {
 	if( strcmp(val, "yes") == 0 )
 		return 1;
@@ -175,7 +179,7 @@ parse_conf(const char *conf)
  * @key: key in configuration file
  * @val: value corresponding to the key
  */
-int
+static int
 set_conf(const char *key, const char *val)
 {
 	int tmp;
