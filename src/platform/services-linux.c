@@ -59,6 +59,11 @@
 /* static functions declaration */
 static int typecmp(const void *e1, const void *e2);
 static int is_pseudofs(const char *fsname);
+static int is_type_remote(const char *fstype);
+
+/* remote file system types */
+const char remote_fs[] = "afs cifs coda fuse.sshfs mfs ncpfs ftpfs nfs nfs4 "
+	"smbfs sshfs";
 
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
@@ -77,10 +82,13 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 int
 is_remote(const struct fsmntinfo *fs)
 {
-	const char remote_fs[] = "afs cifs coda fuse.sshfs mfs "
-            "ncpfs ftpfs nfs nfs4 smbfs sshfs";
+	return is_type_remote(fs->fstype);
+}
 
-	if (strstr(remote_fs, fs->fstype))
+static int
+is_type_remote(const char *fstype)
+{
+	if (strstr(remote_fs, fstype))
 		return 1;
 
 	return 0;
@@ -109,6 +117,10 @@ fetch_info(struct list *lst)
 
 	/* loop to get infos from all the mounted fs */
 	while ((entbuf = getmntent(mtab)) != NULL) {
+		/* avoid stating remote fs because they may hang */
+		if (lflag && is_type_remote(entbuf->mnt_type)) {
+			continue;
+		}
 		/* get infos from statvfs */
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
 			/* display a warning when a FS cannot be stated */
