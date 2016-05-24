@@ -2,24 +2,29 @@
 
 # Kleuren die gebruikt worden voor de standaard tekst output
 # Mogelijke waarden zijn:
-# - zwart
-# - rood
-# - groen
-# - geel
-# - blauw
-# - magenta
-# - cyaan
-# - wit
-# Note: Dit geldt alleen voor voorgrondkleuren
+# - black (zwart)
+# - red (rood)
+# - green (groen)
+# - yellow (geel)
+# - blue (blauw)
+# - magenta (magenta)
+# - cyan (cyaan)
+# - white (wit)
+# Opmerking: Dit geldt alleen voor voorgrondkleuren
+
+# Gebruik dikgedrukte lettertype of extra lichte kleurweergave
+# Opmerking: Dit werkt mogelijk anders op sommige terminals
+# Gebruik "yes" voor ja, of "no" voor nee
+bold_font = no
 
 # Kleur van koptekst
-color_header = blauw
+color_header = blue
 # Kleur wanneer het gebruik laag is
-color_low = groen
+color_low = green
 # Kleur wanneer het gebruik gemiddeld is
-color_medium = geel
+color_medium = yellow
 # Kleur wanneer het gebruik hoog is
-color_high = rood
+color_high = red
 
 # Waarden in procent wanneer kleuren veranderen in de grafiek
 # Startwaarde vanaf wanneer het gebruikt wordt gezien als gemiddeld
@@ -35,7 +40,7 @@ graph_symbol = =
 # Dit is bijvoorbeeld wit: #FFFFFF
 # En dit is rood: #FF0000
 # Etc.
-# NOTE: U MOET het # teken weglaten wanneer u het hier instelt
+# OPMERKING: U MOET het # teken weglaten wanneer u het hier instelt
 # (wit wordt FFFFFF enzovoort)
 
 #

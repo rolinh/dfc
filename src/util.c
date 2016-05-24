@@ -728,21 +728,21 @@ colortostr(int color)
 int
 colortoint(const char *col)
 {
-	if (strcoll(col, _("black")) == 0)
+	if (strcoll(col, "black") == 0)
 		return BLACK;
-	else if (strcoll(col, _("red")) == 0)
+	else if (strcoll(col, "red") == 0)
 		return RED;
-	else if (strcoll(col, _("green")) == 0)
+	else if (strcoll(col, "green") == 0)
 		return GREEN;
-	else if (strcoll(col, _("yellow")) == 0)
+	else if (strcoll(col, "yellow") == 0)
 		return YELLOW;
-	else if (strcoll(col, _("blue")) == 0)
+	else if (strcoll(col, "blue") == 0)
 		return BLUE;
-	else if (strcoll(col, _("magenta")) == 0)
+	else if (strcoll(col, "magenta") == 0)
 		return MAGENTA;
-	else if (strcoll(col, _("cyan")) == 0)
+	else if (strcoll(col, "cyan") == 0)
 		return CYAN;
-	else if (strcoll(col, _("white")) == 0)
+	else if (strcoll(col, "white") == 0)
 		return WHITE;
 	else
 		return -1;

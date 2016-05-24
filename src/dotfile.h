@@ -41,6 +41,7 @@
 #include "util.h"
 
 /* function declaration */
+int is_boolean_value(const char* val);
 char * getconf(void);
 int parse_conf(const char *dfcrc);
 int set_conf(const char *key, const char *val);

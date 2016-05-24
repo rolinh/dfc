@@ -94,7 +94,7 @@ text_disp_header(void)
 
 	/* use color option if triggered */
 	if (cflag)
-		(void)printf("\033[;%dm", cnf.chead);
+		(void)printf("\033[%d;%dm", cnf.font_type , cnf.chead);
 
 	(void)printf("%-*s", max.fsname, _("FILESYSTEM"));
 
@@ -157,7 +157,7 @@ text_disp_sum(double stot, double atot, double utot,
 
 	/* use color option if triggered */
 	if (cflag)
-		(void)printf("\033[;%dm", cnf.chead);
+		(void)printf("\033[%d;%dm", cnf.font_type , cnf.chead);
 	(void)printf("%-*s", width, _("SUM:"));
 	reset_color();
 
@@ -211,17 +211,17 @@ text_disp_bar(double perct)
 	} else { /* color */
 
 		/* green */
-		(void)printf("\033[;%dm", cnf.clow);
+		(void)printf("\033[%d;%dm", cnf.font_type , cnf.clow);
 		for (i = 0; (i < cnf.gmedium) && (i < perct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* yellow */
-		(void)printf("\033[;%dm", cnf.cmedium);
+		(void)printf("\033[%d;%dm", cnf.font_type , cnf.cmedium);
 		for (; (i < cnf.ghigh) && (i < perct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* red */
-		(void)printf("\033[;%dm", cnf.chigh);
+		(void)printf("\033[%d;%dm", cnf.font_type , cnf.chigh);
 		for (; (i < 100) && (i < perct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
@@ -351,11 +351,11 @@ change_color(double perct)
 {
 	if (cflag) {
 		if (perct < (double)cnf.gmedium) /* green */
-			(void)printf("\033[;%dm", cnf.clow);
+			(void)printf("\033[%d;%dm", cnf.font_type, cnf.clow);
 		else if (perct < (double)cnf.ghigh) /* yellow */
-			(void)printf("\033[;%dm", cnf.cmedium);
+			(void)printf("\033[%d;%dm", cnf.font_type, cnf.cmedium);
 		else /* red */
-			(void)printf("\033[;%dm", cnf.chigh);
+			(void)printf("\033[%d;%dm", cnf.font_type, cnf.chigh);
 	}
 }
 
