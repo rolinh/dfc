@@ -58,12 +58,8 @@
 
 /* static functions declaration */
 static int typecmp(const void *e1, const void *e2);
-static int is_pseudofs(const char *fsname);
-static int is_type_remote(const char *fstype);
-
-/* remote file system types */
-const char remote_fs[] = "afs cifs coda fuse.sshfs mfs ncpfs ftpfs nfs nfs4 "
-	"smbfs sshfs";
+static int is_pseudofs(const char *type);
+static int is_remotefs(const char *type);
 
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
@@ -82,16 +78,7 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 int
 is_remote(const struct fsmntinfo *fs)
 {
-	return is_type_remote(fs->fstype);
-}
-
-static int
-is_type_remote(const char *fstype)
-{
-	if (strstr(remote_fs, fstype))
-		return 1;
-
-	return 0;
+	return is_remotefs(fs->fstype);
 }
 
 void
@@ -118,7 +105,7 @@ fetch_info(struct list *lst)
 	/* loop to get infos from all the mounted fs */
 	while ((entbuf = getmntent(mtab)) != NULL) {
 		/* avoid stating remote fs because they may hang */
-		if (lflag && is_type_remote(entbuf->mnt_type)) {
+		if (lflag && is_remotefs(entbuf->mnt_type)) {
 			continue;
 		}
 		/* get infos from statvfs */
@@ -201,7 +188,7 @@ compute_fs_stats(struct fsmntinfo *fmi)
 }
 
 /*
- * Comparison function needed in is_pseudofs for bsearch call.
+ * Comparison function needed for is_pseudofs and is_remotefs bsearch call.
  */
 static int
 typecmp(const void *e1, const void *e2)
@@ -215,7 +202,6 @@ typecmp(const void *e1, const void *e2)
  * Determine if fsname is a pseudo filesystem or not.
  * This function is useless under *BSD and OSX systems.
  * Return 1 if it is, 0 otherwise.
- * On error, -1 is returned.
  */
 static int
 is_pseudofs(const char *type)
@@ -254,10 +240,39 @@ is_pseudofs(const char *type)
 	};
 
 	if (!type)
-		return -1;
+		return 0;
 
 	if (bsearch(&type, pseudofs, sizeof(pseudofs) / sizeof(pseudofs[0]),
-		sizeof(char*), typecmp) == NULL) {
+		sizeof(*pseudofs), typecmp) == NULL) {
+		return 0;
+	}
+
+	return 1;
+}
+
+static int
+is_remotefs(const char *type)
+{
+	/* keep sorted for binary search */
+	static const char *remotefs[] = {
+		"afs",
+		"cifs",
+		"coda",
+		"ftpfs",
+		"fuse.sshfs",
+		"mfs",
+		"ncpfs",
+		"nfs",
+		"nfs4",
+		"smbfs",
+		"sshfs"
+	};
+
+	if (!type)
+		return 0;
+
+	if (bsearch(&type, remotefs, sizeof(remotefs) / sizeof(remotefs[0]),
+		sizeof(*remotefs), typecmp) == NULL) {
 		return 0;
 	}
 
