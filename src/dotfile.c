@@ -50,20 +50,21 @@
 #endif
 
 /* static functions declaration */
-static int is_boolean_value(const char *val);
+static int get_boolean_value(const char *val);
 static int set_conf(const char *key, const char *val);
 
 /*
- * Checks whether a value is a boolean ("yes" or "no")
- * Return 1 if "yes", 0 if "no", or -1 if not a boolean
+ * Get boolean value from a string like ("yes"/"true" or "no"/"false")
+ * Return 1 if "yes"/"true", 0 if "no"/"false", or -1 if not a boolean.
+ * Note that this function is NOT case sensitive.
  * @val: value to check
 */
 static int
-is_boolean_value(const char *val)
+get_boolean_value(const char *val)
 {
-	if( strcmp(val, "yes") == 0 )
+	if ((strcasecmp(val, "yes") == 0) || (strcasecmp(val, "true") == 0))
 		return 1;
-	else if( strcmp(val, "no") == 0 )
+	else if ((strcasecmp(val, "no") == 0) || (strcasecmp(val, "false") == 0))
 		return 0;
 	else
 		return -1;
@@ -187,12 +188,12 @@ set_conf(const char *key, const char *val)
 	char *tmpc = NULL;
 
 	if (strcmp(key, "bold_font") == 0) {
-		if ((tmp = is_boolean_value(val)) == -1)
+		if ((tmp = get_boolean_value(val)) == -1)
 			goto unknown_boolean_value;
 		else if (tmp == 1)
-			cnf.font_type  = BOLD_FONT;
+			cnf.font_type = BOLD_FONT;
 		else if (tmp == 0)
-			cnf.font_type  = REGULAR_FONT;
+			cnf.font_type = REGULAR_FONT;
 	}
 	else if (strcmp(key, "color_header") == 0) {
 		if ((tmp = colortoint(val)) == -1)
