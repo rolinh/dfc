@@ -45,6 +45,10 @@
 #include <sys/ioctl.h>
 #include <math.h>
 
+#if defined(__sun)
+#include <termios.h> /* on solaris, this is where struct winsize is declared */
+#endif /* __sun */
+
 #include "util.h"
 
 #ifdef NLS_ENABLED
