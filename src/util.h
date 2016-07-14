@@ -63,5 +63,7 @@ char * fetchdate(void);
 const char * colortostr(int color);
 int colortoint(const char *col);
 int chk_html_colorcode(const char *color);
+int is_pseudofs(const char *type);
+int is_remotefs(const char *type);
 
 #endif /* ndef UTIL_H */
