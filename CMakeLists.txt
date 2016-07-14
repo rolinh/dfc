@@ -110,7 +110,7 @@ option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit syst
 
 # set compiler flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-ADD_DEFINITIONS(-D_XOPEN_SOURCE=500)
+ADD_DEFINITIONS(-D_XOPEN_SOURCE=600)
 include(CheckCCompilerFlag)
 check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
 check_c_compiler_flag(-Wdouble-promotion HAS_WDOUBLE_PROMOTION)
