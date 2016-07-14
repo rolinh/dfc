@@ -121,6 +121,17 @@ struct fsmntinfo {
 	uint64_t	ffree;	/* # of free inodes */
 	unsigned long	favail;	/* XXX: does not exist on OSX */
 #endif /* __APPLE__ */
+#if defined(__sun)
+	int		flags;	/* XXX: does not exist on Solaris */
+	u_long		bsize;	/* file system block size */
+	u_long		frsize;	/* fragment size */
+	fsblkcnt_t	blocks;	/* size of fs in frsize unit */
+	fsblkcnt_t	bfree;	/* # of free blocks */
+	fsblkcnt_t	bavail;	/* # of available blocks */
+	fsfilcnt_t	files;	/* # of inodes */
+	fsfilcnt_t	ffree;	/* # of free inodes */
+	fsfilcnt_t	favail;	/* # of available inodes */
+#endif /* __sun */
 
 	/* pointer to the next element of the list */
 	struct fsmntinfo *next;
