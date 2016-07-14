@@ -35,13 +35,6 @@
  * Displays free disk space in an elegant manner.
  */
 
-#define _BSD_SOURCE
-
-#ifdef __linux
-#define _POSIX_C_SOURCE 2
-#define _XOPEN_SOURCE 500
-#endif /* __linux__ */
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>

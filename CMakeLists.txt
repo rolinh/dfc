@@ -107,8 +107,8 @@ endif()
 option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit systems but should not cause any problems if defined on non 32-bit systems anyway, thus enabled by default." on)
 
 # set compiler flags
-# long long is required, all the rest should be c89 compliant
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c89 -Wno-long-long")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+ADD_DEFINITIONS(-D_XOPEN_SOURCE=500)
 include(CheckCCompilerFlag)
 check_c_compiler_flag(-Wsign-conversion HAS_WSIGN_CONVERSION)
 check_c_compiler_flag(-Wdouble-promotion HAS_WDOUBLE_PROMOTION)
@@ -132,7 +132,7 @@ set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -O3 -flto -DNDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -g3 -ggdb3 -Wpadded -Wpacked")
 
 if(CMAKE_COMPILER_IS_GNUCC)
-    # gcc warns about strftime format when using std=c89. According to
+    # gcc warns about strftime format when using std=c99. According to
     # strftime(3), it is safe to remove this warning
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-format-y2k")
 endif()

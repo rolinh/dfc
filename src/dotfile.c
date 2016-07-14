@@ -34,7 +34,6 @@
  *
  * Handle configuration file
  */
-#define _BSD_SOURCE
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,6 +41,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <strings.h>
 
 #include "dotfile.h"
 
