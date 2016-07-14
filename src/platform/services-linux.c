@@ -53,11 +53,6 @@
 #include "services.h"
 #include "util.h"
 
-/* static functions declaration */
-static int typecmp(const void *e1, const void *e2);
-static int is_pseudofs(const char *type);
-static int is_remotefs(const char *type);
-
 int
 is_mnt_ignore(const struct fsmntinfo *fs)
 {
@@ -182,98 +177,6 @@ compute_fs_stats(struct fsmntinfo *fmi)
 	else
 		fmi->perctused = 100.0 -
 			((double)fmi->bavail / (double)fmi->blocks) * 100.0;
-}
-
-/*
- * Comparison function needed for is_pseudofs and is_remotefs bsearch call.
- */
-static int
-typecmp(const void *e1, const void *e2)
-{
-	const char *s1 = *(const char * const *)e1;
-	const char *s2 = *(const char * const *)e2;
-	return strcmp(s1, s2);
-}
-
-/*
- * Determine if fsname is a pseudo filesystem or not.
- * This function is useless under *BSD and OSX systems.
- * Return 1 if it is, 0 otherwise.
- */
-static int
-is_pseudofs(const char *type)
-{
-	/* keep sorted for binary search */
-	static const char *pseudofs[] = {
-		"anon_inodefs",
-		"autofs",
-		"bdev",
-		"binfmt_misc",
-		"cgroup",
-		"configfs",
-		"cpuset",
-		"debugfs",
-		"devfs",
-		"devpts",
-		"devtmpfs",
-		"dlmfs",
-		"fuse.gvfs-fuse-daemon",
-		"fusectl",
-		"hugetlbfs",
-		"mqueue",
-		"nfsd",
-		"none",
-		"pipefs",
-		"proc",
-		"pstore",
-		"ramfs",
-		"rootfs",
-		"rpc_pipefs",
-		"securityfs",
-		"sockfs",
-		"spufs",
-		"sysfs",
-		"tmpfs"
-	};
-
-	if (!type)
-		return 0;
-
-	if (bsearch(&type, pseudofs, sizeof(pseudofs) / sizeof(pseudofs[0]),
-		sizeof(*pseudofs), typecmp) == NULL) {
-		return 0;
-	}
-
-	return 1;
-}
-
-static int
-is_remotefs(const char *type)
-{
-	/* keep sorted for binary search */
-	static const char *remotefs[] = {
-		"afs",
-		"cifs",
-		"coda",
-		"ftpfs",
-		"fuse.sshfs",
-		"mfs",
-		"ncpfs",
-		"nfs",
-		"nfs4",
-		"smbfs",
-		"sshfs"
-	};
-
-	if (!type)
-		return 0;
-
-	if (bsearch(&type, remotefs, sizeof(remotefs) / sizeof(remotefs[0]),
-		sizeof(*remotefs), typecmp) == NULL) {
-		return 0;
-	}
-
-	return 1;
 }
 
 #endif /* __linux__ */
