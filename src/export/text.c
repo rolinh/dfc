@@ -122,9 +122,11 @@ text_disp_header(void)
 		(void)printf("%*s", max.avinodes, _("AV.INODES"));
 	}
 
-	/* precedded by a space because previous colum is right aligned */
+	/* add a space because previous colum is right aligned */
+	(void)printf(" ");
+
 	if (!Mflag)
-		(void)printf(" %-*s", max.mntdir, _("MOUNTED ON"));
+		(void)printf("%-*s", max.mntdir, _("MOUNTED ON"));
 
 	if (oflag)
 		(void)printf("%-*s", max.mntopts, _("MOUNT OPTIONS"));
@@ -317,6 +319,9 @@ text_disp_mount(const char *dir)
 static void
 text_disp_mopt(const char *opts)
 {
+	/* add space when prevous column is right aligned */
+	if (Mflag)
+		(void)printf(" ");
 	(void)printf("%-*s", max.mntopts, opts);
 }
 
