@@ -110,8 +110,9 @@ option(LFS_ENABLED "Enable macros for Large File Source. Required on 32-bit syst
 
 # set compiler flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-ADD_DEFINITIONS(-D_XOPEN_SOURCE=600)
-if(SOLARIS)
+if(LINUX)
+    ADD_DEFINITIONS(-D_XOPEN_SOURCE=600)
+elseif(SOLARIS)
     ADD_DEFINITIONS(-D__EXTENSIONS__)
 endif()
 include(CheckCCompilerFlag)
