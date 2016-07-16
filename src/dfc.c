@@ -80,6 +80,7 @@ main(int argc, char *argv[])
 		ECSV = 1,
 		EHTML = 2,
 		ETEX = 3,
+		EJSON = 4,
 		SFSNAME = 0,
 		SFSTYPE = 1,
 		SFSDIR = 2,
@@ -109,11 +110,13 @@ main(int argc, char *argv[])
 	static char csv_str[] = "csv";
 	static char html_str[] = "html";
 	static char tex_str[] = "tex";
+	static char json_str[] = "json";
 	char *const export_opts[] = {
 		text_str,
 		csv_str,
 		html_str,
 		tex_str,
+		json_str,
 		NULL
 	};
 
@@ -236,6 +239,10 @@ main(int argc, char *argv[])
 				case ETEX:
 					Wflag = 1;
 					init_disp_tex(&sdisp);
+					break;
+				case EJSON:
+					Wflag = 1;
+					init_disp_json(&sdisp);
 					break;
 				case -1: /* FALLTHROUGH */
 				default:
@@ -507,7 +514,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 	}
 
-	/* only required for html and tex export (csv and text point to NULL) */
+	/* only required for html, json and tex export */
 	if (sdisp->init)
 		sdisp->init();
 
@@ -575,9 +582,9 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		if (dflag)
-			sdisp->print_uat(p->used, p->perctused, max.used);
-		sdisp->print_uat(p->avail, p->perctused, max.avail);
-		sdisp->print_uat(p->total, p->perctused, max.total);
+			sdisp->print_used(p->used, p->perctused, max.used);
+		sdisp->print_avail(p->avail, p->perctused, max.avail);
+		sdisp->print_total(p->total, p->perctused, max.total);
 
 		/* info about inodes */
 		if (iflag) {

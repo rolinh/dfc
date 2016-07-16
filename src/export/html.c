@@ -72,7 +72,9 @@ init_disp_html(struct display *disp)
 	disp->print_header = html_disp_header;
 	disp->print_sum    = html_disp_sum;
 	disp->print_bar    = html_disp_bar;
-	disp->print_uat    = html_disp_uat;
+	disp->print_used   = html_disp_uat;
+	disp->print_avail  = html_disp_uat;
+	disp->print_total  = html_disp_uat;
 	disp->print_fs     = html_disp_fs;
 	disp->print_type   = html_disp_type;
 	disp->print_inodes = html_disp_inodes;

@@ -163,6 +163,7 @@ SET(SRCS
     ${SOURCE_DIR}/util.c
     ${SOURCE_DIR}/export/csv.c
     ${SOURCE_DIR}/export/html.c
+    ${SOURCE_DIR}/export/json.c
     ${SOURCE_DIR}/export/tex.c
     ${SOURCE_DIR}/export/text.c
     ${SERVICE_SRC_FILE}

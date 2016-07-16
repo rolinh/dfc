@@ -41,6 +41,7 @@
 
 void init_disp_csv(struct display *disp);
 void init_disp_html(struct display *disp);
+void init_disp_json(struct display *disp);
 void init_disp_tex(struct display *disp);
 void init_disp_text(struct display *disp);
 

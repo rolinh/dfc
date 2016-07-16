@@ -71,7 +71,9 @@ init_disp_csv(struct display *disp)
     disp->print_header = csv_disp_header;
     disp->print_sum    = csv_disp_sum;
     disp->print_bar    = csv_disp_bar;
-    disp->print_uat    = csv_disp_uat;
+    disp->print_used   = csv_disp_uat;
+    disp->print_avail  = csv_disp_uat;
+    disp->print_total  = csv_disp_uat;
     disp->print_fs     = csv_disp_fs;
     disp->print_type   = csv_disp_type;
     disp->print_inodes = csv_disp_inodes;

@@ -73,7 +73,9 @@ init_disp_tex(struct display *disp)
 	disp->print_header = tex_disp_header;
 	disp->print_sum    = tex_disp_sum;
 	disp->print_bar    = tex_disp_bar;
-	disp->print_uat    = tex_disp_uat;
+	disp->print_used   = tex_disp_uat;
+	disp->print_avail  = tex_disp_uat;
+	disp->print_total  = tex_disp_uat;
 	disp->print_fs     = tex_disp_fs;
 	disp->print_type   = tex_disp_type;
 	disp->print_inodes = tex_disp_inodes;

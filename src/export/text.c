@@ -74,7 +74,9 @@ init_disp_text(struct display *disp)
     disp->print_header = text_disp_header;
     disp->print_sum    = text_disp_sum;
     disp->print_bar    = text_disp_bar;
-    disp->print_uat    = text_disp_uat;
+    disp->print_used   = text_disp_uat;
+    disp->print_avail  = text_disp_uat;
+    disp->print_total  = text_disp_uat;
     disp->print_fs     = text_disp_fs;
     disp->print_type   = text_disp_type;
     disp->print_inodes = text_disp_inodes;
