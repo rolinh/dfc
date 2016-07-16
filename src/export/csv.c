@@ -263,7 +263,7 @@ csv_disp_mount(const char *dir)
 static void
 csv_disp_mopt(const char *opts)
 {
-	(void)printf("%c%s", cnf.csvsep, opts);
+	(void)printf("%c\"%s\"", cnf.csvsep, opts);
 }
 
 /*
