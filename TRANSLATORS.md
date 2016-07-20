@@ -84,7 +84,7 @@ file:
 
   * Open the *.po file and update translation. Once done, as usual, check your
     translation.
-	
+
 ### ADDING THE TRANSLATION
 
 Add a space and the language code to po/LINGUAS.

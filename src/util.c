@@ -584,10 +584,10 @@ update_maxwidth(struct fsmntinfo *fmi)
 	/* + 1 for a space between each column */
 	max.fsname = imax((int)strlen(fmi->fsname) + 1, max.fsname);
 	max.fstype = imax((int)strlen(fmi->fstype) + 1, max.fstype);
-	
+
 	if (!Mflag)
 		max.mntdir = imax((int)strlen(fmi->mntdir) + 1, max.mntdir);
-	
+
 	if (oflag)
 		max.mntopts = imax((int)strlen(fmi->mntopts) + 1, max.mntopts);
 

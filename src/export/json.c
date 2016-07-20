@@ -230,7 +230,7 @@ json_disp_inodes(uint64_t files, uint64_t favail)
 	}
 }
 
-static void 
+static void
 json_disp_mount(const char *dir)
 {
 	(void)printf(",\"mount_point\":\"%s\"", dir);

@@ -24,7 +24,7 @@ French:
 Swedish:
 
   * Andreas Rönnquist <gusnan@gusnan.se>
-  
+
 Dutch:
 
   * Michiel Pater <mpater@tradosoft.com>
