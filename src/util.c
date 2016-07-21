@@ -155,10 +155,8 @@ sanitizestr(const char *str)
 	if (i == (int)nchars) /* No '_' was found. */
 		return strdup(str);
 
-	if ((new = malloc(nchars)) == NULL) {
-		(void)fputs("malloc failed\n", stderr);
+	if ((new = malloc(nchars)) == NULL)
 		return NULL;
-	}
 
 	for (i = 0; str[i] != '\0'; i++) {
 		if (str[i] == '_') {
