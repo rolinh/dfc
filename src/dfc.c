@@ -213,7 +213,8 @@ main(int argc, char *argv[])
 					(void)fprintf(stderr,
 						_("-c: illegal sub option %s\n"),
 						subopts);
-					return EXIT_FAILURE;
+					ret = EXIT_FAILURE;
+					goto out;
 				}
 			}
 			break;
@@ -249,7 +250,8 @@ main(int argc, char *argv[])
 					(void)fprintf(stderr,
 						_("-e: illegal sub option %s\n"),
 						subopts);
-					return EXIT_FAILURE;
+					ret = EXIT_FAILURE;
+					goto out;
 				}
 			}
 			break;
@@ -299,7 +301,8 @@ main(int argc, char *argv[])
 					(void)fprintf(stderr,
 						_("-q: illegal sub option %s\n"),
 						subopts);
-					return EXIT_FAILURE;
+					ret = EXIT_FAILURE;
+					goto out;
 				}
 			}
 			break;
@@ -359,7 +362,8 @@ main(int argc, char *argv[])
 					(void)fprintf(stderr,
 						_("-u: illegal sub option %s\n"),
 						subopts);
-					return EXIT_FAILURE;
+					ret = EXIT_FAILURE;
+					goto out;
 				}
 			}
 			break;
@@ -383,7 +387,8 @@ main(int argc, char *argv[])
 
 	if (vflag) {
 		(void)printf("%s %s\n", PACKAGE, VERSION);
-		return EXIT_SUCCESS;
+		ret = EXIT_SUCCESS;
+		goto out;
 	}
 
 	/* init default max required width */
@@ -420,6 +425,10 @@ main(int argc, char *argv[])
 
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &sdisp);
+
+out:
+	free(fstfilter);
+	free(fsnfilter);
 
 	return ret;
 }
