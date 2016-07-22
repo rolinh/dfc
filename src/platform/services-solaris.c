@@ -65,9 +65,8 @@ is_mnt_ignore(const struct fsmntinfo *fs)
 		return 0;
 
 	/* libc is dynamically mounted into /lib, treat it as a special case */
-	if (fs->mntdir && (strncmp(fs->mntdir, "/lib/", 5) == 0)) {
+	if (fs->mntdir && (strncmp(fs->mntdir, "/lib/", 5) == 0))
 		return 1;
-	}
 
 	return is_pseudofs(fs->fstype);
 }
@@ -112,30 +111,29 @@ fetch_info(struct list *lst)
 			continue;
 		}
 		if (Wflag) { /* Wflag to avoid name truncation */
-			if ((fmi->fsname = strdup(mnttabbuf.mnt_special)) == NULL) {
+			if ((fmi->fsname = strdup(mnttabbuf.mnt_special)) == NULL)
 				fmi->fsname = g_unknown_str;
-			}
-			if ((fmi->mntdir = strdup(mnttabbuf.mnt_mountp))== NULL) {
+			if ((fmi->mntdir = strdup(mnttabbuf.mnt_mountp))== NULL)
 				fmi->mntdir = g_unknown_str;
-			}
+			if ((fmi->fstype = strdup(mnttabbuf.mnt_fstype)) == NULL)
+				fmi->fstype = g_unknown_str;
 		} else {
 			if ((fmi->fsname = strdup(shortenstr(
-				mnttabbuf.mnt_special,
-				STRMAXLEN))) == NULL) {
+				mnttabbuf.mnt_special, STRMAXLEN))) == NULL) {
 				fmi->fsname = g_unknown_str;
 			}
-			if ((fmi->mntdir = strdup(shortenstr(mnttabbuf.mnt_mountp,
-						STRMAXLEN))) == NULL) {
+			if ((fmi->mntdir = strdup(shortenstr
+				(mnttabbuf.mnt_mountp, STRMAXLEN))) == NULL) {
 				fmi->mntdir = g_unknown_str;
 			}
+			if ((fmi->fstype = strdup(shortenstr(
+				mnttabbuf.mnt_fstype, STRMAXLEN))) == NULL) {
+				fmi->fstype = g_unknown_str;
+			}
 		}
-		if ((fmi->fstype = strdup(shortenstr(mnttabbuf.mnt_fstype,
-						12))) == NULL) {
-			fmi->fstype = g_unknown_str;
-		}
-		if ((fmi->mntopts = strdup(mnttabbuf.mnt_mntopts)) == NULL) {
+
+		if ((fmi->mntopts = strdup(mnttabbuf.mnt_mntopts)) == NULL)
 			fmi->mntopts = g_none_str;
-		}
 
 		fmi->bsize  = vfsbuf.f_bsize;
 		fmi->frsize = vfsbuf.f_frsize;

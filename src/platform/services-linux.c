@@ -97,9 +97,8 @@ fetch_info(struct list *lst)
 	/* loop to get infos from all the mounted fs */
 	while ((entbuf = getmntent(mtab)) != NULL) {
 		/* avoid stating remote fs because they may hang */
-		if (lflag && is_remotefs(entbuf->mnt_type)) {
+		if (lflag && is_remotefs(entbuf->mnt_type))
 			continue;
-		}
 		/* get infos from statvfs */
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
 			/* display a warning when a FS cannot be stated */
@@ -111,33 +110,29 @@ fetch_info(struct list *lst)
 		}
 		/* infos from getmntent */
 		if (Wflag) { /* Wflag to avoid name truncation */
-			if ((fmi->fsname = strdup(entbuf->mnt_fsname))
-					== NULL) {
-				/* g_unknown_str is def. in extern.h(.in) */
+			if ((fmi->fsname = strdup(entbuf->mnt_fsname)) == NULL)
 				fmi->fsname = g_unknown_str;
-			}
-			if ((fmi->mntdir = strdup(entbuf->mnt_dir))
-					== NULL) {
+			if ((fmi->mntdir = strdup(entbuf->mnt_dir)) == NULL)
 				fmi->mntdir = g_unknown_str;
-			}
+			if ((fmi->fstype = strdup(entbuf->mnt_type)) == NULL)
+				fmi->fstype = g_unknown_str;
 		} else {
 			if ((fmi->fsname = strdup(shortenstr(
-				entbuf->mnt_fsname,
-				STRMAXLEN))) == NULL) {
+				entbuf->mnt_fsname, STRMAXLEN))) == NULL) {
 				fmi->fsname = g_unknown_str;
 			}
-			if ((fmi->mntdir = strdup(shortenstr(entbuf->mnt_dir,
-						STRMAXLEN))) == NULL) {
+			if ((fmi->mntdir = strdup(shortenstr(
+				entbuf->mnt_dir, STRMAXLEN))) == NULL) {
 				fmi->mntdir = g_unknown_str;
 			}
+			if ((fmi->fstype = strdup(shortenstr(
+				entbuf->mnt_type, STRMAXLEN))) == NULL) {
+				fmi->fstype = g_unknown_str;
+			}
 		}
-		if ((fmi->fstype = strdup(shortenstr(entbuf->mnt_type,
-						12))) == NULL) {
-			fmi->fstype = g_unknown_str;
-		}
-		if ((fmi->mntopts = strdup(entbuf->mnt_opts)) == NULL) {
+
+		if ((fmi->mntopts = strdup(entbuf->mnt_opts)) == NULL)
 			fmi->mntopts = g_none_str;
-		}
 
 		/* infos from statvfs */
 		fmi->bsize    = vfsbuf.f_bsize;

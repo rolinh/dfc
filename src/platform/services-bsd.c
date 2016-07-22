@@ -126,17 +126,22 @@ fetch_info(struct list *lst)
 				fmi->fsname = g_unknown_str;
 			if ((fmi->mntdir = strdup(entbuf->f_mntonname)) == NULL)
 				fmi->mntdir = g_unknown_str;
+			if ((fmi->fstype = strdup(entbuf->f_fstypename)) == NULL)
+				fmi->fstype = g_unknown_str;
 		} else {
-			if ((fmi->fsname = strdup(shortenstr(entbuf->f_mntfromname,
-					       STRMAXLEN))) == NULL)
+			if ((fmi->fsname = strdup(shortenstr(
+				entbuf->f_mntfromname, STRMAXLEN))) == NULL) {
 				fmi->fsname = g_unknown_str;
-			if ((fmi->mntdir = strdup(shortenstr(entbuf->f_mntonname,
-					    STRMAXLEN))) == NULL)
+			}
+			if ((fmi->mntdir = strdup(shortenstr(
+				entbuf->f_mntonname, STRMAXLEN))) == NULL) {
 				fmi->mntdir = g_unknown_str;
+			}
+			if ((fmi->fstype = strdup(shortenstr(
+				entbuf->f_fstypename, STRMAXLEN))) == NULL) {
+				fmi->fstype = g_unknown_str;
+			}
 		}
-		if ((fmi->fstype = strdup(shortenstr(entbuf->f_fstypename,
-				     STRMAXLEN))) == NULL)
-			fmi->fstype = g_unknown_str;
 
 		/* infos from statvfs */
 		fmi->flags    = GET_FLAGS(vfsbuf);
