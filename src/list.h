@@ -55,7 +55,7 @@ struct fsmntinfo {
 	double used;	    /* fs used size */
 
 	/* infos to get from statvfs(3) */
-#if defined(__linux__)
+#if defined(__linux__) || defined(__GLIBC__)
 	int		flags;	/* XXX: does not exist on Linux */
 	unsigned long	bsize;	/* file system block size */
 	unsigned long	frsize;	/* fragment size */

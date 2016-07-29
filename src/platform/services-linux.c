@@ -34,12 +34,13 @@
  *
  * Linux implemention of services.
  */
-#ifdef __linux__
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#if defined(__linux__) || defined(__GLIBC__)
 
 #ifdef NLS_ENABLED
 #include <locale.h>
