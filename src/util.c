@@ -478,6 +478,23 @@ msort(struct fsmntinfo *fmi)
 }
 
 /*
+ * Compare lengths of mount points, then their paths.
+ * -1,0,1 are returned as in *cmp.
+ */
+int
+lencmp(struct fsmntinfo *a, struct fsmntinfo *b)
+{
+	size_t la = strlen(a->mntdir);
+	size_t lb = strlen(b->mntdir);
+
+	if (la < lb)
+		return -1;
+	if (la > lb)
+		return 1;
+	return strcmp(a->mntdir, b->mntdir);
+}
+
+/*
  * Get the with of TTY and retun it.
  * 0 is returned if stdout is not a tty.
  */
@@ -807,9 +824,11 @@ is_pseudofs(const char *type)
 		"devpts",
 		"devtmpfs",
 		"dlmfs",
+		"fdescfs",
 		"fuse.gvfs-fuse-daemon",
 		"fusectl",
 		"hugetlbfs",
+		"linprocfs",
 		"mqueue",
 		"nfsd",
 		"none",

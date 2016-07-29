@@ -54,6 +54,7 @@ double cvrt(double n);
 int fsfilter(const char *fs, const char *filter, int nm);
 int cmp(struct fsmntinfo *a, struct fsmntinfo *b);
 struct fsmntinfo * msort(struct fsmntinfo *fmi);
+int lencmp(struct fsmntinfo *a, struct fsmntinfo *b);
 int getttywidth(void);
 void init_maxwidths(void);
 int get_req_width(double fs_size);

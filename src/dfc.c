@@ -55,6 +55,7 @@ struct maxwidths max;
 int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
     nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
 int Mflag, Tflag, Wflag;
+int tty_width;
 char unitflag;
 
 int
@@ -63,7 +64,6 @@ main(int argc, char *argv[])
 	struct list queue;
 	struct display sdisp;
 	int ch;
-	int tty_width;
 	int ret = EXIT_SUCCESS;
 	char *fsnfilter = NULL;
 	char *fstfilter = NULL;
@@ -419,10 +419,6 @@ main(int argc, char *argv[])
 	/* fetch information about the currently mounted filesystems */
 	fetch_info(&queue);
 
-	/* cannot display all information if tty is too narrow */
-	if (!fflag && tty_width > 0 && !eflag)
-		auto_adjust(tty_width);
-
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &sdisp);
 
@@ -523,6 +519,74 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 	}
 
+	 /* sort the list */
+	if (qflag)
+		lst->head = msort(lst->head);
+
+	for (p = lst->head; p; p = p->next) {
+		/* ignored unless proven otherwise */
+		p->ignored = 1;
+
+		/* ignore when needed */
+		if (!aflag && (is_mnt_ignore(p) == 1)) {
+			continue;
+		}
+
+		/* ignore /run mounts unless they're dangerously full */
+		if (!aflag && !strncmp(p->mntdir, "/run", 4) && p->perctused < 50) {
+			continue;
+		}
+
+		/* filtering on fs type */
+		if (tflag && (fsfilter(p->fstype, fstfilter, nmt) == 0)) {
+			continue;
+		}
+		/* filtering on fs name */
+		if (pflag && (fsfilter(p->fsname, fsnfilter, nmn) == 0)) {
+			continue;
+		}
+
+		/* skip remote file systems */
+		if (lflag && is_remote(p)) {
+			continue;
+		}
+
+		p->ignored = 0;
+	}
+
+	for (p = lst->head; p; p = p->next) {
+		if (aflag || p->ignored)
+			continue;
+
+		/* doesn't have a device backing store? */
+		if (p->fsname[0] != '/')
+			continue;
+
+		struct fsmntinfo *r;
+		for (r = lst->head; r; r = r->next) {
+			if (p != r && !r->ignored && !strcmp(p->fsname, r->fsname))
+				switch (lencmp(p, r))
+				{
+				case -1:
+				default:
+					/* mounted twice on same dir? */
+					r->ignored = 1;
+					break;
+				case 1:
+					p->ignored = 1;
+				}
+		}
+	}
+
+	for (p = lst->head; p; p = p->next) {
+		if (!p->ignored)
+			update_maxwidth(p);
+	}
+
+	/* cannot display all information if tty is too narrow */
+	if (!fflag && tty_width > 0 && !eflag)
+		auto_adjust(tty_width);
+
 	/* only required for html, json and tex export */
 	if (sdisp->init)
 		sdisp->init();
@@ -531,32 +595,10 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	if (!nflag)
 		sdisp->print_header();
 
-	 /* sort the list */
-	if (qflag)
-		lst->head = msort(lst->head);
-
 	p = lst->head;
 
 	while (p != NULL) {
-		/* ignore when needed */
-		if (!aflag && (is_mnt_ignore(p) == 1)) {
-			p = delete_struct_and_get_next(p);
-			continue;
-		}
-
-		/* filtering on fs type */
-		if (tflag && (fsfilter(p->fstype, fstfilter, nmt) == 0)) {
-			p = delete_struct_and_get_next(p);
-			continue;
-		}
-		/* filtering on fs name */
-		if (pflag && (fsfilter(p->fsname, fsnfilter, nmn) == 0)) {
-			p = delete_struct_and_get_next(p);
-			continue;
-		}
-
-		/* skip remote file systems */
-		if (lflag && is_remote(p)) {
+		if (p->ignored) {
 			p = delete_struct_and_get_next(p);
 			continue;
 		}
@@ -599,7 +641,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		if (iflag) {
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
-#if defined(__linux__)
+#if defined(__linux__) || defined(__GLIBC__)
 			sdisp->print_inodes((uint64_t)(p->files),
 					(uint64_t)(p->favail));
 #else

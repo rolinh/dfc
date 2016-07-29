@@ -148,8 +148,6 @@ fetch_info(struct list *lst)
 
 		fmi->next = NULL;
 		enqueue(lst, *fmi);
-
-		update_maxwidth(fmi);
 	}
 	if (ret > 0) {
 		(void)fprintf(stderr, "An error occured while reading the "
