@@ -544,6 +544,11 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 			continue;
 		}
 
+		/* ignore /run mounts unless they're dangerously full */
+		if (!aflag && !strncmp(p->mntdir, "/run", 4) && p->perctused < 50) {
+			continue;
+		}
+
 		/* filtering on fs type */
 		if (tflag && (fsfilter(p->fstype, fstfilter, nmt) == 0)) {
 			continue;
