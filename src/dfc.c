@@ -607,7 +607,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		if (iflag) {
 			ifitot += (double)p->files;
 			ifatot += (double)p->favail;
-#if defined(__linux__)
+#if defined(__linux__) || defined(__GLIBC__)
 			sdisp->print_inodes((uint64_t)(p->files),
 					(uint64_t)(p->favail));
 #else
