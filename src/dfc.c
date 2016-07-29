@@ -561,6 +561,30 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		p->ignored = 0;
 	}
 
+	for (p = lst->head; p; p = p->next) {
+		if (aflag || p->ignored)
+			continue;
+
+		/* doesn't have a device backing store? */
+		if (p->fsname[0] != '/')
+			continue;
+
+		struct fsmntinfo *r;
+		for (r = lst->head; r; r = r->next) {
+			if (p != r && !r->ignored && !strcmp(p->fsname, r->fsname))
+				switch (lencmp(p, r))
+				{
+				case -1:
+				default:
+					/* mounted twice on same dir? */
+					r->ignored = 1;
+					break;
+				case 1:
+					p->ignored = 1;
+				}
+		}
+	}
+
 	p = lst->head;
 
 	while (p != NULL) {
