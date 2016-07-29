@@ -535,28 +535,36 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 	if (qflag)
 		lst->head = msort(lst->head);
 
-	p = lst->head;
+	for (p = lst->head; p; p = p->next) {
+		/* ignored unless proven otherwise */
+		p->ignored = 1;
 
-	while (p != NULL) {
 		/* ignore when needed */
 		if (!aflag && (is_mnt_ignore(p) == 1)) {
-			p = delete_struct_and_get_next(p);
 			continue;
 		}
 
 		/* filtering on fs type */
 		if (tflag && (fsfilter(p->fstype, fstfilter, nmt) == 0)) {
-			p = delete_struct_and_get_next(p);
 			continue;
 		}
 		/* filtering on fs name */
 		if (pflag && (fsfilter(p->fsname, fsnfilter, nmn) == 0)) {
-			p = delete_struct_and_get_next(p);
 			continue;
 		}
 
 		/* skip remote file systems */
 		if (lflag && is_remote(p)) {
+			continue;
+		}
+
+		p->ignored = 0;
+	}
+
+	p = lst->head;
+
+	while (p != NULL) {
+		if (p->ignored) {
 			p = delete_struct_and_get_next(p);
 			continue;
 		}

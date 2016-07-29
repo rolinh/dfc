@@ -133,6 +133,7 @@ struct fsmntinfo {
 	fsfilcnt_t	favail;	/* # of available inodes */
 #endif /* __sun */
 
+	int ignored;
 	/* pointer to the next element of the list */
 	struct fsmntinfo *next;
 };
