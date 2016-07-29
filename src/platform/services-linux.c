@@ -48,6 +48,7 @@
 
 #include <mntent.h>
 #include <sys/statvfs.h>
+#include <errno.h>
 
 #include "extern.h"
 #include "services.h"
@@ -101,6 +102,9 @@ fetch_info(struct list *lst)
 			continue;
 		/* get infos from statvfs */
 		if (statvfs(entbuf->mnt_dir, &vfsbuf) == -1) {
+			/* show only "real" errors, not lack of permissions */
+			if (errno == EACCES)
+				continue;
 			/* display a warning when a FS cannot be stated */
 			(void)fprintf(stderr, _("WARNING: %s was skipped "
 				"because it could not be stated"),
