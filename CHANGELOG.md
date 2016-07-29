@@ -1,8 +1,42 @@
 # CHANGELOG
 
+## version 3.1.0
+
+BUGS:
+
+  * fix type not respecting -W flag
+  * plug a few memory leaks
+  * escape mount options with "" when exporting to CSV as mount options may
+    typically contain a ","
+  * linux: avoid stat'ing remote file system with local flag is given
+  * consider nfs4 a remote filesystem
+  * correctly link math library (fixes build on Ubuntu)
+  * remove a few extra incorrect CSV separators in CSV export mode
+
+FEATURES:
+
+  * Solaris support
+  * allow CSV separator to be specified via the configuration file
+  * major code refactoring: now, platform specific code is clearly separated
+    and the way to compute required terminal width and display has been vastly
+    improved
+  * add JSON export option
+  * add support for bold font via the configuration file
+  * add -M option to disable "Mounted On" information
+  * add Dutch translation
+  * add git revision in development versions of dfc
+
+INCOMPATIBLE CHANGES:
+
+  * remove "GRIM" compile option - compile flags previously set by "grim" are
+    now defaults
+  * stop translating color names in the configuration file - now, only "english"
+    names are understood
+
 ## version 3.0.5
 
 BUGS:
+
   * fixed initialization of LFS (see v3.0.2 release notes). LFS option as
     existing in v3.0.2-v3.0.4 was just wrong: setting LFS option to false
     would actually enable LFS option...
