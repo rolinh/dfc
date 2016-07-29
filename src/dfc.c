@@ -55,6 +55,7 @@ struct maxwidths max;
 int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
     nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
 int Mflag, Tflag, Wflag;
+int tty_width;
 char unitflag;
 
 int
@@ -63,7 +64,6 @@ main(int argc, char *argv[])
 	struct list queue;
 	struct display sdisp;
 	int ch;
-	int tty_width;
 	int ret = EXIT_SUCCESS;
 	char *fsnfilter = NULL;
 	char *fstfilter = NULL;
@@ -419,10 +419,6 @@ main(int argc, char *argv[])
 	/* fetch information about the currently mounted filesystems */
 	fetch_info(&queue);
 
-	/* cannot display all information if tty is too narrow */
-	if (!fflag && tty_width > 0 && !eflag)
-		auto_adjust(tty_width);
-
 	/* actually displays the info we have got */
 	disp(&queue, fstfilter, fsnfilter, &sdisp);
 
@@ -523,14 +519,6 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 	}
 
-	/* only required for html, json and tex export */
-	if (sdisp->init)
-		sdisp->init();
-
-	/* legend on top */
-	if (!nflag)
-		sdisp->print_header();
-
 	 /* sort the list */
 	if (qflag)
 		lst->head = msort(lst->head);
@@ -589,6 +577,23 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 				}
 		}
 	}
+
+	for (p = lst->head; p; p = p->next) {
+		if (!p->ignored)
+			update_maxwidth(p);
+	}
+
+	/* cannot display all information if tty is too narrow */
+	if (!fflag && tty_width > 0 && !eflag)
+		auto_adjust(tty_width);
+
+	/* only required for html, json and tex export */
+	if (sdisp->init)
+		sdisp->init();
+
+	/* legend on top */
+	if (!nflag)
+		sdisp->print_header();
 
 	p = lst->head;
 

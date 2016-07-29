@@ -152,8 +152,6 @@ fetch_info(struct list *lst)
 
 		/* enqueue the element into the queue */
 		enqueue(lst, *fmi);
-
-		update_maxwidth(fmi);
 	}
 	/* we need to close the mtab file now */
 	if (fclose(mtab) == EOF)
