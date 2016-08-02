@@ -4,6 +4,7 @@
 
 ## CONTRIBUTORS:
 
+  * Adam Borowski
   * Alexandre Perrin
   * Baptiste Daroussin
   * Cyril Roelandt
