@@ -8,10 +8,13 @@ BUGS:
   * plug a few memory leaks
   * escape mount options with "" when exporting to CSV as mount options may
     typically contain a ","
-  * linux: avoid stat'ing remote file system with local flag is given
+  * linux: avoid stat'ing remote file system when local flag is given
   * consider nfs4 a remote filesystem
   * correctly link math library (fixes build on Ubuntu)
   * remove a few extra incorrect CSV separators in CSV export mode
+  * silently ignore EACCESS error on statvfs
+  * fix build failure on Hurd
+  * fix build failure on kFreeBSD
 
 FEATURES:
 
