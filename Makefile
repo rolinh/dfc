@@ -9,6 +9,9 @@ debug: _mkdir_build
 clean:
 	rm -rf build
 
+install: release
+	$(MAKE) -C build install
+
 _mkdir_build:
 	test -d build || mkdir build
 
