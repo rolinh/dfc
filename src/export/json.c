@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, Robin Hahling
+ * Copyright (c) 2016-2017, Robin Hahling
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
