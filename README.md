@@ -1,14 +1,18 @@
 # README
 
-`dfc` is a simple tool that displays file system space usage using graph and
-color. It has other nice features such as HTML and CSV export.
+`dfc` is a tool to report file system space usage information. When the output
+is a terminal, it uses color and graphs by default. It has a lot of features
+such as HTML, JSON and CSV export, multiple filtering options, the ability to
+show mount options and so on.
 
 ## BUILD
 
-`cmake` is required in order to build `dfc`.
+`cmake` is required to build `dfc`. For convenience, a simple `Makefile` (which
+calls `cmake` under the hood) is provided.
+
 I suggest you create a `build` directory in which you compile `dfc`. This is of
-course not required but it will avoid adding files everywhere in the source
-folder.
+course not required but it will prevent files from being created everywhere in
+the source folder.
 
 ### BUILD STEPS
 
