@@ -445,44 +445,42 @@ usage(int status)
 	else {
 		/* 2 fputs because string length limit is 509 */
 		(void)fputs(_("Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] "
-					"[-p FSNAME] [-q SORTBY] [-t FSTYPE]\n"
-					"\t[-u UNIT]\n"
+					"[-p FSNAME] [-q SORTBY] [-t FSTYPE] "
+					"[-u UNIT]\n"
 			"Available options:\n"
 			"\t-a\tprint all mounted filesystem\n"
 			"\t-b\tdo not show the graph bar\n"
-			"\t-c\tchoose color mode. Read the manpage\n"
-			"\t\tfor details\n"
+			"\t-c\tchoose color mode. Read the manpage for "
+			"details\n"
 			"\t-d\tshow used size\n"
-			"\t-e\texport to specified format. Read the manpage\n"
-			"\t\tfor details\n"
+			"\t-e\texport to specified format. Read the manpage "
+			"for details\n"
 			"\t-f\tdisable auto-adjust mode (force display)\n"
 			"\t-h\tprint this message\n"
 			"\t-i\tinfo about inodes\n"
-			"\t-l\tonly show information about locally mounted\n"
-			"\t\tfile systems\n"),
+			"\t-l\tonly show information about locally mounted "
+			"file systems\n"),
 			stdout);
 		(void)fputs(_(
 			"\t-m\tuse metric (SI unit)\n"
 			"\t-M\tdo not print \"mounted on\"\n"
 			"\t-n\tdo not print header\n"
 			"\t-o\tshow mount flags\n"
-			"\t-p\tfilter by file system name. Read the manpage\n"
-			"\t\tfor details\n"
-			"\t-q\tsort the output. Read the manpage\n"
-			"\t\tfor details\n"
+			"\t-p\tfilter by file system name. Read the manpage "
+			"for details\n"
+			"\t-q\tsort the output. Read the manpage for "
+			"details\n"
 			"\t-s\tsum the total usage\n"
-			"\t-t\tfilter by file system type. Read the manpage\n"
-			"\t\tfor details\n"
+			"\t-t\tfilter by file system type. Read the manpage "
+			"for details\n"
 			"\t-T\tshow filesystem type\n"
-			"\t-u\tchoose the unit in which\n"
-			"\t\tto show the values. Read the manpage\n"
-			"\t\tfor details\n"
+			"\t-u\tchoose the unit in which to show the values. "
+			"Read the manpage for details\n"
 			"\t-v\tprint program version\n"
 			"\t-w\tuse a wider bar\n"
 			"\t-W\twide filename (un truncate)\n"),
 		stdout);
 	}
-
 	exit(status);
 	/* NOTREACHED */
 }
