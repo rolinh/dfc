@@ -5,6 +5,7 @@
 BUGS:
 
   * fix type not respecting -W flag
+  * fix alignment issue when both -M and -o options are specified
   * plug a few memory leaks
   * escape mount options with "" when exporting to CSV as mount options may
     typically contain a ","
