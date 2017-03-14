@@ -42,6 +42,8 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <strings.h>
+#include <unistd.h>
+#include <limits.h>
 
 #include "dotfile.h"
 
@@ -71,67 +73,66 @@ get_boolean_value(const char *val)
 }
 
 /*
- * Finds the configuration file and returns it.
+ * Finds the configuration file and returns its path.
  * NULL is returned when no configuration file is found.
  * Configuration file follows XDG Base Directory Specification
  * http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
  */
 char *
-getconf(void)
+config_file(void)
 {
-	struct stat buf;
-	char *home;
-	char *xdg_c_h;
-	char *conf;
+	char *xdg_home, *home;
+	char conf[PATH_MAX];
+	int ret;
 
-	if ((xdg_c_h = getenv("XDG_CONFIG_HOME")) != NULL) {
-		if ((conf = strcat(xdg_c_h, "/dfc/dfcrc")) == NULL) {
-			(void)fputs("strcat failed while guessing "
-					"configuration file\n", stderr);
+	xdg_home = getenv("XDG_CONFIG_HOME");
+	if (xdg_home && *xdg_home) {
+		ret = snprintf(conf, sizeof(conf), "%s/dfc/dfcrc", xdg_home);
+		if (ret < 0)
 			return NULL;
-		}
-		if (stat(conf, &buf) == 0)
-			return conf;
-		else /* no configuration file exists or it cannot be accessed */
-			return NULL;
-	} else { /* maybe XDG_CONFIG_HOME is just not exported */
-		/* lets assume that XDG_CONFIG_HOME is simply $HOME/.config */
-		if ((home = getenv("HOME")) != NULL) {
-			if ((conf = strcat(home, "/.config/dfc/dfcrc")) == NULL) {
-				(void)fputs("strcat failed while guessing "
-						"configuration file location\n",
-						stderr);
-				return NULL;
-			}
-			if (stat(conf, &buf) == 0)
-				return conf;
-			else { /* support $HOME/.dfcrc */
-				/* home has been modified by strcat */
-				if ((home = getenv("HOME")) == NULL)
-					return NULL;
-				if ((conf = strcat(home, "/.dfcrc")) == NULL) {
-					(void)fputs("strcat failed while guessing"
-							" configuration file\n",
-							stderr);
-					return NULL;
-				}
-				if (stat(conf, &buf) == 0)
-					return conf;
-				else
-					return NULL;
-			}
-		} else /* sorry, there is nothing I can do... */
-			return NULL;
+		if ((size_t)ret >= sizeof(conf))
+			goto trunc_err;
+		if (access(conf, F_OK) == 0)
+			return strdup(conf);
 	}
+
+	home = getenv("HOME");
+	if (home && *home) {
+		ret = snprintf(conf, sizeof(conf), "%s/.config/dfc/dfcrc", home);
+		if (ret < 0)
+			return NULL;
+		if ((size_t)ret >= sizeof(conf))
+			goto trunc_err;
+		if (access(conf, F_OK) == 0)
+			return strdup(conf);
+
+		ret = snprintf(conf, sizeof(conf), "%s/.dfcrc", home);
+		if (ret < 0)
+			return NULL;
+		if ((size_t)ret >= sizeof(conf))
+			goto trunc_err;
+		if (access(conf, F_OK) == 0)
+			return strdup(conf);
+	}
+	return NULL;
+
+trunc_err:
+	(void)fprintf(
+		stderr,
+		_("Config file path is longer than %lu and was truncated. "
+		  "Please, open a bug report.\n"),
+		sizeof(conf)
+	);
+	return NULL;
 }
 
 /*
- * parse the configuration file and update options
+ * Parse the configuration file and update options
  * return -1 in case of error, otherwise, 0 is returned
  * @conf: path to the configuration file
  */
 int
-parse_conf(const char *conf)
+update_conf(const char *conf)
 {
 	FILE *fd;
 	char line[255];

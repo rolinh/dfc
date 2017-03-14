@@ -41,8 +41,8 @@
 #include "util.h"
 
 /* function declaration */
-char * getconf(void);
-int parse_conf(const char *dfcrc);
+char *config_file(void);
+int update_conf(const char *dfcrc);
 void init_conf(struct conf *config);
 
 #endif /* ndef H_DOTFILE */

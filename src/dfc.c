@@ -400,13 +400,14 @@ main(int argc, char *argv[])
 	if (tty_width == 0 && cflag != 2)
 		cflag = 0;
 
-	/* change cnf value according to config file, it exists */
-	if ((cfgfile = getconf()) != NULL) {
-		if (parse_conf(cfgfile) == -1) {
+	/* change cnf value according to config file, if it exists */
+	if ((cfgfile = config_file()) != NULL) {
+		if (update_conf(cfgfile) == -1) {
 			(void)fprintf(stderr, _("Error reading the configuration"
 					" file: %s\n"), cfgfile);
 			ret = EXIT_FAILURE;
 		}
+		free(cfgfile);
 	}
 
 	/* if nothing specified, text output is default */
