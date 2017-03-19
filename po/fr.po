@@ -75,7 +75,6 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés localement uniquement\n"
 
 #: src/dfc.c:466
-#, fuzzy
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-M\tdo not print \"mounted on\"\n"
