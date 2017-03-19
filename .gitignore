@@ -1,4 +1,5 @@
 *.directory
 *.swp
+*.patch
 build
 po/dfc.pot
