@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.1.0\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2016-07-29 14:22+0200\n"
+"POT-Creation-Date: 2017-03-19 12:07+0100\n"
 "PO-Revision-Date: 2016-04-15 02:02+0200\n"
 "Last-Translator: Michiel Pater <mpater@tradosoft.com>\n"
 "Language-Team: Dutch\n"
@@ -42,64 +42,51 @@ msgstr "-u: ongeldige suboptie %s\n"
 msgid "Error reading the configuration file: %s\n"
 msgstr "Fout bij het lezen van het configuratiebestand: %s\n"
 
-#: src/dfc.c:444
+#: src/dfc.c:445
 msgid "Try dfc -h for more information\n"
 msgstr "Probeer dfc -h voor meer informatie\n"
 
-#: src/dfc.c:447
+#: src/dfc.c:448
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
-"FSTYPE]\n"
-"\t[-u UNIT]\n"
+"FSTYPE] [-u UNIT]\n"
 "Available options:\n"
 "\t-a\tprint all mounted filesystem\n"
 "\t-b\tdo not show the graph bar\n"
-"\t-c\tchoose color mode. Read the manpage\n"
-"\t\tfor details\n"
+"\t-c\tchoose color mode. Read the manpage for details\n"
 "\t-d\tshow used size\n"
-"\t-e\texport to specified format. Read the manpage\n"
-"\t\tfor details\n"
+"\t-e\texport to specified format. Read the manpage for details\n"
 "\t-f\tdisable auto-adjust mode (force display)\n"
 "\t-h\tprint this message\n"
 "\t-i\tinfo about inodes\n"
-"\t-l\tonly show information about locally mounted\n"
-"\t\tfile systems\n"
+"\t-l\tonly show information about locally mounted file systems\n"
 msgstr ""
 "Gebruik: dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [[-q SORTBY] -t "
-"FSTYPE]\n"
-"\t[-u UNIT]\n"
+"FSTYPE] [-u UNIT]\n"
 "Beschikbare opties:\n"
 "\t-a\tlaat alles zien (verberg geen enkel bestandssysteem)\n"
 "\t-b\tlaat de grafische balk niet zien\n"
 "\t-c\tkies de kleur-modus. Lees de man pagina voor details\n"
 "\t-d\tlaat de gebruikte grootte zien\n"
-"\t-e\texporteer naar een gespecificeerd FORMAT. Lees de\n"
-"\t\tman pagina voor details\n"
-"\t-f\toverschrijf het automatisch-aanpassingsgedrag\n"
-"\t\t(forceer weergave)\n"
+"\t-e\texporteer naar een gespecificeerd FORMAT. Lees de man pagina voor details\n"
+"\t-f\toverschrijf het automatisch-aanpassingsgedrag (forceer weergave)\n"
 "\t-h\tgeef een korte hulptekst weer\n"
 "\t-i\tlaat informatie zien over inodes\n"
-"\t-l\tgeef alleen informatie weer over lokaal-gemountte\n"
-"\t\tbestandssystemen\n"
+"\t-l\tgeef alleen informatie weer over lokaal-gemountte bestandssystemen\n"
 
-#: src/dfc.c:465
-#, fuzzy
+#: src/dfc.c:466
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-M\tdo not print \"mounted on\"\n"
 "\t-n\tdo not print header\n"
 "\t-o\tshow mount flags\n"
-"\t-p\tfilter by file system name. Read the manpage\n"
-"\t\tfor details\n"
-"\t-q\tsort the output. Read the manpage\n"
-"\t\tfor details\n"
+"\t-p\tfilter by file system name. Read the manpage for details\n"
+"\t-q\tsort the output. Read the manpage for details\n"
 "\t-s\tsum the total usage\n"
-"\t-t\tfilter by file system type. Read the manpage\n"
-"\t\tfor details\n"
+"\t-t\tfilter by file system type. Read the manpage for details\n"
 "\t-T\tshow filesystem type\n"
-"\t-u\tchoose the unit in which\n"
-"\t\tto show the values. Read the manpage\n"
-"\t\tfor details\n"
+"\t-u\tchoose the unit in which to show the values. Read the manpage for "
+"details\n"
 "\t-v\tprint program version\n"
 "\t-w\tuse a wider bar\n"
 "\t-W\twide filename (un truncate)\n"
@@ -108,26 +95,29 @@ msgstr ""
 "\t-M\tLaat \"mounted on\" niet zien.\n"
 "\t-n\tlaat de koptekst niet zien\n"
 "\t-o\tgeef mountopties weer\n"
-"\t-p\tstaat u toe om te filteren op naam van bestandssysteem\n"
-"\t\tlees de man pagina voor details\n"
-"\t-q\tgeeft u de mogelijkheid om de output te sorteren op\n"
-"\t\tSORTBY. Lees de man pagina voor details\n"
+"\t-p\tstaat u toe om te filteren op naam van bestandssysteem lees de man pagina voor details\n"
+"\t-q\tgeeft u de mogelijkheid om de output te sorteren op SORTBY. Lees de man pagina voor details\n"
 "\t-s\tlaat de som van het totale gebruik zien\n"
-"\t-t\tstaat u toe om te filteren op type bestandssysteem\n"
-"\t\tlees de man pagina voor details\n"
+"\t-t\tstaat u toe om te filteren op type bestandssysteem lees de man pagina voor details\n"
 "\t-T\tgeef bestandssysteemtypen weer\n"
-"\t-u\tgeef grootte weer in de gespecificeerde eenheid\n"
-"\t\tlees de man pagina voor details\n"
+"\t-u\tgeef grootte weer in de gespecificeerde eenheid lees de man pagina voor details\n"
 "\t-v\tlaat de versie van dfc zien en beeindig het programma\n"
 "\t-w\tgebruik een bredere balk voor de grafiek\n"
 "\t-W\tlaat brede bestandsnamen zien\n"
 
-#: src/dotfile.c:158
+#: src/dotfile.c:122
+#, c-format
+msgid ""
+"Config file path is longer than %lu and was truncated. Please, open a bug "
+"report.\n"
+msgstr ""
+
+#: src/dotfile.c:159
 #, c-format
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Fout: geen waarde voor %s in configuratiebestand\n"
 
-#: src/dotfile.c:224 src/dotfile.c:244
+#: src/dotfile.c:225 src/dotfile.c:245
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
@@ -136,57 +126,57 @@ msgstr ""
 "Waarde conversie mislukt voor graph_medium: %s. Wat had u verwacht metzoiets "
 "hoe dan ook?\n"
 
-#: src/dotfile.c:229
+#: src/dotfile.c:230
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr "Gemiddelde waarde kan niet worden ingesteld beneden 0: %s\n"
 
-#: src/dotfile.c:232
+#: src/dotfile.c:233
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr "Gemiddelde waarde kan niet worden ingesteld boven 100: %s\n"
 
-#: src/dotfile.c:249
+#: src/dotfile.c:250
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr "Hoge waarde kan niet worden ingesteld beneden 0: %s\n"
 
-#: src/dotfile.c:252
+#: src/dotfile.c:253
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr "Hoge waarde kan niet worden ingesteld boven 100: %s\n"
 
-#: src/dotfile.c:262
+#: src/dotfile.c:263
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Onjuiste waarde voor symbool %s\n"
 
-#: src/dotfile.c:343
+#: src/dotfile.c:344
 #, c-format
 msgid "Wrong csv separator: %s\n"
 msgstr "Onjuist csv scheidingsteken: %s\n"
 
-#: src/dotfile.c:348
+#: src/dotfile.c:349
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Fout: onbekende optie in configuratiebestand: %s\n"
 
-#: src/dotfile.c:357
+#: src/dotfile.c:358
 #, c-format
 msgid "Unknown boolean value: %s\n"
 msgstr "Onbekende booleanwaarde: %s\n"
 
-#: src/dotfile.c:362
+#: src/dotfile.c:363
 #, c-format
 msgid "Unknown color value: %s\n"
 msgstr "Onbekende kleurwaarde: %s\n"
 
-#: src/dotfile.c:367
+#: src/dotfile.c:368
 #, c-format
 msgid "Not a valid HTML color: %s\n"
 msgstr "Ongeldige HTML kleurcode: %s\n"
 
-#: src/dotfile.c:372
+#: src/dotfile.c:373
 #, c-format
 msgid "Could not assign value from configuration file: %s\n"
 msgstr "Kan geen waarde lezen uit configuratiebestand: %s\n"
@@ -346,7 +336,7 @@ msgstr "Kan mount flags niet ontvangen voor %s\n"
 msgid "Truncating mount options for %s\n"
 msgstr "Mount opties inkorten voor %s\n"
 
-#: src/platform/services-linux.c:105
+#: src/platform/services-linux.c:110
 #, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
 msgstr "WAARSCHUWING: %s werd overgeslagen, omdat het niet kon wordenvermeldt"
