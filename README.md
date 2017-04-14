@@ -88,7 +88,7 @@ You can also choose some standards parameters like where the files need to be
 installed. This needs to be done when using the `cmake` command.
 Example (from the previously created build directory):
 
-	cmake .. -DPREFIX=/usr -DSYSSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RELEASE
+	cmake .. -DPREFIX=/usr -DSYSCONFDIR=/etc -DCMAKE_BUILD_TYPE=RELEASE
 
 Then run the `make install` and it will install `dfc` according to what you
 chose in the previous step.
