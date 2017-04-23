@@ -226,6 +226,7 @@ set(CPACK_SOURCE_IGNORE_FILES
     "^${PROJECT_SOURCE_DIR}/build/"
     "${PROJECT_SOURCE_DIR}/.gitignore$"
     "${PROJECT_SOURCE_DIR}/po/dfc.pot$"
+    "${PROJECT_SOURCE_DIR}/res/"
     "${CPACK_SOURCE_IGNORE_FILES}")
 include(CPack)
 add_custom_target(dist

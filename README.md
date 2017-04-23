@@ -5,6 +5,8 @@ is a terminal, it uses color and graphs by default. It has a lot of features
 such as HTML, JSON and CSV export, multiple filtering options, the ability to
 show mount options and so on.
 
+![screenshot](res/screenshot.png)
+
 ## BUILD
 
 `cmake` is required to build `dfc`. For convenience, a simple `Makefile` (which
