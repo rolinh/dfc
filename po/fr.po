@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.0.0-devel\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2017-04-09 11:16+0200\n"
+"POT-Creation-Date: 2017-04-30 15:54+0200\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -122,7 +122,7 @@ msgstr ""
 msgid "Error: no value for %s in configuration file\n"
 msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
 
-#: src/dotfile.c:225 src/dotfile.c:245
+#: src/dotfile.c:224 src/dotfile.c:244
 #, c-format
 msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
@@ -131,60 +131,60 @@ msgstr ""
 "La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez-vous "
 "de toute façon?\n"
 
-#: src/dotfile.c:230
+#: src/dotfile.c:229
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
 msgstr "La valeur medianne ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:233
+#: src/dotfile.c:232
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
 msgstr "La valeur médianne ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:250
+#: src/dotfile.c:249
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessous de 0: %s\n"
 
-#: src/dotfile.c:253
+#: src/dotfile.c:252
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
 msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
 
-#: src/dotfile.c:263
+#: src/dotfile.c:262
 #, c-format
 msgid "Wrong symbol value: %s\n"
 msgstr "Symbole impossible: %s\n"
 
-#: src/dotfile.c:344
+#: src/dotfile.c:315
 #, c-format
 msgid "Wrong csv separator: %s\n"
 msgstr "Séparateur csv invalide: %s\n"
 
-#: src/dotfile.c:349
+#: src/dotfile.c:320
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
 msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
 
-#: src/dotfile.c:358
+#: src/dotfile.c:328
 #, c-format
-msgid "Unknown boolean value: %s\n"
-msgstr "Valeur booléenne inconnue: %s\n"
+msgid "Unknown boolean value for '%s': %s\n"
+msgstr "Valeur booléenne inconnue pour '%s': %s\n"
 
-#: src/dotfile.c:363
+#: src/dotfile.c:332
 #, c-format
-msgid "Unknown color value: %s\n"
-msgstr "Couleur inconnue: %s\n"
+msgid "Unknown color value for '%s': %s\n"
+msgstr "Couleur inconnue pour '%s': %s\n"
 
-#: src/dotfile.c:368
+#: src/dotfile.c:336
 #, c-format
-msgid "Not a valid HTML color: %s\n"
-msgstr "Couleur HTML invalide: %s\n"
+msgid "Not a valid HTML color for '%s': %s\n"
+msgstr "Couleur HTML invalide pour '%s': %s\n"
 
-#: src/dotfile.c:373
+#: src/dotfile.c:340
 #, c-format
-msgid "Could not assign value from configuration file: %s\n"
-msgstr "Impossible d'assigner une valeur depuis le fichier de configuration: %s\n"
+msgid "Cannot assign value for '%s': %s\n"
+msgstr "Impossible d'assigner une valeur pour '%s': %s\n"
 
 #: src/util.c:509 src/export/html.c:157 src/export/tex.c:140
 #: src/export/text.c:101
