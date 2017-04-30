@@ -70,8 +70,8 @@
 #define GRAPHBAR_SHORT 22
 #define GRAPHBAR_WIDE 52
 
-/* html color code length (type of #FF0000, etc.) without the # */
-#define HTMLCOLORCODELENGTH 6
+/* hexadecimal color code length (type of #FF0000, etc.) without the # */
+#define HEXCOLOR_LEN 6
 
 
 struct conf {
@@ -85,15 +85,15 @@ struct conf {
 	int gmedium;	/* starting value from which usage is considered medium */
 	int ghigh;	/* starting value from which usage is considered high */
 
-	const char *hcheadbg;	/* background color for header and footer (html) */
-	const char *hcheadfg;	/* font color used in header and footer (html) */
-	const char *hccellbg;	/* background color for cells (html) */
-	const char *hccellfg;	/* font color for cells (html) */
-	const char *hchoverbg;	/* background color on hover (html) */
-	const char *hchoverfg;	/* font color on hover (html) */
-	const char *hclow;	/* color when usage is low (html) */
-	const char *hcmedium;	/* color when usage is medium (html) */
-	const char *hchigh;	/* color when usage is high (html) */
+	char hcheadbg[HEXCOLOR_LEN + 1];	/* background color for header and footer (html) */
+	char hcheadfg[HEXCOLOR_LEN + 1];	/* font color used in header and footer (html) */
+	char hccellbg[HEXCOLOR_LEN + 1];	/* background color for cells (html) */
+	char hccellfg[HEXCOLOR_LEN + 1];	/* font color for cells (html) */
+	char hchoverbg[HEXCOLOR_LEN + 1];	/* background color on hover (html) */
+	char hchoverfg[HEXCOLOR_LEN + 1];	/* font color on hover (html) */
+	char hclow[HEXCOLOR_LEN + 1];	/* color when usage is low (html) */
+	char hcmedium[HEXCOLOR_LEN + 1];	/* color when usage is medium (html) */
+	char hchigh[HEXCOLOR_LEN + 1];	/* color when usage is high (html) */
 
 	char gsymbol;	/* symbol used to draw the graph */
 	char csvsep;	/* separator used for csv export */

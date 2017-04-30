@@ -752,8 +752,8 @@ colortoint(const char *col)
 }
 
 /*
- * check if the input string is a valid html color code.
- * ie: it should be an hexadecimal value
+ * Check if the input string is a valid hexadecimal color code.
+ * ie: it should be a HEXCOLOR_LEN long hexadecimal value.
  * Returns 0 if all went well, otherwise it returns -1
  * @color: input color
  * NOTE: color should omit the #: white is FFFFFF and not #FFFFFF
@@ -763,10 +763,10 @@ chk_html_colorcode(const char *color)
 {
 	int i;
 
-	if (strlen(color) != HTMLCOLORCODELENGTH)
+	if (strlen(color) != HEXCOLOR_LEN)
 		return -1;
 
-	for (i = 0; i < HTMLCOLORCODELENGTH; i++)
+	for (i = 0; i < HEXCOLOR_LEN; i++)
 		if (isxdigit(color[i]) == 0)
 			return -1;
 
