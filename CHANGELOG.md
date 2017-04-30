@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next
+
+BUGS:
+
+  * fix an old bug (4+ years) which messed up colors in HTML export when a
+    configuration file is used
+
 ## version 3.1.0
 
 BUGS:
