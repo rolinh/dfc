@@ -114,13 +114,16 @@ fetch_info(struct list *lst)
 			continue;
 		}
 		/* infos from getmntent */
+		if ((fmi->fsnameog = strdup(entbuf->mnt_fsname)) == NULL)
+			fmi->fsnameog = g_unknown_str;
+		if ((fmi->mntdirog = strdup(entbuf->mnt_dir)) == NULL)
+			fmi->mntdirog = g_unknown_str;
+		if ((fmi->fstypeog = strdup(entbuf->mnt_type)) == NULL)
+			fmi->fstypeog = g_unknown_str;
 		if (Wflag) { /* Wflag to avoid name truncation */
-			if ((fmi->fsname = strdup(entbuf->mnt_fsname)) == NULL)
-				fmi->fsname = g_unknown_str;
-			if ((fmi->mntdir = strdup(entbuf->mnt_dir)) == NULL)
-				fmi->mntdir = g_unknown_str;
-			if ((fmi->fstype = strdup(entbuf->mnt_type)) == NULL)
-				fmi->fstype = g_unknown_str;
+			fmi->fsname = fmi->fsnameog;
+			fmi->mntdir = fmi->mntdirog;
+			fmi->fstype = fmi->fstypeog;
 		} else {
 			if ((fmi->fsname = strdup(shortenstr(
 				entbuf->mnt_fsname, STRMAXLEN))) == NULL) {

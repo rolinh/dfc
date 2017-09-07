@@ -109,8 +109,11 @@ fmi_init(void)
 	struct fsmntinfo fmi;
 
 	fmi.fsname  = g_unknown_str;
+	fmi.fsnameog  = g_unknown_str;
 	fmi.fstype  = g_unknown_str;
+	fmi.fstypeog  = g_unknown_str;
 	fmi.mntdir  = g_unknown_str;
+	fmi.mntdirog  = g_unknown_str;
 	fmi.mntopts = g_none_str;
 
 	fmi.perctused = 0.0;
