@@ -110,13 +110,16 @@ fetch_info(struct list *lst)
 			perror(" ");
 			continue;
 		}
+		if ((fmi->fsnameog = strdup(mnttabbuf.mnt_special)) == NULL)
+			fmi->fsnameog = g_unknown_str;
+		if ((fmi->mntdirog = strdup(mnttabbuf.mnt_mountp))== NULL)
+			fmi->mntdirog = g_unknown_str;
+		if ((fmi->fstypeog = strdup(mnttabbuf.mnt_fstype)) == NULL)
+			fmi->fstypeog = g_unknown_str;
 		if (Wflag) { /* Wflag to avoid name truncation */
-			if ((fmi->fsname = strdup(mnttabbuf.mnt_special)) == NULL)
-				fmi->fsname = g_unknown_str;
-			if ((fmi->mntdir = strdup(mnttabbuf.mnt_mountp))== NULL)
-				fmi->mntdir = g_unknown_str;
-			if ((fmi->fstype = strdup(mnttabbuf.mnt_fstype)) == NULL)
-				fmi->fstype = g_unknown_str;
+			fmi->fsname = fmi->fsnameog;
+			fmi->mntdir = fmi->mntdirog;
+			fmi->fstype = fmi->fstypeog;
 		} else {
 			if ((fmi->fsname = strdup(shortenstr(
 				mnttabbuf.mnt_special, STRMAXLEN))) == NULL) {

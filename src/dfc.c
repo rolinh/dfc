@@ -544,11 +544,11 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		/* filtering on fs type */
-		if (tflag && (fsfilter(p->fstype, fstfilter, nmt) == 0)) {
+		if (tflag && (fsfilter(p->fstypeog, fstfilter, nmt) == 0)) {
 			continue;
 		}
 		/* filtering on fs name */
-		if (pflag && (fsfilter(p->fsname, fsnfilter, nmn) == 0)) {
+		if (pflag && (fsfilter(p->fsnameog, fsnfilter, nmn) == 0)) {
 			continue;
 		}
 

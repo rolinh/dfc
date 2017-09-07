@@ -121,13 +121,16 @@ fetch_info(struct list *lst)
 
 	for (fs = &entbuf; nummnt--; (*fs)++) {
 		vfsbuf = **fs;
+		if ((fmi->fsnameog = strdup(entbuf->f_mntfromname)) == NULL)
+			fmi->fsnameog = g_unknown_str;
+		if ((fmi->mntdirog = strdup(entbuf->f_mntonname)) == NULL)
+			fmi->mntdirog = g_unknown_str;
+		if ((fmi->fstypeog = strdup(entbuf->f_fstypename)) == NULL)
+			fmi->fstypeog = g_unknown_str;
 		if (Wflag) { /* Wflag to avoid name truncation */
-			if ((fmi->fsname = strdup(entbuf->f_mntfromname)) == NULL)
-				fmi->fsname = g_unknown_str;
-			if ((fmi->mntdir = strdup(entbuf->f_mntonname)) == NULL)
-				fmi->mntdir = g_unknown_str;
-			if ((fmi->fstype = strdup(entbuf->f_fstypename)) == NULL)
-				fmi->fstype = g_unknown_str;
+			fmi->fsname = fmi->fsnameog;
+			fmi->mntdir = fmi->mntdirog;
+			fmi->fstype = fmi->fstypeog;
 		} else {
 			if ((fmi->fsname = strdup(shortenstr(
 				entbuf->f_mntfromname, STRMAXLEN))) == NULL) {
