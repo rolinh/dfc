@@ -15,6 +15,7 @@
   * Sylvain Laperche
   * Tobias Patzl
   * Michiel Pater
+  * George Angelopoulos
 
 ## TRANSLATORS:
 
