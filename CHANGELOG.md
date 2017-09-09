@@ -4,8 +4,12 @@
 
 BUGS:
 
+  * fix a typo in the compilation instructions in the readme file
   * fix an old bug (4+ years) which messed up colors in HTML export when a
     configuration file is used
+  * fix a bug which prevented some file systems to be displayed when the
+    filtering option was used
+  * fix a bad implicit fallthrough
 
 ## version 3.1.0
 
