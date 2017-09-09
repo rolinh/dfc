@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.1.0\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2017-04-30 15:54+0200\n"
+"POT-Creation-Date: 2017-09-09 08:48+0200\n"
 "PO-Revision-Date: 2016-04-15 02:02+0200\n"
 "Last-Translator: Michiel Pater <mpater@tradosoft.com>\n"
 "Language-Team: Dutch\n"
@@ -186,61 +186,61 @@ msgstr "Ongeldige HTML kleurcode voor '%s': %s\n"
 msgid "Cannot assign value for '%s': %s\n"
 msgstr "Kan geen waarde voor '%s' toewijzen: %s\n"
 
-#: src/util.c:509 src/export/html.c:157 src/export/tex.c:140
+#: src/util.c:510 src/export/html.c:157 src/export/tex.c:140
 #: src/export/text.c:101
 msgid "FILESYSTEM"
 msgstr "BEST.SYS."
 
-#: src/util.c:510 src/export/html.c:160 src/export/tex.c:142
+#: src/util.c:511 src/export/html.c:160 src/export/tex.c:142
 #: src/export/text.c:104
 msgid "TYPE"
 msgstr "TYPE"
 
-#: src/util.c:512 src/export/html.c:164 src/export/text.c:114
+#: src/util.c:513 src/export/html.c:164 src/export/text.c:114
 msgid "%USED"
 msgstr "%GEBR"
 
-#: src/util.c:513 src/export/html.c:166 src/export/tex.c:147
+#: src/util.c:514 src/export/html.c:166 src/export/tex.c:147
 #: src/export/text.c:117
 msgid "USED"
 msgstr "GEBR"
 
-#: src/util.c:514 src/export/html.c:167 src/export/tex.c:148
+#: src/util.c:515 src/export/html.c:167 src/export/tex.c:148
 #: src/export/text.c:119
 msgid "AVAILABLE"
 msgstr "BESCH."
 
-#: src/util.c:515 src/export/csv.c:104 src/export/html.c:168
+#: src/util.c:516 src/export/csv.c:104 src/export/html.c:168
 #: src/export/tex.c:149 src/export/text.c:120
 #, c-format
 msgid "TOTAL"
 msgstr "TOT."
 
-#: src/util.c:516 src/export/html.c:171 src/export/text.c:123
+#: src/util.c:517 src/export/html.c:171 src/export/text.c:123
 msgid "#INODES"
 msgstr "#INODES"
 
-#: src/util.c:517 src/export/csv.c:108 src/export/html.c:172
+#: src/util.c:518 src/export/csv.c:108 src/export/html.c:172
 #: src/export/text.c:124
 #, c-format
 msgid "AV.INODES"
 msgstr "BB.INODES"
 
-#: src/util.c:518 src/export/csv.c:112 src/export/html.c:176
+#: src/util.c:519 src/export/csv.c:112 src/export/html.c:176
 #: src/export/tex.c:155 src/export/text.c:131
 msgid "MOUNTED ON"
 msgstr "MOUNT"
 
-#: src/util.c:519 src/export/html.c:179 src/export/tex.c:157
+#: src/util.c:520 src/export/html.c:179 src/export/tex.c:157
 #: src/export/text.c:134
 msgid "MOUNT OPTIONS"
 msgstr "MOUNT OPTIES"
 
-#: src/util.c:544
+#: src/util.c:545
 msgid "Cannot compute required width\n"
 msgstr "Kan vereiste breedte niet berekenen\n"
 
-#: src/util.c:620
+#: src/util.c:621
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
@@ -248,7 +248,7 @@ msgstr ""
 "WAARSCHUWING: TTY te smal. Sommige opties zijn uitgeschakeld om dfc output "
 "te laten passen (gebruik -f om te overschrijven).\n"
 
-#: src/util.c:666
+#: src/util.c:667
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "WAARSCHUWING: Output nog steeds te breed. Probeer uw terminal te\n"
@@ -331,12 +331,12 @@ msgstr "VRIJ (-)"
 msgid "SUM:"
 msgstr "TOTAAL:"
 
-#: src/platform/services-bsd.c:350
+#: src/platform/services-bsd.c:353
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Kan mount flags niet ontvangen voor %s\n"
 
-#: src/platform/services-bsd.c:379
+#: src/platform/services-bsd.c:382
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Mount opties inkorten voor %s\n"
