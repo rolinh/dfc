@@ -5,7 +5,7 @@ project(dfc C)
 set(PACKAGE ${CMAKE_PROJECT_NAME})
 set(VERSION_MAJOR 3)
 set(VERSION_MINOR 1)
-set(VERSION_PATCH 0)
+set(VERSION_PATCH 1)
 execute_process(
     COMMAND git rev-parse --short HEAD
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
