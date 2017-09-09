@@ -261,6 +261,7 @@ print_unit(int i, int mode)
 		default:
 			(void)fputs("Could not print unit type in"
 					" human-readable format\n", stderr);
+			return;
 		}
 	case 'b':
 		if (mode)
