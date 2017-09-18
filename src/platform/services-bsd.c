@@ -246,9 +246,6 @@ struct flag_str {
 #if defined(__FreeBSD__)
 	{ MNT_GJOURNAL,           "gjournal"            },
 #endif
-#if defined(__NetBSD__)
-	{ MNT_HIDDEN,           "hidden"            },
-#endif
 #if defined(__APPLE__)
 	{ MNT_JOURNALED,          "journaled"          },
 #endif
