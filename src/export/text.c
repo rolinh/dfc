@@ -132,9 +132,10 @@ text_disp_header(void)
 
 	if (oflag)
 		(void)printf("%-*s", max.mntopts, _("MOUNT OPTIONS"));
-	(void)printf("\n");
-
+	/* reset color before newline to prevent unwanted pollution of the next line */
 	reset_color();
+
+	(void)printf("\n");
 }
 
 /*
