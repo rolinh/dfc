@@ -199,14 +199,14 @@ static void
 text_disp_bar(double used, double size, double gsize)
 {
 	int i;
-	double uperct, sperct;
+	int uperct, sperct;
 	if (agflag) {
-		// used percentage
-		uperct = used / gsize * 100;
-		// total percentage of the greatest volume
-		sperct = size / gsize * 100;
+		// used percentage on the current volume:
+		uperct = (int)(used * 100 / gsize);
+		// percentage of the current volume size on the greatest volume size:
+		sperct = (int)(size * 100 / gsize);
 	} else {
-		uperct = used / size * 100;
+		uperct = (int)(used * 100 / size);
 		sperct = 100;
 	}
 	int barinc = 5;
@@ -251,7 +251,7 @@ text_disp_bar(double used, double size, double gsize)
 			(void)printf("-");
 
 		for (; i < 100; i += barinc)
-			(void)printf("-");
+			(void)printf(" ");
 	}
 
 	(void)printf("]");
