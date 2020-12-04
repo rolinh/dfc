@@ -54,7 +54,7 @@ static void html_disp_deinit(void);
 static void html_disp_header(void);
 static void html_disp_sum(double stot, double utot, double ftot,
                    double ifitot, double ifatot);
-static void html_disp_bar(double perct);
+static void html_disp_bar(double used, double size, double gsize);
 static void html_disp_uat(double n, double perct, int req_width);
 static void html_disp_fs(const char *fsname);
 static void html_disp_type(const char *type);
@@ -207,7 +207,7 @@ html_disp_sum(double stot, double atot, double utot,
 		(void)puts("\t  <td>N/A</td>");
 
 	if (!bflag)
-		html_disp_bar(ptot);
+		html_disp_bar(utot, stot, stot);
 
 	html_disp_perct(ptot);
 
@@ -238,11 +238,15 @@ html_disp_sum(double stot, double atot, double utot,
  * @perct: percentage value
  */
 static void
-html_disp_bar(double perct)
+html_disp_bar(double used, double size, double gsize)
 {
 	int barwidth = 100; /* In pixels */
 	int barheight = 25; /* In pixels */
-	int size;
+	int barsize;
+	int perct = 0; // TODO
+	(void)used;
+	(void)size;
+	(void)gsize;
 
 	(void)puts("\t  <td>");
 
@@ -254,24 +258,24 @@ html_disp_bar(double perct)
 			"background-color:silver; float: left;\"></span>\n",
                        (int)perct*barwidth/100, barheight);
 	} else { /* color */
-		size = (perct < cnf.gmedium) ? (int)perct : cnf.gmedium;
+		barsize = (perct < cnf.gmedium) ? (int)perct : cnf.gmedium;
 		(void)printf("\t    <span style=\"width:%dpx; height: %dpx; "
 			"background-color: #%s; float: left;\"></span>\n",
-                       size * barwidth / 100, barheight, cnf.hclow);
+                       barsize * barwidth / 100, barheight, cnf.hclow);
 
 		if (perct >= cnf.gmedium) {
-			size = (perct < cnf.ghigh) ? (int)perct : cnf.ghigh;
-			size -= cnf.gmedium;
+			barsize = (perct < cnf.ghigh) ? (int)perct : cnf.ghigh;
+			barsize -= cnf.gmedium;
 			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
 			    "background-color: #%s; float: left;\"></span>\n",
-                           size * barwidth / 100, barheight, cnf.hcmedium);
+                           barsize * barwidth / 100, barheight, cnf.hcmedium);
 		}
 
 		if (perct >= cnf.ghigh) {
-			size = (int)perct - cnf.ghigh;
+			barsize = (int)perct - cnf.ghigh;
 			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
 				"background-color: #%s; float: left;\"></span>\n",
-                           size * barwidth / 100, barheight, cnf.hchigh);
+                           barsize * barwidth / 100, barheight, cnf.hchigh);
 		}
 	}
 	(void)puts("\t  </td>");

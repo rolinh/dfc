@@ -86,6 +86,17 @@ imax(int a, int b)
 }
 
 /*
+ * Return the larger of the two floating-point numbers
+ * @a: first element to compare
+ * @b: second element to compare
+ */
+double
+dmax(double a, double b)
+{
+	return (a > b ? a : b);
+}
+
+/*
  * trim withespaces from the input string and returns it
  * @str: string that needs to be trimmed
  */
@@ -518,6 +529,7 @@ init_maxwidths(void)
 	max.avinodes	= iflag ? (int)strlen(_("AV.INODES")) + 1 : 0;
 	max.mntdir	= Mflag ? 0 : (int)strlen(_("MOUNTED ON")) + 1;
 	max.mntopts	= oflag ? (int)strlen(_("MOUNT OPTIONS")) + 1: 0;
+	maxfssize = 0;
 }
 
 /*
@@ -599,6 +611,8 @@ update_maxwidth(struct fsmntinfo *fmi)
 		max.nbinodes = imax(2 + count_digit(fmi->files), max.nbinodes);
 		max.avinodes = imax(3 + count_digit(fmi->ffree), max.avinodes);
 	}
+
+	maxfssize = dmax(fmi->total, maxfssize);
 }
 
 /*

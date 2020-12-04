@@ -125,10 +125,11 @@ extern struct conf cnf;
 
 /* struct to store maximum required widths (useful only in text export mode) */
 extern struct maxwidths max;
+extern double maxfssize;
 
 /* set flags for options */
 extern int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
-    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
+    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag, agflag;
 extern int Mflag, Tflag, Wflag;
 
 /* flag that determines which unit is in use (Ko, Mo, etc.) */

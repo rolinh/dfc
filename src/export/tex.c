@@ -54,7 +54,7 @@ static void tex_disp_deinit(void);
 static void tex_disp_header(void);
 static void tex_disp_sum(double stot, double utot, double ftot,
                   double ifitot, double ifatot);
-static void tex_disp_bar(double perct);
+static void tex_disp_bar(double used, double size, double gsize);
 static void tex_disp_uat(double n, double perct, int req_width);
 static void tex_disp_fs(const char *fsname);
 static void tex_disp_type(const char *type);
@@ -185,7 +185,7 @@ tex_disp_sum(double stot, double atot, double utot,
 		(void)printf(" & N/A");
 
 	if (!bflag)
-		tex_disp_bar(ptot);
+		tex_disp_bar(utot, stot, stot);
 
 	tex_disp_perct(ptot);
 
@@ -216,7 +216,7 @@ tex_disp_sum(double stot, double atot, double utot,
  * @perct: percentage value
  */
 static void
-tex_disp_bar(double perct)
+tex_disp_bar(double used, double size, double gsize)
 {
 	/*
 	 * It could be nice to have a non-ASCII graph bar but it requires TeX
@@ -225,6 +225,11 @@ tex_disp_bar(double perct)
 	 */
 	int i, j;
 	int barinc = 5;
+
+	int perct = 0; // TODO
+	(void)used;
+	(void)size;
+	(void)gsize;
 
 	(void)printf(" & ");
 

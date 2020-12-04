@@ -52,8 +52,9 @@ char g_unknown_str[] = "unknown";
 char g_none_str[]    = "none";
 struct conf cnf;
 struct maxwidths max;
+double maxfssize = 0;
 int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
-    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
+    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag, agflag = 1;
 int Mflag, Tflag, Wflag;
 char unitflag;
 
@@ -583,7 +584,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		if (!bflag)
-			sdisp->print_bar(p->perctused);
+			sdisp->print_bar(p->used, p->total, maxfssize);
 
 		/* %used */
 		sdisp->print_perct(p->perctused);
