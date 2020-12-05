@@ -199,18 +199,18 @@ static void
 text_disp_bar(double perct, double size, double gsize)
 {
 	int i;
-	double sperct, uperct;
+	double uperct, sperct;
 	if (agflag) {
-		// percentage of the current volume size on the greatest volume size:
-		sperct = size * 100 / gsize;
 		// used percentage on the current volume:
 		uperct = perct * size / gsize;
+		// percentage of the current volume size on the greatest volume size:
+		sperct = size * 100 / gsize;
 		// one problem is that fs's with exactly 0.0 % usage are shown
 		// as empty (-) but fs's with something in between 0.0 % and 0.04 % 
 		// are shown as full (=) because of the i < uperct check.
 	} else {
-		sperct = 100;
 		uperct = perct;
+		sperct = 100;
 	}
 	int barinc = 5;
 
