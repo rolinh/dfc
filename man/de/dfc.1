@@ -208,33 +208,32 @@ Zeige einen breiteren Graphen.
 \-W
 Zeigt lange Pfadnamen an (Dateinamen werden nicht abgekürzt). Benötigt u. U.
 ein größeres Display.
-.SH CONFIGURATION FILE
-The configuration file is optional. It allows you to change dfc(1)
-default colors, values when colors change and graph symbol in text mode and
-modify colors used in html export.
+.SH Konfigurationsdatei
+Die Konfigurationsdatei ist optional. Sie ermöglicht es, die 
+Standardfarben, Grenzwerte für Varben und Graphensymbole im Textmodus sowie die Farben im HTML Modus von dfc(1) zu ändern.
 
-If you want to use it, place it here:
+Eine solche Konfigurationsdatei soll am folgenden Ort gespeichert werden:
 
 	$XDG_CONFIG_HOME/dfc/dfcrc
 
-If your operating system does not support XDG Base Directory Specification, it
-should then be placed here:
+Falls Ihr Betriebssystem die XDG Base Directory Specification nicht unterstützt,
+sollte die Konfigurationsdatei stattdessen hier gespeichert werden:
 
 	$HOME/.config/dfc/dfcrc
 
-Or, last choice:
+Oder als letzte Alternative:
 
 	$HOME/.dfcrc
 
-NOTE: The last two choices can be chosen only if your OS does not support XDG
-Base Directory Specification.
+HINWEIS: Die beiden letzten Möglichkeiten sind nur verfügbar falls Ihr
+Betriebssystem die XDG Base Directory Specification nicht unterstützt.
 .SH BUGS
-If you find one, please contact the author and explain what you encounter.
-.SH AUTHORS
+Falls Sie einen Bug finden, kontaktieren Sie bitte den Autor.
+.SH AUTOREN
 Robin Hahling <robin.hahling\(atgw\-computing.net>
 .SH COPYRIGHT
 Copyright \(co 2012-2017 Robin Hahling
-.SH LICENSE
+.SH LIZENZ
 BSD 3-clause
-.SH SEE ALSO
+.SH WEITERE INFORMATIONEN
 df(1), du(1)
