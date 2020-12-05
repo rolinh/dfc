@@ -111,13 +111,13 @@ msgid ""
 "Config file path is longer than %lu and was truncated. Please, open a bug "
 "report.\n"
 msgstr ""
-"Le chemin vers le fichier de configuration est plus long que %lu et a été "
-"tronqué. Veuillez svp ouvrir un rapport de bogue.\n"
+"Die Konfigurationsdatei ist länger als %lu und wurde nur teilweise gelesen "
+"Bitte öffnen Sie einen Bug Report.\n"
 
 #: src/dotfile.c:159
 #, c-format
 msgid "Error: no value for %s in configuration file\n"
-msgstr "Erreur: aucune valeur pour %s dans le fichier de configuration\n"
+msgstr "Fehler: fehlender Wert für %s in der Konfigurationsdatei\n"
 
 #: src/dotfile.c:224 src/dotfile.c:244
 #, c-format
@@ -125,87 +125,86 @@ msgid ""
 "Value conversion failed for graph_medium: %s. What were you expecting with "
 "such a thing anyway?\n"
 msgstr ""
-"La conversion de la valeur a échoué pour graph_medium: %s. Qu'espériez-vous "
-"de toute façon?\n"
+"Fehler beim konvertieren für graph_medium: %s. Was haben Sie erwartet?\n"
 
 #: src/dotfile.c:229
 #, c-format
 msgid "Medium value cannot be set below 0: %s\n"
-msgstr "La valeur medianne ne peut pas être fixée en dessous de 0: %s\n"
+msgstr "Der mittlere Wert kann nicht kleiner als 0 sein: %s\n"
 
 #: src/dotfile.c:232
 #, c-format
 msgid "Medium value cannot be set above 100: %s\n"
-msgstr "La valeur médianne ne peut pas être fixée en dessus de 100: %s\n"
+msgstr "Der mittlere Wert kann nicht größer als 100 sein: %s\n"
 
 #: src/dotfile.c:249
 #, c-format
 msgid "High value cannot be set below 0: %s\n"
-msgstr "La valeur haute ne peut pas être fixée en dessous de 0: %s\n"
+msgstr "Der obere Wert kann nicht kleiner als 0 sein: %s\n"
 
 #: src/dotfile.c:252
 #, c-format
 msgid "High value cannot be set above 100: %s\n"
-msgstr "La valeur haute ne peut pas être fixée en dessus de 100: %s\n"
+msgstr "Der obere Wert kann nicht größer als 100 sein: %s\n"
 
 #: src/dotfile.c:262
 #, c-format
 msgid "Wrong symbol value: %s\n"
-msgstr "Symbole impossible: %s\n"
+msgstr "Ungültiges Symol: %s\n"
 
 #: src/dotfile.c:315
 #, c-format
 msgid "Wrong csv separator: %s\n"
-msgstr "Séparateur csv invalide: %s\n"
+msgstr "Ungültiges Trennsymbol für csv: %s\n"
 
 #: src/dotfile.c:320
 #, c-format
 msgid "Error: unknown option in configuration file: %s\n"
-msgstr "Erreur: option inconnue dans le fichier de configuration: %s\n"
+msgstr "Fehler: unbekannte Option in der Konfigurationsdatei: %s\n"
 
 #: src/dotfile.c:328
 #, c-format
 msgid "Unknown boolean value for '%s': %s\n"
-msgstr "Valeur booléenne inconnue pour '%s': %s\n"
+msgstr "Unbekannter Wahrheitswert für '%s': %s\n"
 
 #: src/dotfile.c:332
 #, c-format
 msgid "Unknown color value for '%s': %s\n"
-msgstr "Couleur inconnue pour '%s': %s\n"
+msgstr "Unbekannter Farbwert für '%s': %s\n"
 
 #: src/dotfile.c:336
 #, c-format
 msgid "Not a valid HTML color for '%s': %s\n"
-msgstr "Couleur HTML invalide pour '%s': %s\n"
+msgstr "HTML Farbe ungültig für '%s': %s\n"
 
 #: src/dotfile.c:340
 #, c-format
 msgid "Cannot assign value for '%s': %s\n"
-msgstr "Impossible d'assigner une valeur pour '%s': %s\n"
+msgstr "Kann den Wert für '%s' nicht zuweisen: %s\n"
 
 #: src/util.c:510 src/export/html.c:157 src/export/tex.c:140
 #: src/export/text.c:101
 msgid "FILESYSTEM"
-msgstr "SYSTÈME DE FICHIERS"
+msgstr "DATEISYSTEM"
 
 #: src/util.c:511 src/export/html.c:160 src/export/tex.c:142
 #: src/export/text.c:104
 msgid "TYPE"
-msgstr "TYPE"
+msgstr "TYP"
 
 #: src/util.c:513 src/export/html.c:164 src/export/text.c:114
 msgid "%USED"
-msgstr "%UTILISÉ"
+msgstr "%BENUTZT"
 
 #: src/util.c:514 src/export/html.c:166 src/export/tex.c:147
 #: src/export/text.c:117
 msgid "USED"
-msgstr " UT."
+msgstr "VOLL"
 
 #: src/util.c:515 src/export/html.c:167 src/export/tex.c:148
 #: src/export/text.c:119
 msgid "AVAILABLE"
-msgstr "DISPO."
+msgstr "   FREI  "
 
 #: src/util.c:516 src/export/csv.c:104 src/export/html.c:168
 #: src/export/tex.c:149 src/export/text.c:120
@@ -221,60 +220,60 @@ msgstr "#INODES"
 #: src/export/text.c:124
 #, c-format
 msgid "AV.INODES"
-msgstr "INODES DISP."
+msgstr "AV.INODES"
 
 #: src/util.c:519 src/export/csv.c:112 src/export/html.c:176
 #: src/export/tex.c:155 src/export/text.c:131
 msgid "MOUNTED ON"
-msgstr "MONTÉ SUR"
+msgstr "EINGEHÄNGT"
 
 #: src/util.c:520 src/export/html.c:179 src/export/tex.c:157
 #: src/export/text.c:134
 msgid "MOUNT OPTIONS"
-msgstr "OPTIONS DE MONTAGE"
+msgstr "EINHÄNGEOPTIONEN"
 
 #: src/util.c:545
 msgid "Cannot compute required width\n"
-msgstr "Impossible de calculer la largeur requise\n"
+msgstr "Kann die benötigte Breite nicht berechnen\n"
 
 #: src/util.c:621
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
 msgstr ""
-"AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
-"afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
+"WARNUNG: TTY ist zu schmal. Manche Optionen wurden deaktivert, damit die "
+"Anzeige passt ( -f um alle Spalten zu erzwingen).\n"
 
 #: src/util.c:667
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
-"AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
-"si cela est possible...\n"
+"WARNUNG: Die Anzeige ist immer noch durcheinander. Vergrößern Sie das Terminal"
+"falls möglich...\n"
 
 #: src/export/csv.c:92
 #, c-format
 msgid "FILESYSTEM%c"
-msgstr "SYSTÈME DE FICHIERS%c"
+msgstr "DATEISYSTEM%c"
 
 #: src/export/csv.c:95
 #, c-format
 msgid "TYPE%c"
-msgstr "TYPE%c"
+msgstr "TYP%c"
 
 #: src/export/csv.c:97
 #, c-format
 msgid "%%USED%c"
-msgstr " %%UT.%c"
+msgstr " %%BENUTZT%c"
 
 #: src/export/csv.c:100
 #, c-format
 msgid "USED%c"
-msgstr " UT.%c"
+msgstr "VOLL%c"
 
 #: src/export/csv.c:102
 #, c-format
 msgid "AVAILABLE%c"
-msgstr "DISPO.%c"
+msgstr "   FREI  %c"
 
 #: src/export/csv.c:107
 #, c-format
@@ -284,29 +283,29 @@ msgstr "%c#INODES%c"
 #: src/export/csv.c:115
 #, c-format
 msgid "%cMOUNT OPTIONS"
-msgstr "%cOPTIONS DE MONTAGE"
+msgstr "%cEINHÄNGEOPTIONEN"
 
 #: src/export/csv.c:137
 #, c-format
 msgid "SUM:%c"
-msgstr "SOM:%c"
+msgstr "TOT:%c"
 
 #: src/export/html.c:146
 msgid "Unknown date"
-msgstr "Date inconnue"
+msgstr "Unbekanntes Datum"
 
 #: src/export/html.c:154
 #, c-format
 msgid "Generated by %s-%s on %s"
-msgstr "Généré par %s-%s le %s"
+msgstr "Genertiert von %s-%s am %s"
 
 #: src/export/tex.c:144
 msgid "USAGE"
-msgstr "UTILISATION"
+msgstr "NUTZUNG"
 
 #: src/export/tex.c:145
 msgid "\\%USED"
-msgstr "\\%UTILISÉ"
+msgstr "\\%VOLL"
 
 #: src/export/tex.c:151
 msgid "\\#INODES"
@@ -314,34 +313,34 @@ msgstr "\\#INODES"
 
 #: src/export/tex.c:152
 msgid "AV.INODES,"
-msgstr "INODES DISP.,"
+msgstr "AV.INODES,"
 
 #: src/export/text.c:107 src/export/text.c:109
 msgid "(=) USED"
-msgstr "(=)  UT."
+msgstr "(=) VOLL"
 
 #: src/export/text.c:109 src/export/text.c:111
 msgid "FREE (-)"
-msgstr "LIB. (-)"
+msgstr "FREI (-)"
 
 #: src/export/text.c:166
 msgid "SUM:"
-msgstr "SOM:"
+msgstr "SUM:"
 
 #: src/platform/services-bsd.c:350
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
-msgstr "Impossible de récupérer les options de montage pour %s\n"
+msgstr "Kann die Einhängeoptionen für %s nicht bestimmen\n"
 
 #: src/platform/services-bsd.c:379
 #, c-format
 msgid "Truncating mount options for %s\n"
-msgstr "Troncation des options de montage pour %s\n"
+msgstr "Zeige Einhängeoptionen für %s nur teilweise\n"
 
 #: src/platform/services-linux.c:110
 #, c-format
 msgid "WARNING: %s was skipped because it could not be stated"
-msgstr "AVERTISSEMENT: %s a été ignoré car il ne peut pas être lu"
+msgstr "WARNUNG: %s wurde übersprungen weil es nicht gelesen werden konnte"
 
 #~ msgid "TOTAL%c"
 #~ msgstr "TOTAL%c"
