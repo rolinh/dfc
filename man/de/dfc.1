@@ -22,142 +22,139 @@ dfc(1) hat außerdem die integrierte Funktion, dass die Ausgabe an das
 Terminal und dessen Breite angepasst wird. Falls dies unerwünscht ist, 
 können mit "\-f" alle Spalten erzwungen werden.
 
-.SH OPTIONS
+.SH OPTIONEN
 .TP
 \-a
-Show all (do not omit any file system).
+Zeige alle Dateisysteme.
 .TP
 \-b
-Do not show the graph bar.
+Zeige keinen Graphen.
 .TP
 \-c [WHEN]
-Choose color mode where WHEN is one of the following sub\-option:
+Wähle den Farbmodus mit WHEN als einer dieser Optionen:
 
 "always":
-Color will always be used, no matter what "stdout" is.
+Farbe wird mit jedem "stdout" verwendet.
 
 "auto":
-This is default when "\-c" is not activated. Color is used only if "stdout"
-is a terminal. For instance, color will be disabled with this option if you
-pipe the output of dfc(1) into another command.
+Das ist die Standardoption wenn "\-c" nicht angegeben ist. Die Ausgabe
+wird nur eingefärbt, wenn "stdout" ein Terminal ist. Zum Beispiel wird die
+ausgabe nicht eingefärbt wenn die Ausgabe von dfc(1) in einen anderen 
+Befehl weitergeleitet wird.
 
 "never":
-Color will never be used.
+Die Ausgabe wird nicht eingefärbt.
 
 .TP
 \-d
-Show used size.
+Zeigt die belegte Größe an.
 .TP
 \-e [FORMAT]
-Allows you to export dfc(1) output to specified FORMAT.
-FORMAT is one of the following:
+Ermöglicht es, dfc(1) in einem speziellen FORMAT zu exportieren.
+FORMAT ist eines der folgenden:
 
 "csv":
-Output as "comma separated value" file type. Example usage:
+Die Ausgabe in Form von kommagetrennten Werten. Zum Beispiel:
 
 	dfc \-e csv > foo.csv
 
 "html":
-Output is HTML formated. Example usage:
+Die Ausgabe ist HTML formattiert. Zum Beispiel:
 
 	dfc \-e html \-Tadiso \-c always > index.html
 
 "json":
-Output is JSON formated. Example usage:
+Die Ausgabe ist JSON formattiert. Zum Beispiel:
 
 	dfc \-e json \-Tisod > report.json
 
 "tex":
-Output is TeX formated. Example usage:
+Die Ausgabe ist TEX formattiert. Zum Beispiel:
 
 	dfc \-e tex \-c always > report.tex
 
 "text":
-Text output (default).
+Textbasierte Ausgabe (Standardoption).
 
 .TP
 \-f
-Override auto\-adjust behavior by forcing information to be displayed.
-This option can be useful when redirecting dfc(1) output.
+Deaktiviert das automatische Anpassen durch Erzwingen von Anzeigen
+der Informationen. Diese Option kann sinnvoll sein, wenn die Ausgabe
+von dfc(1) weitergeleitet wird.
 .TP
 \-h
-Show a short help text.
+Zeigt einen kurzen Hilfetext.
 .TP
 \-i
-Show information about inodes.
+Zeigt Informationen über inodes.
 .TP
 \-l
-Only show information about locally mount file systems.
-.TP
+Zeige nur Informationen zu lokalen Dateisystemen.
 \-m
-Use SI units (metric) (ie: size is computed using powers of 10 instead of powers
-of 2).
+Benutzt SI Einheiten (metrische Einheiten), d. h. die Größe ist berechnet in
+Vielfachen von 10 und nicht Vielfachen von 2.
 .TP
 \-M
-Do not print "mounted on".
+Deaktiviert die Anzeige des Einhängeortes.
 .TP
 \-n
-Do not print header.
+Deaktiviert die Kopfzeile.
 .TP
 \-o
-Show mount options.
+Zeigt die Einhängeoptionen.
 .TP
 \-p [FSNAME]
-Allows you to perform filtering on file system name. FSNAME can be anything.
-For instance, if you want to see only file system which name starts with
-"/dev", you would use the following:
+Ermöglicht es, nach dem Namen der Dateisysteme zu filtern. FSNAME kann alles
+sein. Zum Beispiel falls nur Dateisysteme, die mit "/dev" beginnen, angezeigt werden sollen, kann man folgende Option nutzen:
 
 	dfc \-p /dev
 
-This will output only file systems which names are, for instance,
-"/dev/sda1", "/dev/root", "/dev", etc.
+Somit werden beispielsweise nur "/dev/sda1", "/dev/root", "/dev", etc. angezeigt.
 
-Multiple selection is supported. In this case, FSNAME needs to be a comma
-separated list (without spaces). For instance, if you want to filter "/dev"
-and "tmpfs", you would use the following:
+Mehrere Auswahlen sind, durch Komma (und ohne Leerzeichen) getrennt
+unterstützt. Falls beispielsweise nur "/dev" und "tmpfs" angezeigt werden
+soll, kann man folgende Option nutzen:
 
 	dfc \-p /dev,tmpfs
 
-You can also use negative matching to filter the output. To do so, you just
-need to prepend a "\-" to FSNAME. In the following example, dfc(1) will display
-all file system names except those mentioned:
+Außerdem ist umgekehrtes Filtern möglich. Dazu muss lediglich ein "\-" vor
+FSNAME angehängt werden. In diesem Beispiel wird dfc(1) alle Dateisysteme außer die angegebenen anzeigen:
 
 	dfc \-p \-proc,/dev/sdc,run
 
 .TP
 \-q [SORTBY]
-Allows you to sort the output based on SORTBY.
+Ermöglicht es, die Anzeige nach SORTBY zu sortieren.
 
-SORTBY can take one of those three values: "name", "type", "mount".
+SORTBY kann eines von "name", "type", "mount" sein.
 
-When using "name", the output is sorted by file system name.
-When using "type", the output is sorted by file system type.
-When using "mount", the output is sorted by mount points.
+Mit "name" wird die Anzeige nach den Namen der Dateisysteme sortiert.
+Mit "type" wird die Anzeige nach den Typen der Dateisysteme sortiert.
+Mit "mount" wird die Anzeige nach Einhängeorten sortiert.
 
 .TP
 \-s
-Sum the total usage.
+Zeigt eine Übersicht über alle Dateisysteme an.
 .TP
 \-t [FSTYPE]
-Allows you to perform filtering on file system type. FSTYPE could take any
-known file system value. For instance, "ext4", "ufs", "tmpfs", "reiserfs", etc.
-You can also use wildcard filtering, just as with the \-p option. For instance,
-if you use the following:
+Ermöglicht es, nach dem Typen der Dateisysteme zu filtern. FSTYPE kann ein
+beliebiges bekanntes Dateisystem sein, zum Beispiel "ext4", "ufs", "reiserfs", ...
+Außerdem kann - genau wie mit der \-p Option - teilweises Filtern eingesetzt
+werden:
 
     dfc \-t ext
 
-This will allow any file system type with name starting with "ext" to pass
-through the filter, for instance, "ext2", "ext3" and "ext4".
+Dies zeigt alle Dateisysteme mit "ext" im Typen an, also ext2, ext3, ext4, ...
 
-Multiple selection on file system is also possible. In this case, FSTYPE
-needs to be a comma separated list (without spaces). For instance, if you want to
-filter "ext4" and "tmpfs", you would use the following:
+Mehrere Auswahlen sind, durch Komma (und ohne Leerzeichen) getrennt
+unterstützt. Falls beispielsweise "ext4" und "tmpfs" angezeigt werden
+soll, kann man folgende Option nutzen:
 
 	dfc \-t ext4,tmpfs
 
-You can also use negative matching to filter the output. To do so, you just
-need to prepend a "\-" to FSTYPE. In the following example, dfc(1) will
-display all file system types except those mentioned:
+Außerdem ist umgekehrtes Filtern möglich. Dazu muss lediglich ein "\-" vor
+FSTYPE angehängt werden. In diesem Beispiel wird dfc(1) alle
+Dateisystemtypen außer den angegeben anzeigen:
 
 	dfc \-t \-rootfs,tmpfs
 
