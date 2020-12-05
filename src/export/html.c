@@ -207,7 +207,7 @@ html_disp_sum(double stot, double atot, double utot,
 		(void)puts("\t  <td>N/A</td>");
 
 	if (!bflag)
-		html_disp_bar(utot, stot, stot);
+		html_disp_bar(ptot, stot, maxfssize);
 
 	html_disp_perct(ptot);
 
