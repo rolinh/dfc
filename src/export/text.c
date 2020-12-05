@@ -52,7 +52,7 @@
 static void text_disp_header(void);
 static void text_disp_sum(double stot, double utot,
 		double ftot, double ifitot, double ifatot);
-static void text_disp_bar(double used, double size, double max);
+static void text_disp_bar(double perct, double size, double max);
 static void text_disp_uat(double n, double perct, int req_width);
 static void text_disp_fs(const char *fsname);
 static void text_disp_type(const char *type);
@@ -191,23 +191,26 @@ text_disp_sum(double stot, double atot, double utot,
 
 /*
  * Display the nice usage bar
- * @used: how much space is used on this volume
+ * @perct: usage percentage
  * @size: how much total space this volume has
  * @gsize: how much total space the greatest volume has
  */
 static void
-text_disp_bar(double used, double size, double gsize)
+text_disp_bar(double perct, double size, double gsize)
 {
 	int i;
-	int uperct, sperct;
+	double sperct, uperct;
 	if (agflag) {
-		// used percentage on the current volume:
-		uperct = (int)(used * 100 / gsize);
 		// percentage of the current volume size on the greatest volume size:
-		sperct = (int)(size * 100 / gsize);
+		sperct = size * 100 / gsize;
+		// used percentage on the current volume:
+		uperct = perct * size / gsize;
+		// one problem is that fs's with exactly 0.0 % usage are shown
+		// as empty (-) but fs's with something in between 0.0 % and 0.04 % 
+		// are shown as full (=) because of the i < uperct check.
 	} else {
-		uperct = (int)(used * 100 / size);
 		sperct = 100;
+		uperct = perct;
 	}
 	int barinc = 5;
 

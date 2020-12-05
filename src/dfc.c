@@ -588,7 +588,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		if (!bflag)
-			sdisp->print_bar(p->used, p->total, maxfssize);
+			sdisp->print_bar(p->perctused, p->total, maxfssize);
 
 		/* %used */
 		sdisp->print_perct(p->perctused);
