@@ -166,8 +166,12 @@ text_disp_sum(double stot, double atot, double utot,
 	(void)printf("%-*s", width, _("SUM:"));
 	reset_color();
 
-	if (!bflag)
-		text_disp_bar(utot, stot, stot);
+	if (!bflag) {
+		text_disp_bar(ptot, stot, maxfssize);
+		if (agflag) {
+			(void)printf("\n%*c", 39, ' ');
+		}
+	}
 
 	text_disp_perct(ptot);
 
