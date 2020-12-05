@@ -234,12 +234,12 @@ text_disp_bar(double perct, double size, double gsize)
 
 		/* green */
 		(void)printf("\033[%d;%dm", cnf.font_type , cnf.clow);
-		for (i = 0; (i < cnf.gmedium) && (i < uperct); i += barinc)
+		for (i = 0; (i < cnf.gmedium * sperct / 100) && (i < uperct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* yellow */
 		(void)printf("\033[%d;%dm", cnf.font_type , cnf.cmedium);
-		for (; (i < cnf.ghigh) && (i < uperct); i += barinc)
+		for (; (i < cnf.ghigh * sperct / 100) && (i < uperct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* red */

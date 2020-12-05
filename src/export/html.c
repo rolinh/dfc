@@ -246,7 +246,9 @@ html_disp_bar(double perct, double size, double gsize)
 	int barheight = 25; /* In pixels */
 	int barsize;
 
+	double sperct = 100;
 	if (agflag) {
+		sperct = size / gsize * 100;
 		perct = perct * size / gsize;
 	}
 
@@ -260,21 +262,35 @@ html_disp_bar(double perct, double size, double gsize)
 			"background-color:silver; float: left;\"></span>\n",
                        (int)perct * barwidth / 100, barheight);
 	} else { /* color */
-		barsize = (perct < cnf.gmedium) ? (int)perct : cnf.gmedium;
+		// draw to either the next color or the full bar
+		// scaling each colors' width according to the bar width:
+		if (perct < cnf.gmedium * sperct / 100) {
+			barsize = (int)perct;
+		} else {
+			barsize = (int)(cnf.gmedium * sperct / 100);
+		}
 		(void)printf("\t    <span style=\"width:%dpx; height: %dpx; "
 			"background-color: #%s; float: left;\"></span>\n",
                        barsize * barwidth / 100, barheight, cnf.hclow);
 
-		if (perct >= cnf.gmedium) {
-			barsize = (perct < cnf.ghigh) ? (int)perct : cnf.ghigh;
-			barsize -= cnf.gmedium;
+		if (perct >= cnf.gmedium * sperct / 100) {
+			// if there is something left after the low color, draw 
+			// to the next color or the rest of the full bar
+			// scaling the colors according to the bar width:
+			if (perct < cnf.ghigh * sperct / 100) {
+				barsize = (int)perct;
+			} else {
+				barsize = (int)(cnf.ghigh * sperct / 100);
+			}
+			barsize -= (int)(cnf.gmedium * sperct / 100);
 			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
 			    "background-color: #%s; float: left;\"></span>\n",
                        barsize * barwidth / 100, barheight, cnf.hcmedium);
 		}
 
-		if (perct >= cnf.ghigh) {
-			barsize = (int)perct - cnf.ghigh;
+		// if there is something left after the medium color, draw it:
+		if (perct >= cnf.ghigh * sperct / 100) {
+			barsize = (int)(perct - cnf.ghigh * sperct / 100);
 			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
 				"background-color: #%s; float: left;\"></span>\n",
                        barsize * barwidth / 100, barheight, cnf.hchigh);
