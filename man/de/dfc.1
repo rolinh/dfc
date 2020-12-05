@@ -160,52 +160,54 @@ Dateisystemtypen außer den angegeben anzeigen:
 
 .TP
 \-T
-Show file system type.
+Zeigt den Typen der Dateisysteme an.
 .TP
 \-u [UNIT]
-Show size using the unit specified. UNIT can take one of the following values:
+Zeigt die Größe in der angegebenen Größe an. Folgende Werte stehen
+für UNIT zur Auswahl:
 
 "h":
-	Human readable (default when not using "\-u" option).
+	Menschenlesbar (Standardoption wenn "\-u" nicht angegeben ist).
 
 "b":
-	Show bytes.
+	Zeigt Größen in Bytes.	
 
 "k":
-	Show size using Kio.
+	Zeigt Größen in Kio.
 
 "m":
-	Show size using Mio.
+	Zeigt Größen in Mio.
 
 "g":
-	Show size using Gio.
+	Zeigt Größen in Gio.
 
 "t":
-	Show size using Tio.
+	Zeigt Größen in Tio.
 
 "p":
-	Show size using Pio.
+	Zeigt Größen in Pio.
 
 "e":
-	Show size using Eio.
+	Zeigt Größen in Eio.
 
 "z":
-	Show size using Zio.
+	Zeigt Größen in Zio.
 
 "y":
-	Show size using Yio.
+	Zeigt Größen in Yio.
 
-NOTE: When using "\-u" option along with "\-m" option, those suboptions are
-replaced by their SI counterparts.
+HINWEIS: Wenn sowohl "\-u" als auch "\-m" angegeben sind, werden diese
+Unteroptionen mit ihren SI-Varianten ersetzt.
 .TP
 \-v
-Print dfc(1) version and exit.
+Zeigt die installierte Version von dfc(1) an und beendet.
 .TP
 \-w
-Use a wider bar for the graph.
+Zeige einen breiteren Graphen.
 .TP
 \-W
-Wide path name (avoid truncation of file name). May require a larger display.
+Zeigt lange Pfadnamen an (Dateinamen werden nicht abgekürzt). Benötigt u. U.
+ein größeres Display.
 .SH CONFIGURATION FILE
 The configuration file is optional. It allows you to change dfc(1)
 default colors, values when colors change and graph symbol in text mode and
