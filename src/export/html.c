@@ -258,7 +258,7 @@ html_disp_bar(double perct, double size, double gsize)
 	if (!cflag) {
 		(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
 			"background-color:silver; float: left;\"></span>\n",
-                       (int)perct*barwidth/100, barheight);
+                       (int)perct * barwidth / 100, barheight);
 	} else { /* color */
 		barsize = (perct < cnf.gmedium) ? (int)perct : cnf.gmedium;
 		(void)printf("\t    <span style=\"width:%dpx; height: %dpx; "
@@ -270,14 +270,14 @@ html_disp_bar(double perct, double size, double gsize)
 			barsize -= cnf.gmedium;
 			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
 			    "background-color: #%s; float: left;\"></span>\n",
-                           barsize * barwidth / 100, barheight, cnf.hcmedium);
+                       barsize * barwidth / 100, barheight, cnf.hcmedium);
 		}
 
 		if (perct >= cnf.ghigh) {
 			barsize = (int)perct - cnf.ghigh;
 			(void)printf("\t    <span style=\"width: %dpx; height: %dpx; "
 				"background-color: #%s; float: left;\"></span>\n",
-                           barsize * barwidth / 100, barheight, cnf.hchigh);
+                       barsize * barwidth / 100, barheight, cnf.hchigh);
 		}
 	}
 	(void)puts("\t  </td>");
