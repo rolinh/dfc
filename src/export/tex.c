@@ -185,7 +185,7 @@ tex_disp_sum(double stot, double atot, double utot,
 		(void)printf(" & N/A");
 
 	if (!bflag)
-		tex_disp_bar(utot, stot, stot);
+		tex_disp_bar(ptot, stot, maxfssize);
 
 	tex_disp_perct(ptot);
 
