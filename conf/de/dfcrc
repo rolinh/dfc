@@ -1,0 +1,68 @@
+# Optionale Konfigurationsdatei für dfc
+
+# Farben für die Text Ausgabe
+# Folgende Werte sind möglich:
+# - black
+# - red
+# - green
+# - yellow
+# - blue
+# - magenta
+# - cyan
+# - white
+# Hinweis: Hier geht es ausschließlich um die Vordergrundfarbe.
+
+# Zeige fette oder extra dünne Schrift
+# Hinweis: Dies funktioniert unterschiedlich auf verschiedenen Terminals
+# Wählen Sie entweder yes oder no
+bold_font = no
+
+# Farbe für die Kopfzeile
+color_header = blue
+# Farbe für geringer Nutzung
+color_low = green
+# Farbe für mittlerer Nutzung
+color_medium = yellow
+# Farbe für hohe Nutzung
+color_high = red
+
+# Werte in Prozent, bei der die Farbe im Graphen sich ändert
+# Grenzwert, ab dem die Nutzung als mittel gilt
+graph_medium = 50
+# Grenzwert, ab dem die Nutzung als hoch gilt
+graph_high = 75
+
+# Zeichen, dass für den Graphen verwendet wird (ein beliebiges ASCII Symbol)
+graph_symbol = =
+
+# Außerdem können die Farben für den HTML Export festgelegt werden
+# Die Werte können ein beliebiger erkannter HTML-Farbwert sein
+# Zum Beispiel ist dies weiß: #FFFFFF
+# Oder rot: #FF0000
+# und so weiter.
+# HINWEIS: Das # Zeichen darf nicht mit angegeben werden
+# (weiß wird zu FFFFFF usw.)
+
+# Hintergrundfarbe für Kopf- und Fußzeile
+html_color_header_bg = 970000
+# Schriftfarbe für Kopf- und Fußzeile
+html_color_header_fg = FFFFFF
+# Hintergrundfarbe für die Tabelleneinträge
+html_color_cell_bg = E9E9E9
+# Schriftfarbe für die Tabelleneinträge
+html_color_cell_fg = 000000
+# Hintergrundfarbe beim Darüberfahren mit der Maus
+html_color_hover_bg = FFFFFF
+# Schriftfarbe beim Darüberfahren mit der Maus
+html_color_hover_fg = 000000
+# Farbe bei niedriger Nutzung
+html_color_low = 348017
+# Farbe bei mittlerer Nutzung
+html_color_medium = FDD017
+# Farbe bei hoher Nutzung
+html_color_high = F62217
+
+# Trennsymbol für die csv Ausgabe
+csv_separator = ,
+
+# vim: set noet syn=conf
