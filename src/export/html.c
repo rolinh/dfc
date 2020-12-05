@@ -236,17 +236,19 @@ html_disp_sum(double stot, double atot, double utot,
 /*
  * Display the nice usage bar
  * @perct: percentage value
+ * @size: how much total space this volume has
+ * @gsize: how much total space the greatest volume has
  */
 static void
-html_disp_bar(double used, double size, double gsize)
+html_disp_bar(double perct, double size, double gsize)
 {
 	int barwidth = 100; /* In pixels */
 	int barheight = 25; /* In pixels */
 	int barsize;
-	int perct = 0; // TODO
-	(void)used;
-	(void)size;
-	(void)gsize;
+
+	if (agflag) {
+		perct = perct * size / gsize;
+	}
 
 	(void)puts("\t  <td>");
 
