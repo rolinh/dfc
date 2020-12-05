@@ -236,12 +236,8 @@ tex_disp_bar(double perct, double size, double gsize)
 		uperct = perct;
 		sperct = 100;
 	}
-	int barinc = 5;
 
-	/* option to display a wider bar */
-	if (wflag) {
-		barinc = 2;
-	}
+	int barinc = 100 / ((wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT) - 2);
 
 	(void)printf(" & ");
 
