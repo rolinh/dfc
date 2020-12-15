@@ -1,0 +1,349 @@
+# German translations for dfc package.
+# Copyright (C) 2020 THE dfc'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the dfc package.
+# Robin Hahling <robin.hahling@gw-computing.net>, 2012-2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dfc 3.1.1\n"
+"Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
+"POT-Creation-Date: 2020-12-05 22:19+0100\n"
+"PO-Revision-Date: 2012-04-15 13:52+0200\n"
+"Last-Translator: Leonard von Hagen <lennivh24@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/dfc.c:214
+#, c-format
+msgid "-c: illegal sub option %s\n"
+msgstr "-c: Ungültige Unteroption %s\n"
+
+#: src/dfc.c:251
+#, c-format
+msgid "-e: illegal sub option %s\n"
+msgstr "-e: Ungültige Unteroption %s\n"
+
+#: src/dfc.c:302
+#, c-format
+msgid "-q: illegal sub option %s\n"
+msgstr "-q: Ungültige Unteroption %s\n"
+
+#: src/dfc.c:363
+#, c-format
+msgid "-u: illegal sub option %s\n"
+msgstr "-u: Ungültige Unteroption %s\n"
+
+#: src/dfc.c:406
+#, c-format
+msgid "Error reading the configuration file: %s\n"
+msgstr "Fehler beim Lesen der Konfigurationsdatei: %s\n"
+
+#: src/dfc.c:445
+msgid "Try dfc -h for more information\n"
+msgstr "Führen Sie dfc -h aus für mehr Informationen\n"
+
+#: src/dfc.c:448
+msgid ""
+"Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
+"FSTYPE] [-u UNIT]\n"
+"Available options:\n"
+"\t-a\tprint all mounted filesystem\n"
+"\t-b\tdo not show the graph bar\n"
+"\t-c\tchoose color mode. Read the manpage for details\n"
+"\t-d\tshow used size\n"
+"\t-e\texport to specified format. Read the manpage for details\n"
+"\t-f\tdisable auto-adjust mode (force display)\n"
+"\t-h\tprint this message\n"
+"\t-i\tinfo about inodes\n"
+"\t-l\tonly show information about locally mounted file systems\n"
+msgstr ""
+"Nutzung: dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME]  [-q SORTBY] "
+"[-t FSTYPE] [-u UNIT]\n"
+"Verfügbare Optionen:\n"
+"\t-a\tZeige alle verfügbaren Dateisysteme an\n"
+"\t-b\tZeige keinen Graphen\n"
+"\t-c\tWähle den Farbmodus. Lesen Sie die manpage für mehr Informationen\n"
+"\t-d\tZeige die benutzte Größe an\n"
+"\t-e\tWähle das angegebene Format. Lesen Sie die manpage für mehr Informationen\n"
+"\t-f\tDeaktiviert das automatische Auswählen der Spalten (erzwingt alle Anzeigen)\n"
+"\t-h\tZeigt diese Hilfe\n"
+"\t-i\tZeigt Informationen zu inodes\n"
+"\t-l\tZeige nur lokale Dateisysteme\n"
+
+#: src/dfc.c:466
+msgid ""
+"\t-m\tuse metric (SI unit)\n"
+"\t-M\tdo not print \"mounted on\"\n"
+"\t-n\tdo not print header\n"
+"\t-o\tshow mount flags\n"
+"\t-p\tfilter by file system name. Read the manpage for details\n"
+"\t-q\tsort the output. Read the manpage for details\n"
+"\t-s\tsum the total usage\n"
+"\t-t\tfilter by file system type. Read the manpage for details\n"
+"\t-T\tshow filesystem type\n"
+"\t-u\tchoose the unit in which to show the values. Read the manpage for "
+"details\n"
+"\t-v\tprint program version\n"
+"\t-w\tuse a wider bar\n"
+"\t-W\twide filename (un truncate)\n"
+msgstr ""
+"\t-m\tVerwende metrische Einheiten (SI Einheiten)\n"
+"\t-M\tUnterdrückt die Anzeige des Einhängeortes\n"
+"\t-n\tUnterdrückt die Anzeige der Kopfzeile\n"
+"\t-o\tZeige Einhängeoptionen an\n"
+"\t-p\tFiltert die Dateisysteme nach Namen. Lesen Sie die manpage für mehr Informationen\n"
+"\t-q\tSortiert die Anzeige. Lesen Sie die manpage für mehr Informationen\n"
+"\t-s\tZeige eine Übersicht über alle Dateisysteme\n"
+"\t-t\tFiltert die Dateisysteme nach Typ. Lesen Sie die manpage für mehr Informationen\n"
+"\t-T\tZeige den Dateisystemtypen an\n"
+"\t-u\tWähle eine Einheit für die Anzeige. Lesen Sie die manpage für mehr Informationen\n"
+"\t-v\tZeige die Programmversion an\n"
+"\t-w\tZeige einen breiteren Graphen\n"
+"\t-W\tZeige breite Dateinamen\n"
+
+#: src/dotfile.c:122
+#, c-format
+msgid ""
+"Config file path is longer than %lu and was truncated. Please, open a bug "
+"report.\n"
+msgstr ""
+"Die Konfigurationsdatei ist länger als %lu und wurde nur teilweise gelesen "
+"Bitte öffnen Sie einen Bug Report.\n"
+
+#: src/dotfile.c:159
+#, c-format
+msgid "Error: no value for %s in configuration file\n"
+msgstr "Fehler: fehlender Wert für %s in der Konfigurationsdatei\n"
+
+#: src/dotfile.c:224 src/dotfile.c:244
+#, c-format
+msgid ""
+"Value conversion failed for graph_medium: %s. What were you expecting with "
+"such a thing anyway?\n"
+msgstr ""
+"Fehler beim konvertieren für graph_medium: %s. Was haben Sie erwartet?\n"
+
+#: src/dotfile.c:229
+#, c-format
+msgid "Medium value cannot be set below 0: %s\n"
+msgstr "Der mittlere Wert kann nicht kleiner als 0 sein: %s\n"
+
+#: src/dotfile.c:232
+#, c-format
+msgid "Medium value cannot be set above 100: %s\n"
+msgstr "Der mittlere Wert kann nicht größer als 100 sein: %s\n"
+
+#: src/dotfile.c:249
+#, c-format
+msgid "High value cannot be set below 0: %s\n"
+msgstr "Der obere Wert kann nicht kleiner als 0 sein: %s\n"
+
+#: src/dotfile.c:252
+#, c-format
+msgid "High value cannot be set above 100: %s\n"
+msgstr "Der obere Wert kann nicht größer als 100 sein: %s\n"
+
+#: src/dotfile.c:262
+#, c-format
+msgid "Wrong symbol value: %s\n"
+msgstr "Ungültiges Symol: %s\n"
+
+#: src/dotfile.c:315
+#, c-format
+msgid "Wrong csv separator: %s\n"
+msgstr "Ungültiges Trennsymbol für csv: %s\n"
+
+#: src/dotfile.c:320
+#, c-format
+msgid "Error: unknown option in configuration file: %s\n"
+msgstr "Fehler: unbekannte Option in der Konfigurationsdatei: %s\n"
+
+#: src/dotfile.c:328
+#, c-format
+msgid "Unknown boolean value for '%s': %s\n"
+msgstr "Unbekannter Wahrheitswert für '%s': %s\n"
+
+#: src/dotfile.c:332
+#, c-format
+msgid "Unknown color value for '%s': %s\n"
+msgstr "Unbekannter Farbwert für '%s': %s\n"
+
+#: src/dotfile.c:336
+#, c-format
+msgid "Not a valid HTML color for '%s': %s\n"
+msgstr "HTML Farbe ungültig für '%s': %s\n"
+
+#: src/dotfile.c:340
+#, c-format
+msgid "Cannot assign value for '%s': %s\n"
+msgstr "Kann den Wert für '%s' nicht zuweisen: %s\n"
+
+#: src/util.c:510 src/export/html.c:157 src/export/tex.c:140
+#: src/export/text.c:101
+msgid "FILESYSTEM"
+msgstr "DATEISYSTEM"
+
+#: src/util.c:511 src/export/html.c:160 src/export/tex.c:142
+#: src/export/text.c:104
+msgid "TYPE"
+msgstr "TYP"
+
+#: src/util.c:513 src/export/html.c:164 src/export/text.c:114
+msgid "%USED"
+msgstr "%BENUTZT"
+
+#: src/util.c:514 src/export/html.c:166 src/export/tex.c:147
+#: src/export/text.c:117
+msgid "USED"
+msgstr "VOLL"
+
+#: src/util.c:515 src/export/html.c:167 src/export/tex.c:148
+#: src/export/text.c:119
+msgid "AVAILABLE"
+msgstr "   FREI  "
+
+#: src/util.c:516 src/export/csv.c:104 src/export/html.c:168
+#: src/export/tex.c:149 src/export/text.c:120
+#, c-format
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#: src/util.c:517 src/export/html.c:171 src/export/text.c:123
+msgid "#INODES"
+msgstr "#INODES"
+
+#: src/util.c:518 src/export/csv.c:108 src/export/html.c:172
+#: src/export/text.c:124
+#, c-format
+msgid "AV.INODES"
+msgstr "AV.INODES"
+
+#: src/util.c:519 src/export/csv.c:112 src/export/html.c:176
+#: src/export/tex.c:155 src/export/text.c:131
+msgid "MOUNTED ON"
+msgstr "EINGEHÄNGT"
+
+#: src/util.c:520 src/export/html.c:179 src/export/tex.c:157
+#: src/export/text.c:134
+msgid "MOUNT OPTIONS"
+msgstr "EINHÄNGEOPTIONEN"
+
+#: src/util.c:545
+msgid "Cannot compute required width\n"
+msgstr "Kann die benötigte Breite nicht berechnen\n"
+
+#: src/util.c:621
+msgid ""
+"WARNING: TTY too narrow. Some options have been disabled to make dfc output "
+"fit (use -f to override).\n"
+msgstr ""
+"WARNUNG: TTY ist zu schmal. Manche Optionen wurden deaktivert, damit die "
+"Anzeige passt ( -f um alle Spalten zu erzwingen).\n"
+
+#: src/util.c:667
+msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
+msgstr ""
+"WARNUNG: Die Anzeige ist immer noch durcheinander. Vergrößern Sie das Terminal"
+"falls möglich...\n"
+
+#: src/export/csv.c:92
+#, c-format
+msgid "FILESYSTEM%c"
+msgstr "DATEISYSTEM%c"
+
+#: src/export/csv.c:95
+#, c-format
+msgid "TYPE%c"
+msgstr "TYP%c"
+
+#: src/export/csv.c:97
+#, c-format
+msgid "%%USED%c"
+msgstr " %%BENUTZT%c"
+
+#: src/export/csv.c:100
+#, c-format
+msgid "USED%c"
+msgstr "VOLL%c"
+
+#: src/export/csv.c:102
+#, c-format
+msgid "AVAILABLE%c"
+msgstr "   FREI  %c"
+
+#: src/export/csv.c:107
+#, c-format
+msgid "%c#INODES%c"
+msgstr "%c#INODES%c"
+
+#: src/export/csv.c:115
+#, c-format
+msgid "%cMOUNT OPTIONS"
+msgstr "%cEINHÄNGEOPTIONEN"
+
+#: src/export/csv.c:137
+#, c-format
+msgid "SUM:%c"
+msgstr "TOT:%c"
+
+#: src/export/html.c:146
+msgid "Unknown date"
+msgstr "Unbekanntes Datum"
+
+#: src/export/html.c:154
+#, c-format
+msgid "Generated by %s-%s on %s"
+msgstr "Genertiert von %s-%s am %s"
+
+#: src/export/tex.c:144
+msgid "USAGE"
+msgstr "NUTZUNG"
+
+#: src/export/tex.c:145
+msgid "\\%USED"
+msgstr "\\%VOLL"
+
+#: src/export/tex.c:151
+msgid "\\#INODES"
+msgstr "\\#INODES"
+
+#: src/export/tex.c:152
+msgid "AV.INODES,"
+msgstr "AV.INODES,"
+
+#: src/export/text.c:107 src/export/text.c:109
+msgid "(=) USED"
+msgstr "(=) VOLL"
+
+#: src/export/text.c:109 src/export/text.c:111
+msgid "FREE (-)"
+msgstr "FREI (-)"
+
+#: src/export/text.c:166
+msgid "SUM:"
+msgstr "SUM:"
+
+#: src/platform/services-bsd.c:350
+#, c-format
+msgid "Could not retrieve mount flags for %s\n"
+msgstr "Kann die Einhängeoptionen für %s nicht bestimmen\n"
+
+#: src/platform/services-bsd.c:379
+#, c-format
+msgid "Truncating mount options for %s\n"
+msgstr "Zeige Einhängeoptionen für %s nur teilweise\n"
+
+#: src/platform/services-linux.c:110
+#, c-format
+msgid "WARNING: %s was skipped because it could not be stated"
+msgstr "WARNUNG: %s wurde übersprungen weil es nicht gelesen werden konnte"
+
+#~ msgid "TOTAL%c"
+#~ msgstr "TOTAL%c"
+
+#~ msgid "AV.INODES%c"
+#~ msgstr "INODES DISP.%c"
