@@ -169,7 +169,8 @@ text_disp_sum(double stot, double atot, double utot,
 	if (!bflag) {
 		text_disp_bar(ptot, stot, maxfssize);
 		if (agflag) {
-			(void)printf("\n%*c", 39, ' ');
+			int gap = max.fsname + max.fstype + max.bar;
+			(void)printf("\n%*c", gap, ' ');
 		}
 	}
 
