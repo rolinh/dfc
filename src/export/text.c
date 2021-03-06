@@ -170,7 +170,7 @@ text_disp_sum(double stot, double atot, double utot,
 		text_disp_bar(ptot, stot, maxfssize);
 		if (agflag) {
 			// Display everything after the bar in a new row, indented correctly:
-			int gap = max.fsname + max.fstype + max.bar;
+			int gap = max.fsname + max.bar;
 			(void)printf("\n%*c", gap, ' ');
 		}
 	}
