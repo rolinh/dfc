@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dfc 3.1.1\n"
 "Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
-"POT-Creation-Date: 2017-09-11 13:26+0200\n"
+"POT-Creation-Date: 2020-12-05 09:49+0100\n"
 "PO-Revision-Date: 2012-04-15 13:52+0200\n"
 "Last-Translator: Robin Hahling <robin.hahling@gw-computing.net>\n"
 "Language-Team: French\n"
@@ -17,41 +17,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/dfc.c:214
+#: src/dfc.c:218
 #, c-format
 msgid "-c: illegal sub option %s\n"
 msgstr "-c: sous-option illégale %s\n"
 
-#: src/dfc.c:251
+#: src/dfc.c:255
 #, c-format
 msgid "-e: illegal sub option %s\n"
 msgstr "-e: sous-option illégale %s\n"
 
-#: src/dfc.c:302
+#: src/dfc.c:306
 #, c-format
 msgid "-q: illegal sub option %s\n"
 msgstr "-q: sous-option illégale %s\n"
 
-#: src/dfc.c:363
+#: src/dfc.c:367
 #, c-format
 msgid "-u: illegal sub option %s\n"
 msgstr "-u: sous-option illégale %s\n"
 
-#: src/dfc.c:406
+#: src/dfc.c:410
 #, c-format
 msgid "Error reading the configuration file: %s\n"
 msgstr "Erreur pendant la lecture du fichier de configuration: %s\n"
 
-#: src/dfc.c:445
+#: src/dfc.c:449
 msgid "Try dfc -h for more information\n"
 msgstr "Essayez dfc -h pour plus d'informations\n"
 
-#: src/dfc.c:448
+#: src/dfc.c:452
+#, fuzzy
 msgid ""
 "Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
 "FSTYPE] [-u UNIT]\n"
 "Available options:\n"
 "\t-a\tprint all mounted filesystem\n"
+"\t-A\tprint graphs of absolute width\n"
 "\t-b\tdo not show the graph bar\n"
 "\t-c\tchoose color mode. Read the manpage for details\n"
 "\t-d\tshow used size\n"
@@ -76,7 +78,7 @@ msgstr ""
 "\t-l\taffiche les informations sur les systèmes de fichiers montés "
 "localement uniquement\n"
 
-#: src/dfc.c:466
+#: src/dfc.c:471
 msgid ""
 "\t-m\tuse metric (SI unit)\n"
 "\t-M\tdo not print \"mounted on\"\n"
@@ -115,8 +117,9 @@ msgstr ""
 msgid ""
 "Config file path is longer than %lu and was truncated. Please, open a bug "
 "report.\n"
-msgstr "Le chemin vers le fichier de configuration est plus long que %lu et a "
-"été tronqué. Veuillez svp ouvrir un rapport de bogue.\n"
+msgstr ""
+"Le chemin vers le fichier de configuration est plus long que %lu et a été "
+"tronqué. Veuillez svp ouvrir un rapport de bogue.\n"
 
 #: src/dotfile.c:159
 #, c-format
@@ -187,61 +190,61 @@ msgstr "Couleur HTML invalide pour '%s': %s\n"
 msgid "Cannot assign value for '%s': %s\n"
 msgstr "Impossible d'assigner une valeur pour '%s': %s\n"
 
-#: src/util.c:510 src/export/html.c:157 src/export/tex.c:140
+#: src/util.c:521 src/export/html.c:157 src/export/tex.c:140
 #: src/export/text.c:101
 msgid "FILESYSTEM"
 msgstr "SYSTÈME DE FICHIERS"
 
-#: src/util.c:511 src/export/html.c:160 src/export/tex.c:142
+#: src/util.c:522 src/export/html.c:160 src/export/tex.c:142
 #: src/export/text.c:104
 msgid "TYPE"
 msgstr "TYPE"
 
-#: src/util.c:513 src/export/html.c:164 src/export/text.c:114
+#: src/util.c:524 src/export/html.c:164 src/export/text.c:114
 msgid "%USED"
 msgstr "%UTILISÉ"
 
-#: src/util.c:514 src/export/html.c:166 src/export/tex.c:147
+#: src/util.c:525 src/export/html.c:166 src/export/tex.c:147
 #: src/export/text.c:117
 msgid "USED"
 msgstr " UT."
 
-#: src/util.c:515 src/export/html.c:167 src/export/tex.c:148
+#: src/util.c:526 src/export/html.c:167 src/export/tex.c:148
 #: src/export/text.c:119
 msgid "AVAILABLE"
 msgstr "DISPO."
 
-#: src/util.c:516 src/export/csv.c:104 src/export/html.c:168
+#: src/util.c:527 src/export/csv.c:104 src/export/html.c:168
 #: src/export/tex.c:149 src/export/text.c:120
 #, c-format
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: src/util.c:517 src/export/html.c:171 src/export/text.c:123
+#: src/util.c:528 src/export/html.c:171 src/export/text.c:123
 msgid "#INODES"
 msgstr "#INODES"
 
-#: src/util.c:518 src/export/csv.c:108 src/export/html.c:172
+#: src/util.c:529 src/export/csv.c:108 src/export/html.c:172
 #: src/export/text.c:124
 #, c-format
 msgid "AV.INODES"
 msgstr "INODES DISP."
 
-#: src/util.c:519 src/export/csv.c:112 src/export/html.c:176
+#: src/util.c:530 src/export/csv.c:112 src/export/html.c:176
 #: src/export/tex.c:155 src/export/text.c:131
 msgid "MOUNTED ON"
 msgstr "MONTÉ SUR"
 
-#: src/util.c:520 src/export/html.c:179 src/export/tex.c:157
+#: src/util.c:531 src/export/html.c:179 src/export/tex.c:157
 #: src/export/text.c:134
 msgid "MOUNT OPTIONS"
 msgstr "OPTIONS DE MONTAGE"
 
-#: src/util.c:545
+#: src/util.c:557
 msgid "Cannot compute required width\n"
 msgstr "Impossible de calculer la largeur requise\n"
 
-#: src/util.c:621
+#: src/util.c:635
 msgid ""
 "WARNING: TTY too narrow. Some options have been disabled to make dfc output "
 "fit (use -f to override).\n"
@@ -249,7 +252,7 @@ msgstr ""
 "AVERTISSEMENT: le TTY est trop étroit. Certaines options ont été désactivées "
 "afin d'ajuster l'affichage (utilisez -f afin d'outrepasser).\n"
 
-#: src/util.c:667
+#: src/util.c:681
 msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
 msgstr ""
 "AVERTISSEMENT: l'affichage est toujours perturbé. Agrandissez votre terminal "
@@ -328,16 +331,16 @@ msgstr "(=)  UT."
 msgid "FREE (-)"
 msgstr "LIB. (-)"
 
-#: src/export/text.c:165
+#: src/export/text.c:166
 msgid "SUM:"
 msgstr "SOM:"
 
-#: src/platform/services-bsd.c:353
+#: src/platform/services-bsd.c:350
 #, c-format
 msgid "Could not retrieve mount flags for %s\n"
 msgstr "Impossible de récupérer les options de montage pour %s\n"
 
-#: src/platform/services-bsd.c:382
+#: src/platform/services-bsd.c:379
 #, c-format
 msgid "Truncating mount options for %s\n"
 msgstr "Troncation des options de montage pour %s\n"

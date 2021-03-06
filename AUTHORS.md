@@ -11,6 +11,7 @@
   * Frank Villaro-Dixon
   * Kevin Gillieron
   * Landry Breuil
+  * Lenni vH
   * Matthieu Le Jeune
   * Sylvain Laperche
   * Tobias Patzl
