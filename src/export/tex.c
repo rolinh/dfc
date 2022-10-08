@@ -54,7 +54,7 @@ static void tex_disp_deinit(void);
 static void tex_disp_header(void);
 static void tex_disp_sum(double stot, double utot, double ftot,
                   double ifitot, double ifatot);
-static void tex_disp_bar(double perct);
+static void tex_disp_bar(double perct, double size, double gsize);
 static void tex_disp_uat(double n, double perct, int req_width);
 static void tex_disp_fs(const char *fsname);
 static void tex_disp_type(const char *type);
@@ -185,7 +185,7 @@ tex_disp_sum(double stot, double atot, double utot,
 		(void)printf(" & N/A");
 
 	if (!bflag)
-		tex_disp_bar(ptot);
+		tex_disp_bar(ptot, stot, maxfssize);
 
 	tex_disp_perct(ptot);
 
@@ -213,52 +213,66 @@ tex_disp_sum(double stot, double atot, double utot,
 
 /*
  * Display the nice usage bar
- * @perct: percentage value
+ * @perct: usage percentage
+ * @size: how much total space this volume has
+ * @gsize: how much total space the greatest volume has
  */
 static void
-tex_disp_bar(double perct)
+tex_disp_bar(double perct, double size, double gsize)
 {
 	/*
 	 * It could be nice to have a non-ASCII graph bar but it requires TeX
 	 * packages usually using postscript and so on. So stick with ASCII for
 	 * now until someone shows up with a better idea.
 	 */
-	int i, j;
-	int barinc = 5;
+	int i;
+	double uperct, sperct;
+	if (agflag) {
+		// used percentage on the current volume:
+		uperct = perct * size / gsize;
+		// percentage of the current volume size on the greatest volume size:
+		sperct = size * 100 / gsize;
+	} else {
+		uperct = perct;
+		sperct = 100;
+	}
+
+	int barinc = 100 / ((wflag ? GRAPHBAR_WIDE : GRAPHBAR_SHORT) - 2);
 
 	(void)printf(" & ");
 
-	/* option to display a wider bar */
-	if (wflag) {
-		barinc = 2;
-	}
-
 	if (!cflag) {
-		for (i = 0; i < perct; i += barinc)
+		for (i = 0; i < uperct; i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
-		for (j = i; j < 100; j += barinc)
+		for (; i < sperct; i += barinc)
 			(void)printf("\\-");
+
+		for (; i < 100; i += barinc)
+			(void)printf(" ");
 	} else { /* color */
 		/* green */
 		(void)printf("\\textcolor{%s}{", colortostr(cnf.clow));
-		for (i = 0; (i < cnf.gmedium) && (i < perct); i += barinc)
+		for (i = 0; (i < cnf.gmedium * sperct / 100) && (i < uperct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* yellow */
 		(void)printf("}\\textcolor{%s}{", colortostr(cnf.cmedium));
-		for (; (i < cnf.ghigh) && (i < perct); i += barinc)
+		for (; (i < cnf.ghigh * sperct / 100) && (i < uperct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		/* red */
 		(void)printf("}\\textcolor{%s}{", colortostr(cnf.chigh));
-		for (; (i < 100) && (i < perct); i += barinc)
+		for (; (i < sperct) && (i < uperct); i += barinc)
 			(void)printf("%c", cnf.gsymbol);
 
 		(void)printf("}");
 
-		for (j = i; j < 100; j += barinc)
-			(void)printf("\\-");
+		for (; i < sperct; i += barinc)
+			(void)printf("\\- ");
+
+		for (; i < 100; i += barinc)
+			(void)printf(" ");
 	}
 }
 

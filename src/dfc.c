@@ -52,8 +52,9 @@ char g_unknown_str[] = "unknown";
 char g_none_str[]    = "none";
 struct conf cnf;
 struct maxwidths max;
+double maxfssize = 0;
 int aflag, bflag, cflag, dflag, eflag, fflag, hflag, iflag, lflag, mflag,
-    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag;
+    nflag, oflag, pflag, qflag, sflag, tflag, uflag, vflag, wflag, agflag;
 int Mflag, Tflag, Wflag;
 char unitflag;
 
@@ -187,10 +188,13 @@ main(int argc, char *argv[])
 	 /* Init default colors and symbol sign */
 	init_conf(&cnf);
 
-	while ((ch = getopt(argc, argv, "abc:de:fhilmMnop:q:st:Tu:vwW")) != -1) {
+	while ((ch = getopt(argc, argv, "aAbc:de:fhilmMnop:q:st:Tu:vwW")) != -1) {
 		switch (ch) {
 		case 'a':
 			aflag = 1;
+			break;
+		case 'A':
+			agflag = 1;
 			break;
 		case 'b':
 			bflag = 1;
@@ -450,6 +454,7 @@ usage(int status)
 					"[-u UNIT]\n"
 			"Available options:\n"
 			"\t-a\tprint all mounted filesystem\n"
+			"\t-A\tprint graphs of absolute width\n"
 			"\t-b\tdo not show the graph bar\n"
 			"\t-c\tchoose color mode. Read the manpage for "
 			"details\n"
@@ -583,7 +588,7 @@ disp(struct list *lst, const char *fstfilter, const char *fsnfilter,
 		}
 
 		if (!bflag)
-			sdisp->print_bar(p->perctused);
+			sdisp->print_bar(p->perctused, p->total, maxfssize);
 
 		/* %used */
 		sdisp->print_perct(p->perctused);
