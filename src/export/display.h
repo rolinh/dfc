@@ -44,7 +44,7 @@ struct display
 
 	void (*print_header) (void);
 	void (*print_sum)    (double, double, double, double, double);
-	void (*print_bar)    (double);
+	void (*print_bar)    (double, double, double);
 	void (*print_used)   (double, double, int);
 	void (*print_avail)  (double, double, int);
 	void (*print_total)  (double, double, int);

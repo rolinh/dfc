@@ -57,7 +57,7 @@ static void json_disp_deinit(void);
 static void json_disp_header(void);
 static void json_disp_sum(double stot, double utot, double ftot, double ifitot,
 		double ifatot);
-static void json_disp_bar(double perct);
+static void json_disp_bar(double used, double size, double gsize);
 static void json_disp_uat(double n, const char *key);
 static void json_disp_used(double used, double perct, int req_width);
 static void json_disp_avail(double avail, double perct, int req_width);
@@ -145,9 +145,11 @@ json_disp_sum(double stot, double atot, double utot, double ifitot, double ifato
 }
 
 static void
-json_disp_bar(double perct)
+json_disp_bar(double used, double size, double gsize)
 {
-	(void)perct;
+	(void)used;
+	(void)size;
+	(void)gsize;
 	/* DUMMY */
 }
 

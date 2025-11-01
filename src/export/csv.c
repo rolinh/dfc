@@ -52,7 +52,7 @@
 static void csv_disp_header(void);
 static void csv_disp_sum(double stot, double utot, double ftot,
 		double ifitot, double ifatot);
-static void csv_disp_bar(double perct);
+static void csv_disp_bar(double used, double size, double gsize);
 static void csv_disp_uat(double n, double perct, int req_width);
 static void csv_disp_fs(const char *fsname);
 static void csv_disp_type(const char *type);
@@ -163,12 +163,16 @@ csv_disp_sum(double stot, double atot, double utot, double ifitot, double ifatot
  * Should display the nice usage bar but this makes no sense in CSV export
  * Therefore, this is a dummy function that does nothing when called from
  * dfc.c but it is required in order to avoid stupid checks in dfc.c
- * @perct: is ignored
+ * @used: is ignored
+ * @size: is ignored
+ * @gsize: is ignored
  */
 static void
-csv_disp_bar(double perct)
+csv_disp_bar(double used, double size, double gsize)
 {
-	(void)perct;
+	(void)used;
+	(void)size;
+	(void)gsize;
 	/* DUMMY */
 }
 

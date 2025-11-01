@@ -44,6 +44,7 @@
 
 /* function declaration */
 int imax(int a, int b);
+double dmax(double a, double b);
 char * strtrim(char *str);
 char * shortenstr(char *str, int len);
 char * sanitizestr(const char *str);
