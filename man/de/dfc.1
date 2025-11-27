@@ -1,0 +1,239 @@
+.TH dfc 1  "5. Dezember 2020" "version 3.1.1" "Benutzerbefehle"
+.SH NAME
+dfc \- Zeigt Informationen zu Dateisystemen mit Stil
+.SH NUTZUNG
+.B dfc [OPTION(S)] [\-c WHEN] [\-e FORMAT] [\-p FSNAME] [\-q SORTBY] [\-t FSTYPE] [\-u UNIT]
+.SH DESCRIPTION
+dfc(1) ist ein Programm ähnlich wie df(1), mit der Ausnahme dass es
+Graphen mit den Daten anzeigt
+und in der Lage ist, die Anzeige farblich auszugeben (Standard ist
+"color\-auto", kann jedoch mit der "\-c" Option geändert werden).
+
+Die verfügbare Größe korrespondiert zu dem Speicherplatz, der dem Nutzer
+zur Verfügung steht und nicht dem Administrator (d. h. f_bavail und
+nicht f_bfree).
+
+Ohne irgendwelche Argumente wird die Größe in lesbarem Format angezeigt.
+Im lesbaren Format kann es zu Rundungsfehlern bei der Berechnung der Größen
+kommen. Falls maximale Genauigkeit gewünscht ist, kann mit "\-u" eine
+Einheit gewählt werden.
+
+dfc(1) hat außerdem die integrierte Funktion, dass die Ausgabe an das 
+Terminal und dessen Breite angepasst wird. Falls dies unerwünscht ist, 
+können mit "\-f" alle Spalten erzwungen werden.
+
+.SH OPTIONEN
+.TP
+\-a
+Zeige alle Dateisysteme.
+.TP
+\-b
+Zeige keinen Graphen.
+.TP
+\-c [WHEN]
+Wähle den Farbmodus mit WHEN als einer dieser Optionen:
+
+"always":
+Farbe wird mit jedem "stdout" verwendet.
+
+"auto":
+Das ist die Standardoption wenn "\-c" nicht angegeben ist. Die Ausgabe
+wird nur eingefärbt, wenn "stdout" ein Terminal ist. Zum Beispiel wird die
+ausgabe nicht eingefärbt wenn die Ausgabe von dfc(1) in einen anderen 
+Befehl weitergeleitet wird.
+
+"never":
+Die Ausgabe wird nicht eingefärbt.
+
+.TP
+\-d
+Zeigt die belegte Größe an.
+.TP
+\-e [FORMAT]
+Ermöglicht es, dfc(1) in einem speziellen FORMAT zu exportieren.
+FORMAT ist eines der folgenden:
+
+"csv":
+Die Ausgabe in Form von kommagetrennten Werten. Zum Beispiel:
+
+	dfc \-e csv > foo.csv
+
+"html":
+Die Ausgabe ist HTML formattiert. Zum Beispiel:
+
+	dfc \-e html \-Tadiso \-c always > index.html
+
+"json":
+Die Ausgabe ist JSON formattiert. Zum Beispiel:
+
+	dfc \-e json \-Tisod > report.json
+
+"tex":
+Die Ausgabe ist TEX formattiert. Zum Beispiel:
+
+	dfc \-e tex \-c always > report.tex
+
+"text":
+Textbasierte Ausgabe (Standardoption).
+
+.TP
+\-f
+Deaktiviert das automatische Anpassen durch Erzwingen von Anzeigen
+der Informationen. Diese Option kann sinnvoll sein, wenn die Ausgabe
+von dfc(1) weitergeleitet wird.
+.TP
+\-h
+Zeigt einen kurzen Hilfetext.
+.TP
+\-i
+Zeigt Informationen über inodes.
+.TP
+\-l
+Zeige nur Informationen zu lokalen Dateisystemen.
+\-m
+Benutzt SI Einheiten (metrische Einheiten), d. h. die Größe ist berechnet in
+Vielfachen von 10 und nicht Vielfachen von 2.
+.TP
+\-M
+Deaktiviert die Anzeige des Einhängeortes.
+.TP
+\-n
+Deaktiviert die Kopfzeile.
+.TP
+\-o
+Zeigt die Einhängeoptionen.
+.TP
+\-p [FSNAME]
+Ermöglicht es, nach dem Namen der Dateisysteme zu filtern. FSNAME kann alles
+sein. Zum Beispiel falls nur Dateisysteme, die mit "/dev" beginnen, angezeigt werden sollen, kann man folgende Option nutzen:
+
+	dfc \-p /dev
+
+Somit werden beispielsweise nur "/dev/sda1", "/dev/root", "/dev", etc. angezeigt.
+
+Mehrere Auswahlen sind, durch Komma (und ohne Leerzeichen) getrennt
+unterstützt. Falls beispielsweise nur "/dev" und "tmpfs" angezeigt werden
+soll, kann man folgende Option nutzen:
+
+	dfc \-p /dev,tmpfs
+
+Außerdem ist umgekehrtes Filtern möglich. Dazu muss lediglich ein "\-" vor
+FSNAME angehängt werden. In diesem Beispiel wird dfc(1) alle Dateisysteme außer die angegebenen anzeigen:
+
+	dfc \-p \-proc,/dev/sdc,run
+
+.TP
+\-q [SORTBY]
+Ermöglicht es, die Anzeige nach SORTBY zu sortieren.
+
+SORTBY kann eines von "name", "type", "mount" sein.
+
+Mit "name" wird die Anzeige nach den Namen der Dateisysteme sortiert.
+Mit "type" wird die Anzeige nach den Typen der Dateisysteme sortiert.
+Mit "mount" wird die Anzeige nach Einhängeorten sortiert.
+
+.TP
+\-s
+Zeigt eine Übersicht über alle Dateisysteme an.
+.TP
+\-t [FSTYPE]
+Ermöglicht es, nach dem Typen der Dateisysteme zu filtern. FSTYPE kann ein
+beliebiges bekanntes Dateisystem sein, zum Beispiel "ext4", "ufs", "reiserfs", ...
+Außerdem kann - genau wie mit der \-p Option - teilweises Filtern eingesetzt
+werden:
+
+    dfc \-t ext
+
+Dies zeigt alle Dateisysteme mit "ext" im Typen an, also ext2, ext3, ext4, ...
+
+Mehrere Auswahlen sind, durch Komma (und ohne Leerzeichen) getrennt
+unterstützt. Falls beispielsweise "ext4" und "tmpfs" angezeigt werden
+soll, kann man folgende Option nutzen:
+
+	dfc \-t ext4,tmpfs
+
+Außerdem ist umgekehrtes Filtern möglich. Dazu muss lediglich ein "\-" vor
+FSTYPE angehängt werden. In diesem Beispiel wird dfc(1) alle
+Dateisystemtypen außer den angegeben anzeigen:
+
+	dfc \-t \-rootfs,tmpfs
+
+.TP
+\-T
+Zeigt den Typen der Dateisysteme an.
+.TP
+\-u [UNIT]
+Zeigt die Größe in der angegebenen Größe an. Folgende Werte stehen
+für UNIT zur Auswahl:
+
+"h":
+	Menschenlesbar (Standardoption wenn "\-u" nicht angegeben ist).
+
+"b":
+	Zeigt Größen in Bytes.	
+
+"k":
+	Zeigt Größen in Kio.
+
+"m":
+	Zeigt Größen in Mio.
+
+"g":
+	Zeigt Größen in Gio.
+
+"t":
+	Zeigt Größen in Tio.
+
+"p":
+	Zeigt Größen in Pio.
+
+"e":
+	Zeigt Größen in Eio.
+
+"z":
+	Zeigt Größen in Zio.
+
+"y":
+	Zeigt Größen in Yio.
+
+HINWEIS: Wenn sowohl "\-u" als auch "\-m" angegeben sind, werden diese
+Unteroptionen mit ihren SI-Varianten ersetzt.
+.TP
+\-v
+Zeigt die installierte Version von dfc(1) an und beendet.
+.TP
+\-w
+Zeige einen breiteren Graphen.
+.TP
+\-W
+Zeigt lange Pfadnamen an (Dateinamen werden nicht abgekürzt). Benötigt u. U.
+ein größeres Display.
+.SH Konfigurationsdatei
+Die Konfigurationsdatei ist optional. Sie ermöglicht es, die 
+Standardfarben, Grenzwerte für Varben und Graphensymbole im Textmodus sowie die Farben im HTML Modus von dfc(1) zu ändern.
+
+Eine solche Konfigurationsdatei soll am folgenden Ort gespeichert werden:
+
+	$XDG_CONFIG_HOME/dfc/dfcrc
+
+Falls Ihr Betriebssystem die XDG Base Directory Specification nicht unterstützt,
+sollte die Konfigurationsdatei stattdessen hier gespeichert werden:
+
+	$HOME/.config/dfc/dfcrc
+
+Oder als letzte Alternative:
+
+	$HOME/.dfcrc
+
+HINWEIS: Die beiden letzten Möglichkeiten sind nur verfügbar falls Ihr
+Betriebssystem die XDG Base Directory Specification nicht unterstützt.
+.SH BUGS
+Falls Sie einen Bug finden, kontaktieren Sie bitte den Autor.
+.SH AUTOREN
+Robin Hahling <robin.hahling\(atgw\-computing.net>
+.SH COPYRIGHT
+Copyright \(co 2012-2017 Robin Hahling
+.SH LIZENZ
+BSD 3-clause
+.SH WEITERE INFORMATIONEN
+df(1), du(1)

@@ -31,4 +31,8 @@ Dutch:
 
   * Michiel Pater <mpater@tradosoft.com>
 
+German: 
+
+	* Leonard von Hagen <lennivh24@gmail.com>
+
 <!-- vim: set filetype=markdown textwidth=80 -->
