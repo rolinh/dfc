@@ -1,0 +1,348 @@
+# Georgian translation for dfc.
+# Copyright (C) 2026 dfc's authors.
+# This file is distributed under the same license as the dfc package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dfc 3.1.1-b14e316\n"
+"Report-Msgid-Bugs-To: robin.hahling@gw-computing.net\n"
+"POT-Creation-Date: 2020-05-01 15:57+0200\n"
+"PO-Revision-Date: 2026-04-13 06:27+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: src/dfc.c:214
+#, c-format
+msgid "-c: illegal sub option %s\n"
+msgstr "-c: დაუშვებელი ქვეპარამეტრი %s\n"
+
+#: src/dfc.c:251
+#, c-format
+msgid "-e: illegal sub option %s\n"
+msgstr "-e: დაუშვებელი ქვეპარამეტრი %s\n"
+
+#: src/dfc.c:302
+#, c-format
+msgid "-q: illegal sub option %s\n"
+msgstr "-q: დაუშვებელი ქვეპარამეტრი %s\n"
+
+#: src/dfc.c:363
+#, c-format
+msgid "-u: illegal sub option %s\n"
+msgstr "-u: დაუშვებელი ქვეპარამეტრი %s\n"
+
+#: src/dfc.c:406
+#, c-format
+msgid "Error reading the configuration file: %s\n"
+msgstr "კონფიგურაციის ფაილის წაკითხვის შეცდომა: %s\n"
+
+#: src/dfc.c:445
+msgid "Try dfc -h for more information\n"
+msgstr "მეტი ინფორმაციისთვის სცადეთ 'dfc -h'.\n"
+
+#: src/dfc.c:448
+msgid ""
+"Usage:  dfc [OPTION(S)] [-c WHEN] [-e FORMAT] [-p FSNAME] [-q SORTBY] [-t "
+"FSTYPE] [-u UNIT]\n"
+"Available options:\n"
+"\t-a\tprint all mounted filesystem\n"
+"\t-b\tdo not show the graph bar\n"
+"\t-c\tchoose color mode. Read the manpage for details\n"
+"\t-d\tshow used size\n"
+"\t-e\texport to specified format. Read the manpage for details\n"
+"\t-f\tdisable auto-adjust mode (force display)\n"
+"\t-h\tprint this message\n"
+"\t-i\tinfo about inodes\n"
+"\t-l\tonly show information about locally mounted file systems\n"
+msgstr ""
+"გამოყენება:  dfc [პარამეტრ(ებ)-ი] [-c როდის] [-e ფორმატი] [-p ფსსახელი] [-q "
+"დალაგ.პირ.] [-t ფსტიპი] [-u ერთეული]\n"
+"ხელმისაწვდომი პარამეტრები:\n"
+"\t-a\tყველა მიმაგრებული ფაილური სისტემის გამოტანა\n"
+"\t-b\tგრაფიკის ზოლი ნაჩვენები არ იქნება\n"
+"\t-c\tფერის რეჟიმის არჩევა. დეტალებისთვის წაიკითხეთ სახელმძღვანელო\n"
+"\t-d\tგამოყენებული ზომის ჩვენება\n"
+"\t-e\tგატანა მითითებულ ფორმატში. დეტალებისთვის წაიკითხეთ სახელმძღვანელო\n"
+"\t-f\tავტოგასწორების რეჟიმის გამორთვა (ნაძალადევი ჩვენება \n"
+"\t-h\tამ შეტყობინების გამოტანა\n"
+"\t-i\tინფორმაცია inode-ების შესახებ\n"
+"\t-l\tინფორმაციის გამოტანა, მხოლოდ, ლოკალურად მიმაგრებული ფაილური "
+"სისტემების შესახებ\n"
+
+#: src/dfc.c:466
+msgid ""
+"\t-m\tuse metric (SI unit)\n"
+"\t-M\tdo not print \"mounted on\"\n"
+"\t-n\tdo not print header\n"
+"\t-o\tshow mount flags\n"
+"\t-p\tfilter by file system name. Read the manpage for details\n"
+"\t-q\tsort the output. Read the manpage for details\n"
+"\t-s\tsum the total usage\n"
+"\t-t\tfilter by file system type. Read the manpage for details\n"
+"\t-T\tshow filesystem type\n"
+"\t-u\tchoose the unit in which to show the values. Read the manpage for "
+"details\n"
+"\t-v\tprint program version\n"
+"\t-w\tuse a wider bar\n"
+"\t-W\twide filename (un truncate)\n"
+msgstr ""
+"\t-m\tმეტრული (SI სისტემის) სისტემის გამოყენება\n"
+"\t-M\t\"მიმაგრების წერტილი\" გამოტანილი არ იქნება\n"
+"\t-n\tთავსართი გამოტანილი არ იქნება\n"
+"\t-o\tმიმაგრების ალმების ჩვენება\n"
+"\t-p\tგაფილტვრა ფაილური სისტემის სახელით. დეტალებისთვის წაიკითხეთ "
+"სახელმძღვანელო\n"
+"\t-q\tგამოტანის დალაგება. დეტალებისთვის წაიკითხეთ სახელმძღვანელო\n"
+"\t-s\tსრული გამოყენების შეჯამება\n"
+"\t-t\tგაფილტვრა ფაილური სისტემის ტიპით. დეტალებისთვის წაიკითხეთ "
+"სახელმძღვანელო\n"
+"\t-T\tფაილური სისტემის ტიპის ჩვენება\n"
+"\t-u\tაირჩიეთ ერთეული, რომლითაც მნიშვნელობების ჩვენება მოხდება. "
+"დეტალებისთვის წაიკითხეთ სახელმძღვანელო\n"
+"\t-v\tპროგრამის ვერსიის გამოტანა\n"
+"\t-w\tუფრო განიერი პანელის ჩვენება\n"
+"\t-W\tგანიერი ფაილის სახელი (წაკვეთის გაუქმება\n"
+
+#: src/dotfile.c:122
+#, c-format
+msgid ""
+"Config file path is longer than %lu and was truncated. Please, open a bug "
+"report.\n"
+msgstr ""
+"კონფიგურაციის ფაილის ბილიკი %lu-ზე გრძელია და წაკვეთილ იქნა. მოგვწერეთ ამ "
+"შეცდომის შესახებ.\n"
+
+#: src/dotfile.c:159
+#, c-format
+msgid "Error: no value for %s in configuration file\n"
+msgstr "შეცდომა: კონფიგურაციის ფაილში %s-ის მნიშვნელობა აღმოჩენილი არაა\n"
+
+#: src/dotfile.c:224 src/dotfile.c:244
+#, c-format
+msgid ""
+"Value conversion failed for graph_medium: %s. What were you expecting with "
+"such a thing anyway?\n"
+msgstr ""
+"graph_medium-ისთვის მნიშვნელობის გადაყვანა ჩავარდა %s. რას ელოდით "
+"ამნაირისგან, კი მაგრამ?\n"
+
+#: src/dotfile.c:229
+#, c-format
+msgid "Medium value cannot be set below 0: %s\n"
+msgstr "საშუალო მნიშვნელობის 0-ზე ნაკლებზე დაყენება შეუძლებელია: %s\n"
+
+#: src/dotfile.c:232
+#, c-format
+msgid "Medium value cannot be set above 100: %s\n"
+msgstr "საშუალო მნიშვნელობის 100-ზე ნაკლებზე დაყენება შეუძლებელია: %s\n"
+
+#: src/dotfile.c:249
+#, c-format
+msgid "High value cannot be set below 0: %s\n"
+msgstr "მაღალი მნიშვნელობის 0-ზე ნაკლებზე დაყენება შეუძლებელია: %s\n"
+
+#: src/dotfile.c:252
+#, c-format
+msgid "High value cannot be set above 100: %s\n"
+msgstr "მაღალი მნიშვნელობის 100-ზე ნაკლებზე დაყენება შეუძლებელია: %s\n"
+
+#: src/dotfile.c:262
+#, c-format
+msgid "Wrong symbol value: %s\n"
+msgstr "არასწორი სიმბოლოს მნიშვნელობა: %s\n"
+
+#: src/dotfile.c:315
+#, c-format
+msgid "Wrong csv separator: %s\n"
+msgstr "არასწორი csv-ის გამყოფი: %s\n"
+
+#: src/dotfile.c:320
+#, c-format
+msgid "Error: unknown option in configuration file: %s\n"
+msgstr "შეცდომა: უცნობი პარამეტრი კონფიგურაციის ფაილში %s\n"
+
+#: src/dotfile.c:328
+#, c-format
+msgid "Unknown boolean value for '%s': %s\n"
+msgstr "უცნობი ლოგიკური მნიშვნელობა ცვლადისთვის '%s': %s\n"
+
+#: src/dotfile.c:332
+#, c-format
+msgid "Unknown color value for '%s': %s\n"
+msgstr "უცნობი ფერის მნიშვნელობა ცვლადისთვის '%s': %s\n"
+
+#: src/dotfile.c:336
+#, c-format
+msgid "Not a valid HTML color for '%s': %s\n"
+msgstr "არასწორი HTML ფერი სტრიქონისთვის '%s': %s\n"
+
+#: src/dotfile.c:340
+#, c-format
+msgid "Cannot assign value for '%s': %s\n"
+msgstr "'%s'-ისთვის მნიშვნელობის მინიჭება შეუძლებელია: %s\n"
+
+#: src/util.c:510 src/export/html.c:157 src/export/tex.c:140
+#: src/export/text.c:101
+msgid "FILESYSTEM"
+msgstr "ფაილური სისტემა"
+
+#: src/util.c:511 src/export/html.c:160 src/export/tex.c:142
+#: src/export/text.c:104
+msgid "TYPE"
+msgstr "ტიპი"
+
+#: src/util.c:513 src/export/html.c:164 src/export/text.c:114
+msgid "%USED"
+msgstr "გამოყენებული%"
+
+#: src/util.c:514 src/export/html.c:166 src/export/tex.c:147
+#: src/export/text.c:117
+msgid "USED"
+msgstr "გამოყენებული"
+
+#: src/util.c:515 src/export/html.c:167 src/export/tex.c:148
+#: src/export/text.c:119
+msgid "AVAILABLE"
+msgstr "ხელმისაწვდომი"
+
+#: src/util.c:516 src/export/csv.c:104 src/export/html.c:168
+#: src/export/tex.c:149 src/export/text.c:120
+#, c-format
+msgid "TOTAL"
+msgstr "სულ"
+
+#: src/util.c:517 src/export/html.c:171 src/export/text.c:123
+msgid "#INODES"
+msgstr "#INODE-ები"
+
+#: src/util.c:518 src/export/csv.c:108 src/export/html.c:172
+#: src/export/text.c:124
+#, c-format
+msgid "AV.INODES"
+msgstr "ხელმ. inode-ები"
+
+#: src/util.c:519 src/export/csv.c:112 src/export/html.c:176
+#: src/export/tex.c:155 src/export/text.c:131
+msgid "MOUNTED ON"
+msgstr "მიმაგრ. წრტ"
+
+#: src/util.c:520 src/export/html.c:179 src/export/tex.c:157
+#: src/export/text.c:134
+msgid "MOUNT OPTIONS"
+msgstr "მიმაგრ. პარამ"
+
+#: src/util.c:545
+msgid "Cannot compute required width\n"
+msgstr "საჭირო სიგანის გამოთვლა შეუძლებელია\n"
+
+#: src/util.c:621
+msgid ""
+"WARNING: TTY too narrow. Some options have been disabled to make dfc output "
+"fit (use -f to override).\n"
+msgstr ""
+"გაფრთხილება: TTY ძალიან ვიწროა. ზოგიერთი პარამეტრი გაითიშა, რომ dfc-ის "
+"გამოტანილი ინფორმაცია ჩაეტიოს (გადასაფარად გამოიყენეთ -f).\n"
+
+#: src/util.c:667
+msgid "WARNING: Output still messed up. Enlarge your terminal if you can...\n"
+msgstr ""
+"გაფრთხილება: გამოტანა ჯერ კიდევ არეულია. გაადიდეთ თქვენი ტერმინალი, თუ "
+"შეგიძლიათ...\n"
+
+#: src/export/csv.c:92
+#, c-format
+msgid "FILESYSTEM%c"
+msgstr "ფაილურისისტემა%c"
+
+#: src/export/csv.c:95
+#, c-format
+msgid "TYPE%c"
+msgstr "ტიპი%c"
+
+#: src/export/csv.c:97
+#, c-format
+msgid "%%USED%c"
+msgstr "%%გამოყენებული%c"
+
+#: src/export/csv.c:100
+#, c-format
+msgid "USED%c"
+msgstr "გამოყენებული%c"
+
+#: src/export/csv.c:102
+#, c-format
+msgid "AVAILABLE%c"
+msgstr "ხელმისაწვდომია%c"
+
+#: src/export/csv.c:107
+#, c-format
+msgid "%c#INODES%c"
+msgstr "%c#INODE-ები%c"
+
+#: src/export/csv.c:115
+#, c-format
+msgid "%cMOUNT OPTIONS"
+msgstr "%cმიმაგრების პარამეტრები"
+
+#: src/export/csv.c:137
+#, c-format
+msgid "SUM:%c"
+msgstr "ჯამი:%c"
+
+#: src/export/html.c:146
+msgid "Unknown date"
+msgstr "უცნობი თარიღი"
+
+#: src/export/html.c:154
+#, c-format
+msgid "Generated by %s-%s on %s"
+msgstr "შექმნილია პროგრამით %s-%s %s-ზე"
+
+#: src/export/tex.c:144
+msgid "USAGE"
+msgstr "გამოყენება"
+
+#: src/export/tex.c:145
+msgid "\\%USED"
+msgstr "\\%გამოყენებულია"
+
+#: src/export/tex.c:151
+msgid "\\#INODES"
+msgstr "\\#INODE-ები"
+
+#: src/export/tex.c:152
+msgid "AV.INODES,"
+msgstr "ხელმ.INODEები,"
+
+#: src/export/text.c:107 src/export/text.c:109
+msgid "(=) USED"
+msgstr "(=) გამოყენებული"
+
+#: src/export/text.c:109 src/export/text.c:111
+msgid "FREE (-)"
+msgstr "თავისუფალი (-)"
+
+#: src/export/text.c:166
+msgid "SUM:"
+msgstr "ჯამი:"
+
+#: src/platform/services-bsd.c:350
+#, c-format
+msgid "Could not retrieve mount flags for %s\n"
+msgstr "%s-ისთვის მიმაგრების ალმების მიღება შეუძლებელია\n"
+
+#: src/platform/services-bsd.c:379
+#, c-format
+msgid "Truncating mount options for %s\n"
+msgstr "მიმაგრების პარამეტრების წაკვეთა %s-ისთვის\n"
+
+#: src/platform/services-linux.c:110
+#, c-format
+msgid "WARNING: %s was skipped because it could not be stated"
+msgstr "გაფრთხილება: %s გამოტოვებულია, რადგან მისი აღმოჩენა შეუძლებელია"
